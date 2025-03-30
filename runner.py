@@ -1,3 +1,4 @@
+import asyncio
 import re
 from multiprocessing import Process, freeze_support
 import argparse
@@ -9,10 +10,13 @@ from jproperties import Properties
 from textwrap3 import wrap
 from excel_report_manager import ExcelReportManager
 from kewords_manager import KeywordsManager
+from pdf_report_manager import PdfReportManager
 from utilities import Utils
 from sys import exit
+import os
 
 utils = Utils()
+prm = PdfReportManager()
 
 
 def start_runner(testscript_file, launch_browser=''):
@@ -29,7 +33,8 @@ def start_runner(testscript_file, launch_browser=''):
 
     data_run_in_selenium_grid = str(
         start_properties_configs.get('run_in_selenium_grid').data)
-    data_run_in_appium_grid = str(start_properties_configs.get('run_in_appium_grid').data)
+    data_run_in_appium_grid = str(
+        start_properties_configs.get('run_in_appium_grid').data)
 
     if data_run_in_selenium_grid.lower() == data_run_in_appium_grid.lower() == 'yes':
         exit(
@@ -44,7 +49,7 @@ def start_runner(testscript_file, launch_browser=''):
     valid_keywords_tuple = (
         "tc_id", "tc_desc", "open_browser", "enter_url", "type", "click", "select_file", "verify_displayed_text",
         "mcnp_choose_date_from_datepicker", "wait_for_seconds", "login_jnj", "check_element_enabled",
-        "check_element_disabled", "check_element_displayed")
+        "check_element_disabled", "check_element_displayed", "step")
     # all_test_results_list = []
     e_report = ExcelReportManager()
 
@@ -53,10 +58,10 @@ def start_runner(testscript_file, launch_browser=''):
             # all_steps_list = []
             # step_no = 1
             df = pd.read_excel(testscript_file,
-                               dtype={"Test Steps": "string", "Element Name": "string",
-                                      "Element Locator Name": "string",
-                                      "Test Data": "string"})
-            check_nan_for_test_steps = df['Test Steps'].isnull().values.any()
+                               dtype={"Keyword": "string", "Input1": "string",
+                                      "Input2": "string",
+                                      "Input3": "string"})
+            check_nan_for_test_steps = df['Keyword'].isnull().values.any()
 
             if check_nan_for_test_steps:
                 exit(
@@ -65,57 +70,67 @@ def start_runner(testscript_file, launch_browser=''):
             df1 = df.replace(np.nan, '', regex=True)
             for index, row in df1.iterrows():
                 # print(index)
-                if str(row["Test Steps"]) not in valid_keywords_tuple:
+                if str(row["Keyword"]) not in valid_keywords_tuple:
                     exit("The keyword '" + row[
-                        "Test Steps"] + "' entered in test steps column in the excel file is invalid. Please"
-                                        " check.")
-                if str(row["Test Steps"]) == 'mcnp_choose_date_from_datepicker':
-                    which_calender = str(row["Element Locator Name"])
+                        "Keyword"] + "' entered in keyword column in the excel file is invalid. Please"
+                        " check.")
+                if str(row["Keyword"]) == 'mcnp_choose_date_from_datepicker':
+                    which_calender = str(row["Input2"])
                     if which_calender == 'cn_det_ed':
-                        utils.check_date_format_validity(str(row["Test Data"]))
+                        utils.check_date_format_validity(str(row["Input3"]))
                     if which_calender == 'cn_det_dd':
                         utils.check_date_range_format_validity(
-                            str(row["Test Data"]))
+                            str(row["Input3"]))
 
-                if str(row["Test Steps"]) == 'login_jnj':
-                    element_name_data = str(row["Element Name"])
-                    element_locator_data = str(row["Element Locator Name"])
-                    login_uname_pwd_data = str(row["Test Data"])
+                if str(row["Keyword"]) == 'open_browser':
+                    browser_given = str(row["Input3"])
+                    if launch_browser == '':
+                        if browser_given.lower() != 'chrome' and browser_given.lower() != 'edge':
+                            exit("The input given for keyword '" +
+                                 row["Keyword"] + "' in Input3 column in the excel file is invalid. It should be either 'edge' or 'chrome'. Please check.")
+
+                if str(row["Keyword"]) == 'login_jnj':
+                    element_name_data = str(row["Input1"])
+                    element_locator_data = str(row["Input2"])
+                    login_uname_pwd_data = str(row["Input3"])
 
                     element_name_data_lst = element_name_data.split(";")
                     element_locator_data_lst = element_locator_data.split(";")
                     login_uname_pwd_data_lst = login_uname_pwd_data.split(";")
 
                     if len(list(filter(None, login_uname_pwd_data_lst))) != 2:
-                        exit("The data entered in the Test Data Column for the keyword '" + row[
-                            "Test Steps"] + "' is '" + login_uname_pwd_data + "'. It is not correct. It should be 2 "
-                                                                              "datas "
-                                                                              "separated by a ';'. For example "
-                                                                              "UserName;Password")
+                        exit("The data entered in the Input3 Column for the keyword '" + row[
+                            "Keyword"] + "' is '" + login_uname_pwd_data + "'. It is not correct. It should be 2 "
+                            "datas "
+                            "separated by a ';'. For example "
+                            "UserName;Password")
                     if len(list(filter(None, element_name_data_lst))) != 4:
-                        exit("The data entered in the Element Name Column for the keyword '" + row[
-                            "Test Steps"] + "' is '" + element_name_data + "'. It is not correct. It should be 4 datas "
-                                                                           "separated by a ';'. For example "
-                                                                           "Name1;Name2;Name3;Name4")
+                        exit("The data entered in the Input1 Column for the keyword '" + row[
+                            "Keyword"] + "' is '" + element_name_data + "'. It is not correct. It should be 4 datas "
+                            "separated by a ';'. For example "
+                            "Name1;Name2;Name3;Name4")
                     if len(list(filter(None, element_locator_data_lst))) != 4:
-                        exit("The data entered in the Element Locator Name Column for the keyword '" + row[
-                            "Test Steps"] + "' is '" + element_locator_data + "'. It is not correct. It should be 4 "
-                                                                              "datas "
-                                                                              "separated by a ';'. For example "
-                                                                              "locator1;locator1;locator1;locator1")
+                        exit("The data entered in the Input2 Column for the keyword '" + row[
+                            "Keyword"] + "' is '" + element_locator_data + "'. It is not correct. It should be 4 "
+                            "datas "
+                            "separated by a ';'. For example "
+                            "locator1;locator1;locator1;locator1")
 
                 if index == 0:
-                    if not (str(row["Test Steps"]) == 'tc_id'):
+                    if not (str(row["Keyword"]) == 'tc_id'):
                         exit("The first keyword must be 'tc_id'")
                 if index == 1:
-                    if not (str(row["Test Steps"]) == 'tc_desc'):
+                    if not (str(row["Keyword"]) == 'tc_desc'):
                         exit("The second keyword must be 'tc_desc'")
                 if index == 2:
-                    if not (str(row["Test Steps"]) == 'open_browser'):
-                        exit("The first keyword must be 'open_browser'")
+                    if not (str(row["Keyword"]) == 'step'):
+                        exit("The third keyword must be 'step'")
                 if index == 3:
-                    if not (str(row["Test Steps"]) == 'enter_url'):
-                        exit("The second keyword must be 'enter_url'")
+                    if not (str(row["Keyword"]) == 'open_browser'):
+                        exit("The fourth keyword must be 'open_browser'")
+                if index == 4:
+                    if not (str(row["Keyword"]) == 'enter_url'):
+                        exit("The fifth keyword must be 'enter_url'")
 
             km = KeywordsManager()
             # tca_id = ''
@@ -126,41 +141,37 @@ def start_runner(testscript_file, launch_browser=''):
             # tca_overall_status = 'Passed'
             # repo_m = PdfReportManager()
             for index, row in df1.iterrows():
-                print(str(row["Test Steps"]))
+                print(str(row["Keyword"]))
 
-                if str(row["Test Steps"]) == 'tc_id':
-                    km.repo_m.tca_id = str(row["Test Data"])
+                if str(row["Keyword"]) == 'tc_id':
+                    km.ge_tcid(str(row["Input3"]))
 
-                if str(row["Test Steps"]) == 'tc_desc':
-                    km.repo_m.tca_desc = str(row["Test Data"])
+                if str(row["Keyword"]) == 'tc_desc':
+                    km.ge_tcdesc(str(row["Input3"]))
 
-                if str(row["Test Steps"]) == 'wait_for_seconds':
-                    # sd.wait_for_some_time(int(row["Test Data"]))
-                    km.ge_wait_for_seconds(int(row["Test Data"]))
+                if str(row["Keyword"]) == 'step':
+                    km.ge_step(step=str(row["Input1"]), result=str(row["Input2"]))
 
-                if str(row["Test Steps"]) == 'open_browser':
+                if str(row["Keyword"]) == 'wait_for_seconds':
+                    # sd.wait_for_some_time(int(row["Input3"]))
+                    km.ge_wait_for_seconds(int(row["Input3"]))
+
+                if str(row["Keyword"]) == 'open_browser':
                     try:
-                        # sd = BrowserDriver(str(row["Test Data"]))
-                        # km = KeywordsManager(str(row["Test Data"]))
                         if launch_browser == '':
-                            km.ge_open_browser(str(row["Test Data"]))
-                            km.repo_m.tca_browser_name = str(row["Test Data"])
+                            km.ge_open_browser(str(row["Input3"]))
                         else:
                             km.ge_open_browser(str(launch_browser))
-                            km.repo_m.tca_browser_name = str(launch_browser)
-
-                        # km.repo_m.tca_browser_name = str(row["Test Data"])
-                        km.repo_m.tca_browser_version = km.ge_browser_version()
                     except Exception as e:
                         print(e)
                         break
 
-                if str(row["Test Steps"]) == 'login_jnj':
+                if str(row["Keyword"]) == 'login_jnj':
                     try:
-                        login_jnj_name_data = str(row["Element Name"])
+                        login_jnj_name_data = str(row["Input1"])
                         login_jnj_locator_data = str(
-                            row["Element Locator Name"])
-                        login_jnj_uname_pwd_data = str(row["Test Data"])
+                            row["Input2"])
+                        login_jnj_uname_pwd_data = str(row["Input3"])
 
                         login_jnj_name_data_lst = login_jnj_name_data.split(
                             ";")
@@ -194,56 +205,58 @@ def start_runner(testscript_file, launch_browser=''):
                         print(e)
                         break
 
-                if str(row["Test Steps"]) == 'enter_url':
+                if str(row["Keyword"]) == 'enter_url':
                     try:
-                        km.ge_enter_url(str(row["Test Data"]))
+                        print("before url")
+                        km.ge_enter_url(str(row["Input3"]))
+                        print("inside url")
                     except Exception as e:
                         print(e)
                         break
 
-                if str(row["Test Steps"]) == 'type':
+                if str(row["Keyword"]) == 'type':
                     try:
-                        if row["Test Data"].lower() == 'random_notification_id':
-                            km.ge_type(str(configs.get(row["Element Locator Name"]).data), "xpath",
+                        if row["Input3"].lower() == 'random_notification_id':
+                            km.ge_type(str(configs.get(row["Input2"]).data), "xpath",
                                        utils.generate_random_notif_id(),
-                                       str(row["Element Name"]))
+                                       str(row["Input1"]))
                         else:
-                            km.ge_type(str(configs.get(row["Element Locator Name"]).data), "xpath", row["Test Data"],
-                                       str(row["Element Name"]))
+                            km.ge_type(str(configs.get(row["Input2"]).data), "xpath", row["Input3"],
+                                       str(row["Input1"]))
                     except Exception as e:
                         print(e)
                         break
 
-                if str(row["Test Steps"]) == 'check_element_enabled':
+                if str(row["Keyword"]) == 'check_element_enabled':
                     try:
-                        km.ge_is_element_enabled(str(configs.get(row["Element Locator Name"]).data), "xpath",
-                                                 row["Test Data"])
+                        km.ge_is_element_enabled(str(configs.get(row["Input2"]).data), "xpath",
+                                                 row["Input3"])
                     except Exception as e:
                         print(e)
                         break
 
-                if str(row["Test Steps"]) == 'check_element_disabled':
+                if str(row["Keyword"]) == 'check_element_disabled':
                     try:
-                        km.ge_is_element_disabled(str(configs.get(row["Element Locator Name"]).data), "xpath",
-                                                  row["Test Data"])
+                        km.ge_is_element_disabled(str(configs.get(row["Input2"]).data), "xpath",
+                                                  row["Input3"])
                     except Exception as e:
                         print(e)
                         break
 
-                if str(row["Test Steps"]) == 'check_element_displayed':
+                if str(row["Keyword"]) == 'check_element_displayed':
                     try:
-                        km.ge_is_element_displayed(str(configs.get(row["Element Locator Name"]).data), "xpath",
-                                                   row["Test Data"])
+                        km.ge_is_element_displayed(str(configs.get(row["Input2"]).data), "xpath",
+                                                   row["Input3"])
                     except Exception as e:
                         print(e)
                         break
 
-                if str(row["Test Steps"]) == 'mcnp_choose_date_from_datepicker':
+                if str(row["Keyword"]) == 'mcnp_choose_date_from_datepicker':
                     try:
-                        which_calender = str(row["Element Locator Name"])
-                        date_to_choose = str(row["Test Data"])
+                        which_calender = str(row["Input2"])
+                        date_to_choose = str(row["Input3"])
                         locator_type = "xpath"
-                        locator_name = str(row["Element Name"])
+                        locator_name = str(row["Input1"])
                         cn_det_ddate_mon_txt_xpath = str(
                             configs.get('cn_det_ddate_mon_txt_xpath').data)
                         cn_det_ddate_pre_button_xpath = str(
@@ -276,38 +289,38 @@ def start_runner(testscript_file, launch_browser=''):
                         print(e)
                         break
 
-                if str(row["Test Steps"]) == 'verify_displayed_text':
+                if str(row["Keyword"]) == 'verify_displayed_text':
                     try:
                         km.ge_verify_displayed_text(
-                            str(configs.get(row["Element Locator Name"]).data),
-                            "xpath", row["Test Data"], str(row["Element Name"]))
+                            str(configs.get(row["Input2"]).data),
+                            "xpath", row["Input3"], str(row["Input1"]))
                     except Exception as e:
                         print(e)
                         break
 
-                if str(row["Test Steps"]) == 'click':
+                if str(row["Keyword"]) == 'click':
                     try:
-                        km.ge_click(str(configs.get(row["Element Locator Name"]).data), "xpath",
-                                    str(row["Element Name"]))
+                        km.ge_click(str(configs.get(row["Input2"]).data), "xpath",
+                                    str(row["Input1"]))
                     except Exception as e:
                         print(e)
                         break
 
-                if str(row["Test Steps"]) == 'select_file':
+                if str(row["Keyword"]) == 'select_file':
                     try:
-                        km.ge_select_file(str(configs.get(row["Element Locator Name"]).data), "xpath",
-                                          str(row["Test Data"]))
+                        km.ge_select_file(str(configs.get(row["Input2"]).data), "xpath",
+                                          str(row["Input3"]))
                     except Exception as e:
                         print(e)
                         break
 
-            test_result = [km.repo_m.tca_id, "\n".join(wrap(km.repo_m.tca_desc, width=50)),
-                           km.repo_m.tca_overall_status,
-                           km.repo_m.tca_browser_name + " " + km.repo_m.tca_browser_version]
+            # test_result = [km.repo_m.tc_id, "\n".join(wrap(km.repo_m.test_description, width=110)),
+            #                km.repo_m.overall_status_text,
+            #                km.repo_m.browser_img_alt + " " + km.repo_m.browser_version, km.repo_m.executed_date]
+            test_result = [km.repo_m.tc_id, km.repo_m.test_description,km.repo_m.overall_status_text, km.repo_m.browser_img_alt + " " + km.repo_m.browser_version, km.repo_m.executed_date]
             e_report.add_row(test_result)
 
-            km.repo_m.create_report()
-            km.close_browser()
+            km.ge_close()
 
 
 def take_recording(process_name: Process, record_name):
@@ -356,8 +369,28 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("start", type=str, nargs='?',
                         help="start the execution")
-    parser.add_argument("--version", help="Display the Version", action="store_true")
+    parser.add_argument(
+        "--version", help="Display the Version", action="store_true")
+    parser.add_argument("--encrypt-file", help="Encrypts the file", type=str)
+    parser.add_argument("--output-file", help="Specify the output file name", type=str)
     args = parser.parse_args()
+    # Count how many arguments are provided
+    active_args = sum(bool(arg) for arg in [args.start, args.version, args.encrypt_file])
+
+    if active_args > 1:
+        exit("Error: Only one of 'start', '--version', or '--encrypt-file' can be used at a time.")
+    
+    if args.output_file and not args.encrypt_file:
+        exit("Error: '--output-file' can only be used with '--encrypt-file'.")
+        
+    if args.encrypt_file:
+        if not os.path.isfile(args.encrypt_file):
+            exit("Error: The provided input is not a valid file.")
+        else:
+            output_file = args.output_file or "default_encrypted_file"
+            utils.encrypt_file(str(args.encrypt_file), str(output_file))
+            print(f"Encrypting file {args.encrypt_file} to {output_file}")
+            exit("file encrypted")
     if args.version and args.start is None:
         exit("Version: 3.0")
     if args.start is not None and args.start.lower() == 'start' and args.version is False:
@@ -403,10 +436,11 @@ if __name__ == '__main__':
         '''
         for x in utils.get_absolute_file_paths_in_dir(".\\test_scripts"):
             if "testscript.xlsx" in x:
-                p = re.compile('jbgf', re.I)
+                p = re.compile('ts', re.I)
                 if p.match(x.split('\\')[-1]):
                     if x.split('\\')[-2].lower() == 'chrome':
-                        proc1 = Process(target=start_runner, args=(x, 'chrome',))
+                        proc1 = Process(target=start_runner,
+                                        args=(x, 'chrome',))
                         proc1.start()
                         # time.sleep(5)
                         proc2 = None
@@ -450,6 +484,9 @@ if __name__ == '__main__':
                         proc1.join()
                         if run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
                             proc2.join()
+                            
+        asyncio.run(prm.generate_test_summary_pdf())
+        
     else:
         exit("The syntax for running is 'runner.exe start' or to check the version use 'runner.exe --version'")
 # print("thread finished...exiting")

@@ -1,6 +1,9 @@
 import logging
 
-from reporting import PdfReporting
+import pandas as pd
+
+from pdf_reporting import PdfReporting
+from pdf_ts_reporting import PdfTsReporting
 from utilities import Utils
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p',
@@ -10,37 +13,79 @@ logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s', datefmt='
 class PdfReportManager:
     def __init__(self):
         self.utils = Utils()
-        self.tca_id = ''
-        self.tca_desc = ''
-        self.tca_browser_name = ''
-        self.tca_browser_version = ''
-        self.tca_date_executed = self.utils.get_date_string()
-        self.tca_overall_status = 'Passed'
+        self.tc_id = ''
         self.all_steps_list = []
-        self.step_no = 1
+        self.step_no = 0
+        self.sub_step_no = 0
+        self.row_span = 0
+        self.report_data = {}
+        self.table_data = {}
 
-    def add_step_data(self, step_data, expected_result, actual_result, step_status, step_screenshot):
-        step_list = [self.step_no, step_data, expected_result, actual_result, step_status, step_screenshot]
-        self.all_steps_list.append(step_list)
-        self.step_no = self.step_no + 1
+        self.page_title = "",
+        self.test_description = ""
+        self.browser_img_src = ""
+        self.browser_img_alt = ""
+        self.browser_version = ""
+        self.executed_date = self.utils.get_date_string()
+        self.overall_status_text = "PASSED"
 
-    def create_report(self):
-        pdf = PdfReporting(
-            self.tca_id + "_test_results_" + self.tca_browser_name + "_" + self.tca_overall_status + "_" + self.utils.get_datetime_string())
-        pdf.add_heading(self.tca_id, 1)
-        pdf.add_paragraph(self.tca_desc, 11, False)
-        para = pdf.add_paragraph("Executed On: ", 11, True)
-        pdf.add_paragraph_run(para, self.tca_date_executed, 11)
-        para = pdf.add_paragraph("Web Browser Used: ", 11, True)
-        pdf.add_paragraph_run(para, self.tca_browser_name + " " + self.tca_browser_version, 11)
-        para = pdf.add_paragraph("Overall Status: ", 11, True)
-        pdf.add_paragraph_run(para, self.tca_overall_status, 11)
-        # print(all_steps_list)
-        pdf.add_table(self.all_steps_list)
-        pdf.add_footer()
-        pdf.add_header("Test Results")
-        pdf.save_file()
-        pdf.convert_to_pdf()
+    def add_report_data(self, **data):
+        if "step" in data:
+            self.step_no += 1
+            self.row_span = 1
+            if str(self.step_no) not in self.table_data:
+                self.table_data[str(self.step_no)] = {}
+            self.table_data[str(self.step_no)]["sno"] = str(self.step_no)
+            self.table_data[str(self.step_no)]["rowspan"] = str(self.row_span)
+            self.table_data[str(self.step_no)]["step"] = data["step"]
+            self.table_data[str(self.step_no)]["result"] = data["result"]
+            self.table_data[str(self.step_no)]["overall_step_status"] = "Pass"
+            self.sub_step_no = 0
+        else:
+            self.sub_step_no += 1
+            self.row_span += 1
+            self.table_data[str(self.step_no)]["rowspan"] = str(self.row_span)
+            if "sub_steps" not in self.table_data[str(self.step_no)]:
+                self.table_data[str(self.step_no)]["sub_steps"] = {}
+            
+            if str(self.sub_step_no) not in self.table_data[str(self.step_no)]["sub_steps"]:
+                self.table_data[str(self.step_no)]["sub_steps"][str(self.sub_step_no)] = {}
+            
+            self.table_data[str(self.step_no)]["sub_steps"][str(self.sub_step_no)]["sub_step"] = data["sub_step"]
+            self.table_data[str(self.step_no)]["sub_steps"][str(self.sub_step_no)]["sub_step_message"] = data["sub_step_message"]
+            if "image_src" in data:
+                self.table_data[str(self.step_no)]["sub_steps"][str(self.sub_step_no)]["image_src"] = data["image_src"]
+                self.table_data[str(self.step_no)]["sub_steps"][str(self.sub_step_no)]["image_alt"] = data["image_alt"]
+            self.table_data[str(self.step_no)]["sub_steps"][str(self.sub_step_no)]["sub_step_status"] = data["sub_step_status"]
+            self.table_data[str(self.step_no)]["overall_step_status"] = data["sub_step_status"]
+            if str(data["sub_step_status"]).lower() == "fail":
+                self.overall_status_text = "FAILED"
+
+    # def add_step_data(self, step_data, expected_result, actual_result, step_status, step_screenshot):
+    #     step_list = [self.step_no, step_data, expected_result, actual_result, step_status, step_screenshot]
+    #     self.all_steps_list.append(step_list)
+    #     self.step_no = self.step_no + 1
+
+    async def create_report(self):
+        self.report_data["page_title"] = self.page_title
+        self.report_data["test_description"] = self.test_description
+        self.report_data["browser_img_src"] = self.browser_img_src
+        self.report_data["browser_img_alt"] = self.browser_img_alt
+        self.report_data["browser_version"] = self.browser_version
+        self.report_data["executed_date"] = self.executed_date
+        self.report_data["overall_status_text"] = self.overall_status_text
+        self.report_data["table_data"] = self.table_data
+        pdf = PdfReporting("logo.png", "encrypted_file.jinja2", self.report_data, self.tc_id, self.tc_id + "_test_results_" + self.browser_img_alt + "_" + self.overall_status_text + "_" + self.utils.get_datetime_string())
+        
+        await pdf.generate_pdf()
+        
+    async def generate_test_summary_pdf(self):
+        if self.utils.check_if_file_exists(".\\output.xlsx"):
+            df = pd.read_excel("output.xlsx")
+            table_data = df.to_dict(orient='records')
+            
+            ts_pdf = PdfTsReporting("logo.png", "encrypted_ts_file.jinja2", table_data, "Test_Summary_Results_" + self.utils.get_datetime_string())
+            await ts_pdf.generate_pdf()
 
     def is_not_used(self):
         pass

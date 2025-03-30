@@ -69,7 +69,7 @@ class BrowserDriver(DriverManager):
     #         print_stack()
     #         raise Exception("cannot send data on the element with locator: "
     #                         " locator_type: ")
-    def take_screenshot(self, file_start):
+    def take_screenshot(self, file_start=None):
         """
         Take a screenshot of the current open web page
         """
@@ -88,7 +88,8 @@ class BrowserDriver(DriverManager):
                 print_stack()
                 raise Exception("Exception Occurred when taking screenshot")
         else:
-            return utils.take_screenshot_full(file_start)
+            # return utils.take_screenshot_full(file_start)
+            return utils.take_screenshot_full_src_tag()
 
     def get_title(self):
         return self.driver.title

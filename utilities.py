@@ -9,6 +9,10 @@ from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
 import shutil
+from io import BytesIO
+import base64
+from cryptography.fernet import Fernet
+import pandas as pd
 
 
 class Utils:
@@ -138,6 +142,20 @@ class Utils:
         cv2.imwrite(full_img_path, image)
         # print(os.path.abspath(full_img_path))
         return full_img_path
+    
+    def take_screenshot_full_src_tag(self):
+        # Take a screenshot using pyautogui
+        screenshot = pyautogui.screenshot()
+
+        # Convert the screenshot to a bytes buffer in PNG format
+        buffered = BytesIO()
+        screenshot.save(buffered, format="PNG")
+        
+        # Encode the bytes buffer to a base64 string
+        base64_image = base64.b64encode(buffered.getvalue()).decode("utf-8")
+
+        # Return the base64 image code
+        return f"data:image/png;base64,{base64_image}"
 
     def add_date_time_watermark_to_image(self, file_name_path, text):
         self.is_not_used()
@@ -310,3 +328,30 @@ class Utils:
                     exit("Check the date entered for the keyword 'choose_date_from_datepicker'. It should be like "
                          "the example '01 December 2022 - 02 December 2022' and the first date must be prior to the "
                          "second date")
+
+    def encrypt_file(self, file_path, output_file, encryption_key="DC3HN3PdUb5z_MyYbitSyVnPU_E_WOfZkUsYR8bWKzY="):
+        # Read the file content
+        with open(file_path, "r") as f:
+            file_content = f.read()
+
+        # Encrypt the file content
+        fernet = Fernet(encryption_key)
+        encrypted_content = fernet.encrypt(file_content.encode())
+
+        # Save the encrypted content to a new file
+        with open(output_file, "wb") as f:
+            f.write(encrypted_content)
+
+        # print("File encrypted successfully!")
+        # return encrypted_content
+
+    def decrypt_file(self, encrypted_file_path, decryption_key="DC3HN3PdUb5z_MyYbitSyVnPU_E_WOfZkUsYR8bWKzY="):
+        # Read the encrypted file content
+        with open(encrypted_file_path, "rb") as f:
+            encrypted_content = f.read()
+
+        # Decrypt the file content
+        fernet = Fernet(decryption_key)
+        decrypted_content = fernet.decrypt(encrypted_content).decode()
+
+        return decrypted_content
