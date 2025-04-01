@@ -5,6 +5,7 @@ import pandas as pd
 from pdf_reporting import PdfReporting
 from pdf_ts_reporting import PdfTsReporting
 from utilities import Utils
+import os
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p',
                     level=logging.INFO)
@@ -80,7 +81,7 @@ class PdfReportManager:
         await pdf.generate_pdf()
         
     async def generate_test_summary_pdf(self):
-        if self.utils.check_if_file_exists(".\\output.xlsx"):
+        if self.utils.check_if_file_exists(os.path.join(".", "output.xlsx")):
             df = pd.read_excel("output.xlsx")
             table_data = df.to_dict(orient='records')
             

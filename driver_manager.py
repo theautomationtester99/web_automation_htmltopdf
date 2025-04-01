@@ -112,6 +112,7 @@ class DriverManager:
                 options.add_experimental_option(
                     "excludeSwitches", ["enable-automation"])
                 options.add_experimental_option("prefs", prefs)
+                options.add_argument("--no-sandbox")
                 self.driver = webdriver.Chrome(options=options, service=ChromeService(ChromeDriverManager(
                 ).install()))
                 # self.driver = webdriver.Chrome(options=options)

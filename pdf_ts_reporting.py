@@ -3,6 +3,7 @@ import base64
 from pyppeteer import launch
 
 from utilities import Utils
+import os
 
 
 class PdfTsReporting:
@@ -13,7 +14,8 @@ class PdfTsReporting:
         self.html_content = self._generate_html(encrypted_template_file_path, data)
         self.head_template = self._create_header_template()
         self.footer_template = self._create_footer_template()
-        self.document_name_pdf = self.utils.get_test_result_folder() + "\\" + document_name + ".pdf"
+        #self.document_name_pdf = self.utils.get_test_result_folder() + "\\" + document_name + ".pdf"
+        self.document_name_pdf = os.path.join(self.utils.get_test_result_folder(), document_name + ".pdf")
     
     def _encode_logo(self):
         with open(self.logo_path, "rb") as image_file:
@@ -55,7 +57,8 @@ class PdfTsReporting:
         return output
     
     async def generate_pdf(self):
-        browser = await launch({"headless": True})
+        #browser = await launch({"headless": True})
+        browser = await launch(options={'args': ['--no-sandbox'], 'headless': True})
         # print(await browser.version())
         page = await browser.newPage()
 

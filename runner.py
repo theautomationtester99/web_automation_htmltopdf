@@ -14,6 +14,7 @@ from pdf_report_manager import PdfReportManager
 from utilities import Utils
 from sys import exit
 import os
+from pathlib import Path
 
 utils = Utils()
 prm = PdfReportManager()
@@ -334,10 +335,12 @@ def take_recording(process_name: Process, record_name):
         # frames per second
         fps = 60.0
         # create the video write object
-        out = cv2.VideoWriter(
-            utils.get_test_recordings_folder() + "\\" + record_name +
-            utils.get_datetime_string() + ".mp4", fourcc,
-            fps, (SCREEN_SIZE))
+        # out = cv2.VideoWriter(utils.get_test_recordings_folder() + "\\" + record_name +utils.get_datetime_string() + ".mp4", fourcc,fps, (SCREEN_SIZE))
+        # Construct the path in a platform-independent way
+        output_path = os.path.join(utils.get_test_recordings_folder(), f"{record_name}_{utils.get_datetime_string()}.mp4")
+
+        # Create the VideoWriter object
+        out = cv2.VideoWriter(output_path, fourcc, fps, SCREEN_SIZE)
         # the time you want to record in seconds
         record_seconds = 10
 
@@ -415,12 +418,19 @@ if __name__ == '__main__':
         root_folder = ''
         chrome_folder = ''
         edge_folder = ''
-        for folder_path in utils.get_list_str_paths_of_all_sub_directories(".\\test_scripts"):
-            if folder_path.split('\\')[-1].lower() == 'test_scripts':
+        generic_path = os.path.join(".", "test_scripts")
+        for folder_path in utils.get_list_str_paths_of_all_sub_directories(generic_path):
+            # if folder_path.split('\\')[-1].lower() == 'test_scripts':
+            #     root_folder = folder_path
+            # if folder_path.split('\\')[-1].lower() == 'chrome':
+            #     chrome_folder = folder_path
+            # if folder_path.split('\\')[-1].lower() == 'edge':
+            #     edge_folder = folder_path
+            if Path(folder_path).name.lower() == 'test_scripts':
                 root_folder = folder_path
-            if folder_path.split('\\')[-1].lower() == 'chrome':
+            if Path(folder_path).name.lower() == 'chrome':
                 chrome_folder = folder_path
-            if folder_path.split('\\')[-1].lower() == 'edge':
+            if Path(folder_path).name.lower() == 'edge':
                 edge_folder = folder_path
 
         if utils.check_if_two_folder_contain_same_files(root_folder, chrome_folder):
@@ -434,19 +444,21 @@ if __name__ == '__main__':
         '''
         End
         '''
-        for x in utils.get_absolute_file_paths_in_dir(".\\test_scripts"):
+        for x in utils.get_absolute_file_paths_in_dir(generic_path):
+            print(x)
             if "testscript.xlsx" in x:
+                print("ins")
                 p = re.compile('ts', re.I)
-                if p.match(x.split('\\')[-1]):
-                    if x.split('\\')[-2].lower() == 'chrome':
-                        proc1 = Process(target=start_runner,
-                                        args=(x, 'chrome',))
+                if p.match(os.path.basename(x)):
+                    print("ts match")
+                    if os.path.dirname(x).split(os.sep)[-1].lower() == 'chrome':
+                        proc1 = Process(target=start_runner,args=(x, 'chrome',))
                         proc1.start()
                         # time.sleep(5)
                         proc2 = None
                         if run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
-                            proc2 = Process(target=take_recording(
-                                proc1, x.split("\\")[-1].replace("testscript.xlsx", "")))
+                            # proc2 = Process(target=take_recording(proc1, x.split("\\")[-1].replace("testscript.xlsx", "")))
+                            proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", "")))
 
                             # print(proc1.is_alive())
                             proc2.start()
@@ -454,14 +466,14 @@ if __name__ == '__main__':
                         proc1.join()
                         if run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
                             proc2.join()
-                    elif x.split('\\')[-2].lower() == 'edge':
+                    elif os.path.dirname(x).split(os.sep)[-1].lower() == 'edge':
                         proc1 = Process(target=start_runner, args=(x, 'edge',))
                         proc1.start()
                         # time.sleep(5)
                         proc2 = None
                         if run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
-                            proc2 = Process(target=take_recording(
-                                proc1, x.split("\\")[-1].replace("testscript.xlsx", "")))
+                            # proc2 = Process(target=take_recording(proc1, x.split("\\")[-1].replace("testscript.xlsx", "")))
+                            proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", "")))
 
                             # print(proc1.is_alive())
                             proc2.start()
@@ -469,14 +481,14 @@ if __name__ == '__main__':
                         proc1.join()
                         if run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
                             proc2.join()
-                    elif x.split('\\')[-2].lower() == 'test_scripts':
+                    elif os.path.dirname(x).split(os.sep)[-1].lower() == 'test_scripts':
                         proc1 = Process(target=start_runner, args=(x,))
                         proc1.start()
                         # time.sleep(5)
                         proc2 = None
                         if run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
-                            proc2 = Process(target=take_recording(
-                                proc1, x.split("\\")[-1].replace("testscript.xlsx", "")))
+                            #proc2 = Process(target=take_recording(proc1, x.split("\\")[-1].replace("testscript.xlsx", "")))
+                            proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", "")))
 
                             # print(proc1.is_alive())
                             proc2.start()

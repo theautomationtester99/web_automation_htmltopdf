@@ -26,3 +26,7 @@ pandas
 jproperties
 tabulate
 Appium-Python-Client
+cryptography
+pyppeteer
+pillow
+cx_Freeze

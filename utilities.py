@@ -18,10 +18,13 @@ import pandas as pd
 class Utils:
     def __init__(self):
         self.date_str = self.get_date_string()
-        self.images_folder = os.path.abspath("images\\" + self.date_str)
-        self.recordings_folder = os.path.abspath("recordings\\" + self.date_str)
-        self.test_results_folder = os.path.abspath("test_results\\" + self.date_str)
-        # self.create_image_and_test_results_folders()
+        # self.images_folder = os.path.abspath("images\\" + self.date_str)
+        # self.recordings_folder = os.path.abspath("recordings\\" + self.date_str)
+        # self.test_results_folder = os.path.abspath("test_results\\" + self.date_str)
+        # # self.create_image_and_test_results_folders()        
+        self.images_folder = os.path.abspath(os.path.join("images", self.date_str))
+        self.recordings_folder = os.path.abspath(os.path.join("recordings", self.date_str))
+        self.test_results_folder = os.path.abspath(os.path.join("test_results", self.date_str))
 
     def get_test_result_folder(self):
         return self.test_results_folder
