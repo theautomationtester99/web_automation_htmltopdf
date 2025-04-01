@@ -32,7 +32,7 @@
 
 # import required module
 from cryptography.fernet import Fernet
-
+import platform
 # key generation
 # key = Fernet.generate_key()
 # print(f"Generated Key: {key.decode()}")
@@ -48,16 +48,16 @@ from cryptography.fernet import Fernet
 # dec = f.decrypt("gAAAAABn4lHdfMxWfYLUF9HdSM245-iHNUvatXxllwgSB-hHyZWA2OLTPM0gva0dYAKQG-0ELa0OuHHBICYsNr2h0q7rmRfjTYUiQa35pM5NXqgZD1t7jNw=")
 # print(dec.decode("utf-8"))
 
-# Initialize a dictionary
-my_dict = {'1': 'Alice', 'age': 25}
+# # Initialize a dictionary
+# my_dict = {'1': 'Alice', 'age': 25}
 
-a=1
-b=2
-print(my_dict[str(a)])
-my_dict[str(b)] = {"sno": "test"}
-my_dict[str(b)] = {"sno1": "test1"}
+# a=1
+# b=2
+# print(my_dict[str(a)])
+# my_dict[str(b)] = {"sno": "test"}
+# my_dict[str(b)] = {"sno1": "test1"}
 
-print(my_dict)
+# print(my_dict)
 
 # # Add a new key-value pair
 # my_dict['city'] = {'cest': "tes"}
@@ -73,3 +73,15 @@ print(my_dict)
 # utils = Utils()
 
 # utils.encrypt_file("jinja2_template.html")
+
+
+def detect_os():
+    os_name = platform.system()
+    if os_name == "Linux":
+        return "This system is running Linux."
+    elif os_name == "Windows":
+        return "This system is running Windows."
+    else:
+        return f"Operating System detected: {os_name}"
+    
+print(detect_os())

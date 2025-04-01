@@ -26,6 +26,8 @@ class PdfReportManager:
         self.test_description = ""
         self.browser_img_src = ""
         self.browser_img_alt = ""
+        self.os_img_src = ""
+        self.os_img_alt = ""
         self.browser_version = ""
         self.executed_date = self.utils.get_date_string()
         self.overall_status_text = "PASSED"
@@ -72,6 +74,8 @@ class PdfReportManager:
         self.report_data["test_description"] = self.test_description
         self.report_data["browser_img_src"] = self.browser_img_src
         self.report_data["browser_img_alt"] = self.browser_img_alt
+        self.report_data["os_img_src"] = self.os_img_src
+        self.report_data["os_img_alt"] = self.os_img_alt
         self.report_data["browser_version"] = self.browser_version
         self.report_data["executed_date"] = self.executed_date
         self.report_data["overall_status_text"] = self.overall_status_text

@@ -318,7 +318,7 @@ def start_runner(testscript_file, launch_browser=''):
             # test_result = [km.repo_m.tc_id, "\n".join(wrap(km.repo_m.test_description, width=110)),
             #                km.repo_m.overall_status_text,
             #                km.repo_m.browser_img_alt + " " + km.repo_m.browser_version, km.repo_m.executed_date]
-            test_result = [km.repo_m.tc_id, km.repo_m.test_description,km.repo_m.overall_status_text, km.repo_m.browser_img_alt + " " + km.repo_m.browser_version, km.repo_m.executed_date]
+            test_result = [km.repo_m.tc_id, km.repo_m.test_description,km.repo_m.overall_status_text, km.repo_m.os_img_alt + " " + km.repo_m.browser_img_alt + " " + km.repo_m.browser_version, km.repo_m.executed_date]
             e_report.add_row(test_result)
 
             km.ge_close()

@@ -1,5 +1,6 @@
 import filecmp
 import os
+import platform
 import sys
 import numpy as np
 import cv2
@@ -358,3 +359,12 @@ class Utils:
         decrypted_content = fernet.decrypt(encrypted_content).decode()
 
         return decrypted_content
+    
+    def detect_os(self):
+        os_name = platform.system()
+        if os_name == "Linux":
+            return "Linux"
+        elif os_name == "Windows":
+            return "Windows"
+        else:
+            return f"Operating System detected: {os_name}"
