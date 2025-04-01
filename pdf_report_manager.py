@@ -6,13 +6,12 @@ from pdf_reporting import PdfReporting
 from pdf_ts_reporting import PdfTsReporting
 from utilities import Utils
 import os
-
-logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p',
-                    level=logging.INFO)
+from logger_config import LoggerConfig
 
 
 class PdfReportManager:
     def __init__(self):
+        self.logger = LoggerConfig().logger
         self.utils = Utils()
         self.tc_id = ''
         self.all_steps_list = []
@@ -34,6 +33,7 @@ class PdfReportManager:
 
     def add_report_data(self, **data):
         if "step" in data:
+            self.logger.info('Step is instantiated.')
             self.step_no += 1
             self.row_span = 1
             if str(self.step_no) not in self.table_data:

@@ -1,0 +1,5 @@
+2025-04-01 13:24:21,492 - ProjectLogger - DEBUG - Testing debug message.
+2025-04-01 13:24:21,493 - ProjectLogger - INFO - Testing info message.
+2025-04-01 13:24:21,493 - ProjectLogger - WARNING - Testing warning message.
+2025-04-01 13:24:21,494 - ProjectLogger - ERROR - Testing error message.
+2025-04-01 13:24:21,494 - ProjectLogger - CRITICAL - Testing critical message.

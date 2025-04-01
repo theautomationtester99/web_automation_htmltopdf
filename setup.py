@@ -15,7 +15,7 @@ setup(
     version="1.0",
     description="Keyword Framework",
     options={"build_exe": {"include_files": include_files}},
-    executables=[Executable("runner.py")]
+    executables=[Executable("runner.py", base=None)]
 )
 
 # run "python setup.py build" command in prompt

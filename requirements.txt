@@ -30,3 +30,4 @@ cryptography
 pyppeteer
 pillow
 cx_Freeze
+colorama
