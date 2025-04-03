@@ -1,27 +1,22 @@
-import logging
-
 import pandas as pd
 from tabulate import tabulate
 
+from logger_config import LoggerConfig
 from utilities import Utils
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
 from openpyxl.styles import Alignment
 import os
 
-logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p',
-                    level=logging.WARN)
-
-
 class ExcelReportManager:
     def __init__(self):
+        self.logger = LoggerConfig().logger
         self.utils = Utils()
         self.all_test_results_list = []
 
     def add_row(self, test_result):
         if self.utils.check_if_file_exists(os.path.join(".", "output.xlsx")):
             df = pd.read_excel("output.xlsx")
-            table_data = df.to_dict(orient='records')
             self.all_test_results_list = df.values.tolist()
             self.all_test_results_list.append(test_result)
             self.export_to_excel()

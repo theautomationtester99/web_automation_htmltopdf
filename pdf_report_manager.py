@@ -1,5 +1,3 @@
-import logging
-
 import pandas as pd
 
 from pdf_reporting import PdfReporting
@@ -33,7 +31,7 @@ class PdfReportManager:
 
     def add_report_data(self, **data):
         if "step" in data:
-            self.logger.info('Step is instantiated.')
+            self.logger.debug('Step is captured to be added to PDF report.')
             self.step_no += 1
             self.row_span = 1
             if str(self.step_no) not in self.table_data:
@@ -45,6 +43,7 @@ class PdfReportManager:
             self.table_data[str(self.step_no)]["overall_step_status"] = "Pass"
             self.sub_step_no = 0
         else:
+            self.logger.debug('Sub Step is captured to be added to PDF report.')
             self.sub_step_no += 1
             self.row_span += 1
             self.table_data[str(self.step_no)]["rowspan"] = str(self.row_span)
@@ -70,6 +69,7 @@ class PdfReportManager:
     #     self.step_no = self.step_no + 1
 
     async def create_report(self):
+        self.logger.debug('Finalizing the data to be added to PDF report.')
         self.report_data["page_title"] = self.page_title
         self.report_data["test_description"] = self.test_description
         self.report_data["browser_img_src"] = self.browser_img_src
@@ -85,7 +85,9 @@ class PdfReportManager:
         await pdf.generate_pdf()
         
     async def generate_test_summary_pdf(self):
+        self.logger.debug('Checking if output.xlsx file exists before creating the test summary PDF report.')
         if self.utils.check_if_file_exists(os.path.join(".", "output.xlsx")):
+            self.logger.debug('Output.xlsx exists and starting to create test summary PDF report.')
             df = pd.read_excel("output.xlsx")
             table_data = df.to_dict(orient='records')
             

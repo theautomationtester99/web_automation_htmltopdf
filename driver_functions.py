@@ -1,35 +1,33 @@
 import os
 import time
-from traceback import print_stack
-
 import pyautogui
+from logger_config import LoggerConfig
 from selenium.common.exceptions import *
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
-import logging
 
 from driver_manager import DriverManager
 from utilities import Utils
-
-logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p',
-                    level=logging.WARN)
-
 
 class BrowserDriver(DriverManager):
 
     def __init__(self):
         super().__init__()
+        self.logger = LoggerConfig().logger
 
     def close_browser(self):
+        self.logger.debug("Closing Browser")
         self.driver.quit()
 
     def get_browser_version(self):
+        self.logger.debug("Capturing Browser Version")
         return str(self.driver.capabilities['browserVersion'])
 
     def open_url(self, url):
+        self.logger.debug("Opening URL " + str(url))
         self.driver.get(url)
 
     def scroll_into_view(self, locator, locator_type, element=None):
@@ -37,14 +35,10 @@ class BrowserDriver(DriverManager):
             if locator:
                 element = self.get_element(locator, locator_type)
             self.driver.execute_script("arguments[0].scrollIntoView();", element)
-            logging.info("scrolling to element with locator: " + locator +
-                         " locator_type: " + locator_type)
+            self.logger.debug("scrolling to element with locator: " + locator + " locator_type: " + locator_type)
         except:
-            logging.error("cannot send data on the element with locator: " + locator +
-                          " locator_type: " + locator_type)
-            print_stack()
-            raise Exception("cannot send data on the element with locator: " + locator +
-                            " locator_type: " + locator_type)
+            self.logger.error("cannot send data on the element with locator: " + locator + " locator_type: " + locator_type)
+            raise
 
     # def take_screenshot(self, result_message):
     #     """
@@ -65,8 +59,8 @@ class BrowserDriver(DriverManager):
     #         self.driver.save_screenshot(destination_file)
     #         logging.info("Screenshot save to directory: " + destination_file)
     #     except:
-    #         logging.error("### Exception Occurred when taking screenshot")
-    #         print_stack()
+    #         self.logger.error("### Exception Occurred when taking screenshot")
+    #         ()
     #         raise Exception("cannot send data on the element with locator: "
     #                         " locator_type: ")
     def take_screenshot(self, file_start=None):
@@ -80,18 +74,18 @@ class BrowserDriver(DriverManager):
                 image_name = file_start + "_" + date_time_str
                 full_img_path = utils.images_folder + "\\" + image_name + ".png"
                 self.driver.save_screenshot(full_img_path)
-                logging.info("Screenshot save to directory: " + full_img_path)
+                self.logger.debug("Screenshot save to directory: " + full_img_path)
                 utils.add_date_time_watermark_to_image(full_img_path, date_time_str)
                 return full_img_path
             except:
-                logging.error("### Exception Occurred when taking screenshot")
-                print_stack()
+                self.logger.error("### Exception Occurred when taking screenshot")
                 raise Exception("Exception Occurred when taking screenshot")
         else:
             # return utils.take_screenshot_full(file_start)
             return utils.take_screenshot_full_src_tag()
 
     def get_title(self):
+        self.logger.debug("Getting the page title")
         return self.driver.title
 
     def get_by_type(self, locator_type):
@@ -110,7 +104,7 @@ class BrowserDriver(DriverManager):
         elif locator_type == "link":
             return By.LINK_TEXT
         else:
-            logging.info("Locator type" + locator_type + "not correct/supported")
+            self.logger.debug("Locator type" + locator_type + "not correct/supported")
         return False
 
     def dropdown_select_element(self, locator, locator_type="id", selector="", selector_type="value"):
@@ -126,15 +120,11 @@ class BrowserDriver(DriverManager):
             elif selector_type == "text":
                 sel.select_by_visible_text(selector)
                 time.sleep(1)
-            logging.info("Element selected with selector: " + str(selector) +
-                         " and selectorType: " + selector_type)
+            self.logger.debug("Element selected with selector: " + str(selector) +" and selectorType: " + selector_type)
 
         except:
-            logging.error("Element not selected with selector: " + str(selector) +
-                          " and selectorType: " + selector_type)
-            print_stack()
-            raise Exception("cannot send data on the element with locator: " + locator +
-                            " locator_type: " + locator_type)
+            self.logger.error("Element not selected with selector: " + str(selector) + " and selectorType: " + selector_type)
+            raise
 
     def get_dropdown_options_count(self, locator, locator_type="id"):
         """
@@ -146,13 +136,10 @@ class BrowserDriver(DriverManager):
             element = self.get_element(locator, locator_type)
             sel = Select(element)
             options = sel.options
-            logging.info("Element found with locator: " + locator +
-                         " and locator_type: " + locator_type)
+            self.logger.debug("Element found with locator: " + locator + " and locator_type: " + locator_type)
         except:
-            logging.error("Element not found with locator: " + locator +
-                          " and locator_type: " + locator_type)
-            raise Exception("cannot send data on the element with locator: " + locator +
-                            " locator_type: " + locator_type)
+            self.logger.error("Element not found with locator: " + locator + " and locator_type: " + locator_type)
+            raise
 
         return options
 
@@ -166,13 +153,10 @@ class BrowserDriver(DriverManager):
             element = self.get_element(locator, locator_type)
             sel = Select(element)
             selected_option_text = sel.first_selected_option.text
-            logging.info("Return the selected option of drop down list with locator: " + locator +
-                         " and locator_type: " + locator_type)
+            self.logger.debug("Return the selected option of drop down list with locator: " + locator + " and locator_type: " + locator_type)
         except:
-            logging.error("Can not return the selected option of drop down list with locator: " + locator +
-                          " and locator_type: " + locator_type)
-            raise Exception("cannot send data on the element with locator: " + locator +
-                            " locator_type: " + locator_type)
+            self.logger.error("Can not return the selected option of drop down list with locator: " + locator + " and locator_type: " + locator_type)
+            raise
 
         return selected_option_text
 
@@ -186,13 +170,10 @@ class BrowserDriver(DriverManager):
             element = self.get_element(locator, locator_type)
             sel = Select(element)
             selected_option_value = sel.first_selected_option.get_attribute("value")
-            logging.info("Return the selected option of drop down list with locator: " + locator +
-                         " and locator_type: " + locator_type)
+            self.logger.debug("Return the selected option of drop down list with locator: " + locator + " and locator_type: " + locator_type)
         except:
-            logging.error("Can not return the selected option of drop down list with locator: " + locator +
-                          " and locator_type: " + locator_type)
-            raise Exception("cannot send data on the element with locator: " + locator +
-                            " locator_type: " + locator_type)
+            self.logger.error("Can not return the selected option of drop down list with locator: " + locator + " and locator_type: " + locator_type)
+            raise
 
         return selected_option_value
 
@@ -202,13 +183,10 @@ class BrowserDriver(DriverManager):
             locator_type = locator_type.lower()
             by_type = self.get_by_type(locator_type)
             element = self.driver.find_element(by_type, locator)
-            logging.info("Element found with locator: " + locator +
-                         " and locator_type: " + locator_type)
+            self.logger.debug("Element found with locator: " + locator + " and locator_type: " + locator_type)
         except:
-            logging.error("Element not found with locator: " + locator +
-                          " and locator_type: " + locator_type)
-            raise Exception("cannot send data on the element with locator: " + locator +
-                            " locator_type: " + locator_type)
+            self.logger.error("Element not found with locator: " + locator + " and locator_type: " + locator_type)
+            raise
         return element
 
     def is_element_selected(self, locator, locator_type):
@@ -216,13 +194,11 @@ class BrowserDriver(DriverManager):
         try:
             element = self.get_element(locator, locator_type)
             is_selected = element.is_selected()
-            logging.info("Element found with locator: " + locator +
+            self.logger.debug("Element found with locator: " + locator +
                          " and locator_type: " + locator_type)
         except:
-            logging.error("Element not found with locator: " + locator +
-                          " and locator_type: " + locator_type)
-            raise Exception("cannot send data on the element with locator: " + locator +
-                            " locator_type: " + locator_type)
+            self.logger.error("Element not found with locator: " + locator + " and locator_type: " + locator_type)
+            raise
 
         return is_selected
 
@@ -235,13 +211,10 @@ class BrowserDriver(DriverManager):
             locator_type = locator_type.lower()
             by_type = self.get_by_type(locator_type)
             element = self.driver.find_elements(by_type, locator)
-            logging.info("Element list found with locator: " + locator +
-                         " and locator_type: " + locator_type)
+            self.logger.debug("Element list found with locator: " + locator + " and locator_type: " + locator_type)
         except:
-            logging.error("Element list not found with locator: " + locator +
-                          " and locator_type: " + locator_type)
-            raise Exception("cannot send data on the element with locator: " + locator +
-                            " locator_type: " + locator_type)
+            self.logger.error("Element list not found with locator: " + locator + " and locator_type: " + locator_type)
+            raise
 
         return element
 
@@ -254,14 +227,10 @@ class BrowserDriver(DriverManager):
             if locator:
                 element = self.get_element(locator, locator_type)
             element.click()
-            logging.info("clicked on element with locator: " + locator +
-                         " locator_type: " + locator_type)
+            self.logger.debug("clicked on element with locator: " + locator + " locator_type: " + locator_type)
         except:
-            logging.error("cannot click on the element with locator: " + locator +
-                          " locator_type: " + locator_type)
-            print_stack()
-            raise Exception("cannot send data on the element with locator: " + locator +
-                            " locator_type: " + locator_type)
+            self.logger.error("cannot click on the element with locator: " + locator + " locator_type: " + locator_type)
+            raise
 
     def element_hover(self, locator="", locator_type="id", element=None):
         """
@@ -274,14 +243,10 @@ class BrowserDriver(DriverManager):
             hover = ActionChains(self.driver).move_to_element(element)
             hover.perform()
             time.sleep(2)
-            logging.info("hover to element with locator: " + locator +
-                         " locator_type: " + locator_type)
+            self.logger.debug("hover to element with locator: " + locator + " locator_type: " + locator_type)
         except:
-            logging.error("cannot hover to the element with locator: " + locator +
-                          " locator_type: " + locator_type)
-            print_stack()
-            raise Exception("cannot send data on the element with locator: " + locator +
-                            " locator_type: " + locator_type)
+            self.logger.error("cannot hover to the element with locator: " + locator + " locator_type: " + locator_type)
+            raise
 
     def send_keys(self, data, locator="", locator_type="id", element=None):
         """
@@ -292,13 +257,10 @@ class BrowserDriver(DriverManager):
             if locator:
                 element = self.get_element(locator, locator_type)
             element.send_keys(data)
-            logging.info("send data on element with locator: " + locator +
-                         " locator_type: " + locator_type)
+            self.logger.debug("send data on element with locator: " + locator + " locator_type: " + locator_type)
         except:
-            logging.error("cannot send data on the element with locator: " + locator +
-                          " locator_type: " + locator_type)
-            raise Exception("cannot send data on the element with locator: " + locator +
-                            " locator_type: " + locator_type)
+            self.logger.error("cannot send data on the element with locator: " + locator + " locator_type: " + locator_type)
+            raise
 
     def clear_keys(self, locator="", locator_type="id", element=None):
         """
@@ -309,14 +271,10 @@ class BrowserDriver(DriverManager):
             if locator:
                 element = self.get_element(locator, locator_type)
             element.clear()
-            logging.info("Clear data of element with locator: " + locator +
-                         " locator_type: " + locator_type)
+            self.logger.debug("Clear data of element with locator: " + locator + " locator_type: " + locator_type)
         except:
-            logging.error("cannot clear data of the element with locator: " + locator +
-                          " locator_type: " + locator_type)
-            print_stack()
-            raise Exception("cannot send data on the element with locator: " + locator +
-                            " locator_type: " + locator_type)
+            self.logger.error("cannot clear data of the element with locator: " + locator + " locator_type: " + locator_type)
+            raise Exception("cannot send data on the element with locator: " + locator +  " locator_type: " + locator_type)
 
     def get_text(self, locator="", locator_type="id", element=None, info=""):
         """
@@ -325,23 +283,21 @@ class BrowserDriver(DriverManager):
         """
         try:
             if locator:
-                logging.debug("In locator condition")
+                self.logger.debug("In locator condition")
                 element = self.get_element(locator, locator_type)
-            logging.debug("Before finding text")
+            self.logger.debug("Before finding text")
             text = element.text
-            logging.debug("After finding element, size is: " + str(len(text)))
+            self.logger.debug("After finding element, size is: " + str(len(text)))
             if len(text) == 0:
                 text = element.get_attribute("innerText")
             if len(text) != 0:
-                logging.info("Getting text on element :: " + info)
-                logging.info("The text is :: '" + text + "'")
+                self.logger.debug("Getting text on element :: " + info)
+                self.logger.debug("The text is :: '" + text + "'")
                 text = text.strip()
         except:
-            logging.error("Failed to get text on element " + info)
-            print_stack()
+            self.logger.error("Failed to get text on element " + info)
             text = None
-            raise Exception("cannot send data on the element with locator: " + locator +
-                            " locator_type: " + locator_type)
+            raise
         return text
 
     def is_element_present(self, locator="", locator_type="id", element=None):
@@ -353,27 +309,23 @@ class BrowserDriver(DriverManager):
             if locator:
                 element = self.get_element(locator, locator_type)
             if element is not None:
-                logging.info("Element found with locator: " + locator +
-                             " and locator_type: " + locator_type)
+                self.logger.debug("Element found with locator: " + locator + " and locator_type: " + locator_type)
                 return True
             else:
-                logging.error("Element not found with locator: " + locator +
-                              " and locator_type: " + locator_type)
+                self.logger.error("Element not found with locator: " + locator + " and locator_type: " + locator_type)
                 return False
         except:
-            logging.error("Element not found with locator: " + locator +
-                          " and locator_type: " + locator_type)
+            self.logger.error("Element not found with locator: " + locator + " and locator_type: " + locator_type)
             return False
 
     def apply_style(self, s, element):
-        self.driver.execute_script("arguments[0].setAttribute('style', arguments[1]);",
-                                   element, s)
+        self.driver.execute_script("arguments[0].setAttribute('style', arguments[1]);", element, s)
 
     def highlight(self, effect_time, color, border, locator="", locator_type="id", element=None, ):
         """Highlights (blinks) a Selenium Webdriver element"""
         try:
             if locator:
-                logging.debug("In locator condition")
+                self.logger.debug("In locator condition")
                 element = self.get_element(locator, locator_type)
             # driver = element._parent
 
@@ -382,8 +334,7 @@ class BrowserDriver(DriverManager):
             time.sleep(effect_time)
             self.apply_style(original_style, element)
         except:
-            logging.error("Cannot highlight element with locator: " + locator +
-                          " and locator_type: " + locator_type)
+            self.logger.error("Cannot highlight element with locator: " + locator + " and locator_type: " + locator_type)
 
     def is_element_displayed(self, locator="", locator_type="id", element=None):
         """
@@ -396,15 +347,12 @@ class BrowserDriver(DriverManager):
                 element = self.get_element(locator, locator_type)
             if element is not None:
                 is_displayed = element.is_displayed()
-                logging.info("Element is displayed with locator: " + locator +
-                             " and locator_type: " + locator_type)
+                self.logger.debug("Element is displayed with locator: " + locator + " and locator_type: " + locator_type)
             else:
-                logging.error("Element is not displayed with locator: " + locator +
-                              " and locator_type: " + locator_type)
+                self.logger.error("Element is not displayed with locator: " + locator + " and locator_type: " + locator_type)
             return is_displayed
         except:
-            logging.error("Element is not displayed with locator: " + locator +
-                          " and locator_type: " + locator_type)
+            self.logger.error("Element is not displayed with locator: " + locator + " and locator_type: " + locator_type)
             return False
 
     def is_element_enabled(self, locator="", locator_type="id", element=None):
@@ -419,18 +367,14 @@ class BrowserDriver(DriverManager):
             if element is not None:
                 is_enabled = element.is_enabled()
                 if is_enabled:
-                    logging.info("Element is with locator: " + locator +
-                                 " and locator_type: " + locator_type + " is enabled")
+                    self.logger.debug("Element is with locator: " + locator + " and locator_type: " + locator_type + " is enabled")
                 else:
-                    logging.info("Element is with locator: " + locator +
-                                 " and locator_type: " + locator_type + " is disabled")
+                    self.logger.debug("Element is with locator: " + locator + " and locator_type: " + locator_type + " is disabled")
             else:
-                logging.error("Element is not displayed with locator: " + locator +
-                              " and locator_type: " + locator_type)
+                self.logger.error("Element is not displayed with locator: " + locator + " and locator_type: " + locator_type)
             return is_enabled
         except:
-            logging.error("Element is not displayed with locator: " + locator +
-                          " and locator_type: " + locator_type)
+            self.logger.error("Element is not displayed with locator: " + locator + " and locator_type: " + locator_type)
             return False
 
     def element_presence_check(self, locator="", locator_type="id"):
@@ -439,34 +383,29 @@ class BrowserDriver(DriverManager):
             by_type = self.get_by_type(locator_type)
             element_list = self.driver.find_elements(by_type, locator)
             if len(element_list) > 0:
-                logging.info("Element Found")
+                self.logger.debug("Element Found")
                 return True
             else:
-                logging.info("Element not found")
+                self.logger.debug("Element not found")
                 return False
         except:
-            logging.info("Element not found")
+            self.logger.debug("Element not found")
             return False
 
     def wait_for_element(self, locator, locator_type='id', timeout=10, pollFrequency=0.5):
         element = None
         try:
-            logging.info("Waiting for maximum :: " + str(timeout) + " :: seconds for element to be clickable")
+            self.logger.debug("Waiting for maximum :: " + str(timeout) + " :: seconds for element to be clickable")
 
-            wait = WebDriverWait(self.driver, timeout, poll_frequency=pollFrequency,
-                                 ignored_exceptions=[NoSuchElementException,
-                                                     ElementNotVisibleException,
-                                                     ElementNotSelectableException])
+            wait = WebDriverWait(self.driver, timeout, poll_frequency=pollFrequency, ignored_exceptions=[NoSuchElementException, ElementNotVisibleException, ElementNotSelectableException])
             by_type = self.get_by_type(locator_type)
             element = wait.until(ec.element_to_be_clickable((by_type, locator)))
 
-            logging.info("Element appeared on the web page")
+            self.logger.debug("Element appeared on the web page")
 
         except:
-            logging.info("Element not appeared on the web page")
-            print_stack()
-            raise Exception("cannot send data on the element with locator: " + locator +
-                            " locator_type: " + locator_type)
+            self.logger.debug("Element not appeared on the web page")
+            raise
 
         return element
 
@@ -498,16 +437,13 @@ class BrowserDriver(DriverManager):
         """
         try:
             if locator:
-                logging.debug("In locator condition")
+                self.logger.debug("In locator condition")
                 element = self.get_element(locator, locator_type)
             attribute_value = element.get_attribute(attribute)
         except:
-            logging.error("Failed to get " + attribute + " in element with locator: " +
-                          locator + " and locator_type: " + locator_type)
-            print_stack()
+            self.logger.error("Failed to get " + attribute + " in element with locator: " + locator + " and locator_type: " + locator_type)
             attribute_value = None
-            raise Exception("cannot send data on the element with locator: " + locator +
-                            " locator_type: " + locator_type)
+            raise
         return attribute_value
 
     def refresh(self):
@@ -515,14 +451,10 @@ class BrowserDriver(DriverManager):
 
     def page_has_loaded(self):
         try:
-            WebDriverWait(self.driver, 1000, poll_frequency=0.5).until(
-                lambda driver: self.driver.execute_script('return document.readyState == "complete";'))
-            WebDriverWait(self.driver, 1000, poll_frequency=0.5).until(
-                lambda driver: self.driver.execute_script('return jQuery.active == 0'))
-            WebDriverWait(self.driver, 1000, poll_frequency=0.5).until(
-                lambda driver: self.driver.execute_script('return typeof jQuery != "undefined"'))
-            WebDriverWait(self.driver, 1000, poll_frequency=0.5).until(lambda driver: self.driver.execute_script(
-                'return angular.element(document).injector().get("$http").pendingRequests.length === 0'))
+            WebDriverWait(self.driver, 1000, poll_frequency=0.5).until(lambda driver: self.driver.execute_script('return document.readyState == "complete";'))
+            WebDriverWait(self.driver, 1000, poll_frequency=0.5).until(lambda driver: self.driver.execute_script('return jQuery.active == 0'))
+            WebDriverWait(self.driver, 1000, poll_frequency=0.5).until(lambda driver: self.driver.execute_script('return typeof jQuery != "undefined"'))
+            WebDriverWait(self.driver, 1000, poll_frequency=0.5).until(lambda driver: self.driver.execute_script('return angular.element(document).injector().get("$http").pendingRequests.length === 0'))
         except:
             return False
 

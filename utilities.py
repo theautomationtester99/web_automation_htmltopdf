@@ -2,6 +2,7 @@ import filecmp
 import os
 import platform
 import sys
+from logger_config import LoggerConfig
 import numpy as np
 import cv2
 import pyautogui
@@ -18,6 +19,7 @@ import pandas as pd
 
 class Utils:
     def __init__(self):
+        self.logger = LoggerConfig().logger
         self.date_str = self.get_date_string()
         # self.images_folder = os.path.abspath("images\\" + self.date_str)
         # self.recordings_folder = os.path.abspath("recordings\\" + self.date_str)
@@ -38,15 +40,15 @@ class Utils:
         if os.path.exists(file_path):
             os.remove(file_path)
         else:
-            print("File does not exists")
+            self.logger.debug("File does not exists")
 
     def delete_folder_and_contents(self, folder_path):
         self.is_not_used()
         try:
             shutil.rmtree(folder_path)
-            print('Folder and its content removed')  # Folder and its content removed
+            self.logger.debug('Folder and its content removed')  # Folder and its content removed
         except:
-            print('Folder not deleted')
+            self.logger.debug('Folder not deleted')
 
     def generate_random_notif_id(self):
         self.is_not_used()
@@ -105,14 +107,14 @@ class Utils:
         self.is_not_used()
         now = datetime.now()
         date_time = now.strftime("%d%b%Y_%I%M%S%f")
-        # print("date and time:", date_time)
+        # self.logger.debug("date and time:", date_time)
         return date_time
 
     def get_date_string(self):
         self.is_not_used()
         now = datetime.now()
         date_time = now.strftime("%d%b%Y")
-        # print("date and time:", date_time)
+        # self.logger.debug("date and time:", date_time)
         return date_time
 
     def take_page_screenshot_full(self, image_name_start):
@@ -128,7 +130,7 @@ class Utils:
         # so we can write it to the disk
         image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
         cv2.imwrite(full_img_path, image)
-        # print(os.path.abspath(full_img_path))
+        # self.logger.debug(os.path.abspath(full_img_path))
         return full_img_path
 
     def take_screenshot_full(self, image_name_start):
@@ -144,7 +146,7 @@ class Utils:
         # so we can write it to the disk
         image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
         cv2.imwrite(full_img_path, image)
-        # print(os.path.abspath(full_img_path))
+        # self.logger.debug(os.path.abspath(full_img_path))
         return full_img_path
     
     def take_screenshot_full_src_tag(self):
@@ -245,7 +247,7 @@ class Utils:
         self.is_not_used()
         try:
             ez = months[x]
-            print(ez)
+            self.logger.debug(ez)
             return ez
         except:
             raise ValueError('Not a month')
@@ -256,7 +258,7 @@ class Utils:
         return does_file_exists
 
     # utils = Utils()
-    # print(utils.take_screenshot_full('tc001'))
+    # self.logger.debug(utils.take_screenshot_full('tc001'))
 
     # date_str = get_date_string()
     # create_image_folder(os.path.abspath("images\\" + date_str))
@@ -346,7 +348,7 @@ class Utils:
         with open(output_file, "wb") as f:
             f.write(encrypted_content)
 
-        # print("File encrypted successfully!")
+        # self.logger.debug("File encrypted successfully!")
         # return encrypted_content
 
     def decrypt_file(self, encrypted_file_path, decryption_key="DC3HN3PdUb5z_MyYbitSyVnPU_E_WOfZkUsYR8bWKzY="):
