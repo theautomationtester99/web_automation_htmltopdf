@@ -31,7 +31,7 @@ class ColorFormatter(logging.Formatter):
             logging.ERROR: f'{Fore.RED}{Style.BRIGHT}%(asctime)s - %(name)s - %(levelname)s - %(message)s [%(filename)s:%(lineno)d]{Style.RESET_ALL}',
             logging.CRITICAL: f'{Fore.RED}{Style.BRIGHT}%(asctime)s - %(name)s - %(levelname)s - %(message)s [%(filename)s:%(lineno)d]{Style.RESET_ALL}'
         }
-    
+
     def format(self, record):
         """
         Formats a log record with appropriate coloring based on its log level.
@@ -55,7 +55,7 @@ class ColorFormatter(logging.Formatter):
             formatted_message += f'\n{Fore.MAGENTA}{Style.BRIGHT}{"".join(exc_traceback)}{Style.RESET_ALL}'
             # exc_traceback = "".join(traceback.format_tb(record.exc_info[2]))  # Only the traceback
             # formatted_message += f'\n{Fore.MAGENTA}{Style.BRIGHT}{exc_traceback}{Style.RESET_ALL}'
-                    
+
         return formatted_message
-    
-    
+
+

@@ -83,5 +83,5 @@ def detect_os():
         return "This system is running Windows."
     else:
         return f"Operating System detected: {os_name}"
-    
+
 print(detect_os())

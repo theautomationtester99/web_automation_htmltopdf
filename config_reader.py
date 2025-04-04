@@ -12,7 +12,7 @@ class ConfigReader:
     def __init__(self, config_file):
         """
         Initializes the ConfigReader instance with the specified configuration file.
-        
+
         Args:
             config_file (str): Path to the configuration file.
         """
@@ -22,7 +22,7 @@ class ConfigReader:
     def _load_config(self):
         """
         Loads the configuration file and creates a ConfigParser instance.
-        
+
         Returns:
             ConfigParser: A ConfigParser object containing the parsed configuration data.
         """

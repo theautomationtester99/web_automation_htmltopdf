@@ -10,7 +10,42 @@ import pyppeteer
 
 
 class PdfReporting:
+    """
+    A class to generate PDF reports based on HTML templates.
+
+    This class provides functionality to create PDF reports with custom headers,
+    footers, and content, using provided templates and data. It supports features
+    such as logo encoding, HTML generation, and PDF creation with adjustable configurations.
+
+    Attributes:
+        logger (Logger): Logger instance for logging messages and debugging information.
+        utils (Utils): Utility instance for handling file-related operations.
+        tc_id (str): Test case identifier to display in the header.
+        logo_path (str): Path to the logo image file used in the header.
+        base64_logo (str): Base64 encoded representation of the logo image.
+        html_content (str): Populated HTML content generated from the template and data.
+        head_template (str): HTML template for the PDF report header.
+        footer_template (str): HTML template for the PDF report footer.
+        document_name_pdf (str): Full path of the PDF file to be created.
+
+    Methods:
+        _encode_logo(): Encodes the logo image to a Base64 string for embedding in the header template.
+        _create_header_template(): Generates an HTML header template for the PDF report.
+        _create_footer_template(): Generates an HTML footer template for the PDF report.
+        _generate_html(encrypted_template_file_path, data): Decrypts the template file, populates it with data, and generates HTML content.
+        generate_pdf(): Asynchronously creates a PDF from the generated HTML content, header, and footer templates.
+    """
     def __init__(self, logo_path, encrypted_template_file_path, data, tc_id, document_name):
+        """
+        Initializes the PdfReporting class with provided attributes.
+
+        Args:
+            logo_path (str): Path to the logo image file.
+            encrypted_template_file_path (str): Path to the encrypted template file.
+            data (dict): Data for populating the template.
+            tc_id (str): Test case identifier.
+            document_name (str): Name of the PDF document to be created.
+        """
         self.logger = LoggerConfig().logger
         self.utils = Utils()
         self.tc_id = tc_id
@@ -23,13 +58,25 @@ class PdfReporting:
 
         self.document_name_pdf = os.path.join(self.utils.get_test_result_folder(), document_name + ".pdf")
 
-    
+
     def _encode_logo(self):
+        """
+        Encodes the logo image to a Base64 string for embedding in the header template.
+
+        Returns:
+            str: Base64 encoded representation of the logo image.
+        """
         self.logger.debug("Encoding the logo png file")
         with open(self.logo_path, "rb") as image_file:
             return base64.b64encode(image_file.read()).decode('utf-8')
 
     def _create_header_template(self):
+        """
+        Generates an HTML header template for the PDF report.
+
+        Returns:
+            str: HTML content for the report's header.
+        """
         self.logger.debug("Creating the PDF report header template")
         return f'''
         <div style="display: flex; width: 100%; height: auto; justify-content: space-between; align-items: center; border-bottom: 2px solid #413a97;">
@@ -43,6 +90,12 @@ class PdfReporting:
         '''
 
     def _create_footer_template(self):
+        """
+        Generates an HTML footer template for the PDF report.
+
+        Returns:
+            str: HTML content for the report's footer.
+        """
         self.logger.debug("Creating the PDF report footer template")
         return '''
         <div style='font-size:10px; width:100%; text-align:center;'>
@@ -51,6 +104,16 @@ class PdfReporting:
         '''
 
     def _generate_html(self, encrypted_template_file_path, data):
+        """
+        Decrypts the template file, populates it with data, and generates HTML content.
+
+        Args:
+            encrypted_template_file_path (str): Path to the encrypted template file.
+            data (dict): Data for populating the template.
+
+        Returns:
+            str: HTML content populated with data.
+        """
         self.logger.debug("Decrypting the PDF report template")
         # Decrypt the file
         decrypted_template = self.utils.decrypt_file(encrypted_template_file_path)
@@ -59,17 +122,23 @@ class PdfReporting:
         env = Environment(loader=FileSystemLoader("."))
         template = env.from_string(decrypted_template)
         output = template.render(data)
-        
+
         self.logger.debug("Generated the PDF report template with appropriate data")
-        
+
         # Save the populated HTML to a file
         with open("output.html", "w") as f:
             f.write(output)
 
         # print("HTML file generated successfully!")
         return output
-    
+
     async def generate_pdf(self):
+        """
+        Asynchronously creates a PDF from the generated HTML content, header, and footer templates.
+
+        Returns:
+            None
+        """
         self.logger.debug("Starting creation of PDF report from template with populated data")
         # browser = await launch({"headless": True})
         browser = await launch(options={'args': ['--no-sandbox'], 'headless': True})
@@ -96,5 +165,5 @@ class PdfReporting:
         })
 
         self.logger.debug("Completed creation of PDF report from template with populated data")
-        
+
         await browser.close()

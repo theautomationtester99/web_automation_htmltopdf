@@ -262,8 +262,8 @@
 2025-04-02 13:31:21,649 - WafLogger - DEBUG - Passing the keword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keword manager. [runner.py:185]
-2025-04-02 13:31:21,650 - WafLogger - DEBUG - Passing the keword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-02 13:31:21,650 - WafLogger - DEBUG - Passing the keword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keword manager. [runner.py:186]
 2025-04-02 13:31:21,650 - WafLogger - INFO - Step is instantiated. [pdf_report_manager.py:36]
@@ -369,8 +369,8 @@ sflsdflfdf' to the keword manager. [runner.py:186]
 2025-04-02 13:32:57,156 - WafLogger - DEBUG - Passing the keword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keword manager. [runner.py:185]
-2025-04-02 13:32:57,157 - WafLogger - DEBUG - Passing the keword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-02 13:32:57,157 - WafLogger - DEBUG - Passing the keword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keword manager. [runner.py:186]
 2025-04-02 13:32:57,157 - WafLogger - INFO - Step is instantiated. [pdf_report_manager.py:36]
@@ -530,8 +530,8 @@ sflsdflfdf' to the keword manager. [runner.py:186]
 2025-04-02 17:17:42,628 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:185]
-2025-04-02 17:17:42,628 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-02 17:17:42,628 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:186]
 2025-04-02 17:17:42,629 - WafLogger - INFO - Step is instantiated. [pdf_report_manager.py:36]
@@ -767,8 +767,8 @@ Exception: cannot send data on the element with locator: //*[@id="root"]/div/sec
 2025-04-02 17:27:44,934 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:185]
-2025-04-02 17:27:44,935 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-02 17:27:44,935 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:186]
 2025-04-02 17:27:44,935 - WafLogger - INFO - Step is instantiated. [pdf_report_manager.py:36]
@@ -8606,8 +8606,8 @@ Stacktrace:
 2025-04-03 15:37:11,069 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:185]
-2025-04-03 15:37:11,069 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 15:37:11,069 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:186]
 2025-04-03 15:37:11,069 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -8989,8 +8989,8 @@ Stacktrace:
 2025-04-03 15:40:01,986 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:185]
-2025-04-03 15:40:01,986 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 15:40:01,986 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:186]
 2025-04-03 15:40:01,987 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -9372,8 +9372,8 @@ Stacktrace:
 2025-04-03 15:48:34,597 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:185]
-2025-04-03 15:48:34,598 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 15:48:34,598 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:186]
 2025-04-03 15:48:34,598 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -9750,8 +9750,8 @@ Stacktrace:
 2025-04-03 16:08:03,568 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:186]
-2025-04-03 16:08:03,568 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 16:08:03,568 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:187]
 2025-04-03 16:08:03,568 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -10121,8 +10121,8 @@ Stacktrace:
 2025-04-03 16:27:12,072 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:186]
-2025-04-03 16:27:12,072 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 16:27:12,072 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:187]
 2025-04-03 16:27:12,072 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -10492,8 +10492,8 @@ Stacktrace:
 2025-04-03 16:30:26,090 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:186]
-2025-04-03 16:30:26,090 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 16:30:26,090 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:187]
 2025-04-03 16:30:26,090 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -10863,8 +10863,8 @@ Stacktrace:
 2025-04-03 16:34:08,816 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:186]
-2025-04-03 16:34:08,816 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 16:34:08,816 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:187]
 2025-04-03 16:34:08,816 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -11161,8 +11161,8 @@ AttributeError: 'ImageDraw' object has no attribute 'textsize'
 2025-04-03 16:36:35,057 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:186]
-2025-04-03 16:36:35,057 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 16:36:35,057 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:187]
 2025-04-03 16:36:35,058 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -11532,8 +11532,8 @@ Stacktrace:
 2025-04-03 16:38:49,821 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:186]
-2025-04-03 16:38:49,821 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 16:38:49,821 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:187]
 2025-04-03 16:38:49,822 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -11830,8 +11830,8 @@ AttributeError: 'ImageDraw' object has no attribute 'textsize'
 2025-04-03 16:41:17,434 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:186]
-2025-04-03 16:41:17,434 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 16:41:17,434 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:187]
 2025-04-03 16:41:17,435 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -12128,8 +12128,8 @@ AttributeError: 'FreeTypeFont' object has no attribute 'getsize'
 2025-04-03 16:44:20,802 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:186]
-2025-04-03 16:44:20,802 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 16:44:20,802 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:187]
 2025-04-03 16:44:20,802 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -12499,8 +12499,8 @@ Stacktrace:
 2025-04-03 16:47:54,911 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:186]
-2025-04-03 16:47:54,912 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 16:47:54,912 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:187]
 2025-04-03 16:47:54,912 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -12870,8 +12870,8 @@ Stacktrace:
 2025-04-03 16:50:15,662 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:186]
-2025-04-03 16:50:15,663 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 16:50:15,663 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:187]
 2025-04-03 16:50:15,663 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -13241,8 +13241,8 @@ Stacktrace:
 2025-04-03 16:52:49,569 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:186]
-2025-04-03 16:52:49,570 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 16:52:49,570 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:187]
 2025-04-03 16:52:49,570 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -13612,8 +13612,8 @@ Stacktrace:
 2025-04-03 18:32:48,009 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:186]
-2025-04-03 18:32:48,009 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 18:32:48,009 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:187]
 2025-04-03 18:32:48,009 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -13983,8 +13983,8 @@ Stacktrace:
 2025-04-03 18:36:14,172 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:186]
-2025-04-03 18:36:14,172 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 18:36:14,172 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:187]
 2025-04-03 18:36:14,173 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -14354,8 +14354,8 @@ Stacktrace:
 2025-04-03 18:40:33,742 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:186]
-2025-04-03 18:40:33,742 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 18:40:33,742 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:187]
 2025-04-03 18:40:33,743 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -14725,8 +14725,8 @@ Stacktrace:
 2025-04-03 13:56:46,432 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:186]
-2025-04-03 13:56:46,432 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 13:56:46,432 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:187]
 2025-04-03 13:56:46,433 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -15092,8 +15092,8 @@ Stacktrace:
 2025-04-03 13:59:52,341 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:186]
-2025-04-03 13:59:52,341 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 13:59:52,341 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:187]
 2025-04-03 13:59:52,342 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -15600,8 +15600,8 @@ Stacktrace:
 2025-04-03 14:00:52,881 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:186]
-2025-04-03 14:00:52,882 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 14:00:52,882 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:187]
 2025-04-03 14:00:52,882 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -16108,8 +16108,8 @@ Stacktrace:
 2025-04-03 14:13:40,319 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:186]
-2025-04-03 14:13:40,320 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 14:13:40,320 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:187]
 2025-04-03 14:13:40,320 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -16612,8 +16612,8 @@ Stacktrace:
 2025-04-03 14:15:23,725 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:186]
-2025-04-03 14:15:23,725 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 14:15:23,725 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:187]
 2025-04-03 14:15:23,726 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -16975,8 +16975,8 @@ Stacktrace:
 2025-04-03 14:23:18,333 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:186]
-2025-04-03 14:23:18,335 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 14:23:18,335 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:187]
 2025-04-03 14:23:18,337 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]
@@ -17338,8 +17338,8 @@ Stacktrace:
 2025-04-03 14:26:51,431 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Whatisthisstep
 WhatisthisstepWhatisthisstep
 WhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstepWhatisthisstep' to the keyword manager. [runner.py:186]
-2025-04-03 14:26:51,433 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe 
-flsof lldfoe 
+2025-04-03 14:26:51,433 - WafLogger - DEBUG - Passing the keyword 'step' and input 'Step is stepd foe
+flsof lldfoe
 allfsfdfldf
 sflsdflfdf' to the keyword manager. [runner.py:187]
 2025-04-03 14:26:51,434 - WafLogger - DEBUG - Populating the test details table in the PDF report [keywords_manager.py:38]

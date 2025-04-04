@@ -16,24 +16,66 @@ from driver_manager import DriverManager
 from utilities import Utils
 
 class BrowserDriver(DriverManager):
+    """
+    A driver manager class for browser automation tasks. Provides methods for
+    handling browser interactions such as opening URLs, scrolling elements into view,
+    capturing browser version, taking screenshots, and fetching the page title.
 
+    Attributes:
+        logger: Logger instance for logging browser-related activities.
+    """
     def __init__(self):
+        """
+        Initialize the BrowserDriver instance, setting up the logger instance.
+        """
         super().__init__()
         self.logger = LoggerConfig().logger
 
     def close_browser(self):
+        """
+        Close the browser session gracefully.
+        Logs the action and quits the browser driver.
+
+        Raises:
+            Exception: If any error occurs during the browser quit process.
+        """
         self.logger.debug("Closing Browser")
         self.driver.quit()
 
     def get_browser_version(self):
+        """
+        Fetch the version of the browser being used.
+        Logs the browser version retrieval process.
+
+        Returns:
+            str: The version of the browser as a string.
+        """
         self.logger.debug("Capturing Browser Version")
         return str(self.driver.capabilities['browserVersion'])
 
     def open_url(self, url):
+        """
+        Open a given URL in the browser.
+        Logs the URL opening process.
+
+        Args:
+            url (str): The URL to be opened in the browser.
+        """
         self.logger.debug("Opening URL " + str(url))
         self.driver.get(url)
 
     def scroll_into_view(self, locator, locator_type, element=None):
+        """
+        Scroll to the web element identified by the given locator.
+
+        Args:
+            locator (str): The locator of the web element.
+            locator_type (str): The type of locator (e.g., ID, XPath).
+            element (WebElement, optional): Directly passed web element if available.
+
+        Raises:
+            Exception: If unable to scroll to the element.
+        """
         try:
             if locator:
                 element = self.get_element(locator, locator_type)
@@ -42,31 +84,19 @@ class BrowserDriver(DriverManager):
         except:
             self.logger.error("cannot send data on the element with locator: " + locator + " locator_type: " + locator_type)
             raise
-    
-    """
-    Captures a screenshot of the current open web page, adapting the method based on 
-    the execution environment (headless mode, Selenium grid, or regular browser session).
 
-    For headless mode or when running in a Selenium grid:
-    - Calls the `take_screenshot_with_base64_watermark` method to capture the screenshot,
-    which includes a date-time watermark and returns the image as a Base64-encoded string.
 
-    For a regular browser session:
-    - Utilizes the `Utils` class to capture a full-page screenshot using the `take_screenshot_full_src_tag` method.
-
-    Handles:
-    - Exception logging to capture and report any errors during the screenshot process.
-
-    Returns:
-        str: Screenshot data, either as a Base64-encoded string or as the output of the `Utils` method.
-
-    Raises:
-        Exception: If any error occurs during screenshot capture in headless mode or grid execution.
-    """
-    
     def take_screenshot(self):
         """
-        Take a screenshot of the current open web page
+        Capture a screenshot of the current browser view.
+        Adjusts the screenshot method based on execution environment
+        (headless mode, Selenium grid, or regular session).
+
+        Returns:
+            str: Screenshot data, either as a Base64-encoded string or image file.
+
+        Raises:
+            Exception: If any error occurs during screenshot capture.
         """
         utils = Utils()
         if self.is_headless or self.run_in_selenium_grid.lower() == 'yes':
@@ -78,34 +108,18 @@ class BrowserDriver(DriverManager):
         else:
             # return utils.take_screenshot_full(file_start)
             return utils.take_screenshot_full_src_tag()
-    
-    
-    """
-    Captures a screenshot from the web driver, overlays a semi-transparent rectangle
-    at the top-right corner containing a date-time watermark, and returns the image
-    as a Base64-encoded string. This function is useful for creating visually marked
-    screenshots for documentation or debugging purposes.
 
-    Steps involved:
-    - Captures the screenshot in PNG format using the web driver.
-    - Utilizes the Pillow (PIL) library to process the image and add a date-time
-    watermark inside a transparent black rectangle for enhanced visibility.
-    - Combines the original image with the overlay and converts it to a Base64 string,
-    enabling easy storage or transmission.
-
-    Handles potential exceptions gracefully by logging errors for debugging purposes.
-
-    Returns:
-        str: A Base64-encoded string representation of the watermarked screenshot.
-
-    Raises:
-        Exception: If any error occurs during the screenshot capture or processing.
-    """
 
     def take_screenshot_with_base64_watermark(self):
         """
-        Take a screenshot, add a date-time watermark inside a transparent rectangle,
-        and return the Base64-encoded image.
+        Capture a screenshot, overlay a date-time watermark inside
+        a transparent rectangle, and encode the image into Base64 format.
+
+        Returns:
+            str: Base64-encoded string representation of the watermarked screenshot.
+
+        Raises:
+            Exception: If any error occurs during screenshot capture or processing.
         """
         try:
             # Capture screenshot as binary data
@@ -161,11 +175,30 @@ class BrowserDriver(DriverManager):
             raise
 
     def get_title(self):
+        """
+        Retrieve the title of the current browser page.
+        Logs the process of fetching the title.
+
+        Returns:
+            str: The title of the web page as a string.
+        """
         self.logger.debug("Getting the page title")
         return self.driver.title
 
     def get_by_type(self, locator_type):
-        self.is_not_used()
+        """
+        Determine the Selenium By type corresponding to a given locator type.
+
+        Args:
+            locator_type (str): The type of locator (e.g., "id", "name", "xpath", "css", "class", "link").
+
+        Returns:
+            By: A Selenium By object corresponding to the locator type.
+            bool: Returns False if the locator type is not supported.
+
+        Raises:
+            Exception: If an unsupported locator type is provided, logs a debug message.
+        """
         locator_type = locator_type.lower()
         if locator_type == "id":
             return By.ID
@@ -184,6 +217,18 @@ class BrowserDriver(DriverManager):
         return False
 
     def dropdown_select_element(self, locator, locator_type="id", selector="", selector_type="value"):
+        """
+        Select an option from a dropdown element using a selector.
+
+        Args:
+            locator (str): The locator for the dropdown element.
+            locator_type (str, optional): The type of locator (default: "id").
+            selector (str/int): The value, index, or text of the option to select.
+            selector_type (str, optional): The type of selector ("value", "index", "text").
+
+        Raises:
+            Exception: Logs an error and raises an exception if the element could not be selected.
+        """
         try:
             element = self.get_element(locator, locator_type)
             sel = Select(element)
@@ -204,8 +249,17 @@ class BrowserDriver(DriverManager):
 
     def get_dropdown_options_count(self, locator, locator_type="id"):
         """
-        get the number of options of drop down list
-        :return: number of Options of drop down list
+        Get the number of options available in a dropdown element.
+
+        Args:
+            locator (str): The locator for the dropdown element.
+            locator_type (str, optional): The type of locator (default: "id").
+
+        Returns:
+            list: A list of options in the dropdown element.
+
+        Raises:
+            Exception: Logs an error and raises an exception if the dropdown element could not be found.
         """
         options = None
         try:
@@ -221,8 +275,17 @@ class BrowserDriver(DriverManager):
 
     def get_dropdown_selected_option_text(self, locator, locator_type="id"):
         """
-        get the text of selected option in drop down list
-        :return: the text of selected option in drop down list
+        Get the text of the currently selected option in a dropdown element.
+
+        Args:
+            locator (str): The locator for the dropdown element.
+            locator_type (str, optional): The type of locator (default: "id").
+
+        Returns:
+            str: The text of the selected option.
+
+        Raises:
+            Exception: Logs an error and raises an exception if the selected option could not be retrieved.
         """
         selected_option_text = None
         try:
@@ -238,8 +301,17 @@ class BrowserDriver(DriverManager):
 
     def get_dropdown_selected_option_value(self, locator, locator_type="id"):
         """
-        get the value of selected option in drop down list
-        :return: the value of selected option in drop down list
+        Get the value of the currently selected option in a dropdown element.
+
+        Args:
+            locator (str): The locator for the dropdown element.
+            locator_type (str, optional): The type of locator (default: "id").
+
+        Returns:
+            str: The value of the selected option.
+
+        Raises:
+            Exception: Logs an error and raises an exception if the selected option value could not be retrieved.
         """
         selected_option_value = None
         try:
@@ -254,6 +326,19 @@ class BrowserDriver(DriverManager):
         return selected_option_value
 
     def get_element(self, locator, locator_type="id"):
+        """
+        Retrieve a web element based on the given locator and locator type.
+
+        Args:
+            locator (str): The locator of the web element.
+            locator_type (str, optional): The type of locator (default: "id").
+
+        Returns:
+            WebElement: The located web element.
+
+        Raises:
+            Exception: Logs an error and raises an exception if the element could not be found.
+        """
         element = None
         try:
             locator_type = locator_type.lower()
@@ -266,6 +351,19 @@ class BrowserDriver(DriverManager):
         return element
 
     def is_element_selected(self, locator, locator_type):
+        """
+        Check whether a web element is selected.
+
+        Args:
+            locator (str): The locator of the web element.
+            locator_type (str): The type of locator.
+
+        Returns:
+            bool: True if the element is selected, False otherwise.
+
+        Raises:
+            Exception: Logs an error and raises an exception if the element could not be found.
+        """
         is_selected = None
         try:
             element = self.get_element(locator, locator_type)
@@ -280,7 +378,17 @@ class BrowserDriver(DriverManager):
 
     def get_element_list(self, locator, locator_type="id"):
         """
-        Get list of elements
+        Retrieve a list of web elements based on the given locator and locator type.
+
+        Args:
+            locator (str): The locator of the web elements.
+            locator_type (str, optional): The type of locator (default: "id").
+
+        Returns:
+            list: A list of located web elements.
+
+        Raises:
+            Exception: Logs an error and raises an exception if the elements could not be found.
         """
         element = None
         try:
@@ -296,9 +404,17 @@ class BrowserDriver(DriverManager):
 
     def element_click(self, locator="", locator_type="id", element=None):
         """
-        Either provide element or a combination of locator and locator_type
-        """
+        Click on a web element.
+        Either provide a pre-located element or specify a combination of locator and locator_type.
 
+        Args:
+            locator (str, optional): The locator for the web element (default: "").
+            locator_type (str, optional): The type of locator (e.g., "id", "xpath", default: "id").
+            element (WebElement, optional): A pre-located web element (default: None).
+
+        Raises:
+            Exception: Logs an error and raises an exception if the click action fails.
+        """
         try:
             if locator:
                 element = self.get_element(locator, locator_type)
@@ -310,9 +426,17 @@ class BrowserDriver(DriverManager):
 
     def element_hover(self, locator="", locator_type="id", element=None):
         """
-        Either provide element or a combination of locator and locator_type
-        """
+        Hover over a web element.
+        Either provide a pre-located element or specify a combination of locator and locator_type.
 
+        Args:
+            locator (str, optional): The locator for the web element (default: "").
+            locator_type (str, optional): The type of locator (e.g., "id", "xpath", default: "id").
+            element (WebElement, optional): A pre-located web element (default: None).
+
+        Raises:
+            Exception: Logs an error and raises an exception if the hover action fails.
+        """
         try:
             if locator:
                 element = self.get_element(locator, locator_type)
@@ -326,8 +450,17 @@ class BrowserDriver(DriverManager):
 
     def send_keys(self, data, locator="", locator_type="id", element=None):
         """
-        Send keys to an element
-        Either provide element or a combination of locator and locator_type
+        Send keys to a web element.
+        Either provide a pre-located element or specify a combination of locator and locator_type.
+
+        Args:
+            data (str): The text to send to the element.
+            locator (str, optional): The locator for the web element (default: "").
+            locator_type (str, optional): The type of locator (e.g., "id", "xpath", default: "id").
+            element (WebElement, optional): A pre-located web element (default: None).
+
+        Raises:
+            Exception: Logs an error and raises an exception if the send keys action fails.
         """
         try:
             if locator:
@@ -340,8 +473,16 @@ class BrowserDriver(DriverManager):
 
     def clear_keys(self, locator="", locator_type="id", element=None):
         """
-        Clear keys of an element
-        Either provide element or a combination of locator and locator_type
+        Clear the text in a web element.
+        Either provide a pre-located element or specify a combination of locator and locator_type.
+
+        Args:
+            locator (str, optional): The locator for the web element (default: "").
+            locator_type (str, optional): The type of locator (e.g., "id", "xpath", default: "id").
+            element (WebElement, optional): A pre-located web element (default: None).
+
+        Raises:
+            Exception: Logs an error and raises an exception if the clear action fails.
         """
         try:
             if locator:
@@ -354,8 +495,20 @@ class BrowserDriver(DriverManager):
 
     def get_text(self, locator="", locator_type="id", element=None, info=""):
         """
-        Get 'Text' on an element
-        Either provide element or a combination of locator and locator_type
+        Retrieve the text of a web element.
+        Either provide a pre-located element or specify a combination of locator and locator_type.
+
+        Args:
+            locator (str, optional): The locator for the web element (default: "").
+            locator_type (str, optional): The type of locator (e.g., "id", "xpath", default: "id").
+            element (WebElement, optional): A pre-located web element (default: None).
+            info (str, optional): Additional context about the element (default: "").
+
+        Returns:
+            str: The retrieved text of the web element.
+
+        Raises:
+            Exception: Logs an error and raises an exception if the text retrieval fails.
         """
         try:
             if locator:
@@ -378,8 +531,19 @@ class BrowserDriver(DriverManager):
 
     def is_element_present(self, locator="", locator_type="id", element=None):
         """
-        Check if element is present
-        Either provide element or a combination of locator and locator_type
+        Check if a web element is present.
+        Either provide a pre-located element or specify a combination of locator and locator_type.
+
+        Args:
+            locator (str, optional): The locator for the web element (default: "").
+            locator_type (str, optional): The type of locator (e.g., "id", "xpath", default: "id").
+            element (WebElement, optional): A pre-located web element (default: None).
+
+        Returns:
+            bool: True if the element is present, False otherwise.
+
+        Raises:
+            Exception: Logs an error and raises an exception if the presence check fails.
         """
         try:
             if locator:
@@ -395,10 +559,30 @@ class BrowserDriver(DriverManager):
             return False
 
     def apply_style(self, s, element):
+        """
+        Apply a specific style to a web element using JavaScript.
+
+        Args:
+            s (str): The CSS style to apply to the web element.
+            element (WebElement): The web element to which the style will be applied.
+        """
         self.driver.execute_script("arguments[0].setAttribute('style', arguments[1]);", element, s)
 
     def highlight(self, effect_time, color, border, locator="", locator_type="id", element=None, ):
-        """Highlights (blinks) a Selenium Webdriver element"""
+        """
+        Highlight (blink) a web element by temporarily changing its border color.
+
+        Args:
+            effect_time (int): Duration for which the highlighting effect should last (in seconds).
+            color (str): The color of the border for the highlight effect.
+            border (int): The width of the border for the highlight effect.
+            locator (str, optional): The locator for the web element (default: "").
+            locator_type (str, optional): The type of locator (e.g., "id", "xpath", default: "id").
+            element (WebElement, optional): A pre-located web element (default: None).
+
+        Raises:
+            Exception: Logs an error and raises an exception if the highlight action fails.
+        """
         try:
             if locator:
                 self.logger.debug("In locator condition")
@@ -414,8 +598,19 @@ class BrowserDriver(DriverManager):
 
     def is_element_displayed(self, locator="", locator_type="id", element=None):
         """
-        Check if element is displayed
-        Either provide element or a combination of locator and locator_type
+        Check if a web element is displayed.
+        Either provide a pre-located element or specify a combination of locator and locator_type.
+
+        Args:
+            locator (str, optional): The locator for the web element (default: "").
+            locator_type (str, optional): The type of locator (e.g., "id", "xpath", default: "id").
+            element (WebElement, optional): A pre-located web element (default: None).
+
+        Returns:
+            bool: True if the element is displayed, False otherwise.
+
+        Raises:
+            Exception: Logs an error and raises an exception if the display check fails.
         """
         is_displayed = False
         try:
@@ -433,8 +628,19 @@ class BrowserDriver(DriverManager):
 
     def is_element_enabled(self, locator="", locator_type="id", element=None):
         """
-        Check if element is displayed
-        Either provide element or a combination of locator and locator_type
+        Check if a web element is enabled.
+        Either provide a pre-located element or specify a combination of locator and locator_type.
+
+        Args:
+            locator (str, optional): The locator for the web element (default: "").
+            locator_type (str, optional): The type of locator (e.g., "id", "xpath", default: "id").
+            element (WebElement, optional): A pre-located web element (default: None).
+
+        Returns:
+            bool: True if the element is enabled, False otherwise.
+
+        Raises:
+            Exception: Logs an error and raises an exception if the enable check fails.
         """
         is_enabled = False
         try:
@@ -454,6 +660,19 @@ class BrowserDriver(DriverManager):
             return False
 
     def element_presence_check(self, locator="", locator_type="id"):
+        """
+        Check if a web element is present on the web page.
+
+        Args:
+            locator (str, optional): The locator for the web element (default: "").
+            locator_type (str, optional): The type of locator (e.g., "id", "xpath", default: "id").
+
+        Returns:
+            bool: True if the element is present, False otherwise.
+
+        Raises:
+            Exception: Logs an error and raises an exception if the presence check fails.
+        """
         try:
             locator_type = locator_type.lower()
             by_type = self.get_by_type(locator_type)
@@ -469,6 +688,21 @@ class BrowserDriver(DriverManager):
             return False
 
     def wait_for_element(self, locator, locator_type='id', timeout=10, pollFrequency=0.5):
+        """
+        Wait for a web element to be clickable within a specified timeout.
+
+        Args:
+            locator (str): The locator for the web element.
+            locator_type (str, optional): The type of locator (e.g., "id", "xpath", default: "id").
+            timeout (int, optional): Maximum wait time in seconds (default: 10).
+            pollFrequency (float, optional): Frequency of polling for the element in seconds (default: 0.5).
+
+        Returns:
+            WebElement: The located clickable web element.
+
+        Raises:
+            Exception: Logs an error and raises an exception if the element does not appear within the timeout.
+        """
         element = None
         try:
             self.logger.debug("Waiting for maximum :: " + str(timeout) + " :: seconds for element to be clickable")
@@ -486,6 +720,11 @@ class BrowserDriver(DriverManager):
         return element
 
     def web_scroll(self, direction="up"):
+        """
+        Scrolls the webpage in the specified direction.
+
+        :param direction: The direction to scroll. Use "up" to scroll upwards and "down" to scroll downwards. Defaults to "up".
+        """
         if direction == "up":
             # Scroll Up
             self.driver.execute_script("window.scrollBy(0, -1000);")
@@ -495,7 +734,9 @@ class BrowserDriver(DriverManager):
 
     def get_url(self):
         """
-        Get the current URL        :return:
+        Retrieves the current URL of the webpage.
+
+        :return: A string representing the current URL of the webpage.
         """
         current_url = self.driver.current_url
 
@@ -503,13 +744,20 @@ class BrowserDriver(DriverManager):
 
     def page_back(self):
         """
-        page back the browser
+        Navigates the browser to the previous page in the browser's history.
         """
         self.driver.execute_script("window.history.go(-1)")
 
     def get_attribute_value(self, locator="", locator_type="id", element=None, attribute=""):
         """
-        get attribute value
+        Retrieves the value of a specified attribute from a web element.
+
+        :param locator: The locator of the web element (optional).
+        :param locator_type: The type of the locator (e.g., "id", "xpath"). Defaults to "id".
+        :param element: The web element whose attribute value needs to be fetched (optional).
+        :param attribute: The name of the attribute whose value needs to be fetched.
+        :return: The value of the specified attribute, or None if it fails to retrieve the attribute value.
+        :raises: Exception if the attribute value cannot be retrieved.
         """
         try:
             if locator:
@@ -523,9 +771,18 @@ class BrowserDriver(DriverManager):
         return attribute_value
 
     def refresh(self):
+        """
+        Refreshes the current webpage.
+        """
         self.driver.get(self.driver.current_url)
 
     def page_has_loaded(self):
+        """
+        Checks if the page has fully loaded by evaluating various conditions,
+        including the document state, jQuery activity, and Angular HTTP requests.
+
+        :return: True if the page has fully loaded; otherwise, False.
+        """
         try:
             WebDriverWait(self.driver, 1000, poll_frequency=0.5).until(lambda driver: self.driver.execute_script('return document.readyState == "complete";'))
             WebDriverWait(self.driver, 1000, poll_frequency=0.5).until(lambda driver: self.driver.execute_script('return jQuery.active == 0'))
@@ -535,11 +792,20 @@ class BrowserDriver(DriverManager):
             return False
 
     def wait_for_some_time(self, sec_to_wait):
+        """
+        Pauses the execution for a specified number of seconds.
+
+        :param sec_to_wait: The number of seconds to wait.
+        """
         self.is_not_used()
         time.sleep(int(sec_to_wait))
 
     def file_name_to_select(self, file_name):
-        self.is_not_used()
+        """
+        Simulates selecting a file using its name through keyboard automation.
+
+        :param file_name: The name of the file to select.
+        """
         pyautogui.write(file_name)
         pyautogui.press('tab')
         pyautogui.press('enter')

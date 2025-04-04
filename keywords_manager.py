@@ -6,7 +6,21 @@ from datetime import datetime
 import asyncio
 
 class KeywordsManager(BrowserDriver):
+    """
+    A manager class extending BrowserDriver that provides utilities to manage browser interactions, generate PDF reports,
+    and perform common testing tasks for any application under test.
+
+    Attributes:
+        logger (logging.Logger): Logger instance for logging debug, info, and error messages.
+        repo_m (PdfReportManager): An instance to manage and generate PDF reports.
+        utils (Utils): An instance of utility methods for OS detection and other operations.
+        chrome_logo_src_b64 (str): Base64 encoded string for Chrome logo image.
+        edge_logo_src_b64 (str): Base64 encoded string for Edge logo image.
+        linux_logo_src_b64 (str): Base64 encoded string for Linux logo image.
+        win_logo_src_b64 (str): Base64 encoded string for Windows logo image.
+    """
     def __init__(self):
+
         super().__init__()
         self.logger = LoggerConfig().logger
         self.repo_m = PdfReportManager()
@@ -21,28 +35,67 @@ class KeywordsManager(BrowserDriver):
     '''
 
     def ge_close(self):
+        """
+        Creates a PDF report and closes the browser instance.
+
+        Logs the closure of the browser and generates a PDF report using the PdfReportManager.
+        """
         self.logger.debug("Started creating pdf report and closing the browser")
         asyncio.run(self.repo_m.create_report())
         self.close_browser()
-    
+
     def ge_tcid(self, tc_id):
+        """
+        Sets the test case ID in the PDF report.
+
+        Args:
+            tc_id (str): The identifier of the test case to be included in the report.
+        """
         self.logger.debug("Setting the test report of the PDF report")
         self.repo_m.page_title = "Test Report"
         self.repo_m.tc_id = tc_id
 
     def ge_tcdesc(self, tc_desc):
+        """
+        Sets the description of the test case in the PDF report.
+
+        Args:
+            tc_desc (str): The description of the test case.
+        """
+        pass
         self.logger.debug("Setting the test description in the PDF report")
         self.repo_m.test_description = tc_desc
 
     def ge_step(self, **data):
+        """
+        Populates the test details table in the PDF report with data provided.
+
+        Args:
+            **data: Arbitrary keyword arguments representing test details.
+        """
         self.logger.debug("Populating the test details table in the PDF report")
         self.repo_m.add_report_data(**data)
 
     def ge_wait_for_seconds(self, how_seconds):
+        """
+        Pauses execution for the specified number of seconds.
+
+        Args:
+            how_seconds (str): The duration in seconds to pause execution.
+        """
         self.logger.debug("Pausing the execution for " + how_seconds + " seconds")
         self.wait_for_some_time(how_seconds)
 
     def ge_open_browser(self, browser_name):
+        """
+        Launches the specified browser, captures OS and browser details, and logs information in the PDF report.
+
+        Args:
+            browser_name (str): The name of the browser to launch (e.g., "Chrome", "Edge").
+
+        Raises:
+            Exception: If any error occurs while launching the browser.
+        """
         try:
             self.logger.debug("Launching " + browser_name + " .......")
             self.launch_browser(browser_name)
@@ -79,10 +132,26 @@ class KeywordsManager(BrowserDriver):
             raise
 
     def ge_browser_version(self):
+        """
+        Retrieves the version of the currently active browser.
+
+        Returns:
+            str: The browser version.
+        """
         self.logger.debug("Returning Browser Version.")
         return self.get_browser_version()
 
     def ge_is_element_loaded(self, locator, locator_type):
+        """
+        Verifies if the element specified by the locator and type is loaded on the page.
+
+        Args:
+            locator (str): The locator for the element (e.g., XPath, CSS selector).
+            locator_type (str): The type of locator (e.g., "id", "xpath", "css").
+
+        Returns:
+            bool: True if the element is loaded, False otherwise.
+        """
         self.logger.debug("Checking if element is loaded.")
         try:
             return self.is_element_present(locator, locator_type)
@@ -92,6 +161,17 @@ class KeywordsManager(BrowserDriver):
             raise
 
     def ge_is_element_enabled(self, locator, locator_type, element_name):
+        """
+        Checks if the specified element is enabled and logs the result in the PDF report.
+
+        Args:
+            locator (str): The locator for the element.
+            locator_type (str): The type of locator.
+            element_name (str): The user-friendly name of the element.
+
+        Raises:
+            Exception: If any error occurs while checking element status.
+        """
         self.logger.debug("Checking if element is enabled.")
         try:
             is_enabled = self.is_element_enabled(locator, locator_type)
@@ -110,6 +190,17 @@ class KeywordsManager(BrowserDriver):
             raise
 
     def ge_is_element_disabled(self, locator, locator_type, element_name):
+        """
+        Checks if the specified element is disabled and logs the result in the PDF report.
+
+        Args:
+            locator (str): The locator for the element.
+            locator_type (str): The type of locator.
+            element_name (str): The user-friendly name of the element.
+
+        Raises:
+            Exception: If any error occurs while checking element status.
+        """
         self.logger.debug("Checking if element is disabled.")
         try:
             is_disabled = self.is_element_enabled(locator, locator_type)
@@ -128,6 +219,17 @@ class KeywordsManager(BrowserDriver):
             raise
 
     def ge_is_element_displayed(self, locator, locator_type, element_name):
+        """
+        Checks if the specified element is displayed on the page and logs the result in the PDF report.
+
+        Args:
+            locator (str): The locator for the element.
+            locator_type (str): The type of locator.
+            element_name (str): The user-friendly name of the element.
+
+        Raises:
+            Exception: If any error occurs while checking if the element is displayed.
+        """
         self.logger.debug("Checking if element is displayed.")
         try:
             is_displayed = self.is_element_enabled(locator, locator_type)
@@ -146,6 +248,15 @@ class KeywordsManager(BrowserDriver):
             raise
 
     def ge_enter_url(self, url):
+        """
+        Opens the specified URL in the browser and logs the result in the PDF report.
+
+        Args:
+            url (str): The URL to open.
+
+        Raises:
+            Exception: If any error occurs while trying to open the URL.
+        """
         self.logger.debug("Opening URL")
         try:
             self.open_url(url)
@@ -160,6 +271,18 @@ class KeywordsManager(BrowserDriver):
             raise
 
     def ge_type(self, locator, locator_type, text_to_type, element_name):
+        """
+        Types the specified text into the given element and logs the result in the PDF report.
+
+        Args:
+            locator (str): The locator for the element.
+            locator_type (str): The type of locator.
+            text_to_type (str): The text to type into the element.
+            element_name (str): The user-friendly name of the element.
+
+        Raises:
+            Exception: If any error occurs while typing the text.
+        """
         self.logger.debug("Typing text " + text_to_type)
         len_input = len(text_to_type)
         nbr_spaces = self.utils.count_spaces_in_string(text_to_type)
@@ -184,6 +307,18 @@ class KeywordsManager(BrowserDriver):
             raise
 
     def ge_verify_displayed_text(self, locator, locator_type, expected_text, element_name):
+        """
+        Verifies if the displayed text of the specified element matches the expected text and logs the result in the PDF report.
+
+        Args:
+            locator (str): The locator for the element.
+            locator_type (str): The type of locator.
+            expected_text (str): The text expected to be displayed by the element.
+            element_name (str): The user-friendly name of the element.
+
+        Raises:
+            Exception: If any error occurs while verifying the displayed text.
+        """
         try:
             self.wait_for_element(locator, locator_type)
             self.highlight(1, "blue", 2, locator, locator_type)
@@ -202,6 +337,17 @@ class KeywordsManager(BrowserDriver):
             raise
 
     def ge_click(self, locator, locator_type, element_name):
+        """
+        Clicks on the specified element and logs the result in the PDF report.
+
+        Args:
+            locator (str): The locator for the element.
+            locator_type (str): The type of locator.
+            element_name (str): The user-friendly name of the element.
+
+        Raises:
+            Exception: If any error occurs while performing the click action.
+        """
         try:
             self.scroll_into_view(locator, locator_type)
             self.highlight(1, "blue", 2, locator, locator_type)
@@ -216,6 +362,17 @@ class KeywordsManager(BrowserDriver):
             raise
 
     def ge_select_file(self, locator, locator_type, file_paths):
+        """
+        Selects a file to upload using the provided locator and file paths, then logs the result in the PDF report.
+
+        Args:
+            locator (str): The locator for the file input element.
+            locator_type (str): The type of locator (e.g., "id", "xpath", "css").
+            file_paths (str): The path(s) to the file(s) to be uploaded.
+
+        Raises:
+            Exception: If any error occurs during the file selection process.
+        """
         try:
             self.file_name_to_select(file_paths)
             self.wait_for_element(locator, locator_type)
@@ -233,6 +390,19 @@ class KeywordsManager(BrowserDriver):
     '''
 
     def choose_date_from_date_picker(self, **kwargs):
+        """
+        Selects a date or date range from a date picker, using the provided calendar details.
+
+        Args:
+            **kwargs: Arbitrary keyword arguments required for date selection:
+                    - "which_calender" (str): Specifies the calendar type (e.g., 'cn_det_dd', 'cn_det_ed').
+                    - "date_to_choose" (str): The date or date range to select.
+                    - "locator_type" (str): The type of locator for calendar elements.
+                    - Other parameters needed for navigation and selection in the date picker.
+
+        Raises:
+            Exception: If any error occurs during the date selection process.
+        """
         try:
             util_t = Utils()
             which_calender = kwargs.get("which_calender")
@@ -350,7 +520,7 @@ class KeywordsManager(BrowserDriver):
                     if disp_day_two_dig == day:
                         self.element_click("", "", testscript_file)
                         break
-            
+
             self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
             self.repo_m.add_report_data(sub_step="Choosing the date '" + expected_date + "'in '" + kwargs.get("locator_name") + "'", sub_step_message="The date is chosen successfully", sub_step_status='Pass', image_src=self.take_screenshot(), image_alt = self.repo_m.browser_img_alt)
         except Exception as e:
@@ -360,6 +530,31 @@ class KeywordsManager(BrowserDriver):
             raise
 
     def login_jnj(self, **kwargs):
+        """
+        Performs the login operation for the application specific.
+
+        This method interacts with the provided UI elements to enter the username and password,
+        and handles navigation through the login process. If the password field is detected,
+        it proceeds to complete the login process by entering the password and submitting the form.
+
+        Args:
+            **kwargs: Arbitrary keyword arguments containing locators, locator types, element names,
+                    and user credentials required for the login operation. Expected keys include:
+                    - "uname_locator" (str): Locator for the username field.
+                    - "locator_type" (str): Type of the locators (e.g., "id", "xpath", "css").
+                    - "uname_element_name" (str): User-friendly name for the username field.
+                    - "uname_data" (str): Username data to be entered.
+                    - "proceed_locator" (str): Locator for the proceed button.
+                    - "proceed_element_name" (str): User-friendly name for the proceed button.
+                    - "jnjpwd_locator" (str): Locator for the password field.
+                    - "jnjpwd_element_name" (str): User-friendly name for the password field.
+                    - "pwd_data" (str): Password data to be entered.
+                    - "signon_locator" (str): Locator for the sign-on button.
+                    - "signon_element_name" (str): User-friendly name for the sign-on button.
+
+        Raises:
+            Exception: If any error occurs during the login process.
+        """
         self.ge_click(kwargs.get("uname_locator"), kwargs.get(
             "locator_type"), kwargs.get("uname_element_name"))
         self.ge_type(kwargs.get("uname_locator"), kwargs.get("locator_type"), kwargs.get("uname_data"),

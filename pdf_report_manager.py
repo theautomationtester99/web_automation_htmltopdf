@@ -8,7 +8,33 @@ from logger_config import LoggerConfig
 
 
 class PdfReportManager:
+    """
+    A class to manage the creation of detailed PDF reports and test summary reports.
+    Handles the organization and structure of step-by-step and sub-step reporting data,
+    which is then used to generate visually structured PDF documents.
+    """
     def __init__(self):
+        """
+        Initializes the PdfReportManager with essential components and placeholders.
+
+        Attributes:
+            logger: An instance of LoggerConfig used for logging messages.
+            utils: Utility instance providing date and file handling methods.
+            tc_id: Test case identifier initialized as an empty string.
+            all_steps_list: A list to store all step-related data.
+            step_no: Counter for the current step number.
+            sub_step_no: Counter for the current sub-step number.
+            row_span: Tracks the row span of steps in the report table.
+            report_data: Dictionary to store data for the final report generation.
+            table_data: Dictionary to store step-by-step and sub-step data.
+            page_title: Placeholder for the title of the report page.
+            test_description: Placeholder for the description of the test.
+            browser_img_src, browser_img_alt: Placeholders for browser image source and alt text.
+            os_img_src, os_img_alt: Placeholders for OS image source and alt text.
+            browser_version: Placeholder for the browser version information.
+            executed_date: Stores the date when the test was executed.
+            overall_status_text: Text to indicate the overall status of the test, defaults to "PASSED".
+        """
         self.logger = LoggerConfig().logger
         self.utils = Utils()
         self.tc_id = ''
@@ -30,6 +56,23 @@ class PdfReportManager:
         self.overall_status_text = "PASSED"
 
     def add_report_data(self, **data):
+        """
+        Adds data for a test step or a sub-step into the report structure.
+
+        Args:
+            **data: Arbitrary keyword arguments containing details of a step or sub-step.
+                For a step:
+                    - step (str): Description of the step.
+                    - result (str): Result of the step (e.g., "Pass" or "Fail").
+                For a sub-step:
+                    - sub_step (str): Description of the sub-step.
+                    - sub_step_message (str): Additional details about the sub-step.
+                    - image_src (str, optional): Source path of an image related to the sub-step.
+                    - image_alt (str, optional): Alt text for the sub-step image.
+                    - sub_step_status (str): Status of the sub-step (e.g., "Pass" or "Fail").
+
+        Updates the overall status to "FAILED" if any sub-step has a status of "Fail".
+        """
         if "step" in data:
             self.logger.debug('Step is captured to be added to PDF report.')
             self.step_no += 1
@@ -49,10 +92,10 @@ class PdfReportManager:
             self.table_data[str(self.step_no)]["rowspan"] = str(self.row_span)
             if "sub_steps" not in self.table_data[str(self.step_no)]:
                 self.table_data[str(self.step_no)]["sub_steps"] = {}
-            
+
             if str(self.sub_step_no) not in self.table_data[str(self.step_no)]["sub_steps"]:
                 self.table_data[str(self.step_no)]["sub_steps"][str(self.sub_step_no)] = {}
-            
+
             self.table_data[str(self.step_no)]["sub_steps"][str(self.sub_step_no)]["sub_step"] = data["sub_step"]
             self.table_data[str(self.step_no)]["sub_steps"][str(self.sub_step_no)]["sub_step_message"] = data["sub_step_message"]
             if "image_src" in data:
@@ -63,12 +106,18 @@ class PdfReportManager:
             if str(data["sub_step_status"]).lower() == "fail":
                 self.overall_status_text = "FAILED"
 
-    # def add_step_data(self, step_data, expected_result, actual_result, step_status, step_screenshot):
-    #     step_list = [self.step_no, step_data, expected_result, actual_result, step_status, step_screenshot]
-    #     self.all_steps_list.append(step_list)
-    #     self.step_no = self.step_no + 1
-
     async def create_report(self):
+        """
+        Finalizes the gathered report data and generates a PDF report.
+
+        This method uses the PdfReporting class to create the report by populating a template
+        with test-specific information. The report includes:
+            - Page title, test description, browser and OS details.
+            - Executed date, overall test status, and a detailed step-by-step breakdown.
+
+        The generated PDF is saved with a name containing the test case ID, browser details,
+        and the execution timestamp.
+        """
         self.logger.debug('Finalizing the data to be added to PDF report.')
         self.report_data["page_title"] = self.page_title
         self.report_data["test_description"] = self.test_description
@@ -81,16 +130,27 @@ class PdfReportManager:
         self.report_data["overall_status_text"] = self.overall_status_text
         self.report_data["table_data"] = self.table_data
         pdf = PdfReporting("logo.png", "encrypted_file.jinja2", self.report_data, self.tc_id, self.tc_id + "_test_results_" + self.browser_img_alt + "_" + self.overall_status_text + "_" + self.utils.get_datetime_string())
-        
+
         await pdf.generate_pdf()
-        
+
     async def generate_test_summary_pdf(self):
+        """
+        Generates a summary PDF report based on the contents of 'output.xlsx' file.
+
+        This method checks if the 'output.xlsx' file exists in the current directory.
+        If the file is found:
+            - The data is read into a Pandas DataFrame and converted to a table-friendly format.
+            - PdfTsReporting class is used to create a test summary report with this data.
+
+        The generated summary report includes the test case results and is saved with a
+        timestamped filename.
+        """
         self.logger.debug('Checking if output.xlsx file exists before creating the test summary PDF report.')
         if self.utils.check_if_file_exists(os.path.join(".", "output.xlsx")):
             self.logger.debug('Output.xlsx exists and starting to create test summary PDF report.')
             df = pd.read_excel("output.xlsx")
             table_data = df.to_dict(orient='records')
-            
+
             ts_pdf = PdfTsReporting("logo.png", "encrypted_ts_file.jinja2", table_data, "Test_Summary_Results_" + self.utils.get_datetime_string())
             await ts_pdf.generate_pdf()
 

@@ -23,6 +23,41 @@ prm = PdfReportManager()
 
 
 def start_runner(testscript_file, launch_browser=''):
+    """
+    Start Runner
+
+    This function initializes the test execution environment, validates configurations, processes a test
+    script, and executes test steps based on defined keywords. It performs the following steps:
+
+    1. Loads the 'start.properties' and 'object_repository.properties' configuration files.
+    2. Validates that only one of 'run_in_selenium_grid' or 'run_in_appium_grid' is set to 'Yes'.
+    3. Ensures the test script Excel file:
+        - Is correctly formatted.
+        - Ends with 'testscript.xlsx'.
+        - Has non-empty values in the 'Keyword' column.
+    4. Verifies that the first few rows in the test script contain specific keywords in a defined order:
+        - Row 0: 'tc_id'
+        - Row 1: 'tc_desc'
+        - Row 2: 'step'
+        - Row 3: 'open_browser'
+        - Row 4: 'enter_url'.
+    5. Processes the test script data, validating and executing each step based on predefined keywords:
+        - Keywords include 'tc_id', 'tc_desc', 'step', 'wait_for_seconds', 'open_browser', 'login_jnj',
+        'enter_url', 'type', 'check_element_enabled', 'check_element_disabled', 'check_element_displayed',
+        'mcnp_choose_date_from_datepicker', 'verify_displayed_text', 'click', and 'select_file'.
+        - Passes relevant parameters to the 'KeywordsManager' for execution.
+    6. Collects test results and updates the summary report in Excel.
+    7. Generates a PDF report summarizing the test results.
+
+    Args:
+        testscript_file (str): The path to the test script Excel file.
+        launch_browser (str, optional): Specifies the browser to launch, defaults to an empty string.
+
+    Raises:
+        SystemExit: If invalid configurations or invalid test script data are encountered.
+        Exception: If an error occurs during test script execution.
+
+    """
     wafl = LoggerConfig().logger
     '''
     Load the object repository
@@ -367,7 +402,7 @@ def start_runner(testscript_file, launch_browser=''):
             test_result = [km.repo_m.tc_id, km.repo_m.test_description,km.repo_m.overall_status_text, km.repo_m.os_img_alt + " " + km.repo_m.browser_img_alt + " " + km.repo_m.browser_version, km.repo_m.executed_date]
             wafl.debug("Adding row to test summary results excel file.")
             e_report.add_row(test_result)
-            
+
             wafl.debug("Closing the test and creating the test result pdf file.")
 
             km.ge_close()
@@ -379,27 +414,27 @@ def take_recording(process_name: Process, record_name):
         # display screen resolution, get it using pyautogui itself
         logger = LoggerConfig().logger
         logger.debug("Gathering screen size for recording.")
-        
+
         SCREEN_SIZE = tuple(pyautogui.size())
         # define the codec
         # fourcc = cv2.VideoWriter_fourcc(*"XVID")
         fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
         # frames per second
         logger.debug("Setting FPS for recording.")
-        
+
         fps = 60.0
         # create the video write object
         # out = cv2.VideoWriter(utils.get_test_recordings_folder() + "\\" + record_name +utils.get_datetime_string() + ".mp4", fourcc,fps, (SCREEN_SIZE))
         # Construct the path in a platform-independent way
         logger.debug("Gathering the output path and file name for recording.")
-        
+
         output_path = os.path.join(utils.get_test_recordings_folder(), f"{record_name}_{utils.get_datetime_string()}.mp4")
 
         # Create the VideoWriter object
         out = cv2.VideoWriter(output_path, fourcc, fps, SCREEN_SIZE)
         # the time you want to record in seconds
         record_seconds = 10
-        
+
         logger.debug("Starting recording.")
 
         while True:
@@ -427,10 +462,59 @@ def take_recording(process_name: Process, record_name):
 
 
 if __name__ == '__main__':
+    """
+    This script performs various operations based on the command-line arguments provided by the user. It serves as a command-line tool with the following features:
+
+    Features:
+    ---------
+    1. Accepts command-line arguments to start execution, display version information, or encrypt a specified file.
+    2. Enforces rules to ensure proper usage of the arguments. For example:
+    - Only one argument among 'start', '--version', or '--encrypt-file' can be used at a time.
+    - '--output-file' can only be used in conjunction with '--encrypt-file'.
+    3. Handles the encryption of files while checking the validity of input files and specifying an output file name.
+    4. Displays version information ('Version: 3.0') if the '--version' argument is used.
+    5. When 'start' is chosen:
+    - Loads configurations from 'start.properties'.
+    - Deletes specified directories/files and creates folders for storing test results and recordings.
+    - Validates the contents of the 'test_scripts' folder and checks for duplicate files in 'chrome' and 'edge' subdirectories.
+    6. Identifies files named 'testscript.xlsx' in the 'test_scripts', 'chrome', or 'edge' folders:
+    - Validates if the file name starts with 'ts' (case insensitive).
+    - Executes test scripts based on the browser specified by the folder name ('chrome', 'edge', or dynamic selection from 'test_scripts').
+    - Utilizes multi-process handling for execution and recording, if applicable.
+    7. Generates a test summary PDF after completing the execution.
+    8. Process 'testscript.xlsx' files in specified folders ('chrome', 'edge', or 'test_scripts'): The script dynamically handles execution based on folder type and file naming conventions.
+    9. This script uses comprehensive logging to track progress and errors throughout its execution.
+
+    How to Use:
+    -----------
+    - Run the script with the desired arguments:
+    * `start`: Begin execution and process configurations defined in 'start.properties'.
+    * `--version`: Display version information.
+    * `--encrypt-file`: Encrypt a specified file. Use '--output-file' to specify the name of the output file (optional).
+    - Ensure valid usage and adherence to rules for argument combinations.
+
+    Dependencies:
+    -------------
+    - argparse: For command-line argument parsing.
+    - os, Path, and utils modules: To handle file and folder operations.
+    - LoggerConfig: For logging actions and events during execution.
+    - ConfigReader and Properties classes: To read and process configurations from 'start.properties'.
+    - re: For regular expression matching.
+
+    Examples:
+    ---------
+    - Start the execution:
+    python runner.py start
+    - Display version information:
+    python runner.py --version
+    - Encrypt a file and specify an output file name:
+    python runner.py --encrypt-file input.txt --output-file encrypted.txt
+    -
+    """
     freeze_support()
     logger = LoggerConfig().logger
     logger.debug("Execution Started ----------------.")
-    
+
     logger.debug("Parsing the input arguments.")
     parser = argparse.ArgumentParser()
     parser.add_argument("start", type=str, nargs='?',help="start the execution")
@@ -438,7 +522,7 @@ if __name__ == '__main__':
     parser.add_argument("--encrypt-file", help="Encrypts the file", type=str)
     parser.add_argument("--output-file", help="Specify the output file name", type=str)
     args = parser.parse_args()
-    
+
     logger.debug("Counting the number of input arguments.")
     # Count how many arguments are provided
     active_args = sum(bool(arg) for arg in [args.start, args.version, args.encrypt_file])
@@ -466,37 +550,37 @@ if __name__ == '__main__':
         exit("Version: 3.0")
     if args.start is not None and args.start.lower() == 'start' and args.version is False:
         logger.debug("Loading 'start.properties' file.")
-        
+
         runner_config_reader = ConfigReader("start.properties")
         run_headless = True if str(runner_config_reader.get_property('Browser_Settings', 'Headless', fallback='No')).lower() == 'yes' else False
-        
+
         start_configs = Properties()
         with open('start.properties', 'rb') as config_file:
             start_configs.load(config_file)
         run_in_grid = str(start_configs.get('run_in_selenium_grid').data)
         run_in_appium = str(start_configs.get('run_in_appium_grid').data)
-        
+
         logger.debug("Checking if in 'start.properties' file option to delete results and recording folders is set to 'yes'.")
-        
+
         delete_test_results_images_recordings_folders_before_start = str(start_configs.get('delete_test_results_images_recordings_folders_before_start').data)
-        
+
         if delete_test_results_images_recordings_folders_before_start.lower() == 'yes':
-            logger.debug("Deleting the test_results and recordings folders.")            
+            logger.debug("Deleting the test_results and recordings folders.")
             utils.delete_folder_and_contents("images")
             utils.delete_folder_and_contents("recordings")
             utils.delete_folder_and_contents("test_results")
-        
-        logger.debug("Deleting the output.xlsx file.")            
+
+        logger.debug("Deleting the output.xlsx file.")
         utils.delete_file("output.xlsx")
-        logger.debug("Creating the test_results and recordings folders.")            
+        logger.debug("Creating the test_results and recordings folders.")
         utils.create_image_and_test_results_folders()
 
         '''
         Below code checks if there are duplicate test script excel file in '.\\test_scripts' folder and '.\\test_scripts\\chrome'
         Below code checks if there are duplicate test script excel file in '.\\test_scripts' folder and '.\\test_scripts\\edge'
         '''
-        logger.debug("Starting analysis of the contents of the test_scripts folders.")            
-        
+        logger.debug("Starting analysis of the contents of the test_scripts folders.")
+
         root_folder = ''
         chrome_folder = ''
         edge_folder = ''
@@ -515,43 +599,43 @@ if __name__ == '__main__':
             if Path(folder_path).name.lower() == 'edge':
                 edge_folder = folder_path
 
-        logger.debug("Checking if test_scripts folder and chrome folder contains the same files.")            
+        logger.debug("Checking if test_scripts folder and chrome folder contains the same files.")
 
         if utils.check_if_two_folder_contain_same_files(root_folder, chrome_folder):
-            logger.error("The 'test_scripts' folder and 'chrome' folder contains same test script excel files. Make the files unique per folder.")            
+            logger.error("The 'test_scripts' folder and 'chrome' folder contains same test script excel files. Make the files unique per folder.")
             exit("The 'test_scripts' folder and 'chrome' folder contains same test script excel files. Make the files unique per folder.")
-        
-        logger.debug("Checking if test_scripts folder and edge folder contains the same files.")            
-        
+
+        logger.debug("Checking if test_scripts folder and edge folder contains the same files.")
+
         if utils.check_if_two_folder_contain_same_files(root_folder, edge_folder):
-            logger.error("The 'test_scripts' folder and 'edge' folder contains same test script excel files. Make the files unique per folder.")            
+            logger.error("The 'test_scripts' folder and 'edge' folder contains same test script excel files. Make the files unique per folder.")
             exit("The 'test_scripts' folder and 'edge' folder contains same test script excel files. Make the files unique per folder.")
         '''
         End
         '''
-        logger.debug("Gathering all files present in the test_scripts folder.")            
-        
+        logger.debug("Gathering all files present in the test_scripts folder.")
+
         for x in utils.get_absolute_file_paths_in_dir(generic_path):
-            logger.debug("Getting the file path " + x + ".")   
-            logger.debug("Checking if the file path contains 'testscript.xlsx' in the end.")   
-                     
+            logger.debug("Getting the file path " + x + ".")
+            logger.debug("Checking if the file path contains 'testscript.xlsx' in the end.")
+
             if "testscript.xlsx" in x:
-                logger.debug("The file path " + x + " contains 'testscript.xlsx' in the end.")   
-                logger.debug("Checking if the file name starts with 'ts' (case insensitive).")   
-                
+                logger.debug("The file path " + x + " contains 'testscript.xlsx' in the end.")
+                logger.debug("Checking if the file name starts with 'ts' (case insensitive).")
+
                 p = re.compile('^ts', re.I)
                 if p.match(os.path.basename(x)):
                     logger.debug("The file name " + os.path.basename(x) + " starts with 'ts' (case insensitive).")
-                    logger.debug("Checking if the file " + os.path.basename(x) + " is present in chrome or edge folder.")   
+                    logger.debug("Checking if the file " + os.path.basename(x) + " is present in chrome or edge folder.")
                     if os.path.dirname(x).split(os.sep)[-1].lower() == 'chrome':
-                        logger.debug("The file " + os.path.basename(x) + " is present in chrome folder. Launching the execution of test script on chrome browser.")   
+                        logger.debug("The file " + os.path.basename(x) + " is present in chrome folder. Launching the execution of test script on chrome browser.")
                         proc1 = Process(target=start_runner,args=(x, 'chrome',))
                         proc1.start()
                         # time.sleep(5)
                         proc2 = None
                         if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
-                            logger.debug("Starting the execution recording.")   
-                            
+                            logger.debug("Starting the execution recording.")
+
                             # proc2 = Process(target=take_recording(proc1, x.split("\\")[-1].replace("testscript.xlsx", "")))
                             proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", "")))
 
@@ -562,13 +646,13 @@ if __name__ == '__main__':
                         if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
                             proc2.join()
                     elif os.path.dirname(x).split(os.sep)[-1].lower() == 'edge':
-                        logger.debug("The file " + os.path.basename(x) + " is present in edge folder. Launching the execution of test script on edge browser.")   
+                        logger.debug("The file " + os.path.basename(x) + " is present in edge folder. Launching the execution of test script on edge browser.")
                         proc1 = Process(target=start_runner, args=(x, 'edge',))
                         proc1.start()
                         # time.sleep(5)
                         proc2 = None
                         if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
-                            logger.debug("Starting the execution recording.")   
+                            logger.debug("Starting the execution recording.")
                             # proc2 = Process(target=take_recording(proc1, x.split("\\")[-1].replace("testscript.xlsx", "")))
                             proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", "")))
 
@@ -579,13 +663,13 @@ if __name__ == '__main__':
                         if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
                             proc2.join()
                     elif os.path.dirname(x).split(os.sep)[-1].lower() == 'test_scripts':
-                        logger.debug("The file " + os.path.basename(x) + " is present in test_scripts folder. Launching the execution and browser will be choosen from test script.")   
+                        logger.debug("The file " + os.path.basename(x) + " is present in test_scripts folder. Launching the execution and browser will be choosen from test script.")
                         proc1 = Process(target=start_runner, args=(x,))
                         proc1.start()
                         # time.sleep(5)
                         proc2 = None
                         if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
-                            logger.debug("Starting the execution recording.")   
+                            logger.debug("Starting the execution recording.")
                             #proc2 = Process(target=take_recording(proc1, x.split("\\")[-1].replace("testscript.xlsx", "")))
                             proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", "")))
 

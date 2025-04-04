@@ -2,13 +2,13 @@ import logging
 from logging.handlers import RotatingFileHandler
 import os
 from color_formatter import ColorFormatter
-from config_reader import ConfigReader  
+from config_reader import ConfigReader
 
 class LoggerConfig:
     """
     A configuration class for setting up a logger with both file and console outputs.
 
-    This class is responsible for reading logging configurations from a properties file, 
+    This class is responsible for reading logging configurations from a properties file,
     setting up a logger with rotating file handling, console output, and applying custom formatting.
 
     Attributes:
@@ -33,7 +33,7 @@ class LoggerConfig:
         """
         Retrieves the logging level from the configuration file.
 
-        Reads the logging level from the 'Logging' section in the properties file 
+        Reads the logging level from the 'Logging' section in the properties file
         and converts it into a logging module constant (e.g., DEBUG, INFO).
 
         Returns:
@@ -46,8 +46,8 @@ class LoggerConfig:
         """
         Configures and returns a logger instance.
 
-        Sets up a logger with the specified logging level, a rotating file handler 
-        (with a size limit and backup count), and a console handler. Applies formatting 
+        Sets up a logger with the specified logging level, a rotating file handler
+        (with a size limit and backup count), and a console handler. Applies formatting
         for both file and console outputs.
 
         Returns:

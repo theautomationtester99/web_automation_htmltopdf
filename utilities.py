@@ -18,24 +18,60 @@ import pandas as pd
 
 
 class Utils:
+    """
+    A utility class that provides helper methods for logging, folder management, file operations,
+    and string manipulation.
+
+    Attributes:
+        logger (Logger): Logger instance for logging messages and events.
+        date_str (str): Current date string used for folder naming.
+        images_folder (str): Path to the images folder.
+        recordings_folder (str): Path to the recordings folder.
+        test_results_folder (str): Path to the test results folder.
+    """
     def __init__(self):
+        """
+        Initializes the Utils class by setting up logger and folder paths for images,
+        recordings, and test results.
+        """
         self.logger = LoggerConfig().logger
         self.date_str = self.get_date_string()
         # self.images_folder = os.path.abspath("images\\" + self.date_str)
         # self.recordings_folder = os.path.abspath("recordings\\" + self.date_str)
         # self.test_results_folder = os.path.abspath("test_results\\" + self.date_str)
-        # # self.create_image_and_test_results_folders()        
+        # # self.create_image_and_test_results_folders()
         self.images_folder = os.path.abspath(os.path.join("images", self.date_str))
         self.recordings_folder = os.path.abspath(os.path.join("recordings", self.date_str))
         self.test_results_folder = os.path.abspath(os.path.join("test_results", self.date_str))
 
     def get_test_result_folder(self):
+        """
+        Gets the path to the test results folder.
+
+        Returns:
+            str: The absolute path to the test results folder.
+        """
         return self.test_results_folder
 
     def get_test_recordings_folder(self):
+        """
+        Gets the path to the recordings folder.
+
+        Returns:
+            str: The absolute path to the recordings folder.
+        """
         return self.recordings_folder
 
     def delete_file(self, file_path):
+        """
+        Deletes a file at the specified path if it exists.
+
+        Args:
+            file_path (str): The path to the file to be deleted.
+
+        Logs:
+            Debug: If the file does not exist.
+        """
         self.is_not_used()
         if os.path.exists(file_path):
             os.remove(file_path)
@@ -43,6 +79,16 @@ class Utils:
             self.logger.debug("File does not exists")
 
     def delete_folder_and_contents(self, folder_path):
+        """
+        Deletes a folder and its contents at the specified path.
+
+        Args:
+            folder_path (str): The path to the folder to be deleted.
+
+        Logs:
+            Debug: If the folder and its contents are successfully removed or if the folder could
+            not be deleted.
+        """
         self.is_not_used()
         try:
             shutil.rmtree(folder_path)
@@ -51,6 +97,13 @@ class Utils:
             self.logger.debug('Folder not deleted')
 
     def generate_random_notif_id(self):
+        """
+        Generates a random notification ID using the logged-in user's name,
+        the current date, and the current timestamp.
+
+        Returns:
+            str: A randomly generated notification ID.
+        """
         self.is_not_used()
         logged_user_name = self.get_logged_in_user_name()
         date_time_string = self.get_datetime_string()
@@ -64,14 +117,40 @@ class Utils:
         return random_id
 
     def get_logged_in_user_name(self):
+        """
+        Gets the name of the currently logged-in user.
+
+        Returns:
+            str: The name of the logged-in user.
+        """
         self.is_not_used()
         return os.getlogin()
 
     def make_string_manageable(self, input_str, length):
+        """
+        Splits a string into manageable chunks of the specified length.
+
+        Args:
+            input_str (str): The string to be split.
+            length (int): The desired length of each chunk.
+
+        Returns:
+            str: A string with chunks separated by spaces.
+        """
         self.is_not_used()
         return ' '.join(input_str[i:i + length] for i in range(0, len(input_str), length))
 
     def is_what_percent_of(self, num_a, num_b):
+        """
+        Calculates what percentage `num_a` is of `num_b`.
+
+        Args:
+            num_a (int): The numerator.
+            num_b (int): The denominator.
+
+        Returns:
+            int: The percentage value, or 0 if division by zero occurs.
+        """
         self.is_not_used()
         try:
             return int((num_a / num_b) * 100)
@@ -79,10 +158,30 @@ class Utils:
             return 0
 
     def count_spaces_in_string(self, input_string):
+        """
+        Counts the number of spaces in a given string.
+
+        Args:
+            input_string (str): The string in which spaces are to be counted.
+
+        Returns:
+            int: The number of spaces in the string.
+        """
         self.is_not_used()
         return input_string.count(" ")
 
     def create_image_and_test_results_folders(self):
+        """
+        Creates directories for storing images, recordings, and test results
+        if they do not already exist.
+
+        Checks if the specified paths exist and creates new directories if necessary.
+
+        Attributes Used:
+            images_folder (str): Path to the images folder.
+            recordings_folder (str): Path to the recordings folder.
+            test_results_folder (str): Path to the test results folder.
+        """
         # Check whether the specified path exists or not
         is_exist = os.path.exists(self.images_folder)
         if not is_exist:
@@ -98,12 +197,30 @@ class Utils:
             os.makedirs(self.test_results_folder)
 
     def get_resource_path(self, relative_path):
+        """
+        Gets the absolute path to a resource, supporting PyInstaller builds.
+
+        Args:
+            relative_path (str): The relative path to the resource.
+
+        Returns:
+            str: The absolute path to the resource.
+        """
         self.is_not_used()
         """ Get absolute path to resource, works for dev and for PyInstaller """
         base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
         return os.path.join(base_path, relative_path)
 
     def get_datetime_string(self):
+        """
+        Generates a formatted string representing the current date and time.
+
+        Format:
+            DayMonthYear_HourMinuteSecondMicrosecond (e.g., 04Apr2025_014238123456)
+
+        Returns:
+            str: The formatted date and time string.
+        """
         self.is_not_used()
         now = datetime.now()
         date_time = now.strftime("%d%b%Y_%I%M%S%f")
@@ -111,6 +228,15 @@ class Utils:
         return date_time
 
     def get_date_string(self):
+        """
+        Generates a formatted string representing the current date.
+
+        Format:
+            DayMonthYear (e.g., 04Apr2025)
+
+        Returns:
+            str: The formatted date string.
+        """
         self.is_not_used()
         now = datetime.now()
         date_time = now.strftime("%d%b%Y")
@@ -118,6 +244,15 @@ class Utils:
         return date_time
 
     def take_page_screenshot_full(self, image_name_start):
+        """
+        Takes a full-page screenshot and saves it as a PNG file.
+
+        Args:
+            image_name_start (str): The prefix for the screenshot's file name.
+
+        Returns:
+            str: The absolute path to the saved screenshot file.
+        """
         date_time_str = self.get_datetime_string()
         image_name = image_name_start + "_" + date_time_str
         full_img_path = self.images_folder + "\\" + image_name + ".png"
@@ -134,6 +269,15 @@ class Utils:
         return full_img_path
 
     def take_screenshot_full(self, image_name_start):
+        """
+        Takes a screenshot of the full screen and saves it as a PNG file.
+
+        Args:
+            image_name_start (str): The prefix for the screenshot's file name.
+
+        Returns:
+            str: The absolute path to the saved screenshot file.
+        """
         date_time_str = self.get_datetime_string()
         image_name = image_name_start + "_" + date_time_str
         full_img_path = self.images_folder + "\\" + image_name + ".png"
@@ -148,15 +292,22 @@ class Utils:
         cv2.imwrite(full_img_path, image)
         # self.logger.debug(os.path.abspath(full_img_path))
         return full_img_path
-    
+
     def take_screenshot_full_src_tag(self):
+        """
+        Takes a screenshot of the full screen and returns it as a base64-encoded string
+        in PNG format.
+
+        Returns:
+            str: The base64-encoded string representing the screenshot in PNG format.
+        """
         # Take a screenshot using pyautogui
         screenshot = pyautogui.screenshot()
 
         # Convert the screenshot to a bytes buffer in PNG format
         buffered = BytesIO()
         screenshot.save(buffered, format="PNG")
-        
+
         # Encode the bytes buffer to a base64 string
         base64_image = base64.b64encode(buffered.getvalue()).decode("utf-8")
 
@@ -164,6 +315,17 @@ class Utils:
         return f"data:image/png;base64,{base64_image}"
 
     def add_date_time_watermark_to_image(self, file_name_path, text):
+        """
+        Adds a date and time watermark to the bottom-right corner of an image.
+
+        Args:
+            file_name_path (str): The path to the image file to which the watermark will be added.
+            text (str): The text to use as the watermark.
+
+        Details:
+            - The watermark is rendered in black color with a font size of 36.
+            - It is positioned with a margin of 20 pixels from the right and bottom edges.
+        """
         self.is_not_used()
         image = Image.open(file_name_path)
         font = ImageFont.truetype("arial.ttf", 36)
@@ -185,12 +347,30 @@ class Utils:
         pass
 
     def get_absolute_file_paths_in_dir(self, directory):
+        """
+        Generates absolute file paths for all files within a directory, including its subdirectories.
+
+        Args:
+            directory (str): The path to the directory.
+
+        Yields:
+            str: Absolute file paths of the files within the directory and its subdirectories.
+        """
         self.is_not_used()
         for dir_path, _, filenames in os.walk(directory):
             for f in filenames:
                 yield os.path.abspath(os.path.join(dir_path, f))
 
     def get_list_str_paths_of_all_sub_directories(self, folder):
+        """
+        Retrieves a list of absolute paths for all subdirectories within a given folder.
+
+        Args:
+            folder (str): The path to the folder.
+
+        Returns:
+            list: A list containing the absolute path of the folder and its subdirectories.
+        """
         str_lst = []
         self.is_not_used()
         absolute_path = os.path.abspath(folder)
@@ -202,6 +382,16 @@ class Utils:
         return str_lst
 
     def check_if_two_folder_contain_same_files(self, folder1, folder2):
+        """
+        Compares two folders to check if they contain the same files.
+
+        Args:
+            folder1 (str): Path to the first folder.
+            folder2 (str): Path to the second folder.
+
+        Returns:
+            bool: True if the folders contain common files, False otherwise.
+        """
         self.is_not_used()
         result = filecmp.dircmp(folder1, folder2)
         a = result.common
@@ -211,6 +401,15 @@ class Utils:
             return True
 
     def is_excel_doc(self, input_file):
+        """
+        Determines if a given file is an Excel document by analyzing its file signature.
+
+        Args:
+            input_file (str): Path to the file to be checked.
+
+        Returns:
+            bool: True if the file matches known Excel file signatures, False otherwise.
+        """
         self.is_not_used()
         excel_signatures = [
             ('xlsx', b'\x50\x4B\x05\x06', 2, -22, 4),
@@ -230,6 +429,18 @@ class Utils:
         return False
 
     def get_mtn_number(self, x):
+        """
+        Retrieves the numerical representation of a given month name.
+
+        Args:
+            x (str): Name of the month (e.g., 'January').
+
+        Returns:
+            int: Numerical representation of the month (1 for January, 2 for February, etc.).
+
+        Raises:
+            ValueError: If the input is not a valid month name.
+        """
         months = {
             'January': 1,
             'February': 2,
@@ -253,6 +464,15 @@ class Utils:
             raise ValueError('Not a month')
 
     def check_if_file_exists(self, path):
+        """
+        Checks if a file exists at the specified path.
+
+        Args:
+            path (str): Path to the file.
+
+        Returns:
+            bool: True if the file exists, False otherwise.
+        """
         self.is_not_used()
         does_file_exists = os.path.isfile(path)
         return does_file_exists
@@ -264,6 +484,19 @@ class Utils:
     # create_image_folder(os.path.abspath("images\\" + date_str))
     # take_screenshot_full("images\\" + date_str, "tc001")
     def check_date_format_validity(self, entered_date):
+        """
+        Validates the format of the entered date as 'DD MMMM YYYY'.
+
+        Args:
+            entered_date (str): The date to validate, in the format 'DD MMMM YYYY'.
+
+        Exits:
+            If the date format is invalid or if the date components do not match
+            the expected range of valid days, months, or years.
+
+        Note:
+            The valid years range from 2019 to 2025.
+        """
         self.is_not_used()
         dts = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15",
                "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30",
@@ -294,6 +527,20 @@ class Utils:
                  "be between 2019 and 2025")
 
     def check_date_range_format_validity(self, entered_date):
+        """
+        Validates the format of a date range as 'DD MMMM YYYY - DD MMMM YYYY'.
+
+        Args:
+            entered_date (str): The date range to validate, in the format
+                                'DD MMMM YYYY - DD MMMM YYYY'.
+
+        Exits:
+            If the date range format is invalid, or if the first date is not
+            prior to the second date.
+
+        Note:
+            The valid years range from 2019 to 2025.
+        """
         self.is_not_used()
         dts = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15",
                "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30",
@@ -336,6 +583,17 @@ class Utils:
                          "second date")
 
     def encrypt_file(self, file_path, output_file, encryption_key="DC3HN3PdUb5z_MyYbitSyVnPU_E_WOfZkUsYR8bWKzY="):
+        """
+        Encrypts a file's content and saves the encrypted content to a new file.
+
+        Args:
+            file_path (str): Path to the file to be encrypted.
+            output_file (str): Path to save the encrypted file.
+            encryption_key (str): Encryption key to use for encryption (default provided).
+
+        Details:
+            Uses the Fernet symmetric encryption to secure the file content.
+        """
         # Read the file content
         with open(file_path, "r") as f:
             file_content = f.read()
@@ -352,6 +610,16 @@ class Utils:
         # return encrypted_content
 
     def decrypt_file(self, encrypted_file_path, decryption_key="DC3HN3PdUb5z_MyYbitSyVnPU_E_WOfZkUsYR8bWKzY="):
+        """
+        Decrypts the content of an encrypted file.
+
+        Args:
+            encrypted_file_path (str): Path to the encrypted file.
+            decryption_key (str): Key used to decrypt the file content (default provided).
+
+        Returns:
+            str: The decrypted content as a string.
+        """
         # Read the encrypted file content
         with open(encrypted_file_path, "rb") as f:
             encrypted_content = f.read()
@@ -361,8 +629,14 @@ class Utils:
         decrypted_content = fernet.decrypt(encrypted_content).decode()
 
         return decrypted_content
-    
+
     def detect_os(self):
+        """
+        Detects the operating system on which the script is running.
+
+        Returns:
+            str: The name of the operating system ('Linux', 'Windows', or others).
+        """
         os_name = platform.system()
         if os_name == "Linux":
             return "Linux"

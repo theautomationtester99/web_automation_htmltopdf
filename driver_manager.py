@@ -17,10 +17,38 @@ from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
 class DriverManager:
     """
-    This class is for instantiating web driver instances.
+    This class is responsible for managing and instantiating web driver instances. It provides configurations
+    for browser settings, including private browsing, headless mode, and grid setup. It also reads configurations
+    from a properties file for initializing browser behavior.
+
+    Attributes:
+        config_reader (ConfigReader): An instance of ConfigReader to read configuration properties.
+        is_inprivate (bool): A boolean value indicating whether the browser should run in private mode.
+        is_headless (bool): A boolean value indicating whether the browser should run in headless mode.
+        run_in_selenium_grid (str): A string indicating whether to run in the Selenium grid.
+        grid_url (str): The URL for the Selenium grid.
+        run_in_appium_grid (str): A string indicating whether to run in the Appium grid.
+        appium_url (str): The URL for the Appium grid.
     """
 
     def __init__(self):
+        """
+        Initializes a new instance of the DriverManager class. Sets up the required browser configurations by
+        reading properties from the 'start.properties' file.
+
+        - Sets the environment variable 'WDM_SSL_VERIFY' to '0' to bypass SSL verification.
+        - Reads and parses the configuration properties from the 'start.properties' file.
+        - Initializes browser settings like private mode, headless mode, and grid configurations.
+
+        Attributes initialized:
+            - config_reader: Reads configuration properties.
+            - is_inprivate: Determines if the browser runs in private mode.
+            - is_headless: Determines if the browser runs in headless mode.
+            - run_in_selenium_grid: Retrieves Selenium grid execution preference.
+            - grid_url: Retrieves the Selenium grid URL.
+            - run_in_appium_grid: Retrieves Appium grid execution preference.
+            - appium_url: Retrieves the Appium grid URL.
+        """
         os.environ['WDM_SSL_VERIFY'] = '0'
         self.config_reader = ConfigReader("start.properties")
         self.is_inprivate = self._is_browser_in_private()
@@ -36,14 +64,63 @@ class DriverManager:
         self.appium_url = str(start_configs.get('appium_url').data)
 
     def _is_browser_in_private(self):
+        """
+        Retrieves the browser's private mode setting from the configuration file.
+
+        Returns:
+            bool: True if the browser is configured to run in private mode, False otherwise.
+        """
         is_in_private = self.config_reader.get_property('Browser_Settings', 'InPrivate', fallback='No').upper()
         return str(is_in_private.lower())=="yes"
-    
+
     def _is_browser_headless(self):
+        """
+        Retrieves the browser's headless mode setting from the configuration file.
+
+        Returns:
+            bool: True if the browser is configured to run in headless mode, False otherwise.
+        """
         is_in_private = self.config_reader.get_property('Browser_Settings', 'Headless', fallback='No').upper()
         return str(is_in_private.lower())=="yes"
-    
+
     def launch_browser(self, browser_name):
+        """
+        Launches a web browser based on the provided browser name and configuration settings.
+        This method supports execution in Selenium Grid, Appium Grid, or a local environment.
+
+        Parameters:
+            browser_name (str): The name of the browser to launch. Supported options include "chrome", "edge", and "firefox".
+
+        Functionality:
+            - If running in Selenium Grid:
+                - Configures and launches the specified browser (Chrome or Edge) using Selenium Remote WebDriver.
+                - Applies browser-specific options, such as disabling automation extensions and customizing preferences.
+            - If running in Appium Grid:
+                - Configures and launches the specified mobile browser (Chrome) using Appium Remote WebDriver.
+                - Loads necessary capabilities for Android devices, such as device name, platform name, and automation framework.
+            - If running locally:
+                - Configures and launches the specified browser (Chrome, Edge, or Firefox) using WebDriverManager.
+                - Applies browser-specific options, such as incognito mode, headless mode, and customized preferences.
+
+        Attributes Used:
+            - run_in_selenium_grid: Determines if execution should occur in Selenium Grid.
+            - grid_url: URL for the Selenium Grid.
+            - run_in_appium_grid: Determines if execution should occur in Appium Grid.
+            - appium_url: URL for the Appium Grid.
+            - is_inprivate: Specifies if the browser should run in private mode.
+            - is_headless: Specifies if the browser should run in headless mode.
+
+        Notes:
+            - Firefox browser currently only supports local execution without additional configurations.
+            - This method applies extensive browser options for Edge to optimize browser performance and behavior.
+
+        Raises:
+            ValueError: If the provided browser_name is not supported.
+
+        Example:
+            >>> driver_manager = DriverManager()
+            >>> driver_manager.launch_browser("chrome")
+        """
         if self.run_in_selenium_grid.lower() == 'yes':
             if browser_name.lower() == "chrome":
                 prefs = {"credentials_enable_service": False, "profile.password_manager_enabled": False}
@@ -73,7 +150,7 @@ class DriverManager:
                 capabilities = {
                     # 'deviceName': 'Nexus9T',
                     'deviceName': 'Nexus_9_API_34',
-                    'platformName': 'Android',                              
+                    'platformName': 'Android',
                     'browserName': 'Chrome',
                     'automationName': 'UiAutomator2',
                     # 'systemPort': '10000',
@@ -81,7 +158,7 @@ class DriverManager:
                     'udid': 'emulator-5554'
                 }
                 capabilities_options = UiAutomator2Options().load_capabilities(capabilities)
-                
+
                 self.driver = appium_wd.Remote(self.appium_url, options=capabilities_options)
                 # self.driver.maximize_window()
                 # self.driver = webdriver.Chrome(ChromeDriverManager().install())
