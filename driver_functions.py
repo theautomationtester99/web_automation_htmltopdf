@@ -29,6 +29,7 @@ class BrowserDriver(DriverManager):
         Initialize the BrowserDriver instance, setting up the logger instance.
         """
         super().__init__()
+        self.utils = Utils()
         self.logger = LoggerConfig().logger
 
     def close_browser(self):
@@ -86,7 +87,7 @@ class BrowserDriver(DriverManager):
             raise
 
 
-    def take_screenshot(self):
+    def take_screenshot(self, file_str):
         """
         Capture a screenshot of the current browser view.
         Adjusts the screenshot method based on execution environment
@@ -98,22 +99,89 @@ class BrowserDriver(DriverManager):
         Raises:
             Exception: If any error occurs during screenshot capture.
         """
-        utils = Utils()
         if self.is_headless or self.run_in_selenium_grid.lower() == 'yes':
             try:
-                return self.take_screenshot_with_base64_watermark()
+                return self.take_screenshot_with_base64_watermark(file_str)
             except:
                 self.logger.error("### Exception Occurred when taking screenshot")
                 raise
         else:
             # return utils.take_screenshot_full(file_start)
-            return utils.take_screenshot_full_src_tag()
+            return self.utils.take_screenshot_full_src_tag(file_str)
 
 
-    def take_screenshot_with_base64_watermark(self):
+    # def take_screenshot_with_base64_watermark(self):
+    #     """
+    #     Capture a screenshot, overlay a date-time watermark inside
+    #     a transparent rectangle, and encode the image into Base64 format.
+
+    #     Returns:
+    #         str: Base64-encoded string representation of the watermarked screenshot.
+
+    #     Raises:
+    #         Exception: If any error occurs during screenshot capture or processing.
+    #     """
+    #     try:
+    #         # Capture screenshot as binary data
+    #         screenshot = self.driver.get_screenshot_as_png()
+    #         image = Image.open(BytesIO(screenshot))
+
+    #         # Add the date-time watermark
+    #         date_time_str = Utils().get_datetime_string()
+    #         draw = ImageDraw.Draw(image)
+
+    #         # Use the default font provided by Pillow
+    #         font = ImageFont.load_default()
+
+    #         # Calculate text size using the bounding box
+    #         text_bbox = draw.textbbox((0, 0), date_time_str, font=font)  # Gets the bounding box of the text
+    #         text_width, text_height = text_bbox[2] - text_bbox[0], text_bbox[3] - text_bbox[1]
+
+    #         # Position for watermark (top-right corner)
+    #         width, height = image.size
+    #         padding = 10  # Padding for the rectangle and text
+    #         rect_position = (
+    #             width - text_width - 2 * padding,  # Left
+    #             padding,  # Top
+    #             width - padding,  # Right
+    #             padding + text_height + 2 * padding  # Bottom
+    #         )
+
+    #         # Create transparent rectangle overlay
+    #         rect_color = (0, 0, 0, 128)  # Black color with 50% opacity (RGBA)
+    #         overlay = Image.new("RGBA", image.size, (255, 255, 255, 0))
+    #         overlay_draw = ImageDraw.Draw(overlay)
+    #         overlay_draw.rectangle(rect_position, fill=rect_color)
+
+    #         # Add watermark text over the rectangle
+    #         text_position = (rect_position[0] + padding, rect_position[1] + padding)
+    #         overlay_draw.text(text_position, date_time_str, font=font, fill=(255, 255, 255, 255))  # White text
+
+    #         # Combine the original image with the overlay
+    #         image = Image.alpha_composite(image.convert("RGBA"), overlay)
+
+    #         # Save the image into a BytesIO object
+    #         buffered = BytesIO()
+    #         image.save(buffered, format="PNG")
+
+    #         # Encode the image into Base64 format
+    #         base64_image = base64.b64encode(buffered.getvalue()).decode("utf-8")
+
+    #         # Return the Base64 string
+    #         return f"data:image/png;base64,{base64_image}"
+
+    #     except Exception as e:
+    #         self.logger.error("### Exception Occurred when taking screenshot")
+    #         raise
+    
+    def take_screenshot_with_base64_watermark(self, input_string):
         """
         Capture a screenshot, overlay a date-time watermark inside
-        a transparent rectangle, and encode the image into Base64 format.
+        a transparent rectangle, save the image to a specified folder structure,
+        and encode the image into Base64 format.
+
+        Args:
+            input_string (str): Input string to define folder structure and file name.
 
         Returns:
             str: Base64-encoded string representation of the watermarked screenshot.
@@ -122,6 +190,21 @@ class BrowserDriver(DriverManager):
             Exception: If any error occurs during screenshot capture or processing.
         """
         try:
+            # Define the base folder
+            base_folder = self.utils.images_folder
+            
+            # Extract folder structure and file name from input string
+            parts = input_string.split('_')
+            if len(parts) < 2:
+                raise ValueError("Input string must contain at least two parts separated by underscores.")
+            
+            folder_path = os.path.join(base_folder, parts[0], parts[1])
+            file_name = input_string + ".png"
+            file_path = os.path.join(folder_path, file_name)
+
+            # Create folder structure if not exists
+            os.makedirs(folder_path, exist_ok=True)
+
             # Capture screenshot as binary data
             screenshot = self.driver.get_screenshot_as_png()
             image = Image.open(BytesIO(screenshot))
@@ -134,37 +217,38 @@ class BrowserDriver(DriverManager):
             font = ImageFont.load_default()
 
             # Calculate text size using the bounding box
-            text_bbox = draw.textbbox((0, 0), date_time_str, font=font)  # Gets the bounding box of the text
+            text_bbox = draw.textbbox((0, 0), date_time_str, font=font)
             text_width, text_height = text_bbox[2] - text_bbox[0], text_bbox[3] - text_bbox[1]
 
             # Position for watermark (top-right corner)
             width, height = image.size
-            padding = 10  # Padding for the rectangle and text
+            padding = 10
             rect_position = (
-                width - text_width - 2 * padding,  # Left
-                padding,  # Top
-                width - padding,  # Right
-                padding + text_height + 2 * padding  # Bottom
+                width - text_width - 2 * padding,
+                padding,
+                width - padding,
+                padding + text_height + 2 * padding
             )
 
             # Create transparent rectangle overlay
-            rect_color = (0, 0, 0, 128)  # Black color with 50% opacity (RGBA)
+            rect_color = (0, 0, 0, 128)
             overlay = Image.new("RGBA", image.size, (255, 255, 255, 0))
             overlay_draw = ImageDraw.Draw(overlay)
             overlay_draw.rectangle(rect_position, fill=rect_color)
 
             # Add watermark text over the rectangle
             text_position = (rect_position[0] + padding, rect_position[1] + padding)
-            overlay_draw.text(text_position, date_time_str, font=font, fill=(255, 255, 255, 255))  # White text
+            overlay_draw.text(text_position, date_time_str, font=font, fill=(255, 255, 255, 255))
 
             # Combine the original image with the overlay
             image = Image.alpha_composite(image.convert("RGBA"), overlay)
 
-            # Save the image into a BytesIO object
-            buffered = BytesIO()
-            image.save(buffered, format="PNG")
+            # Save the image to the specified folder structure
+            image.save(file_path, format="PNG")
 
             # Encode the image into Base64 format
+            buffered = BytesIO()
+            image.save(buffered, format="PNG")
             base64_image = base64.b64encode(buffered.getvalue()).decode("utf-8")
 
             # Return the Base64 string
@@ -173,6 +257,7 @@ class BrowserDriver(DriverManager):
         except Exception as e:
             self.logger.error("### Exception Occurred when taking screenshot")
             raise
+
 
     def get_title(self):
         """

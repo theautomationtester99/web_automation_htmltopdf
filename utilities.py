@@ -29,6 +29,16 @@ class Utils:
         recordings_folder (str): Path to the recordings folder.
         test_results_folder (str): Path to the test results folder.
     """
+    _instance = None  # Class-level attribute to store the single instance
+
+    def __new__(cls, *args, **kwargs):
+        """
+        Ensures only one instance of the class is created.
+        """
+        if not cls._instance:
+            cls._instance = super(Utils, cls).__new__(cls, *args, **kwargs)
+        return cls._instance
+
     def __init__(self):
         """
         Initializes the Utils class by setting up logger and folder paths for images,
@@ -36,6 +46,7 @@ class Utils:
         """
         self.logger = LoggerConfig().logger
         self.date_str = self.get_date_string()
+        self.date_time_str = self.get_datetime_string()
         # self.images_folder = os.path.abspath("images\\" + self.date_str)
         # self.recordings_folder = os.path.abspath("recordings\\" + self.date_str)
         # self.test_results_folder = os.path.abspath("test_results\\" + self.date_str)
@@ -293,16 +304,61 @@ class Utils:
         # self.logger.debug(os.path.abspath(full_img_path))
         return full_img_path
 
-    def take_screenshot_full_src_tag(self):
+    # def take_screenshot_full_src_tag(self):
+    #     """
+    #     Takes a screenshot of the full screen and returns it as a base64-encoded string
+    #     in PNG format.
+
+    #     Returns:
+    #         str: The base64-encoded string representing the screenshot in PNG format.
+    #     """
+    #     # Take a screenshot using pyautogui
+    #     screenshot = pyautogui.screenshot()
+
+    #     # Convert the screenshot to a bytes buffer in PNG format
+    #     buffered = BytesIO()
+    #     screenshot.save(buffered, format="PNG")
+
+    #     # Encode the bytes buffer to a base64 string
+    #     base64_image = base64.b64encode(buffered.getvalue()).decode("utf-8")
+
+    #     # Return the base64 image code
+    #     return f"data:image/png;base64,{base64_image}"
+    
+    def take_screenshot_full_src_tag(self, file_name: str):
         """
-        Takes a screenshot of the full screen and returns it as a base64-encoded string
-        in PNG format.
+        Takes a screenshot of the full screen, saves it under the appropriate folder structure,
+        and returns it as a base64-encoded string in PNG format.
+
+        Args:
+            file_name (str): The string used to create folder structure and name the saved image file.
 
         Returns:
             str: The base64-encoded string representing the screenshot in PNG format.
         """
+        # Split the file_name to create the folder structure
+        parts = file_name.split("_")
+        if len(parts) < 3:
+            raise ValueError("Invalid file_name format. Expected format: 'tc1_chrome_001'")
+
+        # Define the base directory and folder structure
+        base_dir = self.images_folder
+        folder_1 = parts[0]  # e.g., 'tc1'
+        folder_2 = parts[1]  # e.g., 'chrome'
+        image_name = f"{file_name}.png"  # e.g., 'tc1_chrome_001.png'
+
+        # Create the folders if they don't exist
+        folder_path = os.path.join(base_dir, folder_1, folder_2)
+        os.makedirs(folder_path, exist_ok=True)
+
+        # Define the full file path
+        file_path = os.path.join(folder_path, image_name)
+
         # Take a screenshot using pyautogui
         screenshot = pyautogui.screenshot()
+
+        # Save the screenshot as a PNG file
+        screenshot.save(file_path, format="PNG")
 
         # Convert the screenshot to a bytes buffer in PNG format
         buffered = BytesIO()
@@ -644,3 +700,20 @@ class Utils:
             return "Windows"
         else:
             return f"Operating System detected: {os_name}"
+        
+    def format_number_zeropad_4char(self, number):
+        """
+        Converts an integer to a zero-padded string with a length of 4 characters.
+
+        Args:
+            number (int): The integer to be formatted.
+
+        Returns:
+            str: A string representation of the integer with leading zeros, 
+                ensuring a total length of 4 characters.
+
+        Example:
+            format_number(1) -> "0001"
+            format_number(123) -> "0123"
+        """
+        return f"{number:04}"

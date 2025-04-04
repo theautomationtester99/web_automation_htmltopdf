@@ -75,13 +75,26 @@ import platform
 # utils.encrypt_file("jinja2_template.html")
 
 
-def detect_os():
-    os_name = platform.system()
-    if os_name == "Linux":
-        return "This system is running Linux."
-    elif os_name == "Windows":
-        return "This system is running Windows."
-    else:
-        return f"Operating System detected: {os_name}"
+# def detect_os():
+#     os_name = platform.system()
+#     if os_name == "Linux":
+#         return "This system is running Linux."
+#     elif os_name == "Windows":
+#         return "This system is running Windows."
+#     else:
+#         return f"Operating System detected: {os_name}"
 
-print(detect_os())
+# print(detect_os())
+
+class a:
+    def __init__(self):
+        self.a = 1
+
+    def my_function(self, x):
+        print(f"Received value: {x}")
+
+    # Example of passing and incrementing in a single line
+    def another(self):
+        self.my_function(self.a := self.a + 1)
+
+
