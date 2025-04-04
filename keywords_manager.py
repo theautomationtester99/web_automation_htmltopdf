@@ -67,7 +67,10 @@ class KeywordsManager(BrowserDriver):
                 self.repo_m.browser_img_alt = browser_name.upper()
                 self.repo_m.browser_version = self.ge_browser_version()
             self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
-            self.repo_m.add_report_data(sub_step="Open Browser ", sub_step_message="The browser opened successfully", sub_step_status="Pass", image_src=self.take_screenshot(), image_alt = self.repo_m.browser_img_alt)
+            if self.is_headless:
+                self.repo_m.add_report_data(sub_step="Open Browser ", sub_step_message="The browser opened successfully", sub_step_status="Pass")
+            else:
+                self.repo_m.add_report_data(sub_step="Open Browser ", sub_step_message="The browser opened successfully", sub_step_status="Pass", image_src=self.take_screenshot(), image_alt = self.repo_m.browser_img_alt)
         except Exception as e:
             self.logger.error("An error occurred: %s", e, exc_info=True)
             self.logger.debug("Populating the step result details along with screenshot in the PDF report.")

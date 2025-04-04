@@ -8,6 +8,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
+from io import BytesIO
+from PIL import Image, ImageDraw, ImageFont
+import base64
 
 from driver_manager import DriverManager
 from utilities import Utils
@@ -39,50 +42,123 @@ class BrowserDriver(DriverManager):
         except:
             self.logger.error("cannot send data on the element with locator: " + locator + " locator_type: " + locator_type)
             raise
+    
+    """
+    Captures a screenshot of the current open web page, adapting the method based on 
+    the execution environment (headless mode, Selenium grid, or regular browser session).
 
-    # def take_screenshot(self, result_message):
-    #     """
-    #     Take a screenshot of the current open web page
-    #     """
-    #     file_name = result_message + "." + str(round(time.time() * 1000)) + ".png"
-    #     if len(file_name) >= 200:
-    #         file_name = str(round(time.time() * 1000)) + ".png"
-    #     screenshot_directory = "../screenshots/"
-    #     relative_file_name = screenshot_directory + file_name
-    #     current_directory = os.path.dirname(__file__)
-    #     destination_file = os.path.join(current_directory, relative_file_name)
-    #     destination_directory = os.path.join(current_directory, screenshot_directory)
-    #
-    #     try:
-    #         if not os.path.exists(destination_directory):
-    #             os.makedirs(destination_directory)
-    #         self.driver.save_screenshot(destination_file)
-    #         logging.info("Screenshot save to directory: " + destination_file)
-    #     except:
-    #         self.logger.error("### Exception Occurred when taking screenshot")
-    #         ()
-    #         raise Exception("cannot send data on the element with locator: "
-    #                         " locator_type: ")
-    def take_screenshot(self, file_start=None):
+    For headless mode or when running in a Selenium grid:
+    - Calls the `take_screenshot_with_base64_watermark` method to capture the screenshot,
+    which includes a date-time watermark and returns the image as a Base64-encoded string.
+
+    For a regular browser session:
+    - Utilizes the `Utils` class to capture a full-page screenshot using the `take_screenshot_full_src_tag` method.
+
+    Handles:
+    - Exception logging to capture and report any errors during the screenshot process.
+
+    Returns:
+        str: Screenshot data, either as a Base64-encoded string or as the output of the `Utils` method.
+
+    Raises:
+        Exception: If any error occurs during screenshot capture in headless mode or grid execution.
+    """
+    
+    def take_screenshot(self):
         """
         Take a screenshot of the current open web page
         """
         utils = Utils()
-        if self.run_in_selenium_grid.lower() == 'yes':
+        if self.is_headless or self.run_in_selenium_grid.lower() == 'yes':
             try:
-                date_time_str = utils.get_datetime_string()
-                image_name = file_start + "_" + date_time_str
-                full_img_path = utils.images_folder + "\\" + image_name + ".png"
-                self.driver.save_screenshot(full_img_path)
-                self.logger.debug("Screenshot save to directory: " + full_img_path)
-                utils.add_date_time_watermark_to_image(full_img_path, date_time_str)
-                return full_img_path
+                return self.take_screenshot_with_base64_watermark()
             except:
                 self.logger.error("### Exception Occurred when taking screenshot")
-                raise Exception("Exception Occurred when taking screenshot")
+                raise
         else:
             # return utils.take_screenshot_full(file_start)
             return utils.take_screenshot_full_src_tag()
+    
+    
+    """
+    Captures a screenshot from the web driver, overlays a semi-transparent rectangle
+    at the top-right corner containing a date-time watermark, and returns the image
+    as a Base64-encoded string. This function is useful for creating visually marked
+    screenshots for documentation or debugging purposes.
+
+    Steps involved:
+    - Captures the screenshot in PNG format using the web driver.
+    - Utilizes the Pillow (PIL) library to process the image and add a date-time
+    watermark inside a transparent black rectangle for enhanced visibility.
+    - Combines the original image with the overlay and converts it to a Base64 string,
+    enabling easy storage or transmission.
+
+    Handles potential exceptions gracefully by logging errors for debugging purposes.
+
+    Returns:
+        str: A Base64-encoded string representation of the watermarked screenshot.
+
+    Raises:
+        Exception: If any error occurs during the screenshot capture or processing.
+    """
+
+    def take_screenshot_with_base64_watermark(self):
+        """
+        Take a screenshot, add a date-time watermark inside a transparent rectangle,
+        and return the Base64-encoded image.
+        """
+        try:
+            # Capture screenshot as binary data
+            screenshot = self.driver.get_screenshot_as_png()
+            image = Image.open(BytesIO(screenshot))
+
+            # Add the date-time watermark
+            date_time_str = Utils().get_datetime_string()
+            draw = ImageDraw.Draw(image)
+
+            # Use the default font provided by Pillow
+            font = ImageFont.load_default()
+
+            # Calculate text size using the bounding box
+            text_bbox = draw.textbbox((0, 0), date_time_str, font=font)  # Gets the bounding box of the text
+            text_width, text_height = text_bbox[2] - text_bbox[0], text_bbox[3] - text_bbox[1]
+
+            # Position for watermark (top-right corner)
+            width, height = image.size
+            padding = 10  # Padding for the rectangle and text
+            rect_position = (
+                width - text_width - 2 * padding,  # Left
+                padding,  # Top
+                width - padding,  # Right
+                padding + text_height + 2 * padding  # Bottom
+            )
+
+            # Create transparent rectangle overlay
+            rect_color = (0, 0, 0, 128)  # Black color with 50% opacity (RGBA)
+            overlay = Image.new("RGBA", image.size, (255, 255, 255, 0))
+            overlay_draw = ImageDraw.Draw(overlay)
+            overlay_draw.rectangle(rect_position, fill=rect_color)
+
+            # Add watermark text over the rectangle
+            text_position = (rect_position[0] + padding, rect_position[1] + padding)
+            overlay_draw.text(text_position, date_time_str, font=font, fill=(255, 255, 255, 255))  # White text
+
+            # Combine the original image with the overlay
+            image = Image.alpha_composite(image.convert("RGBA"), overlay)
+
+            # Save the image into a BytesIO object
+            buffered = BytesIO()
+            image.save(buffered, format="PNG")
+
+            # Encode the image into Base64 format
+            base64_image = base64.b64encode(buffered.getvalue()).decode("utf-8")
+
+            # Return the Base64 string
+            return f"data:image/png;base64,{base64_image}"
+
+        except Exception as e:
+            self.logger.error("### Exception Occurred when taking screenshot")
+            raise
 
     def get_title(self):
         self.logger.debug("Getting the page title")

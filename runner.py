@@ -2,6 +2,7 @@ import asyncio
 import re
 from multiprocessing import Process, freeze_support
 import argparse
+from config_reader import ConfigReader
 import cv2
 import numpy as np
 import pandas as pd
@@ -466,6 +467,9 @@ if __name__ == '__main__':
     if args.start is not None and args.start.lower() == 'start' and args.version is False:
         logger.debug("Loading 'start.properties' file.")
         
+        runner_config_reader = ConfigReader("start.properties")
+        run_headless = True if str(runner_config_reader.get_property('Browser_Settings', 'Headless', fallback='No')).lower() == 'yes' else False
+        
         start_configs = Properties()
         with open('start.properties', 'rb') as config_file:
             start_configs.load(config_file)
@@ -545,7 +549,7 @@ if __name__ == '__main__':
                         proc1.start()
                         # time.sleep(5)
                         proc2 = None
-                        if run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
+                        if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
                             logger.debug("Starting the execution recording.")   
                             
                             # proc2 = Process(target=take_recording(proc1, x.split("\\")[-1].replace("testscript.xlsx", "")))
@@ -555,7 +559,7 @@ if __name__ == '__main__':
                             proc2.start()
 
                         proc1.join()
-                        if run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
+                        if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
                             proc2.join()
                     elif os.path.dirname(x).split(os.sep)[-1].lower() == 'edge':
                         logger.debug("The file " + os.path.basename(x) + " is present in edge folder. Launching the execution of test script on edge browser.")   
@@ -563,7 +567,7 @@ if __name__ == '__main__':
                         proc1.start()
                         # time.sleep(5)
                         proc2 = None
-                        if run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
+                        if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
                             logger.debug("Starting the execution recording.")   
                             # proc2 = Process(target=take_recording(proc1, x.split("\\")[-1].replace("testscript.xlsx", "")))
                             proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", "")))
@@ -572,7 +576,7 @@ if __name__ == '__main__':
                             proc2.start()
 
                         proc1.join()
-                        if run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
+                        if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
                             proc2.join()
                     elif os.path.dirname(x).split(os.sep)[-1].lower() == 'test_scripts':
                         logger.debug("The file " + os.path.basename(x) + " is present in test_scripts folder. Launching the execution and browser will be choosen from test script.")   
@@ -580,7 +584,7 @@ if __name__ == '__main__':
                         proc1.start()
                         # time.sleep(5)
                         proc2 = None
-                        if run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
+                        if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
                             logger.debug("Starting the execution recording.")   
                             #proc2 = Process(target=take_recording(proc1, x.split("\\")[-1].replace("testscript.xlsx", "")))
                             proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", "")))
@@ -589,7 +593,7 @@ if __name__ == '__main__':
                             proc2.start()
 
                         proc1.join()
-                        if run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
+                        if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
                             proc2.join()
 
         asyncio.run(prm.generate_test_summary_pdf())

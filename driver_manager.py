@@ -4,6 +4,7 @@ import time
 import pyautogui as pag
 from appium import webdriver as appium_wd
 from appium.options.android import UiAutomator2Options
+from config_reader import ConfigReader
 from jproperties import Properties
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -21,6 +22,9 @@ class DriverManager:
 
     def __init__(self):
         os.environ['WDM_SSL_VERIFY'] = '0'
+        self.config_reader = ConfigReader("start.properties")
+        self.is_inprivate = self._is_browser_in_private()
+        self.is_headless = self._is_browser_headless()
         start_configs = Properties()
         with open('start.properties', 'rb') as config_file:
             start_configs.load(config_file)
@@ -31,34 +35,34 @@ class DriverManager:
             start_configs.get('run_in_appium_grid').data)
         self.appium_url = str(start_configs.get('appium_url').data)
 
+    def _is_browser_in_private(self):
+        is_in_private = self.config_reader.get_property('Browser_Settings', 'InPrivate', fallback='No').upper()
+        return str(is_in_private.lower())=="yes"
+    
+    def _is_browser_headless(self):
+        is_in_private = self.config_reader.get_property('Browser_Settings', 'Headless', fallback='No').upper()
+        return str(is_in_private.lower())=="yes"
+    
     def launch_browser(self, browser_name):
         if self.run_in_selenium_grid.lower() == 'yes':
             if browser_name.lower() == "chrome":
-                prefs = {"credentials_enable_service": False,
-                         "profile.password_manager_enabled": False}
+                prefs = {"credentials_enable_service": False, "profile.password_manager_enabled": False}
                 options = Options()
-                options.add_experimental_option(
-                    "useAutomationExtension", False)
-                options.add_experimental_option(
-                    "excludeSwitches", ["enable-automation"])
+                options.add_experimental_option("useAutomationExtension", False)
+                options.add_experimental_option("excludeSwitches", ["enable-automation"])
                 options.add_experimental_option("prefs", prefs)
-                self.driver = webdriver.Remote(
-                    command_executor=self.grid_url, options=options)
+                self.driver = webdriver.Remote(command_executor=self.grid_url, options=options)
                 self.driver.maximize_window()
                 # self.driver = webdriver.Chrome(ChromeDriverManager().install())
             if browser_name.lower() == "edge":
-                prefs = {"credentials_enable_service": False, "profile.password_manager_enabled": False,
-                         "browser.show_hub_apps_tower": False, "browser.show_hub_apps_tower_pinned": False}
+                prefs = {"credentials_enable_service": False, "profile.password_manager_enabled": False, "browser.show_hub_apps_tower": False, "browser.show_hub_apps_tower_pinned": False}
                 edge_options = EdgeOptions()
-                edge_options.add_experimental_option(
-                    "useAutomationExtension", False)
-                edge_options.add_experimental_option(
-                    "excludeSwitches", ["enable-automation"])
+                edge_options.add_experimental_option("useAutomationExtension", False)
+                edge_options.add_experimental_option("excludeSwitches", ["enable-automation"])
                 edge_options.add_experimental_option("prefs", prefs)
                 # edge_options.add_argument("-inprivate")
                 edge_options.add_argument("--disable-extensions")
-                self.driver = webdriver.Remote(
-                    command_executor=self.grid_url, options=edge_options)
+                self.driver = webdriver.Remote(command_executor=self.grid_url, options=edge_options)
                 self.driver.maximize_window()
                 pag.press('esc')
 
@@ -82,48 +86,44 @@ class DriverManager:
                 # self.driver.maximize_window()
                 # self.driver = webdriver.Chrome(ChromeDriverManager().install())
             if browser_name.lower() == "edge":
-                prefs = {"credentials_enable_service": False, "profile.password_manager_enabled": False,
-                         "browser.show_hub_apps_tower": False, "browser.show_hub_apps_tower_pinned": False}
+                prefs = {"credentials_enable_service": False, "profile.password_manager_enabled": False, "browser.show_hub_apps_tower": False, "browser.show_hub_apps_tower_pinned": False}
                 edge_options = EdgeOptions()
-                edge_options.add_experimental_option(
-                    "useAutomationExtension", False)
-                edge_options.add_experimental_option(
-                    "excludeSwitches", ["enable-automation"])
+                edge_options.add_experimental_option("useAutomationExtension", False)
+                edge_options.add_experimental_option("excludeSwitches", ["enable-automation"])
                 edge_options.add_experimental_option("prefs", prefs)
                 # edge_options.add_argument("-inprivate")
                 edge_options.add_argument("--disable-extensions")
-                self.driver = webdriver.Remote(
-                    command_executor=self.grid_url, options=edge_options)
+                self.driver = webdriver.Remote(command_executor=self.grid_url, options=edge_options)
                 self.driver.maximize_window()
                 pag.press('esc')
 
                 # self.driver = webdriver.Edge(EdgeChromiumDriverManager().install())
         else:
             if browser_name.lower() == "chrome":
-                prefs = {"credentials_enable_service": False,
-                         "profile.password_manager_enabled": False}
+                prefs = {"credentials_enable_service": False, "profile.password_manager_enabled": False}
                 options = Options()
-                options.add_experimental_option(
-                    "useAutomationExtension", False)
-                options.add_experimental_option(
-                    "excludeSwitches", ["enable-automation"])
+                options.add_experimental_option("useAutomationExtension", False)
+                options.add_experimental_option("excludeSwitches", ["enable-automation"])
                 options.add_experimental_option("prefs", prefs)
+                if self.is_inprivate:
+                    options.add_argument("--incognito")
+                if self.is_headless:
+                    options.add_argument("--headless")
                 options.add_argument("--no-sandbox")
-                self.driver = webdriver.Chrome(options=options, service=ChromeService(ChromeDriverManager(
-                ).install()))
+                self.driver = webdriver.Chrome(options=options, service=ChromeService(ChromeDriverManager().install()))
                 # self.driver = webdriver.Chrome(options=options)
                 self.driver.maximize_window()
                 # self.driver = webdriver.Chrome(ChromeDriverManager().install())
             if browser_name.lower() == "edge":
-                prefs = {"credentials_enable_service": False, "profile.password_manager_enabled": False,
-                         "browse.show_hub_apps_tower": False, "browser.show_hub_apps_tower_pinned": False}
+                prefs = {"credentials_enable_service": False, "profile.password_manager_enabled": False, "browse.show_hub_apps_tower": False, "browser.show_hub_apps_tower_pinned": False}
                 edge_options = EdgeOptions()
-                edge_options.add_experimental_option(
-                    "useAutomationExtension", False)
-                edge_options.add_experimental_option(
-                    "excludeSwitches", ["enable-automation"])
+                edge_options.add_experimental_option("useAutomationExtension", False)
+                edge_options.add_experimental_option("excludeSwitches", ["enable-automation"])
                 edge_options.add_experimental_option("prefs", prefs)
-                # edge_options.add_argument("--inprivate")
+                if self.is_inprivate:
+                    edge_options.add_argument("--inprivate")
+                if self.is_headless:
+                    edge_options.add_argument("--headless")
                 edge_options.add_argument("--disable-extensions")
                 edge_options.add_argument("--disable-gpu")
                 edge_options.add_argument("--disable-field-trial-config")
@@ -162,13 +162,12 @@ class DriverManager:
                 edge_options.add_argument("--export-tagged-pdf")
                 edge_options.add_argument("--no-sandbox")
                 # edge_options.add_argument("--user-data-dir=new_profile_dir")
-                self.driver = webdriver.Edge(options=edge_options,
-                                             service=EdgeService(EdgeChromiumDriverManager().install()))
+                self.driver = webdriver.Edge(options=edge_options, service=EdgeService(EdgeChromiumDriverManager().install()))
                 # self.driver = webdriver.Edge(options=edge_options)
                 self.driver.maximize_window()
                 # self.driver = webdriver.Edge(EdgeChromiumDriverManager().install())
-                time.sleep(10)
-                pag.press('esc')
+                # time.sleep(5)
+                # pag.press('esc')
             if browser_name.lower() == "firefox":
                 self.driver = webdriver.Firefox()
                 self.driver.maximize_window()
