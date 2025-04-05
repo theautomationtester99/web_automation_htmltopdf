@@ -31,6 +31,7 @@
 # print(generate_random_notif_id())
 
 # import required module
+import os
 from cryptography.fernet import Fernet
 import platform
 # key generation
@@ -104,8 +105,21 @@ import platform
 # else:
 #     print("running")
 
-processes = [1]
+# processes = [1]
 
-for batch_start in range(0, len(processes), 5):
-    batch = processes[batch_start:batch_start + 5] 
-    print(batch)
+# for batch_start in range(0, len(processes), 5):
+#     batch = processes[batch_start:batch_start + 5] 
+#     print(batch)
+
+
+
+def get_logged_in_user_name():
+        """
+        Gets the name of the currently logged-in user.
+
+        Returns:
+            str: The name of the logged-in user.
+        """
+        return os.getlogin()
+
+print(get_logged_in_user_name())

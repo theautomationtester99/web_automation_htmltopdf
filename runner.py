@@ -90,8 +90,6 @@ def start_runner(testscript_file, rlog_queue, rlock, launch_browser=''):
 
     wafl.debug("Loading 'object_repository.properties' is successful.")
 
-    only_delete = str(configs.get("login_uname_textbox_xpath").data)
-
     valid_keywords_tuple = ("tc_id", "tc_desc", "open_browser", "enter_url", "type", "click", "select_file", "verify_displayed_text","mcnp_choose_date_from_datepicker", "wait_for_seconds", "login_jnj", "check_element_enabled","check_element_disabled", "check_element_displayed", "step")
     # all_test_results_list = []
     wafl.debug("Instantiating excel report manager")
@@ -407,7 +405,8 @@ def start_runner(testscript_file, rlog_queue, rlock, launch_browser=''):
             #                km.repo_m.overall_status_text,
             #                km.repo_m.browser_img_alt + " " + km.repo_m.browser_version, km.repo_m.executed_date]
             wafl.debug("Gathering test summary results.")
-            test_result = [km.repo_m.tc_id, km.repo_m.test_description,km.repo_m.overall_status_text, km.repo_m.os_img_alt + " " + km.repo_m.browser_img_alt + " " + km.repo_m.browser_version, km.repo_m.executed_date]
+            logged_user_name = str(utils.get_logged_in_user_name())
+            test_result = [km.repo_m.tc_id, km.repo_m.test_description,km.repo_m.overall_status_text, km.repo_m.os_img_alt + " " + km.repo_m.browser_img_alt + " " + km.repo_m.browser_version + " ( User: " + logged_user_name + " )", km.repo_m.executed_date]
             wafl.debug("Adding row to test summary results excel file.")
             e_report.add_row(test_result)
 
@@ -769,8 +768,8 @@ if __name__ == '__main__':
                         processes.append(Process(target=start_runner, args=(x,log_queue, lock,)))
         
         # Start processes in batches of 5
-        for batch_start in range(0, len(processes), 5):
-            batch = processes[batch_start:batch_start + 5]  # Create batches of 5 processes
+        for batch_start in range(0, len(processes), number_threads):
+            batch = processes[batch_start:batch_start + number_threads]  # Create batches of 5 processes
 
             for process in batch:
                 process.start()

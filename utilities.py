@@ -13,7 +13,6 @@ import shutil
 from io import BytesIO
 import base64
 from cryptography.fernet import Fernet
-import pandas as pd
 
 
 class Utils:
@@ -133,7 +132,6 @@ class Utils:
         Returns:
             str: The name of the logged-in user.
         """
-        self.is_not_used()
         return os.getlogin()
 
     def make_string_manageable(self, input_str, length):
