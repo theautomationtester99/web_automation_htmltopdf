@@ -717,3 +717,11 @@ class Utils:
             format_number(123) -> "0123"
         """
         return f"{number:04}"
+    
+    def format_elapsed_time(self, elapsed_time):
+        milliseconds = int((elapsed_time - int(elapsed_time)) * 1000)
+        seconds = int(elapsed_time) % 60
+        minutes = (int(elapsed_time) // 60) % 60
+        hours = int(elapsed_time) // 3600
+
+        return f"{hours}hrs:{minutes}min:{seconds}sec:{milliseconds}ms"

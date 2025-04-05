@@ -36,6 +36,7 @@ include_files = [
     ('object_repository.properties', 'object_repository.properties'),
     ('encrypted_ts_file.jinja2', 'encrypted_ts_file.jinja2'),
     ('start.properties', 'start.properties')
+    ('enc_help_doc.enc', 'enc_help_doc.enc')
 ]
 
 setup(

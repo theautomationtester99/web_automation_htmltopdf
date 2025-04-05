@@ -1,7 +1,10 @@
 import asyncio
 import re
-from multiprocessing import Process, freeze_support
+from multiprocessing import Process, freeze_support, Lock
 import argparse
+import tempfile
+import time
+import webbrowser
 from config_reader import ConfigReader
 import cv2
 import numpy as np
@@ -17,9 +20,11 @@ from sys import exit
 import os
 from pathlib import Path
 from logger_config import LoggerConfig
+import psutil
 
 utils = Utils()
 prm = PdfReportManager()
+
 
 
 def start_runner(testscript_file, launch_browser=''):
@@ -460,6 +465,57 @@ def take_recording(process_name: Process, record_name):
         logger.error("An error occurred: %s", e, exc_info=True)
         pass
 
+def check_before_start():
+    logger.debug("Loading 'start.properties' file.")
+
+    runner_config_reader = ConfigReader("start.properties")
+    delete_test_results_images_recordings_folders_before_start =  str(runner_config_reader.get_property('Misc', 'delete_test_results_images_recordings_folders_before_start', fallback='No')).lower()
+
+    logger.debug("Checking if in 'start.properties' file option to delete results and recording folders is set to 'yes'.")
+
+    if delete_test_results_images_recordings_folders_before_start.lower() == 'yes':
+        logger.debug("Deleting the test_results and recordings folders.")
+        utils.delete_folder_and_contents("images")
+        utils.delete_folder_and_contents("recordings")
+        utils.delete_folder_and_contents("test_results")
+
+    logger.debug("Deleting the output.xlsx file.")
+    utils.delete_file("output.xlsx")
+    logger.debug("Creating the test_results and recordings folders.")
+    utils.create_image_and_test_results_folders()
+
+    '''
+    Below code checks if there are duplicate test script excel file in '.\\test_scripts' folder and '.\\test_scripts\\chrome'
+    Below code checks if there are duplicate test script excel file in '.\\test_scripts' folder and '.\\test_scripts\\edge'
+    '''
+    logger.debug("Starting analysis of the contents of the test_scripts folders.")
+
+    root_folder = ''
+    chrome_folder = ''
+    edge_folder = ''
+    generic_path = os.path.join(".", "test_scripts")
+    for folder_path in utils.get_list_str_paths_of_all_sub_directories(generic_path):
+        if Path(folder_path).name.lower() == 'test_scripts':
+            root_folder = folder_path
+        if Path(folder_path).name.lower() == 'chrome':
+            chrome_folder = folder_path
+        if Path(folder_path).name.lower() == 'edge':
+            edge_folder = folder_path
+
+    logger.debug("Checking if test_scripts folder and chrome folder contains the same files.")
+
+    if utils.check_if_two_folder_contain_same_files(root_folder, chrome_folder):
+        logger.error("The 'test_scripts' folder and 'chrome' folder contains same test script excel files. Make the files unique per folder.")
+        exit("The 'test_scripts' folder and 'chrome' folder contains same test script excel files. Make the files unique per folder.")
+
+    logger.debug("Checking if test_scripts folder and edge folder contains the same files.")
+
+    if utils.check_if_two_folder_contain_same_files(root_folder, edge_folder):
+        logger.error("The 'test_scripts' folder and 'edge' folder contains same test script excel files. Make the files unique per folder.")
+        exit("The 'test_scripts' folder and 'edge' folder contains same test script excel files. Make the files unique per folder.")
+    '''
+    End
+    '''
 
 if __name__ == '__main__':
     """
@@ -512,28 +568,43 @@ if __name__ == '__main__':
     -
     """
     freeze_support()
+    lock = Lock()
     logger = LoggerConfig().logger
     logger.debug("Execution Started ----------------.")
-
     logger.debug("Parsing the input arguments.")
     parser = argparse.ArgumentParser()
-    parser.add_argument("start", type=str, nargs='?',help="start the execution")
+    parser.add_argument("--start", action="store_true", help="Start the execution.")
+    parser.add_argument("--start-parallel", action="store_true", help="Start parallel execution.")
     parser.add_argument("--version", help="Display the Version", action="store_true")
     parser.add_argument("--encrypt-file", help="Encrypts the file", type=str)
     parser.add_argument("--output-file", help="Specify the output file name", type=str)
+    parser.add_argument("--help-html", action="store_true", help="Open the default browser to display dynamic help.")
     args = parser.parse_args()
 
     logger.debug("Counting the number of input arguments.")
     # Count how many arguments are provided
-    active_args = sum(bool(arg) for arg in [args.start, args.version, args.encrypt_file])
+    active_args = sum(bool(arg) for arg in [args.start, args.start_parallel, args.version, args.encrypt_file, args.help_html])
 
     if active_args > 1:
-        logger.error("Only one of 'start', '--version', or '--encrypt-file' can be used at a time.")
-        exit("Only one of 'start', '--version', or '--encrypt-file' can be used at a time.")
+        logger.error("Only one of '--start', --start-parallel, '--version', '--encrypt-file' or '--help-html' can be used at a time.")
+        exit("Only one of '--start', --start-parallel, '--version', '--encrypt-file' or '--help-html' can be used at a time.")
 
     if args.output_file and not args.encrypt_file:
         logger.error("'--output-file' can only be used with '--encrypt-file'.")
         exit("Error: '--output-file' can only be used with '--encrypt-file'.")
+        
+    if args.help_html:
+        html_content = utils.decrypt_file("enc_help_doc.enc")
+        # Create a temporary file without deleting it afterward
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".html", delete=False) as temp_file:
+            temp_file.write(html_content)
+            temp_file.flush()
+            temp_file_path = temp_file.name
+
+        # Open the temporary file in the default browser
+        webbrowser.open(f"file://{temp_file_path}")
+        logger.debug(f"Temporary file created at: {temp_file_path}")
+        logger.debug("Please close the browser manually when you're done.")
 
     if args.encrypt_file:
         logger.debug("Started encrypting file " + args.encrypt_file + ".")
@@ -545,75 +616,24 @@ if __name__ == '__main__':
             utils.encrypt_file(str(args.encrypt_file), str(output_file))
             logger.debug(f"Finished encrypting file {args.encrypt_file} to {output_file}")
             exit()
-    if args.version and args.start is None:
+    
+    if args.version and not(args.start):
         logger.debug("Version: 3.0")
         exit("Version: 3.0")
-    if args.start is not None and args.start.lower() == 'start' and args.version is False:
+    
+    if args.start and args.version is False:
+        st = time.time()
+        check_before_start()
         logger.debug("Loading 'start.properties' file.")
 
         runner_config_reader = ConfigReader("start.properties")
         run_headless = True if str(runner_config_reader.get_property('Browser_Settings', 'Headless', fallback='No')).lower() == 'yes' else False
+        run_in_grid =  str(runner_config_reader.get_property('SGrid', 'run_in_selenium_grid', fallback='No')).lower()
+        run_in_appium =  str(runner_config_reader.get_property('Appium', 'run_in_appium_grid', fallback='No')).lower()
 
-        start_configs = Properties()
-        with open('start.properties', 'rb') as config_file:
-            start_configs.load(config_file)
-        run_in_grid = str(start_configs.get('run_in_selenium_grid').data)
-        run_in_appium = str(start_configs.get('run_in_appium_grid').data)
-
-        logger.debug("Checking if in 'start.properties' file option to delete results and recording folders is set to 'yes'.")
-
-        delete_test_results_images_recordings_folders_before_start = str(start_configs.get('delete_test_results_images_recordings_folders_before_start').data)
-
-        if delete_test_results_images_recordings_folders_before_start.lower() == 'yes':
-            logger.debug("Deleting the test_results and recordings folders.")
-            utils.delete_folder_and_contents("images")
-            utils.delete_folder_and_contents("recordings")
-            utils.delete_folder_and_contents("test_results")
-
-        logger.debug("Deleting the output.xlsx file.")
-        utils.delete_file("output.xlsx")
-        logger.debug("Creating the test_results and recordings folders.")
-        utils.create_image_and_test_results_folders()
-
-        '''
-        Below code checks if there are duplicate test script excel file in '.\\test_scripts' folder and '.\\test_scripts\\chrome'
-        Below code checks if there are duplicate test script excel file in '.\\test_scripts' folder and '.\\test_scripts\\edge'
-        '''
-        logger.debug("Starting analysis of the contents of the test_scripts folders.")
-
-        root_folder = ''
-        chrome_folder = ''
-        edge_folder = ''
-        generic_path = os.path.join(".", "test_scripts")
-        for folder_path in utils.get_list_str_paths_of_all_sub_directories(generic_path):
-            # if folder_path.split('\\')[-1].lower() == 'test_scripts':
-            #     root_folder = folder_path
-            # if folder_path.split('\\')[-1].lower() == 'chrome':
-            #     chrome_folder = folder_path
-            # if folder_path.split('\\')[-1].lower() == 'edge':
-            #     edge_folder = folder_path
-            if Path(folder_path).name.lower() == 'test_scripts':
-                root_folder = folder_path
-            if Path(folder_path).name.lower() == 'chrome':
-                chrome_folder = folder_path
-            if Path(folder_path).name.lower() == 'edge':
-                edge_folder = folder_path
-
-        logger.debug("Checking if test_scripts folder and chrome folder contains the same files.")
-
-        if utils.check_if_two_folder_contain_same_files(root_folder, chrome_folder):
-            logger.error("The 'test_scripts' folder and 'chrome' folder contains same test script excel files. Make the files unique per folder.")
-            exit("The 'test_scripts' folder and 'chrome' folder contains same test script excel files. Make the files unique per folder.")
-
-        logger.debug("Checking if test_scripts folder and edge folder contains the same files.")
-
-        if utils.check_if_two_folder_contain_same_files(root_folder, edge_folder):
-            logger.error("The 'test_scripts' folder and 'edge' folder contains same test script excel files. Make the files unique per folder.")
-            exit("The 'test_scripts' folder and 'edge' folder contains same test script excel files. Make the files unique per folder.")
-        '''
-        End
-        '''
         logger.debug("Gathering all files present in the test_scripts folder.")
+        
+        generic_path = os.path.join(".", "test_scripts")
 
         for x in utils.get_absolute_file_paths_in_dir(generic_path):
             logger.debug("Getting the file path " + x + ".")
@@ -679,10 +699,82 @@ if __name__ == '__main__':
                         proc1.join()
                         if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
                             proc2.join()
+        et = time.time()
+
+        # get the execution time
+        elapsed_time = round(et - st)
+        logger.info(utils.format_elapsed_time(elapsed_time))
+        
+
 
         asyncio.run(prm.generate_test_summary_pdf())
+    
+    if args.start_parallel and args.version is False:
+        st = time.time()
+        check_before_start()
+        logger.debug("Loading 'start.properties' file.")
 
-    else:
-        logger.error("The syntax for running is 'runner.exe start' or to check the version use 'runner.exe --version'")
-        exit("The syntax for running is 'runner.exe start' or to check the version use 'runner.exe --version'")
+        runner_config_reader = ConfigReader("start.properties")
+        run_headless = True if str(runner_config_reader.get_property('Browser_Settings', 'Headless', fallback='No')).lower() == 'yes' else False
+        run_in_grid =  True if str(runner_config_reader.get_property('SGrid', 'run_in_selenium_grid', fallback='No')).lower() == 'yes' else False
+        run_in_appium =  True if str(runner_config_reader.get_property('Appium', 'run_in_appium_grid', fallback='No')).lower() == 'yes' else False
+        number_threads =  int(runner_config_reader.get_property('Parallel', 'NoThreads', fallback='5'))
+        
+        if number_threads > 5:
+            exit("number of threads cannot be more than 5")
+        
+        if not run_headless and not run_in_grid:
+            logger.error("Parallel execution can only be run in headless mode.")
+            exit("Parallel execution can only be run in headless mode.")
+
+        logger.debug("Gathering all files present in the test_scripts folder.")
+        
+        generic_path = os.path.join(".", "test_scripts")        
+
+        processes = []
+
+        for x in utils.get_absolute_file_paths_in_dir(generic_path):
+            logger.debug("Getting the file path " + x + ".")
+            logger.debug("Checking if the file path contains 'testscript.xlsx' in the end.")
+
+            if "testscript.xlsx" in x:
+                logger.debug("The file path " + x + " contains 'testscript.xlsx' in the end.")
+                logger.debug("Checking if the file name starts with 'ts' (case insensitive).")
+
+                p = re.compile('^ts', re.I)
+                if p.match(os.path.basename(x)):
+                    logger.debug("The file name " + os.path.basename(x) + " starts with 'ts' (case insensitive).")
+                    logger.debug("Checking if the file " + os.path.basename(x) + " is present in chrome or edge folder.")
+                    if os.path.dirname(x).split(os.sep)[-1].lower() == 'chrome':
+                        logger.debug("The file " + os.path.basename(x) + " is present in chrome folder. Launching the execution of test script on chrome browser.")
+                        processes.append(Process(target=start_runner,args=(x, 'chrome',)))
+                    elif os.path.dirname(x).split(os.sep)[-1].lower() == 'edge':
+                        logger.debug("The file " + os.path.basename(x) + " is present in edge folder. Launching the execution of test script on edge browser.")
+                        processes.append(Process(target=start_runner,args=(x, 'edge',)))
+                    elif os.path.dirname(x).split(os.sep)[-1].lower() == 'test_scripts':
+                        logger.debug("The file " + os.path.basename(x) + " is present in test_scripts folder. Launching the execution and browser will be choosen from test script.")
+                        processes.append(Process(target=start_runner, args=(x,)))
+        
+        # Start processes in batches of 5
+        for batch_start in range(0, len(processes), 5):
+            batch = processes[batch_start:batch_start + 5]  # Create batches of 5 processes
+
+            for process in batch:
+                process.start()
+
+            # Wait for all processes in the batch to complete
+            for process in batch:
+                process.join()
+
+        et = time.time()
+
+        # get the execution time
+        elapsed_time = round(et - st)
+        logger.info(utils.format_elapsed_time(elapsed_time))
+        
+        asyncio.run(prm.generate_test_summary_pdf())
+
+    # else:
+    #     logger.error("The syntax for running is 'runner.exe --start' or to check the version use 'runner.exe --version'")
+    #     exit("The syntax for running is 'runner.exe --start' or to check the version use 'runner.exe --version'")
 # print("thread finished...exiting")

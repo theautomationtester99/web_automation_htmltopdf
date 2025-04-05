@@ -86,15 +86,26 @@ import platform
 
 # print(detect_os())
 
-class a:
-    def __init__(self):
-        self.a = 1
+# class a:
+#     def __init__(self):
+#         self.a = 1
 
-    def my_function(self, x):
-        print(f"Received value: {x}")
+#     def my_function(self, x):
+#         print(f"Received value: {x}")
 
-    # Example of passing and incrementing in a single line
-    def another(self):
-        self.my_function(self.a := self.a + 1)
+#     # Example of passing and incrementing in a single line
+#     def another(self):
+#         self.my_function(self.a := self.a + 1)
 
+# run_headless = True
+# run_in_grid =  True 
+# if not run_headless and not run_in_grid:
+#     exit("Parallel execution can only be run in headless mode.")
+# else:
+#     print("running")
 
+processes = [1]
+
+for batch_start in range(0, len(processes), 5):
+    batch = processes[batch_start:batch_start + 5] 
+    print(batch)
