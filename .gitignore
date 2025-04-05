@@ -3,3 +3,8 @@
 /__pycache__
 /.venv
 /images
+/test_results
+/output.html
+/output.xlsx
+output.xlsx
+output.html
