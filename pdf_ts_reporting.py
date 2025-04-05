@@ -1,6 +1,5 @@
 from jinja2 import Environment, FileSystemLoader
 import base64
-from logger_config import LoggerConfig
 from pyppeteer import launch
 
 from utilities import Utils
@@ -22,7 +21,7 @@ class PdfTsReporting:
         footer_template (str): HTML template string for the footer of the PDF.
         document_name_pdf (str): Full path where the generated PDF document will be saved.
     """
-    def __init__(self, logo_path, encrypted_template_file_path, data, document_name):
+    def __init__(self, logger, logo_path, encrypted_template_file_path, data, document_name):
         """
         Initializes the PdfTsReporting class by configuring logger, encoding logo, and generating templates.
 
@@ -32,8 +31,8 @@ class PdfTsReporting:
             data (dict): Data to populate the HTML template.
             document_name (str): Desired name of the output PDF document.
         """
-        self.logger = LoggerConfig().logger
-        self.utils = Utils()
+        self.logger = logger
+        self.utils = Utils(self.logger)
         self.logo_path = logo_path
         self.base64_logo = self._encode_logo()
         self.html_content = self._generate_html(encrypted_template_file_path, data)

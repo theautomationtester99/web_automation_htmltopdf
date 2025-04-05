@@ -1,7 +1,6 @@
 import os
 import time
 import pyautogui
-from logger_config import LoggerConfig
 from selenium.common.exceptions import *
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
@@ -24,13 +23,13 @@ class BrowserDriver(DriverManager):
     Attributes:
         logger: Logger instance for logging browser-related activities.
     """
-    def __init__(self):
+    def __init__(self, logger):
         """
         Initialize the BrowserDriver instance, setting up the logger instance.
         """
-        super().__init__()
-        self.utils = Utils()
-        self.logger = LoggerConfig().logger
+        super().__init__(logger)
+        self.utils = Utils(self.logger)
+        self.logger = logger
 
     def close_browser(self):
         """
@@ -210,7 +209,7 @@ class BrowserDriver(DriverManager):
             image = Image.open(BytesIO(screenshot))
 
             # Add the date-time watermark
-            date_time_str = Utils().get_datetime_string()
+            date_time_str = self.utils.get_datetime_string()
             draw = ImageDraw.Draw(image)
 
             # Use the default font provided by Pillow

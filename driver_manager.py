@@ -1,5 +1,4 @@
 import os
-import time
 
 import pyautogui as pag
 from appium import webdriver as appium_wd
@@ -31,7 +30,7 @@ class DriverManager:
         appium_url (str): The URL for the Appium grid.
     """
 
-    def __init__(self):
+    def __init__(self, logger):
         """
         Initializes a new instance of the DriverManager class. Sets up the required browser configurations by
         reading properties from the 'start.properties' file.
@@ -49,6 +48,7 @@ class DriverManager:
             - run_in_appium_grid: Retrieves Appium grid execution preference.
             - appium_url: Retrieves the Appium grid URL.
         """
+        self.logger = logger
         os.environ['WDM_SSL_VERIFY'] = '0'
         self.config_reader = ConfigReader("start.properties")
         self.is_inprivate = self._is_browser_in_private()

@@ -1,7 +1,6 @@
 import pandas as pd
 from tabulate import tabulate
 
-from logger_config import LoggerConfig
 from utilities import Utils
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
@@ -19,13 +18,14 @@ class ExcelReportManager:
         utils: Instance of the Utils class for utility operations.
         all_test_results_list: List to store all test results data.
     """
-    def __init__(self):
+    def __init__(self, logger, lock):
         """
         Initializes the ExcelReportManager with a logger, utility instance,
         and an empty list for storing test results.
         """
-        self.logger = LoggerConfig().logger
-        self.utils = Utils()
+        self.logger = logger
+        self.lock = lock
+        self.utils = Utils(self.logger)
         self.all_test_results_list = []
 
     def add_row(self, test_result):
@@ -39,14 +39,15 @@ class ExcelReportManager:
             test_result (list): A list containing test result details such as
             test case ID, description, status, browser, and execution date.
         """
-        if self.utils.check_if_file_exists(os.path.join(".", "output.xlsx")):
-            df = pd.read_excel("output.xlsx")
-            self.all_test_results_list = df.values.tolist()
-            self.all_test_results_list.append(test_result)
-            self.export_to_excel()
-        else:
-            self.all_test_results_list.append(test_result)
-            self.export_to_excel()
+        with self.lock:
+            if self.utils.check_if_file_exists(os.path.join(".", "output.xlsx")):
+                df = pd.read_excel("output.xlsx")
+                self.all_test_results_list = df.values.tolist()
+                self.all_test_results_list.append(test_result)
+                self.export_to_excel()
+            else:
+                self.all_test_results_list.append(test_result)
+                self.export_to_excel()
 
     def export_to_excel(self):
         """

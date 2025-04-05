@@ -1,12 +1,8 @@
-import pandas as pd
-from logger_config import LoggerConfig
 from utilities import Utils
 from jinja2 import Environment, FileSystemLoader
-import asyncio
 import os
 import base64
 from pyppeteer import launch
-import pyppeteer
 
 
 class PdfReporting:
@@ -35,7 +31,7 @@ class PdfReporting:
         _generate_html(encrypted_template_file_path, data): Decrypts the template file, populates it with data, and generates HTML content.
         generate_pdf(): Asynchronously creates a PDF from the generated HTML content, header, and footer templates.
     """
-    def __init__(self, logo_path, encrypted_template_file_path, data, tc_id, document_name):
+    def __init__(self, logger, logo_path, encrypted_template_file_path, data, tc_id, document_name):
         """
         Initializes the PdfReporting class with provided attributes.
 
@@ -46,8 +42,8 @@ class PdfReporting:
             tc_id (str): Test case identifier.
             document_name (str): Name of the PDF document to be created.
         """
-        self.logger = LoggerConfig().logger
-        self.utils = Utils()
+        self.logger = logger
+        self.utils = Utils(self.logger)
         self.tc_id = tc_id
         self.logo_path = logo_path
         self.base64_logo = self._encode_logo()

@@ -1,6 +1,6 @@
 import asyncio
 import re
-from multiprocessing import Process, freeze_support, Lock
+from multiprocessing import Process, Queue, freeze_support, Lock
 import argparse
 import tempfile
 import time
@@ -11,7 +11,6 @@ import numpy as np
 import pandas as pd
 import pyautogui
 from jproperties import Properties
-from textwrap3 import wrap
 from excel_report_manager import ExcelReportManager
 from keywords_manager import KeywordsManager
 from pdf_report_manager import PdfReportManager
@@ -20,14 +19,9 @@ from sys import exit
 import os
 from pathlib import Path
 from logger_config import LoggerConfig
-import psutil
-
-utils = Utils()
-prm = PdfReportManager()
 
 
-
-def start_runner(testscript_file, launch_browser=''):
+def start_runner(testscript_file, rlog_queue, rlock, launch_browser=''):
     """
     Start Runner
 
@@ -63,7 +57,9 @@ def start_runner(testscript_file, launch_browser=''):
         Exception: If an error occurs during test script execution.
 
     """
-    wafl = LoggerConfig().logger
+    logger_config = LoggerConfig(log_queue=rlog_queue)
+    wafl = logger_config.logger
+    utils = Utils(wafl)
     '''
     Load the object repository
     '''
@@ -99,7 +95,7 @@ def start_runner(testscript_file, launch_browser=''):
     valid_keywords_tuple = ("tc_id", "tc_desc", "open_browser", "enter_url", "type", "click", "select_file", "verify_displayed_text","mcnp_choose_date_from_datepicker", "wait_for_seconds", "login_jnj", "check_element_enabled","check_element_disabled", "check_element_displayed", "step")
     # all_test_results_list = []
     wafl.debug("Instantiating excel report manager")
-    e_report = ExcelReportManager()
+    e_report = ExcelReportManager(wafl, rlock)
 
     wafl.debug("Checking if the test script excel file name ends with 'testscript.xlsx'")
 
@@ -179,6 +175,13 @@ def start_runner(testscript_file, launch_browser=''):
                     if not (str(row["Keyword"]) == 'tc_id'):
                         wafl.error("The first keyword must be 'tc_id'")
                         exit("The first keyword must be 'tc_id'")
+                    else:
+                        fn = os.path.basename(testscript_file)
+                        prefix = fn.split('_')[0]
+                        if not (str(prefix).lower() == str(row["Input3"]).lower()):
+                            wafl.error("The 'tc_id' in the script file is not matching with the tc id mentioned in the file name " + testscript_file)
+                            exit("The 'tc_id' in the script file is not matching with the tc id mentioned in the file name " + testscript_file)
+                        
                 if index == 1:
                     wafl.debug("Checking if a second keyword in the test script excel file is 'tc_desc'.")
                     if not (str(row["Keyword"]) == 'tc_desc'):
@@ -202,7 +205,7 @@ def start_runner(testscript_file, launch_browser=''):
 
             wafl.debug("Instantiating the keyword manager.")
 
-            km = KeywordsManager()
+            km = KeywordsManager(wafl)
             # tca_id = ''
             # tca_desc = ''
             # tca_browser_name = ''
@@ -569,7 +572,17 @@ if __name__ == '__main__':
     """
     freeze_support()
     lock = Lock()
-    logger = LoggerConfig().logger
+    # Create a shared log queue
+    log_queue = Queue()
+
+    # Initialize logger config and start the listener
+    logger_config = LoggerConfig(log_queue=log_queue)
+    listener = logger_config.start_listener()
+    logger = logger_config.logger
+    
+    utils = Utils(logger)
+    prm = PdfReportManager(logger)
+    
     logger.debug("Execution Started ----------------.")
     logger.debug("Parsing the input arguments.")
     parser = argparse.ArgumentParser()
@@ -649,7 +662,7 @@ if __name__ == '__main__':
                     logger.debug("Checking if the file " + os.path.basename(x) + " is present in chrome or edge folder.")
                     if os.path.dirname(x).split(os.sep)[-1].lower() == 'chrome':
                         logger.debug("The file " + os.path.basename(x) + " is present in chrome folder. Launching the execution of test script on chrome browser.")
-                        proc1 = Process(target=start_runner,args=(x, 'chrome',))
+                        proc1 = Process(target=start_runner,args=(x, log_queue, lock, 'chrome', ))
                         proc1.start()
                         # time.sleep(5)
                         proc2 = None
@@ -667,7 +680,7 @@ if __name__ == '__main__':
                             proc2.join()
                     elif os.path.dirname(x).split(os.sep)[-1].lower() == 'edge':
                         logger.debug("The file " + os.path.basename(x) + " is present in edge folder. Launching the execution of test script on edge browser.")
-                        proc1 = Process(target=start_runner, args=(x, 'edge',))
+                        proc1 = Process(target=start_runner, args=(x, log_queue, lock, 'edge',))
                         proc1.start()
                         # time.sleep(5)
                         proc2 = None
@@ -684,7 +697,7 @@ if __name__ == '__main__':
                             proc2.join()
                     elif os.path.dirname(x).split(os.sep)[-1].lower() == 'test_scripts':
                         logger.debug("The file " + os.path.basename(x) + " is present in test_scripts folder. Launching the execution and browser will be choosen from test script.")
-                        proc1 = Process(target=start_runner, args=(x,))
+                        proc1 = Process(target=start_runner, args=(x,log_queue, lock,))
                         proc1.start()
                         # time.sleep(5)
                         proc2 = None
@@ -741,19 +754,19 @@ if __name__ == '__main__':
                 logger.debug("The file path " + x + " contains 'testscript.xlsx' in the end.")
                 logger.debug("Checking if the file name starts with 'ts' (case insensitive).")
 
-                p = re.compile('^ts', re.I)
+                p = re.compile(r'^ts[a-zA-Z0-9]*_testscript\.xlsx$', re.I)
                 if p.match(os.path.basename(x)):
                     logger.debug("The file name " + os.path.basename(x) + " starts with 'ts' (case insensitive).")
                     logger.debug("Checking if the file " + os.path.basename(x) + " is present in chrome or edge folder.")
                     if os.path.dirname(x).split(os.sep)[-1].lower() == 'chrome':
                         logger.debug("The file " + os.path.basename(x) + " is present in chrome folder. Launching the execution of test script on chrome browser.")
-                        processes.append(Process(target=start_runner,args=(x, 'chrome',)))
+                        processes.append(Process(target=start_runner,args=(x,log_queue, lock, 'chrome',)))
                     elif os.path.dirname(x).split(os.sep)[-1].lower() == 'edge':
                         logger.debug("The file " + os.path.basename(x) + " is present in edge folder. Launching the execution of test script on edge browser.")
-                        processes.append(Process(target=start_runner,args=(x, 'edge',)))
+                        processes.append(Process(target=start_runner,args=(x,log_queue, lock, 'edge',)))
                     elif os.path.dirname(x).split(os.sep)[-1].lower() == 'test_scripts':
                         logger.debug("The file " + os.path.basename(x) + " is present in test_scripts folder. Launching the execution and browser will be choosen from test script.")
-                        processes.append(Process(target=start_runner, args=(x,)))
+                        processes.append(Process(target=start_runner, args=(x,log_queue, lock,)))
         
         # Start processes in batches of 5
         for batch_start in range(0, len(processes), 5):
@@ -773,6 +786,10 @@ if __name__ == '__main__':
         logger.info(utils.format_elapsed_time(elapsed_time))
         
         asyncio.run(prm.generate_test_summary_pdf())
+    
+    log_queue.put(None)  # Signal to stop the listener
+    listener.stop()
+    logger.info("Application ended in main method.")
 
     # else:
     #     logger.error("The syntax for running is 'runner.exe --start' or to check the version use 'runner.exe --version'")

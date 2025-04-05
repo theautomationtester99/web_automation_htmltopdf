@@ -4,7 +4,6 @@ from pdf_reporting import PdfReporting
 from pdf_ts_reporting import PdfTsReporting
 from utilities import Utils
 import os
-from logger_config import LoggerConfig
 
 
 class PdfReportManager:
@@ -13,7 +12,7 @@ class PdfReportManager:
     Handles the organization and structure of step-by-step and sub-step reporting data,
     which is then used to generate visually structured PDF documents.
     """
-    def __init__(self):
+    def __init__(self, logger):
         """
         Initializes the PdfReportManager with essential components and placeholders.
 
@@ -35,8 +34,8 @@ class PdfReportManager:
             executed_date: Stores the date when the test was executed.
             overall_status_text: Text to indicate the overall status of the test, defaults to "PASSED".
         """
-        self.logger = LoggerConfig().logger
-        self.utils = Utils()
+        self.logger = logger
+        self.utils = Utils(self.logger)
         self.tc_id = ''
         self.all_steps_list = []
         self.step_no = 0
@@ -129,7 +128,7 @@ class PdfReportManager:
         self.report_data["executed_date"] = self.executed_date
         self.report_data["overall_status_text"] = self.overall_status_text
         self.report_data["table_data"] = self.table_data
-        pdf = PdfReporting("logo.png", "encrypted_file.jinja2", self.report_data, self.tc_id, self.tc_id + "_test_results_" + self.browser_img_alt + "_" + self.overall_status_text + "_" + self.utils.get_datetime_string())
+        pdf = PdfReporting(self.logger, "logo.png", "encrypted_file.jinja2", self.report_data, self.tc_id, self.tc_id + "_test_results_" + self.browser_img_alt + "_" + self.overall_status_text + "_" + self.utils.get_datetime_string())
 
         await pdf.generate_pdf()
 
@@ -151,7 +150,7 @@ class PdfReportManager:
             df = pd.read_excel("output.xlsx")
             table_data = df.to_dict(orient='records')
 
-            ts_pdf = PdfTsReporting("logo.png", "encrypted_ts_file.jinja2", table_data, "Test_Summary_Results_" + self.utils.get_datetime_string())
+            ts_pdf = PdfTsReporting(self.logger, "logo.png", "encrypted_ts_file.jinja2", table_data, "Test_Summary_Results_" + self.utils.get_datetime_string())
             await ts_pdf.generate_pdf()
 
     def is_not_used(self):

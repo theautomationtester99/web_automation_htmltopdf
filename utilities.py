@@ -2,7 +2,6 @@ import filecmp
 import os
 import platform
 import sys
-from logger_config import LoggerConfig
 import numpy as np
 import cv2
 import pyautogui
@@ -36,15 +35,15 @@ class Utils:
         Ensures only one instance of the class is created.
         """
         if not cls._instance:
-            cls._instance = super(Utils, cls).__new__(cls, *args, **kwargs)
+            cls._instance = super(Utils, cls).__new__(cls)
         return cls._instance
 
-    def __init__(self):
+    def __init__(self, logger):
         """
         Initializes the Utils class by setting up logger and folder paths for images,
         recordings, and test results.
         """
-        self.logger = LoggerConfig().logger
+        self.logger = logger
         self.date_str = self.get_date_string()
         self.date_time_str = self.get_datetime_string()
         # self.images_folder = os.path.abspath("images\\" + self.date_str)
