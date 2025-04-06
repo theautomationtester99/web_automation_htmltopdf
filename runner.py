@@ -23,39 +23,20 @@ from logger_config import LoggerConfig
 
 def start_runner(testscript_file, rlog_queue, rlock, launch_browser=''):
     """
-    Start Runner
+    Initializes and executes the test script.
 
-    This function initializes the test execution environment, validates configurations, processes a test
-    script, and executes test steps based on defined keywords. It performs the following steps:
-
-    1. Loads the 'start.properties' and 'object_repository.properties' configuration files.
-    2. Validates that only one of 'run_in_selenium_grid' or 'run_in_appium_grid' is set to 'Yes'.
-    3. Ensures the test script Excel file:
-        - Is correctly formatted.
-        - Ends with 'testscript.xlsx'.
-        - Has non-empty values in the 'Keyword' column.
-    4. Verifies that the first few rows in the test script contain specific keywords in a defined order:
-        - Row 0: 'tc_id'
-        - Row 1: 'tc_desc'
-        - Row 2: 'step'
-        - Row 3: 'open_browser'
-        - Row 4: 'enter_url'.
-    5. Processes the test script data, validating and executing each step based on predefined keywords:
-        - Keywords include 'tc_id', 'tc_desc', 'step', 'wait_for_seconds', 'open_browser', 'login_jnj',
-        'enter_url', 'type', 'check_element_enabled', 'check_element_disabled', 'check_element_displayed',
-        'mcnp_choose_date_from_datepicker', 'verify_displayed_text', 'click', and 'select_file'.
-        - Passes relevant parameters to the 'KeywordsManager' for execution.
-    6. Collects test results and updates the summary report in Excel.
-    7. Generates a PDF report summarizing the test results.
+    This function sets up the test execution environment, validates configurations, processes the test script,
+    and executes test steps based on predefined keywords. It also generates reports summarizing the test results.
 
     Args:
         testscript_file (str): The path to the test script Excel file.
-        launch_browser (str, optional): Specifies the browser to launch, defaults to an empty string.
+        rlog_queue (Queue): A multiprocessing queue for logging.
+        rlock (Lock): A multiprocessing lock for thread-safe operations.
+        launch_browser (str, optional): Specifies the browser to launch. Defaults to an empty string.
 
     Raises:
-        SystemExit: If invalid configurations or invalid test script data are encountered.
+        SystemExit: If invalid configurations or test script data are encountered.
         Exception: If an error occurs during test script execution.
-
     """
     logger_config = LoggerConfig(log_queue=rlog_queue)
     wafl = logger_config.logger
@@ -63,32 +44,28 @@ def start_runner(testscript_file, rlog_queue, rlock, launch_browser=''):
     '''
     Load the object repository
     '''
-    ele_hl_tm = 1
-    ele_hl_sz = 2
-    ele_hl_cl = 'blue'
     wafl.debug("Loading 'start.properties' file")
     configs = Properties()
     start_properties_configs = Properties()
     with open('start.properties', 'rb') as start_config_file:
-        wafl.debug("Loading 'start.properties' file")
+        wafl.debug("Successfully opened 'start.properties' file for reading.")
         start_properties_configs.load(start_config_file)
 
-    wafl.debug("Loading 'start.properties' is successful")
+    wafl.debug("'start.properties' file loaded successfully.")
 
-    data_run_in_selenium_grid = str(
-        start_properties_configs.get('run_in_selenium_grid').data)
-    data_run_in_appium_grid = str(
-        start_properties_configs.get('run_in_appium_grid').data)
+    data_run_in_selenium_grid = str(start_properties_configs.get('run_in_selenium_grid').data)
+    data_run_in_appium_grid = str(start_properties_configs.get('run_in_appium_grid').data)
 
     if data_run_in_selenium_grid.lower() == data_run_in_appium_grid.lower() == 'yes':
-        exit("In 'start.properties' file, both 'run_in_appium_grid' and 'run_in_selenium_grid' are set as 'Yes'. Only 1 should be set as 'Yes'")
+        wafl.error("Both 'run_in_appium_grid' and 'run_in_selenium_grid' are set to 'Yes' in 'start.properties'. Only one should be set to 'Yes'.")
+        exit("In 'start.properties' file, both 'run_in_appium_grid' and 'run_in_selenium_grid' are set as 'Yes'. Only one should be set as 'Yes'.")
 
-    wafl.debug("Loading 'object_repository.properties' file")
+    wafl.debug("Loading 'object_repository.properties' file.")
 
     with open('object_repository.properties', 'rb') as config_file:
         configs.load(config_file)
 
-    wafl.debug("Loading 'object_repository.properties' is successful.")
+    wafl.debug("'object_repository.properties' file loaded successfully.")
 
     valid_keywords_tuple = ("tc_id", "tc_desc", "open_browser", "enter_url", "type", "click", "select_file", "verify_displayed_text","mcnp_choose_date_from_datepicker", "wait_for_seconds", "login_jnj", "check_element_enabled","check_element_disabled", "check_element_displayed", "step")
     # all_test_results_list = []
@@ -416,6 +393,18 @@ def start_runner(testscript_file, rlog_queue, rlock, launch_browser=''):
 
 
 def take_recording(process_name: Process, record_name):
+    """
+    Records the screen while the specified process is running.
+
+    This function captures the screen and saves it as a video file. It stops recording when the specified process ends.
+
+    Args:
+        process_name (Process): The process to monitor for recording.
+        record_name (str): The name of the output video file.
+
+    Raises:
+        Exception: If an error occurs during recording.
+    """
     try:
         # time.sleep(30)
         # display screen resolution, get it using pyautogui itself
@@ -468,6 +457,15 @@ def take_recording(process_name: Process, record_name):
         pass
 
 def check_before_start():
+    """
+    Performs pre-execution checks and setup.
+
+    This function deletes specified folders and files, creates necessary directories, and validates the contents
+    of the `test_scripts` folder to ensure there are no duplicate test scripts in the `chrome` and `edge` subfolders.
+
+    Raises:
+        SystemExit: If duplicate test scripts are found in the `test_scripts` folder and its subfolders.
+    """
     logger.debug("Loading 'start.properties' file.")
 
     runner_config_reader = ConfigReader("start.properties")
@@ -525,53 +523,25 @@ def check_before_start():
 
 if __name__ == '__main__':
     """
-    This script performs various operations based on the command-line arguments provided by the user. It serves as a command-line tool with the following features:
+    Entry point for the script.
 
-    Features:
-    ---------
-    1. Accepts command-line arguments to start execution, display version information, or encrypt a specified file.
-    2. Enforces rules to ensure proper usage of the arguments. For example:
-    - Only one argument among 'start', '--version', or '--encrypt-file' can be used at a time.
-    - '--output-file' can only be used in conjunction with '--encrypt-file'.
-    3. Handles the encryption of files while checking the validity of input files and specifying an output file name.
-    4. Displays version information ('Version: 3.0') if the '--version' argument is used.
-    5. When 'start' is chosen:
-    - Loads configurations from 'start.properties'.
-    - Deletes specified directories/files and creates folders for storing test results and recordings.
-    - Validates the contents of the 'test_scripts' folder and checks for duplicate files in 'chrome' and 'edge' subdirectories.
-    6. Identifies files named 'testscript.xlsx' in the 'test_scripts', 'chrome', or 'edge' folders:
-    - Validates if the file name starts with 'ts' (case insensitive).
-    - Executes test scripts based on the browser specified by the folder name ('chrome', 'edge', or dynamic selection from 'test_scripts').
-    - Utilizes multi-process handling for execution and recording, if applicable.
-    7. Generates a test summary PDF after completing the execution.
-    8. Process 'testscript.xlsx' files in specified folders ('chrome', 'edge', or 'test_scripts'): The script dynamically handles execution based on folder type and file naming conventions.
-    9. This script uses comprehensive logging to track progress and errors throughout its execution.
+    This script performs various operations based on the command-line arguments provided by the user. It supports
+    the following features:
+    - Starting test execution.
+    - Displaying version information.
+    - Encrypting a specified file.
+    - Generating test summary reports.
 
-    How to Use:
-    -----------
-    - Run the script with the desired arguments:
-    * `start`: Begin execution and process configurations defined in 'start.properties'.
-    * `--version`: Display version information.
-    * `--encrypt-file`: Encrypt a specified file. Use '--output-file' to specify the name of the output file (optional).
-    - Ensure valid usage and adherence to rules for argument combinations.
+    Command-line Arguments:
+        --start: Starts the test execution.
+        --start-parallel: Starts parallel test execution.
+        --version: Displays the version information.
+        --encrypt-file: Encrypts the specified file.
+        --output-file: Specifies the name of the output file (used with --encrypt-file).
+        --help-html: Opens the default browser to display dynamic help.
 
-    Dependencies:
-    -------------
-    - argparse: For command-line argument parsing.
-    - os, Path, and utils modules: To handle file and folder operations.
-    - LoggerConfig: For logging actions and events during execution.
-    - ConfigReader and Properties classes: To read and process configurations from 'start.properties'.
-    - re: For regular expression matching.
-
-    Examples:
-    ---------
-    - Start the execution:
-    python runner.py start
-    - Display version information:
-    python runner.py --version
-    - Encrypt a file and specify an output file name:
-    python runner.py --encrypt-file input.txt --output-file encrypted.txt
-    -
+    Raises:
+        SystemExit: If invalid arguments are provided or errors occur during execution.
     """
     freeze_support()
     lock = Lock()
