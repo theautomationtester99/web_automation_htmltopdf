@@ -508,12 +508,16 @@ def check_before_start():
 
     if utils.check_if_two_folder_contain_same_files(root_folder, chrome_folder):
         logger.error("The 'test_scripts' folder and 'chrome' folder contains same test script excel files. Make the files unique per folder.")
+        log_queue.put(None)  # Signal to stop the listener
+        listener.stop()
         exit("The 'test_scripts' folder and 'chrome' folder contains same test script excel files. Make the files unique per folder.")
 
     logger.debug("Checking if test_scripts folder and edge folder contains the same files.")
 
     if utils.check_if_two_folder_contain_same_files(root_folder, edge_folder):
         logger.error("The 'test_scripts' folder and 'edge' folder contains same test script excel files. Make the files unique per folder.")
+        log_queue.put(None)  # Signal to stop the listener
+        listener.stop()
         exit("The 'test_scripts' folder and 'edge' folder contains same test script excel files. Make the files unique per folder.")
     '''
     End
@@ -599,10 +603,14 @@ if __name__ == '__main__':
 
     if active_args > 1:
         logger.error("Only one of '--start', --start-parallel, '--version', '--encrypt-file' or '--help-html' can be used at a time.")
+        log_queue.put(None)  # Signal to stop the listener
+        listener.stop()
         exit("Only one of '--start', --start-parallel, '--version', '--encrypt-file' or '--help-html' can be used at a time.")
 
     if args.output_file and not args.encrypt_file:
         logger.error("'--output-file' can only be used with '--encrypt-file'.")
+        log_queue.put(None)  # Signal to stop the listener
+        listener.stop()
         exit("Error: '--output-file' can only be used with '--encrypt-file'.")
         
     if args.help_html:
@@ -622,15 +630,21 @@ if __name__ == '__main__':
         logger.debug("Started encrypting file " + args.encrypt_file + ".")
         if not os.path.isfile(args.encrypt_file):
             logger.error("The provided input is not a valid file.")
+            log_queue.put(None)  # Signal to stop the listener
+            listener.stop()
             exit("Error: The provided input is not a valid file.")
         else:
             output_file = args.output_file or "default_encrypted_file"
             utils.encrypt_file(str(args.encrypt_file), str(output_file))
             logger.debug(f"Finished encrypting file {args.encrypt_file} to {output_file}")
+            log_queue.put(None)  # Signal to stop the listener
+            listener.stop()
             exit()
     
     if args.version and not(args.start):
         logger.debug("Version: 3.0")
+        log_queue.put(None)  # Signal to stop the listener
+        listener.stop()
         exit("Version: 3.0")
     
     if args.start and args.version is False:

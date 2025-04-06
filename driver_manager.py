@@ -3,6 +3,7 @@ import os
 import pyautogui as pag
 from appium import webdriver as appium_wd
 from appium.options.android import UiAutomator2Options
+import requests
 from config_reader import ConfigReader
 from jproperties import Properties
 from selenium import webdriver
@@ -21,6 +22,7 @@ class DriverManager:
     from a properties file for initializing browser behavior.
 
     Attributes:
+        logger (Logger): Logger instance for logging messages.
         config_reader (ConfigReader): An instance of ConfigReader to read configuration properties.
         is_inprivate (bool): A boolean value indicating whether the browser should run in private mode.
         is_headless (bool): A boolean value indicating whether the browser should run in headless mode.
@@ -28,6 +30,7 @@ class DriverManager:
         grid_url (str): The URL for the Selenium grid.
         run_in_appium_grid (str): A string indicating whether to run in the Appium grid.
         appium_url (str): The URL for the Appium grid.
+        driver (WebDriver): The WebDriver instance for the launched browser.
     """
 
     def __init__(self, logger):
@@ -38,6 +41,9 @@ class DriverManager:
         - Sets the environment variable 'WDM_SSL_VERIFY' to '0' to bypass SSL verification.
         - Reads and parses the configuration properties from the 'start.properties' file.
         - Initializes browser settings like private mode, headless mode, and grid configurations.
+
+        Args:
+            logger (Logger): Logger instance for logging messages.
 
         Attributes initialized:
             - config_reader: Reads configuration properties.
@@ -62,6 +68,7 @@ class DriverManager:
         self.run_in_appium_grid = str(
             start_configs.get('run_in_appium_grid').data)
         self.appium_url = str(start_configs.get('appium_url').data)
+        self.grid_os_info = ""
 
     def _is_browser_in_private(self):
         """
@@ -80,15 +87,15 @@ class DriverManager:
         Returns:
             bool: True if the browser is configured to run in headless mode, False otherwise.
         """
-        is_in_private = self.config_reader.get_property('Browser_Settings', 'Headless', fallback='No').upper()
-        return str(is_in_private.lower())=="yes"
+        is_headless = self.config_reader.get_property('Browser_Settings', 'Headless', fallback='No').upper()
+        return str(is_headless.lower()) == "yes"
 
     def launch_browser(self, browser_name):
         """
         Launches a web browser based on the provided browser name and configuration settings.
         This method supports execution in Selenium Grid, Appium Grid, or a local environment.
 
-        Parameters:
+        Args:
             browser_name (str): The name of the browser to launch. Supported options include "chrome", "edge", and "firefox".
 
         Functionality:
@@ -118,7 +125,7 @@ class DriverManager:
             ValueError: If the provided browser_name is not supported.
 
         Example:
-            >>> driver_manager = DriverManager()
+            >>> driver_manager = DriverManager(logger)
             >>> driver_manager.launch_browser("chrome")
         """
         if self.run_in_selenium_grid.lower() == 'yes':
@@ -128,15 +135,39 @@ class DriverManager:
                 options.add_experimental_option("useAutomationExtension", False)
                 options.add_experimental_option("excludeSwitches", ["enable-automation"])
                 options.add_experimental_option("prefs", prefs)
+                if self.is_inprivate:
+                    options.add_argument("--incognito")
+                if self.is_headless:
+                    options.add_argument("--headless")
                 self.driver = webdriver.Remote(command_executor=self.grid_url, options=options)
                 self.driver.maximize_window()
                 # self.driver = webdriver.Chrome(ChromeDriverManager().install())
+                # Query the Selenium Grid API for node status
+                try:
+                    response = requests.get(f"{self.grid_url}/status")
+                    response.raise_for_status()
+                    grid_status = response.json()
+                    # self.logger.info(f"Full Grid Status Response: {grid_status}")  # Log the full response
+
+                    nodes = grid_status.get("value", {}).get("nodes", [])
+                    for node in nodes:
+                        os_info = node.get("osInfo", {}).get("name", "Unknown OS")
+                        self.grid_os_info = os_info
+                        os_version = node.get("osInfo", {}).get("version", "Unknown Version")
+                        os_arch = node.get("osInfo", {}).get("arch", "Unknown Architecture")
+                        self.logger.info(f"Node OS: {os_info}, Version: {os_version}, Architecture: {os_arch}")
+                except requests.RequestException as e:
+                    self.logger.error(f"Failed to fetch Selenium Grid status: {e}")
             if browser_name.lower() == "edge":
                 prefs = {"credentials_enable_service": False, "profile.password_manager_enabled": False, "browser.show_hub_apps_tower": False, "browser.show_hub_apps_tower_pinned": False}
                 edge_options = EdgeOptions()
                 edge_options.add_experimental_option("useAutomationExtension", False)
                 edge_options.add_experimental_option("excludeSwitches", ["enable-automation"])
                 edge_options.add_experimental_option("prefs", prefs)
+                if self.is_inprivate:
+                    edge_options.add_argument("--incognito")
+                if self.is_headless:
+                    edge_options.add_argument("--headless")
                 # edge_options.add_argument("-inprivate")
                 edge_options.add_argument("--disable-extensions")
                 self.driver = webdriver.Remote(command_executor=self.grid_url, options=edge_options)
@@ -144,6 +175,22 @@ class DriverManager:
                 pag.press('esc')
 
                 # self.driver = webdriver.Edge(EdgeChromiumDriverManager().install())
+                # Query the Selenium Grid API for node status
+                try:
+                    response = requests.get(f"{self.grid_url}/status")
+                    response.raise_for_status()
+                    grid_status = response.json()
+                    # self.logger.info(f"Full Grid Status Response: {grid_status}")  # Log the full response
+                    # Extract OS information from the nodes
+                    nodes = grid_status.get("value", {}).get("nodes", [])
+                    for node in nodes:
+                        os_info = node.get("osInfo", {}).get("name", "Unknown OS")
+                        self.grid_os_info = os_info
+                        os_version = node.get("osInfo", {}).get("version", "Unknown Version")
+                        os_arch = node.get("osInfo", {}).get("arch", "Unknown Architecture")
+                        self.logger.info(f"Node OS: {os_info}, Version: {os_version}, Architecture: {os_arch}")
+                except requests.RequestException as e:
+                    self.logger.error(f"Failed to fetch Selenium Grid status: {e}")
         elif self.run_in_appium_grid.lower() == 'yes':
             if browser_name.lower() == "chrome":
                 print('inside loop')

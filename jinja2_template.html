@@ -141,6 +141,9 @@
         <div>
             <img id="browsimg" src="{{ browser_img_src }}" alt="{{ browser_img_alt }}">
             <img id="osimg" src="{{ os_img_src }}" alt="{{ os_img_alt }}">
+            {% if grid_img_src %}
+            <img id="osimg" src="{{ grid_img_src }}">
+            {% endif %}
         </div>
         <div><b>Version Details:</b></div>
         <div>{{ browser_version }}</div>
