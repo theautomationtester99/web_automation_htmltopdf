@@ -1,3 +1,4 @@
+from config_reader import ConfigReader
 from driver_functions import BrowserDriver
 from pdf_report_manager import PdfReportManager
 from utilities import Utils
@@ -21,6 +22,7 @@ class KeywordsManager(BrowserDriver):
     def __init__(self, logger):
 
         super().__init__(logger)
+        self.screenshot_strategy = self._get_screenshot_strategy()
         self.screenshot_no = 0
         self.screenshot_first_str = ""
         self.logger = logger
@@ -35,7 +37,43 @@ class KeywordsManager(BrowserDriver):
     '''
     The below are the keywords that can be used generically for any application under testing.
     '''
+    
+    def _get_screenshot_strategy(self):
+        """
+        Fetches the screenshot_return value from the start.properties file.
 
+        Args:
+            start_props_reader (ConfigReader): Reader for the 'start.properties' configuration file.
+
+        Returns:
+            str: The value of screenshot_return (always, onerror, or never).
+        """
+        start_props_reader = ConfigReader("start.properties")
+        return str(start_props_reader.get_property('Misc', 'screenshot_strategy',fallback='always')).lower()
+
+    def ge_switch_to_iframe(self, locator, locator_type, element_name):
+        """
+        Creates a PDF report and closes the browser instance.
+
+        Logs the closure of the browser and generates a PDF report using the PdfReportManager.
+        """
+        try:
+            self.wait_for_element(locator, locator_type)
+            self.scroll_into_view(locator, locator_type)
+            # self.web_scroll()
+            # self.ge_click(locator, locator_type, element_name)
+            self.highlight(1, "blue", 2, locator, locator_type)
+            self.switch_to_iframe(locator, locator_type)            
+            self.screenshot_no += 1
+            self.repo_m.add_report_data(sub_step="Switch to Iframe " + element_name, sub_step_message="Switched to Iframe successfully", sub_step_status='Pass', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+        except Exception as e:
+            self.screenshot_no += 1
+            self.logger.error("An error occurred: %s", e, exc_info=True)
+            self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
+            self.repo_m.add_report_data(sub_step="Switch to Iframe " + element_name, sub_step_message="Error Occured. " + str(e), sub_step_status='Fail', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+
+            raise
+    
     def ge_close(self):
         """
         Creates a PDF report and closes the browser instance.
@@ -85,7 +123,7 @@ class KeywordsManager(BrowserDriver):
         Args:
             how_seconds (str): The duration in seconds to pause execution.
         """
-        self.logger.debug("Pausing the execution for " + how_seconds + " seconds")
+        self.logger.debug("Pausing the execution for " + str(how_seconds) + " seconds")
         self.wait_for_some_time(how_seconds)
 
     def ge_open_browser(self, browser_name):
@@ -377,6 +415,7 @@ class KeywordsManager(BrowserDriver):
         """
         try:
             self.scroll_into_view(locator, locator_type)
+            # self.web_scroll()
             self.highlight(1, "blue", 2, locator, locator_type)
             self.element_click(locator, locator_type)
             self.wait_for_some_time(2)

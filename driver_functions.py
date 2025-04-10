@@ -64,7 +64,7 @@ class BrowserDriver(DriverManager):
         self.logger.debug("Opening URL " + str(url))
         self.driver.get(url)
 
-    def scroll_into_view(self, locator, locator_type, element=None):
+    def scroll_into_view1(self, locator, locator_type, element=None):
         """
         Scroll to the web element identified by the given locator.
 
@@ -80,6 +80,27 @@ class BrowserDriver(DriverManager):
             if locator:
                 element = self.get_element(locator, locator_type)
             self.driver.execute_script("arguments[0].scrollIntoView();", element)
+            self.logger.debug("scrolling to element with locator: " + locator + " locator_type: " + locator_type)
+        except:
+            self.logger.error("cannot send data on the element with locator: " + locator + " locator_type: " + locator_type)
+            raise
+    
+    def scroll_into_view(self, locator, locator_type, element=None):
+        """
+        Scroll to the web element identified by the given locator.
+
+        Args:
+            locator (str): The locator of the web element.
+            locator_type (str): The type of locator (e.g., ID, XPath).
+            element (WebElement, optional): Directly passed web element if available.
+
+        Raises:
+            Exception: If unable to scroll to the element.
+        """
+        try:
+            if locator:
+                element = self.get_element(locator, locator_type)
+            self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element)
             self.logger.debug("scrolling to element with locator: " + locator + " locator_type: " + locator_type)
         except:
             self.logger.error("cannot send data on the element with locator: " + locator + " locator_type: " + locator_type)
@@ -172,7 +193,7 @@ class BrowserDriver(DriverManager):
     #     except Exception as e:
     #         self.logger.error("### Exception Occurred when taking screenshot")
     #         raise
-    
+
     def take_screenshot_with_base64_watermark(self, input_string):
         """
         Capture a screenshot, overlay a date-time watermark inside
@@ -191,12 +212,12 @@ class BrowserDriver(DriverManager):
         try:
             # Define the base folder
             base_folder = self.utils.images_folder
-            
+
             # Extract folder structure and file name from input string
             parts = input_string.split('_')
             if len(parts) < 2:
                 raise ValueError("Input string must contain at least two parts separated by underscores.")
-            
+
             folder_path = os.path.join(base_folder, parts[0], parts[1])
             file_name = input_string + ".png"
             file_path = os.path.join(folder_path, file_name)
@@ -612,6 +633,32 @@ class BrowserDriver(DriverManager):
             text = None
             raise
         return text
+    
+    def switch_to_iframe(self, locator="", locator_type="id", element=None):
+        """
+        Check if a web element is present.
+        Either provide a pre-located element or specify a combination of locator and locator_type.
+
+        Args:
+            locator (str, optional): The locator for the web element (default: "").
+            locator_type (str, optional): The type of locator (e.g., "id", "xpath", default: "id").
+            element (WebElement, optional): A pre-located web element (default: None).
+
+        Returns:
+            bool: True if the element is present, False otherwise.
+
+        Raises:
+            Exception: Logs an error and raises an exception if the presence check fails.
+        """
+        try:
+            if locator:
+                element = self.get_element(locator, locator_type)
+            
+            self.driver.switch_to.default_content()  # Switch back to the main content
+            self.driver.switch_to.frame(element)
+            
+        except:
+            self.logger.error("Unable to switch to iframe with locator: " + locator + " and locator_type: " + locator_type)
 
     def is_element_present(self, locator="", locator_type="id", element=None):
         """

@@ -1,5 +1,6 @@
 import filecmp
 import os
+from pathlib import Path
 import platform
 import sys
 import numpy as np
@@ -321,7 +322,7 @@ class Utils:
 
     #     # Return the base64 image code
     #     return f"data:image/png;base64,{base64_image}"
-    
+
     def take_screenshot_full_src_tag(self, file_name: str):
         """
         Takes a screenshot of the full screen, saves it under the appropriate folder structure,
@@ -414,7 +415,7 @@ class Utils:
             for f in filenames:
                 yield os.path.abspath(os.path.join(dir_path, f))
 
-    def get_list_str_paths_of_all_sub_directories(self, folder):
+    def get_list_abs_paths_of_dir_and_sub_dir(self, folder):
         """
         Retrieves a list of absolute paths for all subdirectories within a given folder.
 
@@ -433,6 +434,22 @@ class Utils:
             if os.path.isdir(d):
                 str_lst.append(d)
         return str_lst
+
+    def get_abs_path_folder_matching_string_within_folder(self, root_folder_path, search_folder_name: str) -> str:
+        """
+        Processes the test_scripts folder to identify subfolders like 'chrome', 'edge', or 'test_scripts'.
+
+        Args:
+            folder_name (str): The name of the folder to process (e.g., 'chrome', 'edge', 'test_scripts').
+            utils (Utils): Utility class instance for file operations.
+
+        Returns:
+            str: The path to the folder if found, otherwise an empty string.
+        """
+        for folder_path in self.get_list_abs_paths_of_dir_and_sub_dir(root_folder_path):
+            if Path(folder_path).name.lower() == search_folder_name.lower():
+                return folder_path
+        return ''
 
     def check_if_two_folder_contain_same_files(self, folder1, folder2):
         """
@@ -697,7 +714,7 @@ class Utils:
             return "Windows"
         else:
             return f"Operating System detected: {os_name}"
-        
+
     def format_number_zeropad_4char(self, number):
         """
         Converts an integer to a zero-padded string with a length of 4 characters.
@@ -706,7 +723,7 @@ class Utils:
             number (int): The integer to be formatted.
 
         Returns:
-            str: A string representation of the integer with leading zeros, 
+            str: A string representation of the integer with leading zeros,
                 ensuring a total length of 4 characters.
 
         Example:
@@ -714,7 +731,7 @@ class Utils:
             format_number(123) -> "0123"
         """
         return f"{number:04}"
-    
+
     def format_elapsed_time(self, elapsed_time):
         milliseconds = int((elapsed_time - int(elapsed_time)) * 1000)
         seconds = int(elapsed_time) % 60
