@@ -2,6 +2,7 @@ import asyncio
 import re
 from multiprocessing import Process, Queue, freeze_support, Lock
 import argparse
+import sys
 import tempfile
 import time
 import webbrowser
@@ -22,7 +23,7 @@ from logger_config import LoggerConfig
 from constants import VALID_KEYWORDS
 
 
-def start_runner(testscript_file, rlog_queue, rlock,start_props_reader,object_repo_reader, launch_browser=''):
+def start_runner(testscript_file, rlog_queue, rlock, start_props_reader, object_repo_reader, launch_browser=''):
     """
     Initializes and executes the test script.
 
@@ -33,10 +34,12 @@ def start_runner(testscript_file, rlog_queue, rlock,start_props_reader,object_re
         testscript_file (str): The path to the test script Excel file.
         rlog_queue (Queue): A multiprocessing queue for logging.
         rlock (Lock): A multiprocessing lock for thread-safe operations.
+        start_props_reader (ConfigReader): Reader for the 'start.properties' configuration file.
+        object_repo_reader (ConfigReader): Reader for the 'object_repository.properties' configuration file.
         launch_browser (str, optional): Specifies the browser to launch. Defaults to an empty string.
 
     Raises:
-        SystemExit: If invalid configurations or test script data are encountered.
+        ValueError: If invalid configurations or test script data are encountered.
         Exception: If an error occurs during test script execution.
     """
     logger_config = LoggerConfig(log_queue=rlog_queue)
@@ -46,9 +49,9 @@ def start_runner(testscript_file, rlog_queue, rlock,start_props_reader,object_re
     data_run_in_selenium_grid = str(start_props_reader.get_property('SGrid', 'run_in_selenium_grid', fallback='No')).lower()
     data_run_in_appium_grid = str(start_props_reader.get_property('Appium', 'run_in_appium_grid', fallback='No')).lower()
 
-    if data_run_in_selenium_grid.lower() == data_run_in_appium_grid.lower() == 'yes':
+    if data_run_in_selenium_grid == data_run_in_appium_grid == 'yes':
         wafl.error("Both 'run_in_appium_grid' and 'run_in_selenium_grid' are set to 'Yes' in 'start.properties'. Only one should be set to 'Yes'.")
-        exit("In 'start.properties' file, both 'run_in_appium_grid' and 'run_in_selenium_grid' are set as 'Yes'. Only one should be set as 'Yes'.")
+        raise ValueError("In 'start.properties' file, both 'run_in_appium_grid' and 'run_in_selenium_grid' are set as 'Yes'. Only one should be set as 'Yes'.")
 
     wafl.debug("Instantiating excel report manager")
     e_report = ExcelReportManager(wafl, rlock)
@@ -60,28 +63,25 @@ def start_runner(testscript_file, rlog_queue, rlock,start_props_reader,object_re
         wafl.debug("Checking if the test script excel file is in correct excel format")
         if utils.is_excel_doc(testscript_file):
             wafl.debug("Test script excel file is in correct excel format. Proceeding execution.")
-            # all_steps_list = []
-            # step_no = 1
             wafl.debug("Reading the test script excel file into pandas dataframe.")
-            df = pd.read_excel(testscript_file,dtype={"Keyword": "string", "Input1": "string","Input2": "string","Input3": "string"})
+            df = pd.read_excel(testscript_file, dtype={"Keyword": "string", "Input1": "string", "Input2": "string", "Input3": "string"})
             wafl.debug("Checking if the 'Keyword' column of test script excel file does not contain empty values.")
             check_nan_for_test_steps = df['Keyword'].isnull().values.any()
 
             if check_nan_for_test_steps:
                 wafl.error("The 'Keyword' column in the excel file contains empty values. Please check.")
-                exit("The 'Keyword' column in the excel file contains empty values. Please check.")
+                raise ValueError("The 'Keyword' column in the excel file contains empty values. Please check.")
 
             wafl.debug("Replacing all empty values in pandas data frame as ''.")
             df1 = df.replace(np.nan, '', regex=True)
             wafl.debug("Looping through the data frame to check the validity of its content.")
             for index, row in df1.iterrows():
                 wafl.debug("Reading Row Number " + str(index))
-                # print(index)
-                wafl.debug("Checking if the keyword in row number " + str(index) + " of 'Keyword' column '" +str(row["Keyword"]) + "' is a valid keyword.")
+                wafl.debug("Checking if the keyword in row number " + str(index) + " of 'Keyword' column '" + str(row["Keyword"]) + "' is a valid keyword.")
                 if str(row["Keyword"]) not in VALID_KEYWORDS:
-                    wafl.error("The keyword in row number " + str(index) + " of 'Keyword' column '" +str(row["Keyword"]) + "' is invalid.")
-                    exit("The keyword '" + row["Keyword"] + "' entered in keyword column in the excel file is invalid. Please check.")
-                wafl.debug("The keyword in row number " + str(index) + " of 'Keyword' column '" +str(row["Keyword"]) + "' is a valid keyword.")
+                    wafl.error("The keyword in row number " + str(index) + " of 'Keyword' column '" + str(row["Keyword"]) + "' is invalid.")
+                    raise ValueError(f"The keyword '{row['Keyword']}' entered in keyword column in the excel file is invalid. Please check.")
+                wafl.debug("The keyword in row number " + str(index) + " of 'Keyword' column '" + str(row["Keyword"]) + "' is a valid keyword.")
 
                 if str(row["Keyword"]) == 'mcnp_choose_date_from_datepicker':
                     which_calender = str(row["Input2"])
@@ -97,7 +97,7 @@ def start_runner(testscript_file, rlog_queue, rlock,start_props_reader,object_re
                     if launch_browser == '':
                         if browser_given.lower() != 'chrome' and browser_given.lower() != 'edge':
                             wafl.error("The input given for keyword '" + str(row["Keyword"]) + "' in Input3 column in the excel file is invalid. It should be either 'edge' or 'chrome'.")
-                            exit("The input given for keyword '" + str(row["Keyword"]) + "' in Input3 column in the excel file is invalid. It should be either 'edge' or 'chrome'. Please check.")
+                            raise ValueError("The input given for keyword '" + str(row["Keyword"]) + "' in Input3 column in the excel file is invalid. It should be either 'edge' or 'chrome'. Please check.")
 
                 if str(row["Keyword"]) == 'login_jnj':
                     element_name_data = str(row["Input1"])
@@ -109,18 +109,18 @@ def start_runner(testscript_file, rlog_queue, rlock,start_props_reader,object_re
                     login_uname_pwd_data_lst = login_uname_pwd_data.split(";")
 
                     if len(list(filter(None, login_uname_pwd_data_lst))) != 2:
-                        exit("The data entered in the Input3 Column for the keyword '" + row[
+                        raise ValueError("The data entered in the Input3 Column for the keyword '" + row[
                             "Keyword"] + "' is '" + login_uname_pwd_data + "'. It is not correct. It should be 2 "
                             "datas "
                             "separated by a ';'. For example "
                             "UserName;Password")
                     if len(list(filter(None, element_name_data_lst))) != 4:
-                        exit("The data entered in the Input1 Column for the keyword '" + row[
+                        raise ValueError("The data entered in the Input1 Column for the keyword '" + row[
                             "Keyword"] + "' is '" + element_name_data + "'. It is not correct. It should be 4 datas "
                             "separated by a ';'. For example "
                             "Name1;Name2;Name3;Name4")
                     if len(list(filter(None, element_locator_data_lst))) != 4:
-                        exit("The data entered in the Input2 Column for the keyword '" + row[
+                        raise ValueError("The data entered in the Input2 Column for the keyword '" + row[
                             "Keyword"] + "' is '" + element_locator_data + "'. It is not correct. It should be 4 "
                             "datas "
                             "separated by a ';'. For example "
@@ -130,45 +130,38 @@ def start_runner(testscript_file, rlog_queue, rlock,start_props_reader,object_re
                     wafl.debug("Checking if a first keyword in the test script excel file is 'tc_id'.")
                     if not (str(row["Keyword"]) == 'tc_id'):
                         wafl.error("The first keyword must be 'tc_id'")
-                        exit("The first keyword must be 'tc_id'")
+                        raise ValueError("The first keyword must be 'tc_id'")
                     else:
                         fn = os.path.basename(testscript_file)
                         prefix = fn.split('_')[0]
                         if not (str(prefix).lower() == str(row["Input3"]).lower()):
                             wafl.error("The 'tc_id' in the script file is not matching with the tc id mentioned in the file name " + testscript_file)
-                            exit("The 'tc_id' in the script file is not matching with the tc id mentioned in the file name " + testscript_file)
+                            raise ValueError("The 'tc_id' in the script file is not matching with the tc id mentioned in the file name " + testscript_file)
                         
                 if index == 1:
                     wafl.debug("Checking if a second keyword in the test script excel file is 'tc_desc'.")
                     if not (str(row["Keyword"]) == 'tc_desc'):
                         wafl.error("The second keyword must be 'tc_desc'")
-                        exit("The second keyword must be 'tc_desc'")
+                        raise ValueError("The second keyword must be 'tc_desc'")
                 if index == 2:
                     wafl.debug("Checking if a third keyword in the test script excel file is 'step'.")
                     if not (str(row["Keyword"]) == 'step'):
                         wafl.error("The third keyword must be 'step'")
-                        exit("The third keyword must be 'step'")
+                        raise ValueError("The third keyword must be 'step'")
                 if index == 3:
                     wafl.debug("Checking if a fourth keyword in the test script excel file is 'open_browser'.")
                     if not (str(row["Keyword"]) == 'open_browser'):
                         wafl.error("The fourth keyword must be 'open_browser'")
-                        exit("The fourth keyword must be 'open_browser'")
+                        raise ValueError("The fourth keyword must be 'open_browser'")
                 if index == 4:
                     wafl.debug("Checking if a fifth keyword in the test script excel file is 'enter_url'.")
                     if not (str(row["Keyword"]) == 'enter_url'):
                         wafl.error("The fifth keyword must be 'enter_url'")
-                        exit("The fifth keyword must be 'enter_url'")
+                        raise ValueError("The fifth keyword must be 'enter_url'")
 
             wafl.debug("Instantiating the keyword manager.")
 
             km = KeywordsManager(wafl)
-            # tca_id = ''
-            # tca_desc = ''
-            # tca_browser_name = ''
-            # tca_browser_version = ''
-            # tca_date_executed = utils.get_date_string()
-            # tca_overall_status = 'Passed'
-            # repo_m = PdfReportManager()
             wafl.debug("Looping through the data frame to execute the test script.")
             for index, row in df1.iterrows():
                 wafl.debug("Reading Row Number " + str(index))
@@ -188,7 +181,6 @@ def start_runner(testscript_file, rlog_queue, rlock,start_props_reader,object_re
 
                 if str(row["Keyword"]) == 'wait_for_seconds':
                     wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input3"]) + "' to the keyword manager.")
-                    # sd.wait_for_some_time(int(row["Input3"]))
                     km.ge_wait_for_seconds(int(row["Input3"]))
 
                 if str(row["Keyword"]) == 'open_browser':
@@ -219,7 +211,6 @@ def start_runner(testscript_file, rlog_queue, rlock,start_props_reader,object_re
                             ";")
                         login_jnj_uname_pwd_data_lst = login_jnj_uname_pwd_data.split(
                             ";")
-                        # login_jnj_name_locator_dict = dict(zip(login_jnj_name_data_lst, login_jnj_locator_data_lst))
                         login_jnj_dict = {'locator_type': 'xpath', 'uname_data': login_jnj_uname_pwd_data_lst[0],
                                           'pwd_data': login_jnj_uname_pwd_data_lst[1]}
                         for i in range(len(login_jnj_name_data_lst)):
@@ -347,9 +338,6 @@ def start_runner(testscript_file, rlog_queue, rlock,start_props_reader,object_re
                         wafl.error("An error occurred: %s", e, exc_info=True)
                         break
 
-            # test_result = [km.repo_m.tc_id, "\n".join(wrap(km.repo_m.test_description, width=110)),
-            #                km.repo_m.overall_status_text,
-            #                km.repo_m.browser_img_alt + " " + km.repo_m.browser_version, km.repo_m.executed_date]
             wafl.debug("Gathering test summary results.")
             logged_user_name = str(utils.get_logged_in_user_name())
             test_result = [km.repo_m.tc_id, km.repo_m.test_description,km.repo_m.overall_status_text, km.repo_m.os_img_alt + " " + km.repo_m.browser_img_alt + " " + km.repo_m.browser_version + " ( User: " + logged_user_name + " )", km.repo_m.executed_date]
@@ -375,49 +363,27 @@ def take_recording(process_name: Process, record_name):
         Exception: If an error occurs during recording.
     """
     try:
-        # time.sleep(30)
-        # display screen resolution, get it using pyautogui itself
         logger = LoggerConfig().logger
         logger.debug("Gathering screen size for recording.")
 
         SCREEN_SIZE = tuple(pyautogui.size())
-        # define the codec
-        # fourcc = cv2.VideoWriter_fourcc(*"XVID")
         fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
-        # frames per second
-        logger.debug("Setting FPS for recording.")
-
         fps = 60.0
-        # create the video write object
-        # out = cv2.VideoWriter(utils.get_test_recordings_folder() + "\\" + record_name +utils.get_datetime_string() + ".mp4", fourcc,fps, (SCREEN_SIZE))
-        # Construct the path in a platform-independent way
-        logger.debug("Gathering the output path and file name for recording.")
+        logger.debug("Setting FPS for recording.")
 
         output_path = os.path.join(utils.get_test_recordings_folder(), f"{record_name}_{utils.get_datetime_string()}.mp4")
 
-        # Create the VideoWriter object
         out = cv2.VideoWriter(output_path, fourcc, fps, SCREEN_SIZE)
-        # the time you want to record in seconds
-        record_seconds = 10
 
         logger.debug("Starting recording.")
 
         while True:
-            # print(process_name.is_alive())
-            # make a screenshot
             img = pyautogui.screenshot()
-            # convert these pixels to a proper numpy array to work with OpenCV
             frame = np.array(img)
-            # convert colors from BGR to RGB
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            # write the frame
             out.write(frame)
-            # show the frame
-            # cv2.imshow("screenshot", frame)
-            # if the user clicks q, it exits
             if not process_name.is_alive():
                 break
-        # make sure everything is closed when exited
         cv2.destroyAllWindows()
         out.release()
         logger.debug("Finished recording.")
@@ -432,12 +398,15 @@ def check_before_start(start_props_reader):
     This function deletes specified folders and files, creates necessary directories, and validates the contents
     of the `test_scripts` folder to ensure there are no duplicate test scripts in the `chrome` and `edge` subfolders.
 
+    Args:
+        start_props_reader (ConfigReader): Reader for the 'start.properties' configuration file.
+
     Raises:
-        SystemExit: If duplicate test scripts are found in the `test_scripts` folder and its subfolders.
+        ValueError: If duplicate test scripts are found in the `test_scripts` folder and its subfolders.
     """
     logger.debug("Loading 'start.properties' file.")
 
-    delete_test_results_images_recordings_folders_before_start =  str(start_props_reader.get_property('Misc', 'delete_test_results_images_recordings_folders_before_start', fallback='No')).lower()
+    delete_test_results_images_recordings_folders_before_start = str(start_props_reader.get_property('Misc', 'delete_test_results_images_recordings_folders_before_start', fallback='No')).lower()
 
     logger.debug("Checking if in 'start.properties' file option to delete results and recording folders is set to 'yes'.")
 
@@ -452,10 +421,6 @@ def check_before_start(start_props_reader):
     logger.debug("Creating the test_results and recordings folders.")
     utils.create_image_and_test_results_folders()
 
-    '''
-    Below code checks if there are duplicate test script excel file in '.\\test_scripts' folder and '.\\test_scripts\\chrome'
-    Below code checks if there are duplicate test script excel file in '.\\test_scripts' folder and '.\\test_scripts\\edge'
-    '''
     logger.debug("Starting analysis of the contents of the test_scripts folders.")
 
     root_folder = ''
@@ -474,20 +439,14 @@ def check_before_start(start_props_reader):
 
     if utils.check_if_two_folder_contain_same_files(root_folder, chrome_folder):
         logger.error("The 'test_scripts' folder and 'chrome' folder contains same test script excel files. Make the files unique per folder.")
-        log_queue.put(None)  # Signal to stop the listener
-        listener.stop()
-        exit("The 'test_scripts' folder and 'chrome' folder contains same test script excel files. Make the files unique per folder.")
+        raise ValueError("The 'test_scripts' folder and 'chrome' folder contains same test script excel files. Make the files unique per folder.")
 
     logger.debug("Checking if test_scripts folder and edge folder contains the same files.")
 
     if utils.check_if_two_folder_contain_same_files(root_folder, edge_folder):
         logger.error("The 'test_scripts' folder and 'edge' folder contains same test script excel files. Make the files unique per folder.")
-        log_queue.put(None)  # Signal to stop the listener
-        listener.stop()
-        exit("The 'test_scripts' folder and 'edge' folder contains same test script excel files. Make the files unique per folder.")
-    '''
-    End
-    '''
+        raise ValueError("The 'test_scripts' folder and 'edge' folder contains same test script excel files. Make the files unique per folder.")
+
 
 if __name__ == '__main__':
     """
@@ -509,246 +468,204 @@ if __name__ == '__main__':
         --help-html: Opens the default browser to display dynamic help.
 
     Raises:
-        SystemExit: If invalid arguments are provided or errors occur during execution.
+        ValueError: If invalid arguments are provided or errors occur during execution.
+        SystemExit: If the program exits successfully after completing a specific operation.
     """
-    freeze_support()
-    lock = Lock()
-    # Create a shared log queue
-    log_queue = Queue()
+    try:
+        freeze_support()
+        lock = Lock()
+        log_queue = Queue()
 
-    # Initialize logger config and start the listener
-    logger_config = LoggerConfig(log_queue=log_queue)
-    listener = logger_config.start_listener()
-    logger = logger_config.logger
-    
-    utils = Utils(logger)
-    prm = PdfReportManager(logger)
-    
-    start_props_reader = ConfigReader("start.properties")
-    object_repo_reader = ConfigReader("object_repository.properties")
-    
-    logger.debug("Execution Started ----------------.")
-    logger.debug("Parsing the input arguments.")
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--start", action="store_true", help="Start the execution.")
-    parser.add_argument("--start-parallel", action="store_true", help="Start parallel execution.")
-    parser.add_argument("--version", help="Display the Version", action="store_true")
-    parser.add_argument("--encrypt-file", help="Encrypts the file", type=str)
-    parser.add_argument("--output-file", help="Specify the output file name", type=str)
-    parser.add_argument("--help-html", action="store_true", help="Open the default browser to display dynamic help.")
-    args = parser.parse_args()
+        logger_config = LoggerConfig(log_queue=log_queue)
+        listener = logger_config.start_listener()
+        logger = logger_config.logger
 
-    logger.debug("Counting the number of input arguments.")
-    # Count how many arguments are provided
-    active_args = sum(bool(arg) for arg in [args.start, args.start_parallel, args.version, args.encrypt_file, args.help_html])
+        utils = Utils(logger)
+        prm = PdfReportManager(logger)
 
-    if active_args > 1:
-        logger.error("Only one of '--start', --start-parallel, '--version', '--encrypt-file' or '--help-html' can be used at a time.")
-        log_queue.put(None)  # Signal to stop the listener
+        start_props_reader = ConfigReader("start.properties")
+        object_repo_reader = ConfigReader("object_repository.properties")
+
+        logger.debug("Execution Started ----------------.")
+        logger.debug("Parsing the input arguments.")
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--start", action="store_true", help="Start the execution.")
+        parser.add_argument("--start-parallel", action="store_true", help="Start parallel execution.")
+        parser.add_argument("--version", help="Display the Version", action="store_true")
+        parser.add_argument("--encrypt-file", help="Encrypts the file", type=str)
+        parser.add_argument("--output-file", help="Specify the output file name", type=str)
+        parser.add_argument("--help-html", action="store_true", help="Open the default browser to display dynamic help.")
+        args = parser.parse_args()
+
+        logger.debug("Counting the number of input arguments.")
+        active_args = sum(bool(arg) for arg in [args.start, args.start_parallel, args.version, args.encrypt_file, args.help_html])
+    
+        if active_args > 1:
+            logger.error("Only one of '--start', --start-parallel, '--version', '--encrypt-file' or '--help-html' can be used at a time.")
+            raise ValueError("Only one of '--start', --start-parallel, '--version', '--encrypt-file' or '--help-html' can be used at a time.")
+
+        if args.output_file and not args.encrypt_file:
+            logger.error("'--output-file' can only be used with '--encrypt-file'.")
+            raise ValueError("'--output-file' can only be used with '--encrypt-file'.")
+
+        if args.help_html:
+            html_content = utils.decrypt_file("enc_help_doc.enc")
+            with tempfile.NamedTemporaryFile(mode="w", suffix=".html", delete=False) as temp_file:
+                temp_file.write(html_content)
+                temp_file.flush()
+                temp_file_path = temp_file.name
+
+            webbrowser.open(f"file://{temp_file_path}")
+            logger.debug(f"Temporary file created at: {temp_file_path}")
+            logger.debug("Please close the browser manually when you're done.")
+
+        if args.encrypt_file:
+            logger.debug("Started encrypting file " + args.encrypt_file + ".")
+            if not os.path.isfile(args.encrypt_file):
+                logger.error("The provided input is not a valid file.")
+                raise ValueError("The provided input is not a valid file.")
+            else:
+                output_file = args.output_file or "default_encrypted_file"
+                utils.encrypt_file(str(args.encrypt_file), str(output_file))
+                logger.debug(f"Finished encrypting file {args.encrypt_file} to {output_file}")
+                sys.exit(0)  # Exit the program successfully after encrypting the file
+
+        if args.version:
+            logger.info("Version: 3.0")
+            print("Version: 3.0")
+            sys.exit(0)  # Exit the program successfully after encrypting the file
+
+        if args.start:
+            st = time.time()
+            check_before_start(start_props_reader)
+            run_headless = True if str(start_props_reader.get_property('Browser_Settings', 'Headless', fallback='No')).lower() == 'yes' else False
+            run_in_grid =  str(start_props_reader.get_property('SGrid', 'run_in_selenium_grid', fallback='No')).lower()
+            run_in_appium =  str(start_props_reader.get_property('Appium', 'run_in_appium_grid', fallback='No')).lower()
+
+            logger.debug("Gathering all files present in the test_scripts folder.")
+            
+            generic_path = os.path.join(".", "test_scripts")
+
+            for x in utils.get_absolute_file_paths_in_dir(generic_path):
+                logger.debug("Getting the file path " + x + ".")
+                logger.debug("Checking if the file path contains 'testscript.xlsx' in the end.")
+
+                if "testscript.xlsx" in x:
+                    logger.debug("The file path " + x + " contains 'testscript.xlsx' in the end.")
+                    logger.debug("Checking if the file name starts with 'ts' (case insensitive).")
+
+                    p = re.compile('^ts', re.I)
+                    if p.match(os.path.basename(x)):
+                        logger.debug("The file name " + os.path.basename(x) + " starts with 'ts' (case insensitive).")
+                        logger.debug("Checking if the file " + os.path.basename(x) + " is present in chrome or edge folder.")
+                        if os.path.dirname(x).split(os.sep)[-1].lower() == 'chrome':
+                            logger.debug("The file " + os.path.basename(x) + " is present in chrome folder. Launching the execution of test script on chrome browser.")
+                            proc1 = Process(target=start_runner,args=(x, log_queue, lock,start_props_reader,object_repo_reader, 'chrome', ))
+                            proc1.start()
+                            proc2 = None
+                            if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
+                                logger.debug("Starting the execution recording.")
+                                proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", "")))
+                                proc2.start()
+
+                            proc1.join()
+                            if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
+                                proc2.join()
+                        elif os.path.dirname(x).split(os.sep)[-1].lower() == 'edge':
+                            logger.debug("The file " + os.path.basename(x) + " is present in edge folder. Launching the execution of test script on edge browser.")
+                            proc1 = Process(target=start_runner, args=(x, log_queue, lock,start_props_reader,object_repo_reader, 'edge',))
+                            proc1.start()
+                            proc2 = None
+                            if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
+                                logger.debug("Starting the execution recording.")
+                                proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", "")))
+                                proc2.start()
+
+                            proc1.join()
+                            if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
+                                proc2.join()
+                        elif os.path.dirname(x).split(os.sep)[-1].lower() == 'test_scripts':
+                            logger.debug("The file " + os.path.basename(x) + " is present in test_scripts folder. Launching the execution and browser will be choosen from test script.")
+                            proc1 = Process(target=start_runner, args=(x,log_queue, lock,start_props_reader,object_repo_reader,))
+                            proc1.start()
+                            proc2 = None
+                            if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
+                                logger.debug("Starting the execution recording.")
+                                proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", "")))
+                                proc2.start()
+
+                            proc1.join()
+                            if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
+                                proc2.join()
+            et = time.time()
+
+            elapsed_time = round(et - st)
+            logger.info(utils.format_elapsed_time(elapsed_time))
+            asyncio.run(prm.generate_test_summary_pdf())
+
+        if args.start_parallel:
+            st = time.time()
+            check_before_start(start_props_reader)
+            run_headless = True if str(start_props_reader.get_property('Browser_Settings', 'Headless', fallback='No')).lower() == 'yes' else False
+            run_in_grid =  True if str(start_props_reader.get_property('SGrid', 'run_in_selenium_grid', fallback='No')).lower() == 'yes' else False
+            run_in_appium =  True if str(start_props_reader.get_property('Appium', 'run_in_appium_grid', fallback='No')).lower() == 'yes' else False
+            number_threads =  int(start_props_reader.get_property('Parallel', 'NoThreads', fallback='5'))
+            
+            if number_threads > 5:
+                raise ValueError("number of threads cannot be more than 5")
+            
+            if not run_headless and not run_in_grid:
+                logger.error("Parallel execution can only be run in headless mode.")
+                raise ValueError("Parallel execution can only be run in headless mode.")
+
+            logger.debug("Gathering all files present in the test_scripts folder.")
+            
+            generic_path = os.path.join(".", "test_scripts")        
+
+            processes = []
+
+            for x in utils.get_absolute_file_paths_in_dir(generic_path):
+                logger.debug("Getting the file path " + x + ".")
+                logger.debug("Checking if the file path contains 'testscript.xlsx' in the end.")
+
+                if "testscript.xlsx" in x:
+                    logger.debug("The file path " + x + " contains 'testscript.xlsx' in the end.")
+                    logger.debug("Checking if the file name starts with 'ts' (case insensitive).")
+
+                    p = re.compile(r'^ts[a-zA-Z0-9]*_testscript\.xlsx$', re.I)
+                    if p.match(os.path.basename(x)):
+                        logger.debug("The file name " + os.path.basename(x) + " starts with 'ts' (case insensitive).")
+                        logger.debug("Checking if the file " + os.path.basename(x) + " is present in chrome or edge folder.")
+                        if os.path.dirname(x).split(os.sep)[-1].lower() == 'chrome':
+                            logger.debug("The file " + os.path.basename(x) + " is present in chrome folder. Launching the execution of test script on chrome browser.")
+                            processes.append(Process(target=start_runner,args=(x,log_queue, lock,start_props_reader,object_repo_reader, 'chrome',)))
+                        elif os.path.dirname(x).split(os.sep)[-1].lower() == 'edge':
+                            logger.debug("The file " + os.path.basename(x) + " is present in edge folder. Launching the execution of test script on edge browser.")
+                            processes.append(Process(target=start_runner,args=(x,log_queue, lock,start_props_reader,object_repo_reader, 'edge',)))
+                        elif os.path.dirname(x).split(os.sep)[-1].lower() == 'test_scripts':
+                            logger.debug("The file " + os.path.basename(x) + " is present in test_scripts folder. Launching the execution and browser will be choosen from test script.")
+                            processes.append(Process(target=start_runner, args=(x,log_queue, lock,start_props_reader,object_repo_reader,)))
+            
+            for batch_start in range(0, len(processes), number_threads):
+                batch = processes[batch_start:batch_start + number_threads]
+
+                for process in batch:
+                    process.start()
+
+                for process in batch:
+                    process.join()
+
+            et = time.time()
+
+            elapsed_time = round(et - st)
+            logger.info(utils.format_elapsed_time(elapsed_time))
+            
+            asyncio.run(prm.generate_test_summary_pdf())
+
+    except Exception as e:
+        logger.error(f"An error occurred: {e}")
+        raise
+    finally:
+        log_queue.put(None)
         listener.stop()
-        exit("Only one of '--start', --start-parallel, '--version', '--encrypt-file' or '--help-html' can be used at a time.")
-
-    if args.output_file and not args.encrypt_file:
-        logger.error("'--output-file' can only be used with '--encrypt-file'.")
-        log_queue.put(None)  # Signal to stop the listener
-        listener.stop()
-        exit("Error: '--output-file' can only be used with '--encrypt-file'.")
-        
-    if args.help_html:
-        html_content = utils.decrypt_file("enc_help_doc.enc")
-        # Create a temporary file without deleting it afterward
-        with tempfile.NamedTemporaryFile(mode="w", suffix=".html", delete=False) as temp_file:
-            temp_file.write(html_content)
-            temp_file.flush()
-            temp_file_path = temp_file.name
-
-        # Open the temporary file in the default browser
-        webbrowser.open(f"file://{temp_file_path}")
-        logger.debug(f"Temporary file created at: {temp_file_path}")
-        logger.debug("Please close the browser manually when you're done.")
-
-    if args.encrypt_file:
-        logger.debug("Started encrypting file " + args.encrypt_file + ".")
-        if not os.path.isfile(args.encrypt_file):
-            logger.error("The provided input is not a valid file.")
-            log_queue.put(None)  # Signal to stop the listener
-            listener.stop()
-            exit("Error: The provided input is not a valid file.")
-        else:
-            output_file = args.output_file or "default_encrypted_file"
-            utils.encrypt_file(str(args.encrypt_file), str(output_file))
-            logger.debug(f"Finished encrypting file {args.encrypt_file} to {output_file}")
-            log_queue.put(None)  # Signal to stop the listener
-            listener.stop()
-            exit()
-    
-    if args.version and not(args.start):
-        logger.debug("Version: 3.0")
-        log_queue.put(None)  # Signal to stop the listener
-        listener.stop()
-        exit("Version: 3.0")
-    
-    if args.start and args.version is False:
-        st = time.time()
-        check_before_start(start_props_reader)
-        logger.debug("Loading 'start.properties' file.")
-
-
-        run_headless = True if str(start_props_reader.get_property('Browser_Settings', 'Headless', fallback='No')).lower() == 'yes' else False
-        run_in_grid =  str(start_props_reader.get_property('SGrid', 'run_in_selenium_grid', fallback='No')).lower()
-        run_in_appium =  str(start_props_reader.get_property('Appium', 'run_in_appium_grid', fallback='No')).lower()
-
-        logger.debug("Gathering all files present in the test_scripts folder.")
-        
-        generic_path = os.path.join(".", "test_scripts")
-
-        for x in utils.get_absolute_file_paths_in_dir(generic_path):
-            logger.debug("Getting the file path " + x + ".")
-            logger.debug("Checking if the file path contains 'testscript.xlsx' in the end.")
-
-            if "testscript.xlsx" in x:
-                logger.debug("The file path " + x + " contains 'testscript.xlsx' in the end.")
-                logger.debug("Checking if the file name starts with 'ts' (case insensitive).")
-
-                p = re.compile('^ts', re.I)
-                if p.match(os.path.basename(x)):
-                    logger.debug("The file name " + os.path.basename(x) + " starts with 'ts' (case insensitive).")
-                    logger.debug("Checking if the file " + os.path.basename(x) + " is present in chrome or edge folder.")
-                    if os.path.dirname(x).split(os.sep)[-1].lower() == 'chrome':
-                        logger.debug("The file " + os.path.basename(x) + " is present in chrome folder. Launching the execution of test script on chrome browser.")
-                        proc1 = Process(target=start_runner,args=(x, log_queue, lock,start_props_reader,object_repo_reader, 'chrome', ))
-                        proc1.start()
-                        # time.sleep(5)
-                        proc2 = None
-                        if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
-                            logger.debug("Starting the execution recording.")
-
-                            # proc2 = Process(target=take_recording(proc1, x.split("\\")[-1].replace("testscript.xlsx", "")))
-                            proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", "")))
-
-                            # print(proc1.is_alive())
-                            proc2.start()
-
-                        proc1.join()
-                        if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
-                            proc2.join()
-                    elif os.path.dirname(x).split(os.sep)[-1].lower() == 'edge':
-                        logger.debug("The file " + os.path.basename(x) + " is present in edge folder. Launching the execution of test script on edge browser.")
-                        proc1 = Process(target=start_runner, args=(x, log_queue, lock,start_props_reader,object_repo_reader, 'edge',))
-                        proc1.start()
-                        # time.sleep(5)
-                        proc2 = None
-                        if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
-                            logger.debug("Starting the execution recording.")
-                            # proc2 = Process(target=take_recording(proc1, x.split("\\")[-1].replace("testscript.xlsx", "")))
-                            proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", "")))
-
-                            # print(proc1.is_alive())
-                            proc2.start()
-
-                        proc1.join()
-                        if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
-                            proc2.join()
-                    elif os.path.dirname(x).split(os.sep)[-1].lower() == 'test_scripts':
-                        logger.debug("The file " + os.path.basename(x) + " is present in test_scripts folder. Launching the execution and browser will be choosen from test script.")
-                        proc1 = Process(target=start_runner, args=(x,log_queue, lock,start_props_reader,object_repo_reader,))
-                        proc1.start()
-                        # time.sleep(5)
-                        proc2 = None
-                        if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
-                            logger.debug("Starting the execution recording.")
-                            #proc2 = Process(target=take_recording(proc1, x.split("\\")[-1].replace("testscript.xlsx", "")))
-                            proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", "")))
-
-                            # print(proc1.is_alive())
-                            proc2.start()
-
-                        proc1.join()
-                        if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
-                            proc2.join()
-        et = time.time()
-
-        # get the execution time
-        elapsed_time = round(et - st)
-        logger.info(utils.format_elapsed_time(elapsed_time))
-        
-
-
-        asyncio.run(prm.generate_test_summary_pdf())
-    
-    if args.start_parallel and args.version is False:
-        st = time.time()
-        check_before_start(start_props_reader)
-        logger.debug("Loading 'start.properties' file.")
-
-        run_headless = True if str(start_props_reader.get_property('Browser_Settings', 'Headless', fallback='No')).lower() == 'yes' else False
-        run_in_grid =  True if str(start_props_reader.get_property('SGrid', 'run_in_selenium_grid', fallback='No')).lower() == 'yes' else False
-        run_in_appium =  True if str(start_props_reader.get_property('Appium', 'run_in_appium_grid', fallback='No')).lower() == 'yes' else False
-        number_threads =  int(start_props_reader.get_property('Parallel', 'NoThreads', fallback='5'))
-        
-        if number_threads > 5:
-            log_queue.put(None)  # Signal to stop the listener
-            listener.stop()
-            exit("number of threads cannot be more than 5")
-        
-        if not run_headless and not run_in_grid:
-            logger.error("Parallel execution can only be run in headless mode.")
-            log_queue.put(None)  # Signal to stop the listener
-            listener.stop()
-            exit("Parallel execution can only be run in headless mode.")
-
-        logger.debug("Gathering all files present in the test_scripts folder.")
-        
-        generic_path = os.path.join(".", "test_scripts")        
-
-        processes = []
-
-        for x in utils.get_absolute_file_paths_in_dir(generic_path):
-            logger.debug("Getting the file path " + x + ".")
-            logger.debug("Checking if the file path contains 'testscript.xlsx' in the end.")
-
-            if "testscript.xlsx" in x:
-                logger.debug("The file path " + x + " contains 'testscript.xlsx' in the end.")
-                logger.debug("Checking if the file name starts with 'ts' (case insensitive).")
-
-                p = re.compile(r'^ts[a-zA-Z0-9]*_testscript\.xlsx$', re.I)
-                if p.match(os.path.basename(x)):
-                    logger.debug("The file name " + os.path.basename(x) + " starts with 'ts' (case insensitive).")
-                    logger.debug("Checking if the file " + os.path.basename(x) + " is present in chrome or edge folder.")
-                    if os.path.dirname(x).split(os.sep)[-1].lower() == 'chrome':
-                        logger.debug("The file " + os.path.basename(x) + " is present in chrome folder. Launching the execution of test script on chrome browser.")
-                        processes.append(Process(target=start_runner,args=(x,log_queue, lock,start_props_reader,object_repo_reader, 'chrome',)))
-                    elif os.path.dirname(x).split(os.sep)[-1].lower() == 'edge':
-                        logger.debug("The file " + os.path.basename(x) + " is present in edge folder. Launching the execution of test script on edge browser.")
-                        processes.append(Process(target=start_runner,args=(x,log_queue, lock,start_props_reader,object_repo_reader, 'edge',)))
-                    elif os.path.dirname(x).split(os.sep)[-1].lower() == 'test_scripts':
-                        logger.debug("The file " + os.path.basename(x) + " is present in test_scripts folder. Launching the execution and browser will be choosen from test script.")
-                        processes.append(Process(target=start_runner, args=(x,log_queue, lock,start_props_reader,object_repo_reader,)))
-        
-        # Start processes in batches of 5
-        for batch_start in range(0, len(processes), number_threads):
-            batch = processes[batch_start:batch_start + number_threads]  # Create batches of 5 processes
-
-            for process in batch:
-                process.start()
-
-            # Wait for all processes in the batch to complete
-            for process in batch:
-                process.join()
-
-        et = time.time()
-
-        # get the execution time
-        elapsed_time = round(et - st)
-        logger.info(utils.format_elapsed_time(elapsed_time))
-        
-        asyncio.run(prm.generate_test_summary_pdf())
-    
-    log_queue.put(None)  # Signal to stop the listener
-    listener.stop()
-    logger.info("Application ended in main method.")
-
-    # else:
-    #     logger.error("The syntax for running is 'runner.exe --start' or to check the version use 'runner.exe --version'")
-    #     exit("The syntax for running is 'runner.exe --start' or to check the version use 'runner.exe --version'")
-# print("thread finished...exiting")
+        logger.info("Application ended in main method.")
