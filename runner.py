@@ -588,7 +588,7 @@ if __name__ == '__main__':
                     logger.debug("The file path " + x + " contains 'testscript.xlsx' in the end.")
                     logger.debug("Checking if the file name starts with 'ts' (case insensitive).")
 
-                    p = re.compile('^ts', re.I)
+                    p = re.compile(r'^qs[a-zA-Z0-9]*_testscript\.xlsx$', re.I)
                     if p.match(os.path.basename(x)):
                         logger.debug("The file name " + os.path.basename(x) + " starts with 'ts' (case insensitive).")
                         logger.debug("Checking if the file " + os.path.basename(x) + " is present in chrome or edge folder.")
@@ -666,7 +666,7 @@ if __name__ == '__main__':
                     logger.debug("The file path " + x + " contains 'testscript.xlsx' in the end.")
                     logger.debug("Checking if the file name starts with 'ts' (case insensitive).")
 
-                    p = re.compile(r'^ts[a-zA-Z0-9]*_testscript\.xlsx$', re.I)
+                    p = re.compile(r'^qs[a-zA-Z0-9]*_testscript\.xlsx$', re.I)
                     if p.match(os.path.basename(x)):
                         logger.debug("The file name " + os.path.basename(x) + " starts with 'ts' (case insensitive).")
                         logger.debug("Checking if the file " + os.path.basename(x) + " is present in chrome or edge folder.")

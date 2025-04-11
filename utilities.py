@@ -1,4 +1,5 @@
 import filecmp
+import getpass
 import os
 from pathlib import Path
 import platform
@@ -133,7 +134,8 @@ class Utils:
         Returns:
             str: The name of the logged-in user.
         """
-        return os.getlogin()
+        # return os.getlogin()
+        return getpass.getuser()
 
     def make_string_manageable(self, input_str, length):
         """

@@ -46,32 +46,68 @@ class KeywordsManager(BrowserDriver):
             start_props_reader (ConfigReader): Reader for the 'start.properties' configuration file.
 
         Returns:
-            str: The value of screenshot_return (always, onerror, or never).
+            str: The value of screenshot_return (always, on-error, or never).
         """
         start_props_reader = ConfigReader("start.properties")
         return str(start_props_reader.get_property('Misc', 'screenshot_strategy',fallback='always')).lower()
 
     def ge_switch_to_iframe(self, locator, locator_type, element_name):
         """
-        Creates a PDF report and closes the browser instance.
+        Switches to the specified iframe and logs the result in the PDF report.
 
-        Logs the closure of the browser and generates a PDF report using the PdfReportManager.
+        Args:
+            locator (str): The locator for the iframe.
+            locator_type (str): The type of locator.
+            element_name (str): The user-friendly name of the iframe.
+
+        Raises:
+            Exception: If any error occurs while switching to the iframe.
         """
         try:
             self.wait_for_element(locator, locator_type)
             self.scroll_into_view(locator, locator_type)
-            # self.web_scroll()
-            # self.ge_click(locator, locator_type, element_name)
             self.highlight(1, "blue", 2, locator, locator_type)
-            self.switch_to_iframe(locator, locator_type)            
-            self.screenshot_no += 1
-            self.repo_m.add_report_data(sub_step="Switch to Iframe " + element_name, sub_step_message="Switched to Iframe successfully", sub_step_status='Pass', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
-        except Exception as e:
-            self.screenshot_no += 1
-            self.logger.error("An error occurred: %s", e, exc_info=True)
-            self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
-            self.repo_m.add_report_data(sub_step="Switch to Iframe " + element_name, sub_step_message="Error Occured. " + str(e), sub_step_status='Fail', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+            self.switch_to_iframe(locator, locator_type)
 
+            # Handle screenshot strategy
+            if self.screenshot_strategy == "always":
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Switch to Iframe '{element_name}'",
+                    sub_step_message="Switched to Iframe successfully",
+                    sub_step_status='Pass',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Switch to Iframe '{element_name}'",
+                    sub_step_message="Switched to Iframe successfully",
+                    sub_step_status='Pass'
+                )
+        except Exception as e:
+            self.logger.error("An error occurred: %s", e, exc_info=True)
+
+            # Handle screenshot strategy for errors
+            if self.screenshot_strategy in ["always", "on-error"]:
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Switch to Iframe '{element_name}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Switch to Iframe '{element_name}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail'
+                )
             raise
     
     def ge_close(self):
@@ -137,9 +173,11 @@ class KeywordsManager(BrowserDriver):
             Exception: If any error occurs while launching the browser.
         """
         try:
-            self.logger.debug("Launching " + browser_name + " .......")
+            self.logger.debug(f"Launching {browser_name} .......")
             self.launch_browser(browser_name)
             self.logger.debug("Capturing the OS where the browser is running.")
+
+            # Determine OS and browser details
             if self.run_in_selenium_grid.lower() == "yes":
                 self.logger.debug("Capturing the OS where the browser is running in Selenium Grid.")
                 os_name = self.grid_os_info
@@ -147,37 +185,79 @@ class KeywordsManager(BrowserDriver):
             else:
                 self.logger.debug("Capturing the OS where the browser is running in local machine.")
                 os_name = self.utils.detect_os()
+
+            # Populate OS details in the PDF report
             if str(os_name).lower() == "linux":
-                self.logger.debug("Populating the OS details in the PDF report as " + os_name )
+                self.logger.debug(f"Populating the OS details in the PDF report as {os_name}")
                 self.repo_m.os_img_src = self.linux_logo_src_b64
                 self.repo_m.os_img_alt = os_name
-            if str(os_name).lower() == "windows":
-                self.logger.debug("Populating the OS details in the PDF report as " + os_name )
+            elif str(os_name).lower() == "windows":
+                self.logger.debug(f"Populating the OS details in the PDF report as {os_name}")
                 self.repo_m.os_img_src = self.win_logo_src_b64
                 self.repo_m.os_img_alt = os_name
+
+            # Populate browser details in the PDF report
             if browser_name.lower() == 'chrome':
-                self.logger.debug("Populating the browser details in the PDF report as " + browser_name )
+                self.logger.debug(f"Populating the browser details in the PDF report as {browser_name}")
                 self.repo_m.browser_img_src = self.chrome_logo_src_b64
                 self.repo_m.browser_img_alt = browser_name.upper()
                 self.repo_m.browser_version = self.ge_browser_version()
-            if browser_name.lower() == 'edge':
-                self.logger.debug("Populating the browser details in the PDF report as " + browser_name )
+            elif browser_name.lower() == 'edge':
+                self.logger.debug(f"Populating the browser details in the PDF report as {browser_name}")
                 self.repo_m.browser_img_src = self.edge_logo_src_b64
                 self.repo_m.browser_img_alt = browser_name.upper()
                 self.repo_m.browser_version = self.ge_browser_version()
-            self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
-            self.screenshot_first_str = self.repo_m.tc_id+"_"+self.repo_m.browser_img_alt
-            if self.is_headless:
-                self.repo_m.add_report_data(sub_step="Open Browser ", sub_step_message="The browser opened successfully", sub_step_status="Pass")
-            else:
-                self.screenshot_no += 1
-                self.repo_m.add_report_data(sub_step="Open Browser ", sub_step_message="The browser opened successfully", sub_step_status="Pass", image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
-        except Exception as e:
-            self.screenshot_no += 1
-            self.logger.error("An error occurred: %s", e, exc_info=True)
-            self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
-            self.repo_m.add_report_data(sub_step="Open Browser " + browser_name, sub_step_message="Error Occured. " + str(e), sub_step_status='Fail', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
 
+            self.logger.debug("Populating the step result details in the PDF report.")
+            self.screenshot_first_str = f"{self.repo_m.tc_id}_{self.repo_m.browser_img_alt}"
+
+            # Handle screenshot strategy
+            if self.is_headless:
+                self.repo_m.add_report_data(
+                    sub_step="Open Browser",
+                    sub_step_message="The browser opened successfully",
+                    sub_step_status="Pass"
+                )
+            else:
+                if self.screenshot_strategy == "always":
+                    self.screenshot_no += 1
+                    self.repo_m.add_report_data(
+                        sub_step="Open Browser",
+                        sub_step_message="The browser opened successfully",
+                        sub_step_status="Pass",
+                        image_src=self.take_screenshot(
+                            f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                        ),
+                        image_alt=self.repo_m.browser_img_alt
+                    )
+                else:
+                    self.repo_m.add_report_data(
+                        sub_step="Open Browser",
+                        sub_step_message="The browser opened successfully",
+                        sub_step_status="Pass"
+                    )
+        except Exception as e:
+            self.logger.error("An error occurred: %s", e, exc_info=True)
+            self.logger.debug("Populating the step result details in the PDF report.")
+
+            # Handle screenshot strategy for errors
+            if self.screenshot_strategy in ["always", "on-error"]:
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Open Browser {browser_name}",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Open Browser {browser_name}",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail'
+                )
             raise
 
     def ge_browser_version(self):
@@ -226,19 +306,52 @@ class KeywordsManager(BrowserDriver):
             is_enabled = self.is_element_enabled(locator, locator_type)
             if is_enabled:
                 self.logger.debug("Element is enabled.")
-                self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
+
+                # Handle screenshot strategy
+                
                 self.screenshot_no += 1
-                self.repo_m.add_report_data(sub_step="Check if the element " + element_name+ " is enabled", sub_step_message="The element " + element_name + " is enabled", sub_step_status='Pass', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+                self.repo_m.add_report_data(
+                    sub_step=f"Check if the element '{element_name}' is enabled",
+                    sub_step_message=f"The element '{element_name}' is enabled",
+                    sub_step_status='Pass',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+                
             else:
                 self.logger.debug("Element is NOT enabled.")
-                self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
+
+                # Handle screenshot strategy
+               
                 self.screenshot_no += 1
-                self.repo_m.add_report_data(sub_step="Check if the element " + element_name+ " is enabled", sub_step_message="The element " + element_name + " is NOT enabled", sub_step_status='Fail', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+                self.repo_m.add_report_data(
+                    sub_step=f"Check if the element '{element_name}' is enabled",
+                    sub_step_message=f"The element '{element_name}' is NOT enabled",
+                    sub_step_status='Fail',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+                
         except Exception as e:
             self.logger.error("An error occurred: %s", e, exc_info=True)
-            self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
+
+            # Handle screenshot strategy for errors
+            
             self.screenshot_no += 1
-            self.repo_m.add_report_data(sub_step="Check if the element " + element_name+ " is enabled", sub_step_message="Error Occurred " + str(e), sub_step_status='Fail', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+            self.repo_m.add_report_data(
+                sub_step=f"Check if the element '{element_name}' is enabled",
+                sub_step_message=f"Error Occurred: {str(e)}",
+                sub_step_status='Fail',
+                image_src=self.take_screenshot(
+                    f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                ),
+                image_alt=self.repo_m.browser_img_alt
+            )
+            
             raise
 
     def ge_is_element_disabled(self, locator, locator_type, element_name):
@@ -255,22 +368,55 @@ class KeywordsManager(BrowserDriver):
         """
         self.logger.debug("Checking if element is disabled.")
         try:
-            is_disabled = self.is_element_enabled(locator, locator_type)
-            if is_disabled is False:
+            is_disabled = not self.is_element_enabled(locator, locator_type)
+            if is_disabled:
                 self.logger.debug("Element is disabled.")
-                self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
+
+                # Handle screenshot strategy
+                
                 self.screenshot_no += 1
-                self.repo_m.add_report_data(sub_step="Check if the element " + element_name+ " is disabled", sub_step_message="The element " + element_name + " is disabled", sub_step_status='Pass', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+                self.repo_m.add_report_data(
+                    sub_step=f"Check if the element '{element_name}' is disabled",
+                    sub_step_message=f"The element '{element_name}' is disabled",
+                    sub_step_status='Pass',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+               
             else:
                 self.logger.debug("Element is NOT disabled.")
-                self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
+
+                # Handle screenshot strategy
+                
                 self.screenshot_no += 1
-                self.repo_m.add_report_data(sub_step="Check if the element " + element_name+ " is disabled", sub_step_message="The element " + element_name + " is NOT disabled", sub_step_status='Fail', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+                self.repo_m.add_report_data(
+                    sub_step=f"Check if the element '{element_name}' is disabled",
+                    sub_step_message=f"The element '{element_name}' is NOT disabled",
+                    sub_step_status='Fail',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+                
         except Exception as e:
             self.logger.error("An error occurred: %s", e, exc_info=True)
-            self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
+
+            # Handle screenshot strategy for errors
+            
             self.screenshot_no += 1
-            self.repo_m.add_report_data(sub_step="Check if the element " + element_name+ " is disabled", sub_step_message="Error Occurred " + str(e), sub_step_status='Fail', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+            self.repo_m.add_report_data(
+                sub_step=f"Check if the element '{element_name}' is disabled",
+                sub_step_message=f"Error Occurred: {str(e)}",
+                sub_step_status='Fail',
+                image_src=self.take_screenshot(
+                    f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                ),
+                image_alt=self.repo_m.browser_img_alt
+            )
+        
             raise
 
     def ge_is_element_displayed(self, locator, locator_type, element_name):
@@ -287,22 +433,55 @@ class KeywordsManager(BrowserDriver):
         """
         self.logger.debug("Checking if element is displayed.")
         try:
-            is_displayed = self.is_element_enabled(locator, locator_type)
+            is_displayed = self.is_element_present(locator, locator_type)
             if is_displayed:
                 self.logger.debug("Element is displayed.")
-                self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
+
+                # Handle screenshot strategy
+                
                 self.screenshot_no += 1
-                self.repo_m.add_report_data(sub_step="Check if the element " + element_name+ " is displayed", sub_step_message="The element " + element_name + " is displayed", sub_step_status='Pass', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+                self.repo_m.add_report_data(
+                    sub_step=f"Check if the element '{element_name}' is displayed",
+                    sub_step_message=f"The element '{element_name}' is displayed",
+                    sub_step_status='Pass',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+                
             else:
                 self.logger.debug("Element is NOT displayed.")
-                self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
+
+                # Handle screenshot strategy
+               
                 self.screenshot_no += 1
-                self.repo_m.add_report_data(sub_step="Check if the element " + element_name+ " is displayed", sub_step_message="The element " + element_name + " is NOT displayed", sub_step_status='Fail', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+                self.repo_m.add_report_data(
+                    sub_step=f"Check if the element '{element_name}' is displayed",
+                    sub_step_message=f"The element '{element_name}' is NOT displayed",
+                    sub_step_status='Fail',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+                
         except Exception as e:
             self.logger.error("An error occurred: %s", e, exc_info=True)
-            self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
+
+            # Handle screenshot strategy for errors
+            
             self.screenshot_no += 1
-            self.repo_m.add_report_data(sub_step="Check if the element " + element_name+ " is displayed", sub_step_message="Error Occurred " + str(e), sub_step_status='Fail', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+            self.repo_m.add_report_data(
+                sub_step=f"Check if the element '{element_name}' is displayed",
+                sub_step_message=f"Error Occurred: {str(e)}",
+                sub_step_status='Fail',
+                image_src=self.take_screenshot(
+                    f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                ),
+                image_alt=self.repo_m.browser_img_alt
+            )
+            
             raise
 
     def ge_enter_url(self, url):
@@ -320,14 +499,48 @@ class KeywordsManager(BrowserDriver):
             self.open_url(url)
             self.page_has_loaded()
             self.wait_for_some_time(2)
-            self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
-            self.screenshot_no += 1
-            self.repo_m.add_report_data(sub_step="Enter URL " + str(url), sub_step_message="The URL is entered successfully", sub_step_status='Pass', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+            self.logger.debug("Populating the step result details in the PDF report.")
+
+            # Handle screenshot strategy
+            if self.screenshot_strategy == "always":
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Enter URL '{url}'",
+                    sub_step_message="The URL is entered successfully",
+                    sub_step_status='Pass',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Enter URL '{url}'",
+                    sub_step_message="The URL is entered successfully",
+                    sub_step_status='Pass'
+                )
         except Exception as e:
             self.logger.error("An error occurred: %s", e, exc_info=True)
-            self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
-            self.screenshot_no += 1
-            self.repo_m.add_report_data(sub_step="Enter URL " + url, sub_step_message="Error Occurred " + str(e), sub_step_status='Fail', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+            self.logger.debug("Populating the step result details in the PDF report.")
+
+            # Handle screenshot strategy for errors
+            if self.screenshot_strategy in ["always", "on-error"]:
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Enter URL '{url}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Enter URL '{url}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail'
+                )
             raise
 
     def ge_type(self, locator, locator_type, text_to_type, element_name):
@@ -350,22 +563,55 @@ class KeywordsManager(BrowserDriver):
         if percent_spaces > 2:
             report_txt_to_type = text_to_type
         else:
-            report_txt_to_type = self.utils.make_string_manageable(
-                text_to_type, 25)
+            report_txt_to_type = self.utils.make_string_manageable(text_to_type, 25)
 
         try:
             self.highlight(1, "blue", 2, locator, locator_type)
             self.element_click(locator, locator_type)
             self.send_keys(text_to_type, locator, locator_type)
             self.wait_for_some_time(1)
-            self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
-            self.screenshot_no += 1
-            self.repo_m.add_report_data(sub_step="Type the text '" + report_txt_to_type + "'in '" + element_name+ "'", sub_step_message="The text should be typed successfully", sub_step_status='Pass', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+            self.logger.debug("Populating the step result details in the PDF report.")
+
+            # Handle screenshot strategy
+            if self.screenshot_strategy == "always":
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Type the text '{report_txt_to_type}' in '{element_name}'",
+                    sub_step_message="The text should be typed successfully",
+                    sub_step_status='Pass',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Type the text '{report_txt_to_type}' in '{element_name}'",
+                    sub_step_message="The text should be typed successfully",
+                    sub_step_status='Pass'
+                )
         except Exception as e:
             self.logger.error("An error occurred: %s", e, exc_info=True)
-            self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
-            self.screenshot_no += 1
-            self.repo_m.add_report_data(sub_step="Type the text '" + report_txt_to_type + "'in '" + element_name+ "'", sub_step_message="Error Occurred " + str(e), sub_step_status='Fail', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+            self.logger.debug("Populating the step result details in the PDF report.")
+
+            # Handle screenshot strategy for errors
+            if self.screenshot_strategy in ["always", "on-error"]:
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Type the text '{report_txt_to_type}' in '{element_name}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Type the text '{report_txt_to_type}' in '{element_name}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail'
+                )
             raise
 
     def ge_verify_displayed_text(self, locator, locator_type, expected_text, element_name):
@@ -386,19 +632,52 @@ class KeywordsManager(BrowserDriver):
             self.highlight(1, "blue", 2, locator, locator_type)
             actual_text = self.get_text(locator, locator_type, element_name)
             is_matched = (actual_text == expected_text)
+
+            # Handle screenshot strategy
             if is_matched:
-                self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
+                self.logger.debug("Populating the step result details in the PDF report.")
+                
                 self.screenshot_no += 1
-                self.repo_m.add_report_data(sub_step="Verifying the text '" + expected_text + "'in '" + element_name + "'", sub_step_message="The text is  " + actual_text, sub_step_status='Pass', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+                self.repo_m.add_report_data(
+                    sub_step=f"Verifying the text '{expected_text}' in '{element_name}'",
+                    sub_step_message=f"The text is '{actual_text}'",
+                    sub_step_status='Pass',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+                
             else:
-                self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
+                self.logger.debug("Populating the step result details in the PDF report.")
+                
                 self.screenshot_no += 1
-                self.repo_m.add_report_data(sub_step="Verifying the text '" + expected_text + "'in '" + element_name + "'", sub_step_message="The text is  " + actual_text, sub_step_status='Fail', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+                self.repo_m.add_report_data(
+                    sub_step=f"Verifying the text '{expected_text}' in '{element_name}'",
+                    sub_step_message=f"The text is '{actual_text}'",
+                    sub_step_status='Fail',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+                
         except Exception as e:
             self.logger.error("An error occurred: %s", e, exc_info=True)
-            self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
+
+            # Handle screenshot strategy for errors
+            
             self.screenshot_no += 1
-            self.repo_m.add_report_data(sub_step="Verifying the text '" + expected_text + "'in '" + element_name + "'", sub_step_message="Error Occurred " + str(e), sub_step_status='Fail', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+            self.repo_m.add_report_data(
+                sub_step=f"Verifying the text '{expected_text}' in '{element_name}'",
+                sub_step_message=f"Error Occurred: {str(e)}",
+                sub_step_status='Fail',
+                image_src=self.take_screenshot(
+                    f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                ),
+                image_alt=self.repo_m.browser_img_alt
+                )
+            
             raise
 
     def ge_click(self, locator, locator_type, element_name):
@@ -415,18 +694,51 @@ class KeywordsManager(BrowserDriver):
         """
         try:
             self.scroll_into_view(locator, locator_type)
-            # self.web_scroll()
             self.highlight(1, "blue", 2, locator, locator_type)
             self.element_click(locator, locator_type)
             self.wait_for_some_time(2)
-            self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
-            self.screenshot_no += 1
-            self.repo_m.add_report_data(sub_step="Click on the element '" + element_name + "'", sub_step_message="The click is successful", sub_step_status='Pass', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+            self.logger.debug("Populating the step result details in the PDF report.")
+
+            # Handle screenshot strategy
+            if self.screenshot_strategy == "always":
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Click on the element '{element_name}'",
+                    sub_step_message="The click is successful",
+                    sub_step_status='Pass',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Click on the element '{element_name}'",
+                    sub_step_message="The click is successful",
+                    sub_step_status='Pass'
+                )
         except Exception as e:
             self.logger.error("An error occurred: %s", e, exc_info=True)
-            self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
-            self.screenshot_no += 1
-            self.repo_m.add_report_data(sub_step="Click on the element '" + element_name + "'", sub_step_message="Error Occurred " + str(e), sub_step_status='Fail', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+            self.logger.debug("Populating the step result details in the PDF report.")
+
+            # Handle screenshot strategy for errors
+            if self.screenshot_strategy in ["always", "on-error"]:
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Click on the element '{element_name}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Click on the element '{element_name}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail'
+                )
             raise
 
     def ge_select_file(self, locator, locator_type, file_paths):
@@ -445,14 +757,48 @@ class KeywordsManager(BrowserDriver):
             self.file_name_to_select(file_paths)
             self.wait_for_element(locator, locator_type)
             self.scroll_into_view(locator, locator_type)
-            self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
-            self.screenshot_no += 1
-            self.repo_m.add_report_data(sub_step="Upload the file '" + file_paths + "'", sub_step_message="The file is added successfully", sub_step_status='Pass', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+            self.logger.debug("Populating the step result details in the PDF report.")
+
+            # Handle screenshot strategy
+            if self.screenshot_strategy == "always":
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Upload the file '{file_paths}'",
+                    sub_step_message="The file is added successfully",
+                    sub_step_status='Pass',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Upload the file '{file_paths}'",
+                    sub_step_message="The file is added successfully",
+                    sub_step_status='Pass'
+                )
         except Exception as e:
             self.logger.error("An error occurred: %s", e, exc_info=True)
-            self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
-            self.screenshot_no += 1
-            self.repo_m.add_report_data(sub_step="Upload the file '" + file_paths + "'", sub_step_message="Error Occurred " + str(e), sub_step_status='Fail', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+            self.logger.debug("Populating the step result details in the PDF report.")
+
+            # Handle screenshot strategy for errors
+            if self.screenshot_strategy in ["always", "on-error"]:
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Upload the file '{file_paths}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Upload the file '{file_paths}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail'
+                )
             raise
 
     '''
@@ -492,6 +838,8 @@ class KeywordsManager(BrowserDriver):
                 second_mon = str(second_date.split()[1])
                 second_mon_nbr = util_t.get_mtn_number(second_mon)
                 second_day = str(second_date.split()[0])
+
+                # Navigate to the first date
                 while True:
                     displayed_month = self.get_text(kwargs.get('cn_det_ddate_mon_txt_xpath'),
                                                     kwargs.get("locator_type"),
@@ -502,27 +850,25 @@ class KeywordsManager(BrowserDriver):
                     if displayed_month == first_mon_yr:
                         break
                     if disp_yr > first_yr:
-                        self.element_click(kwargs.get(
-                            'cn_det_ddate_pre_button_xpath'), kwargs.get("locator_type"))
+                        self.element_click(kwargs.get('cn_det_ddate_pre_button_xpath'), kwargs.get("locator_type"))
                     elif disp_yr < first_yr:
-                        self.element_click(kwargs.get(
-                            'cn_det_ddate_nxt_button_xpath'), kwargs.get("locator_type"))
+                        self.element_click(kwargs.get('cn_det_ddate_nxt_button_xpath'), kwargs.get("locator_type"))
                     else:
                         if disp_mon_nbr > first_mon_nbr:
-                            self.element_click(kwargs.get('cn_det_ddate_pre_button_xpath'),
-                                               kwargs.get("locator_type"))
+                            self.element_click(kwargs.get('cn_det_ddate_pre_button_xpath'), kwargs.get("locator_type"))
                         else:
-                            self.element_click(kwargs.get('cn_det_ddate_nxt_button_xpath'),
-                                               kwargs.get("locator_type"))
+                            self.element_click(kwargs.get('cn_det_ddate_nxt_button_xpath'), kwargs.get("locator_type"))
+
                 date_element_list = self.get_element_list(kwargs.get('cn_det_ddate_date_list_xpath'),
-                                                          kwargs.get("locator_type"))
+                                                        kwargs.get("locator_type"))
                 for testscript_file in date_element_list:
                     disp_day = self.get_text("", "", testscript_file)
                     disp_day_two_dig = "%02d" % (int(disp_day),)
                     if disp_day_two_dig == first_day:
                         self.element_click("", "", testscript_file)
                         break
-                # Second date in date range
+
+                # Navigate to the second date in the range
                 while True:
                     displayed_month = self.get_text(kwargs.get('cn_det_ddate_mon_txt_xpath'),
                                                     kwargs.get("locator_type"),
@@ -533,20 +879,17 @@ class KeywordsManager(BrowserDriver):
                     if displayed_month == second_mon_yr:
                         break
                     if disp_yr > second_yr:
-                        self.element_click(kwargs.get('cn_det_ddate_pre_button_xpath'),
-                                           kwargs.get("locator_type"))
+                        self.element_click(kwargs.get('cn_det_ddate_pre_button_xpath'), kwargs.get("locator_type"))
                     elif disp_yr < second_yr:
-                        self.element_click(kwargs.get('cn_det_ddate_nxt_button_xpath'),
-                                           kwargs.get("locator_type"))
+                        self.element_click(kwargs.get('cn_det_ddate_nxt_button_xpath'), kwargs.get("locator_type"))
                     else:
                         if disp_mon_nbr > second_mon_nbr:
-                            self.element_click(kwargs.get('cn_det_ddate_pre_button_xpath'),
-                                               kwargs.get("locator_type"))
+                            self.element_click(kwargs.get('cn_det_ddate_pre_button_xpath'), kwargs.get("locator_type"))
                         else:
-                            self.element_click(kwargs.get('cn_det_ddate_nxt_button_xpath'),
-                                               kwargs.get("locator_type"))
-                date_element_list = self.get_element_list(
-                    kwargs.get('cn_det_ddate_date_list_xpath'), kwargs.get("locator_type"))
+                            self.element_click(kwargs.get('cn_det_ddate_nxt_button_xpath'), kwargs.get("locator_type"))
+
+                date_element_list = self.get_element_list(kwargs.get('cn_det_ddate_date_list_xpath'),
+                                                        kwargs.get("locator_type"))
                 for testscript_file in date_element_list:
                     disp_day = self.get_text("", "", testscript_file)
                     disp_day_two_dig = "%02d" % (int(disp_day),)
@@ -560,6 +903,8 @@ class KeywordsManager(BrowserDriver):
                 mon = str(expected_date.split()[1])
                 mon_nbr = util_t.get_mtn_number(mon)
                 day = str(expected_date.split()[0])
+
+                # Navigate to the date
                 while True:
                     displayed_month = self.get_text(kwargs.get('cn_det_edate_mon_txt_xpath'),
                                                     kwargs.get("locator_type"),
@@ -570,20 +915,17 @@ class KeywordsManager(BrowserDriver):
                     if displayed_month == mon_yr:
                         break
                     if disp_yr > yr:
-                        self.element_click(kwargs.get('cn_det_edate_pre_button_xpath'),
-                                           kwargs.get("locator_type"))
+                        self.element_click(kwargs.get('cn_det_edate_pre_button_xpath'), kwargs.get("locator_type"))
                     elif disp_yr < yr:
-                        self.element_click(kwargs.get('cn_det_edate_nxt_button_xpath'),
-                                           kwargs.get("locator_type"))
+                        self.element_click(kwargs.get('cn_det_edate_nxt_button_xpath'), kwargs.get("locator_type"))
                     else:
                         if disp_mon_nbr > mon_nbr:
-                            self.element_click(kwargs.get('cn_det_edate_pre_button_xpath'),
-                                               kwargs.get("locator_type"))
+                            self.element_click(kwargs.get('cn_det_edate_pre_button_xpath'), kwargs.get("locator_type"))
                         else:
-                            self.element_click(kwargs.get('cn_det_edate_nxt_button_xpath'),
-                                               kwargs.get("locator_type"))
-                date_element_list = self.get_element_list(
-                    kwargs.get('cn_det_edate_date_list_xpath'), kwargs.get("locator_type"))
+                            self.element_click(kwargs.get('cn_det_edate_nxt_button_xpath'), kwargs.get("locator_type"))
+
+                date_element_list = self.get_element_list(kwargs.get('cn_det_edate_date_list_xpath'),
+                                                        kwargs.get("locator_type"))
                 for testscript_file in date_element_list:
                     disp_day = self.get_text("", "", testscript_file)
                     disp_day_two_dig = "%02d" % (int(disp_day),)
@@ -591,14 +933,41 @@ class KeywordsManager(BrowserDriver):
                         self.element_click("", "", testscript_file)
                         break
 
-            self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
-            self.screenshot_no += 1
-            self.repo_m.add_report_data(sub_step="Choosing the date '" + expected_date + "'in '" + kwargs.get("locator_name") + "'", sub_step_message="The date is chosen successfully", sub_step_status='Pass', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+            # Handle screenshot strategy
+            if self.screenshot_strategy == "always":
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Choosing the date '{expected_date}' in '{kwargs.get('locator_name')}'",
+                    sub_step_message="The date is chosen successfully",
+                    sub_step_status='Pass',
+                    image_src=self.take_screenshot(self.screenshot_first_str + "_" + self.utils.format_number_zeropad_4char(self.screenshot_no)),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Choosing the date '{expected_date}' in '{kwargs.get('locator_name')}'",
+                    sub_step_message="The date is chosen successfully",
+                    sub_step_status='Pass'
+                )
         except Exception as e:
             self.logger.error("An error occurred: %s", e, exc_info=True)
-            self.logger.debug("Populating the step result details along with screenshot in the PDF report.")
-            self.screenshot_no += 1
-            self.repo_m.add_report_data(sub_step="Choosing the date '" + expected_date + "'in '" + kwargs.get("locator_name") + "'", sub_step_message="Error Occurred " + str(e), sub_step_status='Fail', image_src=self.take_screenshot(self.screenshot_first_str+"_"+self.utils.format_number_zeropad_4char(self.screenshot_no)), image_alt = self.repo_m.browser_img_alt)
+
+            # Handle screenshot strategy for errors
+            if self.screenshot_strategy in ["always", "on-error"]:
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Choosing the date '{expected_date}' in '{kwargs.get('locator_name')}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail',
+                    image_src=self.take_screenshot(self.screenshot_first_str + "_" + self.utils.format_number_zeropad_4char(self.screenshot_no)),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Choosing the date '{expected_date}' in '{kwargs.get('locator_name')}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail'
+                )
             raise
 
     def login_jnj(self, **kwargs):
