@@ -116,12 +116,26 @@
             max-width: 100%; /* Prevent table from exceeding PDF dimensions */
             }
         }
-        /* Other styles unchanged for brevity */
+        .browser-title {
+            font-size: larger;
+            text-decoration: underline;
+            color: blue;
+        }
     </style>
 </head>
 <body>
 
-<table>
+    {% set chrome_matches = [] %}
+    {% for value in data %}
+        {% if "chrome" in value.Browser|lower %}
+            {% if chrome_matches.append(1) %}{% endif %}
+        {% endif %}
+    {% endfor %}
+    
+    {% if chrome_matches|length > 0 %}
+<div class="browser-title"><p>CHROME</p></div>
+
+ <table>
     <thead>
         <tr>
             <th>Sno</th>
@@ -134,6 +148,7 @@
     </thead>
     <tbody>
         {% for value in data %}
+        {% if "chrome" in value.Browser|lower %}
         <tr>
             <td>{{ loop.index }}</td>
             <td class="fixedwidth">{{ value.tc_id }}</td>
@@ -146,9 +161,52 @@
             <td>{{ value.Browser }}</td>
             <td>{{ value['Executed Date'] }}</td>
         </tr>
+        {% endif %}
         {% endfor %}
     </tbody>
 </table>
+{% endif %}
 
+    {% set edge_matches = [] %}
+    {% for value in data %}
+        {% if "edge" in value.Browser|lower %}
+            {% if edge_matches.append(1) %}{% endif %}
+        {% endif %}
+    {% endfor %}
+
+    {% if edge_matches|length > 0 %}
+<div class="browser-title"><p>EDGE</p></div>
+
+ <table>
+    <thead>
+        <tr>
+            <th>Sno</th>
+            <th>TC ID</th>
+            <th>Test Description</th>
+            <th>Status</th>
+            <th>Browser</th>
+            <th>Executed Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for value in data %}
+        {% if "edge" in value.Browser|lower %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td class="fixedwidth">{{ value.tc_id }}</td>
+            <td>{{ value.tc_description.replace('\n', '<br>') | safe }}</td>
+            {% if "failed" in value.Status|lower %}
+            <td class="red-cell">{{ value.Status }}</td>
+            {% else %}
+            <td>{{ value.Status }}</td>
+            {% endif %}
+            <td>{{ value.Browser }}</td>
+            <td>{{ value['Executed Date'] }}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
 </body>
 </html>

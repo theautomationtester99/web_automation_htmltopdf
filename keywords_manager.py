@@ -23,6 +23,7 @@ class KeywordsManager(BrowserDriver):
 
         super().__init__(logger)
         self.screenshot_strategy = self._get_screenshot_strategy()
+        self.highlight_enabled = self._get_highlight_element_strategy()
         self.screenshot_no = 0
         self.screenshot_first_str = ""
         self.logger = logger
@@ -49,8 +50,52 @@ class KeywordsManager(BrowserDriver):
             str: The value of screenshot_return (always, on-error, or never).
         """
         start_props_reader = ConfigReader("start.properties")
-        return str(start_props_reader.get_property('Misc', 'screenshot_strategy',fallback='always')).lower()
+        strategy = str(start_props_reader.get_property('Misc', 'screenshot_strategy', fallback='always')).lower()
 
+        # Validate the strategy and default to "always" if invalid
+        if strategy not in ["always", "on-error", "never"]:
+            self.logger.warning(f"Invalid screenshot_strategy '{strategy}' found in configuration. Defaulting to 'always'.")
+            strategy = "always"
+        
+        if strategy == "never":
+            self.logger.info("Mapping 'never' screenshot strategy to 'on-error'.")
+            strategy = "on-error"
+
+        return strategy
+    
+    def _get_highlight_element_strategy(self):
+        """
+        Fetches the screenshot_return value from the start.properties file.
+
+        Args:
+            start_props_reader (ConfigReader): Reader for the 'start.properties' configuration file.
+
+        Returns:
+            str: The value of screenshot_return (always, on-error, or never).
+        """
+        start_props_reader = ConfigReader("start.properties")
+        highlight_enabled = start_props_reader.get_property('Misc', 'highlight_elements', fallback='yes').lower() == 'yes'
+
+        return highlight_enabled
+
+    def ge_switch_to_default_content(self):
+        """
+        Switches to the specified iframe and logs the result in the PDF report.
+
+        Args:
+            locator (str): The locator for the iframe.
+            locator_type (str): The type of locator.
+            element_name (str): The user-friendly name of the iframe.
+
+        Raises:
+            Exception: If any error occurs while switching to the iframe.
+        """
+        try:
+            self.switch_to_default_content()
+        except Exception as e:
+            self.logger.error("An error occurred: %s", e, exc_info=True)
+            raise
+    
     def ge_switch_to_iframe(self, locator, locator_type, element_name):
         """
         Switches to the specified iframe and logs the result in the PDF report.
@@ -66,7 +111,8 @@ class KeywordsManager(BrowserDriver):
         try:
             self.wait_for_element(locator, locator_type)
             self.scroll_into_view(locator, locator_type)
-            self.highlight(1, "blue", 2, locator, locator_type)
+            if self.highlight_enabled:
+                self.highlight(1, "blue", 2, locator, locator_type)
             self.switch_to_iframe(locator, locator_type)
 
             # Handle screenshot strategy
@@ -288,6 +334,131 @@ class KeywordsManager(BrowserDriver):
             self.logger.debug("An error occurred: %s", e, exc_info=True)
             return False
             raise
+    
+    def ge_drag_and_drop(self, source_locator, source_locator_type, target_locator, target_locator_type, source_element_name, target_element_name):
+        """
+        Performs a drag-and-drop action from a source element to a target element and logs the result in the PDF report.
+
+        Args:
+            source_locator (str): The locator for the source element.
+            source_locator_type (str): The type of locator for the source element (e.g., "id", "xpath").
+            target_locator (str): The locator for the target element.
+            target_locator_type (str): The type of locator for the target element (e.g., "id", "xpath").
+            source_element_name (str): The user-friendly name of the source element.
+            target_element_name (str): The user-friendly name of the target element.
+
+        Raises:
+            Exception: If any error occurs during the drag-and-drop action.
+        """
+        self.logger.debug(f"Performing drag-and-drop from '{source_element_name}' to '{target_element_name}'.")
+        try:
+            # Call the drag_and_drop function from driver_functions.py
+            self.drag_and_drop(source_locator, source_locator_type, target_locator, target_locator_type)
+
+            # Handle screenshot strategy
+            if self.screenshot_strategy == "always":
+                self.ge_wait_for_seconds(2)
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Drag and Drop '{source_element_name}' to '{target_element_name}'",
+                    sub_step_message="Drag-and-drop action completed successfully",
+                    sub_step_status='Pass',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Drag and Drop '{source_element_name}' to '{target_element_name}'",
+                    sub_step_message="Drag-and-drop action completed successfully",
+                    sub_step_status='Pass'
+                )
+        except Exception as e:
+            self.logger.error(f"An error occurred during drag-and-drop: {e}", exc_info=True)
+
+            # Handle screenshot strategy for errors
+            if self.screenshot_strategy in ["always", "onerror"]:
+                self.ge_wait_for_seconds(2)
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Drag and Drop '{source_element_name}' to '{target_element_name}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Drag and Drop '{source_element_name}' to '{target_element_name}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail'
+                )
+            raise
+        
+    def ge_mouse_hover(self, locator, locator_type, element_name):
+        """
+        Performs a mouse hover action on the specified element and logs the result in the PDF report.
+
+        Args:
+            locator (str): The locator for the element.
+            locator_type (str): The type of locator (e.g., "id", "xpath").
+            element_name (str): The user-friendly name of the element.
+
+        Raises:
+            Exception: If any error occurs during the mouse hover action.
+        """
+        self.logger.debug(f"Performing mouse hover on '{element_name}'.")
+        try:
+            if self.highlight_enabled:
+                self.highlight(1, "blue", 2, locator, locator_type)
+            # Call the mouse_hover function from driver_functions.py
+            self.element_hover(locator, locator_type)
+
+            # Handle screenshot strategy
+            if self.screenshot_strategy == "always":
+                self.ge_wait_for_seconds(2)
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Mouse Hover on '{element_name}'",
+                    sub_step_message="Mouse hover action completed successfully",
+                    sub_step_status='Pass',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Mouse Hover on '{element_name}'",
+                    sub_step_message="Mouse hover action completed successfully",
+                    sub_step_status='Pass'
+                )
+        except Exception as e:
+            self.logger.error(f"An error occurred during mouse hover: {e}", exc_info=True)
+
+            # Handle screenshot strategy for errors
+            if self.screenshot_strategy in ["always", "onerror"]:
+                self.ge_wait_for_seconds(2)
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Mouse Hover on '{element_name}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Mouse Hover on '{element_name}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail'
+                )
+            raise
 
     def ge_is_element_enabled(self, locator, locator_type, element_name):
         """
@@ -303,6 +474,8 @@ class KeywordsManager(BrowserDriver):
         """
         self.logger.debug("Checking if element is enabled.")
         try:
+            if self.highlight_enabled:
+                self.highlight(1, "blue", 2, locator, locator_type)
             is_enabled = self.is_element_enabled(locator, locator_type)
             if is_enabled:
                 self.logger.debug("Element is enabled.")
@@ -353,6 +526,140 @@ class KeywordsManager(BrowserDriver):
             )
             
             raise
+    
+    def ge_is_chk_radio_element_selected(self, locator, locator_type, element_name):
+        """
+        Checks if the specified element is enabled and logs the result in the PDF report.
+
+        Args:
+            locator (str): The locator for the element.
+            locator_type (str): The type of locator.
+            element_name (str): The user-friendly name of the element.
+
+        Raises:
+            Exception: If any error occurs while checking element status.
+        """
+        self.logger.debug("Checking if element is selected.")
+        try:
+            if self.highlight_enabled:
+                self.highlight(1, "blue", 2, locator, locator_type)
+            is_selected = self.is_chk_radio_element_selected(locator, locator_type)
+            if is_selected:
+                self.logger.debug("Element is selected.")
+
+                # Handle screenshot strategy
+                
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Check if the element '{element_name}' is selected",
+                    sub_step_message=f"The element '{element_name}' is selected",
+                    sub_step_status='Pass',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+                
+            else:
+                self.logger.debug("Element is NOT selected.")
+
+                # Handle screenshot strategy
+               
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Check if the element '{element_name}' is selected",
+                    sub_step_message=f"The element '{element_name}' is NOT selected",
+                    sub_step_status='Fail',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+                
+        except Exception as e:
+            self.logger.error("An error occurred: %s", e, exc_info=True)
+
+            # Handle screenshot strategy for errors
+            
+            self.screenshot_no += 1
+            self.repo_m.add_report_data(
+                sub_step=f"Check if the element '{element_name}' is selected",
+                sub_step_message=f"Error Occurred: {str(e)}",
+                sub_step_status='Fail',
+                image_src=self.take_screenshot(
+                    f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                ),
+                image_alt=self.repo_m.browser_img_alt
+            )
+            
+            raise
+    
+    def ge_is_chk_radio_element_not_selected(self, locator, locator_type, element_name):
+        """
+        Checks if the specified element is enabled and logs the result in the PDF report.
+
+        Args:
+            locator (str): The locator for the element.
+            locator_type (str): The type of locator.
+            element_name (str): The user-friendly name of the element.
+
+        Raises:
+            Exception: If any error occurs while checking element status.
+        """
+        self.logger.debug("Checking if element is NOT selected.")
+        try:
+            if self.highlight_enabled:
+                self.highlight(1, "blue", 2, locator, locator_type)
+            is_not_selected = not self.is_chk_radio_element_selected(locator, locator_type)
+            if is_not_selected:
+                self.logger.debug("Element is NOT selected.")
+
+                # Handle screenshot strategy
+                
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Check if the element '{element_name}' is NOT selected",
+                    sub_step_message=f"The element '{element_name}' is NOT selected",
+                    sub_step_status='Pass',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+                
+            else:
+                self.logger.debug("Element is selected.")
+
+                # Handle screenshot strategy
+               
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Check if the element '{element_name}' is NOT selected",
+                    sub_step_message=f"The element '{element_name}' is selected",
+                    sub_step_status='Fail',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+                
+        except Exception as e:
+            self.logger.error("An error occurred: %s", e, exc_info=True)
+
+            # Handle screenshot strategy for errors
+            
+            self.screenshot_no += 1
+            self.repo_m.add_report_data(
+                sub_step=f"Check if the element '{element_name}' is NOT selected",
+                sub_step_message=f"Error Occurred: {str(e)}",
+                sub_step_status='Fail',
+                image_src=self.take_screenshot(
+                    f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                ),
+                image_alt=self.repo_m.browser_img_alt
+            )
+            
+            raise
 
     def ge_is_element_disabled(self, locator, locator_type, element_name):
         """
@@ -368,6 +675,8 @@ class KeywordsManager(BrowserDriver):
         """
         self.logger.debug("Checking if element is disabled.")
         try:
+            if self.highlight_enabled:
+                self.highlight(1, "blue", 2, locator, locator_type)
             is_disabled = not self.is_element_enabled(locator, locator_type)
             if is_disabled:
                 self.logger.debug("Element is disabled.")
@@ -566,7 +875,8 @@ class KeywordsManager(BrowserDriver):
             report_txt_to_type = self.utils.make_string_manageable(text_to_type, 25)
 
         try:
-            self.highlight(1, "blue", 2, locator, locator_type)
+            if self.highlight_enabled:
+                self.highlight(1, "blue", 2, locator, locator_type)
             self.element_click(locator, locator_type)
             self.send_keys(text_to_type, locator, locator_type)
             self.wait_for_some_time(1)
@@ -629,7 +939,8 @@ class KeywordsManager(BrowserDriver):
         """
         try:
             self.wait_for_element(locator, locator_type)
-            self.highlight(1, "blue", 2, locator, locator_type)
+            if self.highlight_enabled:
+                self.highlight(1, "blue", 2, locator, locator_type)
             actual_text = self.get_text(locator, locator_type, element_name)
             is_matched = (actual_text == expected_text)
 
@@ -694,7 +1005,8 @@ class KeywordsManager(BrowserDriver):
         """
         try:
             self.scroll_into_view(locator, locator_type)
-            self.highlight(1, "blue", 2, locator, locator_type)
+            if self.highlight_enabled:
+                self.highlight(1, "blue", 2, locator, locator_type)
             self.element_click(locator, locator_type)
             self.wait_for_some_time(2)
             self.logger.debug("Populating the step result details in the PDF report.")

@@ -125,6 +125,25 @@ def start_runner(testscript_file, rlog_queue, rlock, start_props_reader, object_
                             "datas "
                             "separated by a ';'. For example "
                             "locator1;locator1;locator1;locator1")
+                
+                if str(row["Keyword"]) == 'drag_drop':
+                    dd_element_name_data = str(row["Input1"])
+                    dd_element_locator_data = str(row["Input2"])
+
+                    dd_element_name_data_lst = dd_element_name_data.split(";")
+                    dd_element_locator_data_lst = dd_element_locator_data.split(";")
+                    
+                    if len(list(filter(None, dd_element_name_data_lst))) != 2:
+                        raise ValueError("The data entered in the Input1 Column for the keyword '" + row[
+                            "Keyword"] + "' is '" + dd_element_name_data + "'. It is not correct. It should be 2 element names "
+                            "separated by a ';'. For example "
+                            "element1;elementName2")
+                    if len(list(filter(None, dd_element_locator_data_lst))) != 2:
+                        raise ValueError("The data entered in the Input2 Column for the keyword '" + row[
+                            "Keyword"] + "' is '" + dd_element_locator_data + "'. It is not correct. It should be 2 "
+                            "datas "
+                            "separated by a ';'. For example "
+                            "locator1;locator2")
 
                 if index == 0:
                     wafl.debug("Checking if a first keyword in the test script excel file is 'tc_id'.")
@@ -166,6 +185,59 @@ def start_runner(testscript_file, rlog_queue, rlock, start_props_reader, object_
             for index, row in df1.iterrows():
                 wafl.debug("Reading Row Number " + str(index))
                 
+                if str(row["Keyword"]) == 'hover_mouse':
+                    locator_type = "xpath"
+                    if "_css" in str(row["Input2"]).lower():
+                        locator_type = "css"
+                    if "_id" in str(row["Input2"]).lower():
+                        locator_type = "id"
+                    wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input2"]) + "' to the keyword manager.")
+                    km.ge_mouse_hover(str(object_repo_reader.get_property(locator_type.upper(), row["Input2"], fallback='No')), locator_type,str(row["Input1"]))
+                
+                if str(row["Keyword"]) == 'drag_drop':
+                    locator_type_s = "xpath"
+                    locator_type_d = "xpath"
+                    
+                    wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input2"]) + "' to the keyword manager.")
+                    dd_ele_name_data = str(row["Input1"])
+                    dd_ele_locator_data = str(row["Input2"])
+
+                    dd_ele_name_data_lst = dd_ele_name_data.split(";")
+                    dd_ele_locator_data_lst = dd_ele_locator_data.split(";")
+                    
+                    if "_css" in str(dd_ele_locator_data_lst[0]).lower():
+                        locator_type_s = "css"
+                    if "_id" in str(dd_ele_locator_data_lst[0]).lower():
+                        locator_type_s = "id"
+                    
+                    if "_css" in str(dd_ele_locator_data_lst[1]).lower():
+                        locator_type_d = "css"
+                    if "_id" in str(dd_ele_locator_data_lst[1]).lower():
+                        locator_type_d = "id"
+                    
+                    km.ge_drag_and_drop(str(object_repo_reader.get_property(locator_type_s.upper(), dd_ele_locator_data_lst[0], fallback='No')), locator_type_s,str(object_repo_reader.get_property(locator_type_d.upper(), dd_ele_locator_data_lst[1], fallback='No')), locator_type_d, dd_ele_name_data_lst[0], dd_ele_name_data_lst[1])
+                
+                if str(row["Keyword"]) == 'check_radio_chk_not_selected':
+                    locator_type = "xpath"
+                    if "_css" in str(row["Input2"]).lower():
+                        locator_type = "css"
+                    if "_id" in str(row["Input2"]).lower():
+                        locator_type = "id"
+                    wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input2"]) + "' to the keyword manager.")
+                    km.ge_is_chk_radio_element_not_selected(str(object_repo_reader.get_property(locator_type.upper(), row["Input2"], fallback='No')), locator_type,str(row["Input1"]))
+                
+                if str(row["Keyword"]) == 'check_radio_chk_selected':
+                    locator_type = "xpath"
+                    if "_css" in str(row["Input2"]).lower():
+                        locator_type = "css"
+                    if "_id" in str(row["Input2"]).lower():
+                        locator_type = "id"
+                    wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input2"]) + "' to the keyword manager.")
+                    km.ge_is_chk_radio_element_selected(str(object_repo_reader.get_property(locator_type.upper(), row["Input2"], fallback='No')), locator_type,str(row["Input1"]))
+                
+                if str(row["Keyword"]) == 'switch_to_default_content':
+                    km.ge_switch_to_default_content()
+                    
                 if str(row["Keyword"]) == 'switch_to_iframe':
                     locator_type = "xpath"
                     if "_css" in str(row["Input2"]).lower():

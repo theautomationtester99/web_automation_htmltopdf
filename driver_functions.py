@@ -659,6 +659,20 @@ class BrowserDriver(DriverManager):
             
         except:
             self.logger.error("Unable to switch to iframe with locator: " + locator + " and locator_type: " + locator_type)
+    
+    def switch_to_default_content(self):
+        """
+        Switch back to the default content of the page.
+
+        Raises:
+            Exception: Logs an error and raises an exception if switching to the default content fails.
+        """
+        try:
+            self.logger.debug("Switching to default content")
+            self.driver.switch_to.default_content()  # Switch back to the main content
+            
+        except:
+            self.logger.error("Unable to switch to default content")
 
     def is_element_present(self, locator="", locator_type="id", element=None):
         """
@@ -726,6 +740,42 @@ class BrowserDriver(DriverManager):
             self.apply_style(original_style, element)
         except:
             self.logger.error("Cannot highlight element with locator: " + locator + " and locator_type: " + locator_type)
+            
+            
+    def drag_and_drop(self, source_locator="", source_locator_type="id", target_locator="", target_locator_type="id"):
+        """
+        Performs a drag-and-drop action from a source element to a target element.
+
+        Args:
+            source_locator (str, optional): The locator for the source element (default: "").
+            source_locator_type (str, optional): The type of locator for the source element (e.g., "id", "xpath", default: "id").
+            target_locator (str, optional): The locator for the target element (default: "").
+            target_locator_type (str, optional): The type of locator for the target element (e.g., "id", "xpath", default: "id").
+
+        Raises:
+            Exception: Logs an error and raises an exception if the drag-and-drop action fails.
+        """
+        try:
+            # Locate the source and target elements
+            source_element = self.get_element(source_locator, source_locator_type)
+            target_element = self.get_element(target_locator, target_locator_type)
+
+            # Perform the drag-and-drop action
+            actions = ActionChains(self.driver)
+            actions.drag_and_drop(source_element, target_element).perform()
+
+            self.logger.debug(
+                f"Successfully performed drag-and-drop from source with locator: {source_locator} "
+                f"and locator_type: {source_locator_type} to target with locator: {target_locator} "
+                f"and locator_type: {target_locator_type}"
+            )
+        except Exception as e:
+            self.logger.error(
+                f"Failed to perform drag-and-drop from source with locator: {source_locator} "
+                f"and locator_type: {source_locator_type} to target with locator: {target_locator} "
+                f"and locator_type: {target_locator_type}. Error: {str(e)}"
+            )
+            raise
 
     def is_element_displayed(self, locator="", locator_type="id", element=None):
         """
@@ -786,6 +836,39 @@ class BrowserDriver(DriverManager):
             else:
                 self.logger.error("Element is not displayed with locator: " + locator + " and locator_type: " + locator_type)
             return is_enabled
+        except:
+            self.logger.error("Element is not displayed with locator: " + locator + " and locator_type: " + locator_type)
+            return False
+    
+    def is_chk_radio_element_selected(self, locator="", locator_type="id", element=None):
+        """
+        Check if a web element is enabled.
+        Either provide a pre-located element or specify a combination of locator and locator_type.
+
+        Args:
+            locator (str, optional): The locator for the web element (default: "").
+            locator_type (str, optional): The type of locator (e.g., "id", "xpath", default: "id").
+            element (WebElement, optional): A pre-located web element (default: None).
+
+        Returns:
+            bool: True if the element is enabled, False otherwise.
+
+        Raises:
+            Exception: Logs an error and raises an exception if the enable check fails.
+        """
+        is_selected = False
+        try:
+            if locator:
+                element = self.get_element(locator, locator_type)
+            if element is not None:
+                is_selected = element.is_selected()
+                if is_selected:
+                    self.logger.debug("Element is with locator: " + locator + " and locator_type: " + locator_type + " is selected")
+                else:
+                    self.logger.debug("Element is with locator: " + locator + " and locator_type: " + locator_type + " is NOT selected")
+            else:
+                self.logger.error("Element is not displayed with locator: " + locator + " and locator_type: " + locator_type)
+            return is_selected
         except:
             self.logger.error("Element is not displayed with locator: " + locator + " and locator_type: " + locator_type)
             return False
