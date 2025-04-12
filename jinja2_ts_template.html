@@ -147,10 +147,12 @@
         </tr>
     </thead>
     <tbody>
+        {% set sno = [] %}
         {% for value in data %}
-        {% if "chrome" in value.Browser|lower %}
+            {% if "chrome" in value.Browser|lower %}
+                {% if sno.append(1) %}{% endif %}
         <tr>
-            <td>{{ loop.index }}</td>
+            <td>{{ sno|length }}</td>
             <td class="fixedwidth">{{ value.tc_id }}</td>
             <td>{{ value.tc_description.replace('\n', '<br>') | safe }}</td>
             {% if "failed" in value.Status|lower %}
@@ -189,10 +191,12 @@
         </tr>
     </thead>
     <tbody>
+        {% set sno = [] %}
         {% for value in data %}
         {% if "edge" in value.Browser|lower %}
+        {% if sno.append(1) %}{% endif %}
         <tr>
-            <td>{{ loop.index }}</td>
+            <td>{{ sno|length }}</td>
             <td class="fixedwidth">{{ value.tc_id }}</td>
             <td>{{ value.tc_description.replace('\n', '<br>') | safe }}</td>
             {% if "failed" in value.Status|lower %}

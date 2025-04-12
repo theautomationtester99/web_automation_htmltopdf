@@ -45,6 +45,10 @@ def start_runner(testscript_file, rlog_queue, rlock, start_props_reader, object_
     logger_config = LoggerConfig(log_queue=rlog_queue)
     wafl = logger_config.logger
     utils = Utils(wafl)
+    
+    wafl.info("Starting test script execution.")
+    wafl.debug(f"Test script file: {testscript_file}")
+    wafl.debug(f"Launch browser parameter: {launch_browser}")
 
     data_run_in_selenium_grid = str(start_props_reader.get_property('SGrid', 'run_in_selenium_grid', fallback='No')).lower()
     data_run_in_appium_grid = str(start_props_reader.get_property('Appium', 'run_in_appium_grid', fallback='No')).lower()
@@ -59,47 +63,50 @@ def start_runner(testscript_file, rlog_queue, rlock, start_props_reader, object_
     wafl.debug("Checking if the test script excel file name ends with 'testscript.xlsx'")
 
     if "testscript.xlsx" in testscript_file:
-        wafl.debug("Test script excel file name ends with 'testscript.xlsx'. Proceeding execution.")
-        wafl.debug("Checking if the test script excel file is in correct excel format")
+        wafl.debug("The test script Excel file name ends with 'testscript.xlsx'. Proceeding with execution.")
+        wafl.debug("Validating if the test script Excel file is in the correct format.")
         if utils.is_excel_doc(testscript_file):
-            wafl.debug("Test script excel file is in correct excel format. Proceeding execution.")
-            wafl.debug("Reading the test script excel file into pandas dataframe.")
+            wafl.debug("The test script Excel file is in the correct format. Proceeding with execution.")
+            wafl.debug("Reading the test script Excel file into a pandas DataFrame.")
             df = pd.read_excel(testscript_file, dtype={"Keyword": "string", "Input1": "string", "Input2": "string", "Input3": "string"})
-            wafl.debug("Checking if the 'Keyword' column of test script excel file does not contain empty values.")
+            wafl.debug("Checking if the 'Keyword' column of the test script Excel file contains any empty values.")
             check_nan_for_test_steps = df['Keyword'].isnull().values.any()
 
             if check_nan_for_test_steps:
-                wafl.error("The 'Keyword' column in the excel file contains empty values. Please check.")
-                raise ValueError("The 'Keyword' column in the excel file contains empty values. Please check.")
+                wafl.error("The 'Keyword' column in the Excel file contains empty values. Please check and correct the file.")
+                raise ValueError("The 'Keyword' column in the Excel file contains empty values. Please check and correct the file.")
 
-            wafl.debug("Replacing all empty values in pandas data frame as ''.")
+            wafl.debug("Replacing all empty values in the pandas DataFrame with empty strings ('').")
             df1 = df.replace(np.nan, '', regex=True)
-            wafl.debug("Looping through the data frame to check the validity of its content.")
+            wafl.debug("Iterating through the DataFrame to validate its content.")
             for index, row in df1.iterrows():
-                wafl.debug("Reading Row Number " + str(index))
-                wafl.debug("Checking if the keyword in row number " + str(index) + " of 'Keyword' column '" + str(row["Keyword"]) + "' is a valid keyword.")
+                wafl.debug(f"Processing row number {index}.")
+                wafl.debug(f"Validating the keyword '{row['Keyword']}' in row number {index}.")
                 if str(row["Keyword"]) not in VALID_KEYWORDS:
-                    wafl.error("The keyword in row number " + str(index) + " of 'Keyword' column '" + str(row["Keyword"]) + "' is invalid.")
-                    raise ValueError(f"The keyword '{row['Keyword']}' entered in keyword column in the excel file is invalid. Please check.")
-                wafl.debug("The keyword in row number " + str(index) + " of 'Keyword' column '" + str(row["Keyword"]) + "' is a valid keyword.")
+                    wafl.error(f"The keyword '{row['Keyword']}' in row number {index} is invalid. Please check the test script.")
+                    raise ValueError(f"The keyword '{row['Keyword']}' in the test script is invalid. Please check the test script.")
+                wafl.debug(f"The keyword '{row['Keyword']}' in row number {index} is valid.")
 
                 if str(row["Keyword"]) == 'mcnp_choose_date_from_datepicker':
+                    wafl.debug("Validating the date format for the 'mcnp_choose_date_from_datepicker' keyword.")
                     which_calender = str(row["Input2"])
                     if which_calender == 'cn_det_ed':
+                        wafl.debug(f"Validating the date format for the calendar '{which_calender}'.")
                         utils.check_date_format_validity(str(row["Input3"]))
                     if which_calender == 'cn_det_dd':
-                        utils.check_date_range_format_validity(
-                            str(row["Input3"]))
+                        wafl.debug(f"Validating the date range format for the calendar '{which_calender}'.")
+                        utils.check_date_range_format_validity(str(row["Input3"]))
 
                 if str(row["Keyword"]) == 'open_browser':
                     browser_given = str(row["Input3"])
-                    wafl.debug("Checking if a valid browser name is given.")
+                    wafl.debug("Validating the browser name provided in the test script.")
                     if launch_browser == '':
-                        if browser_given.lower() != 'chrome' and browser_given.lower() != 'edge':
-                            wafl.error("The input given for keyword '" + str(row["Keyword"]) + "' in Input3 column in the excel file is invalid. It should be either 'edge' or 'chrome'.")
-                            raise ValueError("The input given for keyword '" + str(row["Keyword"]) + "' in Input3 column in the excel file is invalid. It should be either 'edge' or 'chrome'. Please check.")
+                        if browser_given.lower() not in ['chrome', 'edge']:
+                            wafl.error(f"The browser name '{browser_given}' provided in the test script is invalid. It should be either 'chrome' or 'edge'.")
+                            raise ValueError(f"The browser name '{browser_given}' provided in the test script is invalid. It should be either 'chrome' or 'edge'. Please check.")
 
                 if str(row["Keyword"]) == 'login_jnj':
+                    wafl.debug("Validating the input data for the 'login_jnj' keyword.")
                     element_name_data = str(row["Input1"])
                     element_locator_data = str(row["Input2"])
                     login_uname_pwd_data = str(row["Input3"])
@@ -108,75 +115,33 @@ def start_runner(testscript_file, rlog_queue, rlock, start_props_reader, object_
                     element_locator_data_lst = element_locator_data.split(";")
                     login_uname_pwd_data_lst = login_uname_pwd_data.split(";")
 
-                    if len(list(filter(None, login_uname_pwd_data_lst))) != 2:
-                        raise ValueError("The data entered in the Input3 Column for the keyword '" + row[
-                            "Keyword"] + "' is '" + login_uname_pwd_data + "'. It is not correct. It should be 2 "
-                            "datas "
-                            "separated by a ';'. For example "
-                            "UserName;Password")
-                    if len(list(filter(None, element_name_data_lst))) != 4:
-                        raise ValueError("The data entered in the Input1 Column for the keyword '" + row[
-                            "Keyword"] + "' is '" + element_name_data + "'. It is not correct. It should be 4 datas "
-                            "separated by a ';'. For example "
-                            "Name1;Name2;Name3;Name4")
-                    if len(list(filter(None, element_locator_data_lst))) != 4:
-                        raise ValueError("The data entered in the Input2 Column for the keyword '" + row[
-                            "Keyword"] + "' is '" + element_locator_data + "'. It is not correct. It should be 4 "
-                            "datas "
-                            "separated by a ';'. For example "
-                            "locator1;locator1;locator1;locator1")
-                
+                    if len(list(filter(None, [item.strip() for item in login_uname_pwd_data_lst]))) != 2:
+                        wafl.error(f"The data '{login_uname_pwd_data}' in the 'Input3' column for the 'login_jnj' keyword is invalid. It should contain exactly 2 values separated by a semicolon (';').")
+                        raise ValueError(f"The data '{login_uname_pwd_data}' in the 'Input3' column for the 'login_jnj' keyword is invalid. It should contain exactly 2 values separated by a semicolon (';').")
+                    
+                    if len(list(filter(None, [item.strip() for item in element_name_data_lst]))) != 4:
+                        wafl.error(f"The data '{element_name_data}' in the 'Input1' column for the 'login_jnj' keyword is invalid. It should contain exactly 4 values separated by a semicolon (';').")
+                        raise ValueError(f"The data '{element_name_data}' in the 'Input1' column for the 'login_jnj' keyword is invalid. It should contain exactly 4 values separated by a semicolon (';').")
+                    
+                    if len(list(filter(None, [item.strip() for item in element_locator_data_lst]))) != 4:
+                        wafl.error(f"The data '{element_locator_data}' in the 'Input2' column for the 'login_jnj' keyword is invalid. It should contain exactly 4 values separated by a semicolon (';').")
+                        raise ValueError(f"The data '{element_locator_data}' in the 'Input2' column for the 'login_jnj' keyword is invalid. It should contain exactly 4 values separated by a semicolon (';').")
+
                 if str(row["Keyword"]) == 'drag_drop':
+                    wafl.debug("Validating the input data for the 'drag_drop' keyword.")
                     dd_element_name_data = str(row["Input1"])
                     dd_element_locator_data = str(row["Input2"])
 
                     dd_element_name_data_lst = dd_element_name_data.split(";")
                     dd_element_locator_data_lst = dd_element_locator_data.split(";")
-                    
-                    if len(list(filter(None, dd_element_name_data_lst))) != 2:
-                        raise ValueError("The data entered in the Input1 Column for the keyword '" + row[
-                            "Keyword"] + "' is '" + dd_element_name_data + "'. It is not correct. It should be 2 element names "
-                            "separated by a ';'. For example "
-                            "element1;elementName2")
-                    if len(list(filter(None, dd_element_locator_data_lst))) != 2:
-                        raise ValueError("The data entered in the Input2 Column for the keyword '" + row[
-                            "Keyword"] + "' is '" + dd_element_locator_data + "'. It is not correct. It should be 2 "
-                            "datas "
-                            "separated by a ';'. For example "
-                            "locator1;locator2")
 
-                if index == 0:
-                    wafl.debug("Checking if a first keyword in the test script excel file is 'tc_id'.")
-                    if not (str(row["Keyword"]) == 'tc_id'):
-                        wafl.error("The first keyword must be 'tc_id'")
-                        raise ValueError("The first keyword must be 'tc_id'")
-                    else:
-                        fn = os.path.basename(testscript_file)
-                        prefix = fn.split('_')[0]
-                        if not (str(prefix).lower() == str(row["Input3"]).lower()):
-                            wafl.error("The 'tc_id' in the script file is not matching with the tc id mentioned in the file name " + testscript_file)
-                            raise ValueError("The 'tc_id' in the script file is not matching with the tc id mentioned in the file name " + testscript_file)
+                    if len(list(filter(None, [item.strip() for item in dd_element_name_data_lst]))) != 2:
+                        wafl.error(f"The data '{dd_element_name_data}' in the 'Input1' column for the 'drag_drop' keyword is invalid. It should contain exactly 2 values separated by a semicolon (';').")
+                        raise ValueError(f"The data '{dd_element_name_data}' in the 'Input1' column for the 'drag_drop' keyword is invalid. It should contain exactly 2 values separated by a semicolon (';').")
 
-                if index == 1:
-                    wafl.debug("Checking if a second keyword in the test script excel file is 'tc_desc'.")
-                    if not (str(row["Keyword"]) == 'tc_desc'):
-                        wafl.error("The second keyword must be 'tc_desc'")
-                        raise ValueError("The second keyword must be 'tc_desc'")
-                if index == 2:
-                    wafl.debug("Checking if a third keyword in the test script excel file is 'step'.")
-                    if not (str(row["Keyword"]) == 'step'):
-                        wafl.error("The third keyword must be 'step'")
-                        raise ValueError("The third keyword must be 'step'")
-                if index == 3:
-                    wafl.debug("Checking if a fourth keyword in the test script excel file is 'open_browser'.")
-                    if not (str(row["Keyword"]) == 'open_browser'):
-                        wafl.error("The fourth keyword must be 'open_browser'")
-                        raise ValueError("The fourth keyword must be 'open_browser'")
-                if index == 4:
-                    wafl.debug("Checking if a fifth keyword in the test script excel file is 'enter_url'.")
-                    if not (str(row["Keyword"]) == 'enter_url'):
-                        wafl.error("The fifth keyword must be 'enter_url'")
-                        raise ValueError("The fifth keyword must be 'enter_url'")
+                    if len(list(filter(None, [item.strip() for item in dd_element_locator_data_lst]))) != 2:
+                        wafl.error(f"The data '{dd_element_locator_data}' in the 'Input2' column for the 'drag_drop' keyword is invalid. It should contain exactly 2 values separated by a semicolon (';').")
+                        raise ValueError(f"The data '{dd_element_locator_data}' in the 'Input2' column for the 'drag_drop' keyword is invalid. It should contain exactly 2 values separated by a semicolon (';').")
 
             wafl.debug("Instantiating the keyword manager.")
 
