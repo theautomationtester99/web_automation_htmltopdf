@@ -57,7 +57,7 @@ class LoggerConfig:
         file_handler = RotatingFileHandler(self.log_file, maxBytes=5 * 1024 * 1024, backupCount=5)
         file_handler.setLevel(self.log_level)
         file_handler.setFormatter(logging.Formatter(
-            '%(asctime)s - %(name)s - %(levelname)s - [PID:%(process)d] %(message)s [%(filename)s:%(lineno)d]'
+            '%(asctime)s - %(name)s - %(levelname)s - %(filename)s:%(lineno)d] [PID:%(process)d] %(message)s'
         ))
 
         # Console handler with ColorFormatter

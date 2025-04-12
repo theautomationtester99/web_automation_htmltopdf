@@ -26,11 +26,11 @@ class ColorFormatter(logging.Formatter):
         super().__init__()
         self.default_format = '%(asctime)s - %(name)s - %(levelname)s - [PID:%(process)d] %(message)s [%(filename)s:%(lineno)d]'
         self.formats = {
-            logging.DEBUG: f'{Fore.BLUE}{Style.BRIGHT}%(asctime)s - %(name)s - %(levelname)s - [PID:%(process)d] %(message)s [%(filename)s:%(lineno)d]{Style.RESET_ALL}',
-            logging.INFO: f'{Fore.GREEN}%(asctime)s - %(name)s - %(levelname)s - [PID:%(process)d] %(message)s [%(filename)s:%(lineno)d]{Style.RESET_ALL}',
-            logging.WARNING: f'{Fore.YELLOW}%(asctime)s - %(name)s - %(levelname)s - [PID:%(process)d] %(message)s [%(filename)s:%(lineno)d]{Style.RESET_ALL}',
-            logging.ERROR: f'{Fore.RED}{Style.BRIGHT}%(asctime)s - %(name)s - %(levelname)s - [PID:%(process)d] %(message)s [%(filename)s:%(lineno)d]{Style.RESET_ALL}',
-            logging.CRITICAL: f'{Fore.RED}{Style.BRIGHT}%(asctime)s - %(name)s - %(levelname)s - [PID:%(process)d] %(message)s [%(filename)s:%(lineno)d]{Style.RESET_ALL}'
+            logging.DEBUG: f'{Fore.BLUE}{Style.BRIGHT}%(asctime)s - %(name)s - %(levelname)s - [%(filename)s:%(lineno)d] [PID:%(process)d] %(message)s {Style.RESET_ALL}',
+            logging.INFO: f'{Fore.GREEN}%(asctime)s - %(name)s - %(levelname)s - [%(filename)s:%(lineno)d] [PID:%(process)d] %(message)s {Style.RESET_ALL}',
+            logging.WARNING: f'{Fore.YELLOW}%(asctime)s - %(name)s - %(levelname)s - [%(filename)s:%(lineno)d] [PID:%(process)d] %(message)s {Style.RESET_ALL}',
+            logging.ERROR: f'{Fore.RED}{Style.BRIGHT}%(asctime)s - %(name)s - %(levelname)s - [%(filename)s:%(lineno)d] [PID:%(process)d] %(message)s {Style.RESET_ALL}',
+            logging.CRITICAL: f'{Fore.RED}{Style.BRIGHT}%(asctime)s - %(name)s - %(levelname)s - [%(filename)s:%(lineno)d] [PID:%(process)d] %(message)s {Style.RESET_ALL}'
         }
 
     def format(self, record):
