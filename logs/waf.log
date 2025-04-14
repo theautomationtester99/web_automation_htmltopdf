@@ -1449,3 +1449,23 @@ AttributeError: 'KeywordsManager' object has no attribute 'driver' [runner.py:28
 2025-04-12 17:29:52,776 - WafLogger - DEBUG - pdf_ts_reporting.py:81] [PID:22728] Creating the test summary report PDF footer template
 2025-04-12 17:29:52,776 - WafLogger - DEBUG - pdf_ts_reporting.py:126] [PID:22728] Starting creation of test dummary PDF report from template with populated data
 2025-04-12 17:29:53,892 - WafLogger - DEBUG - pdf_ts_reporting.py:150] [PID:22728] Completed creation of test summary PDF report from template with populated data
+2025-04-14 10:50:15,419 - WafLogger - DEBUG - runner.py:568] [PID:17852] Execution Started ----------------.
+2025-04-14 10:50:15,420 - WafLogger - DEBUG - runner.py:569] [PID:17852] Parsing the input arguments.
+2025-04-14 10:50:15,423 - WafLogger - DEBUG - runner.py:579] [PID:17852] Counting the number of input arguments.
+2025-04-14 10:50:15,424 - WafLogger - DEBUG - runner.py:602] [PID:17852] Started encrypting file .\help_document.html.
+2025-04-14 10:50:15,489 - WafLogger - DEBUG - runner.py:609] [PID:17852] Finished encrypting file .\help_document.html to .\enc_help_doc.enc
+2025-04-14 10:50:32,231 - WafLogger - DEBUG - runner.py:568] [PID:9792] Execution Started ----------------.
+2025-04-14 10:50:32,232 - WafLogger - DEBUG - runner.py:569] [PID:9792] Parsing the input arguments.
+2025-04-14 10:50:44,934 - WafLogger - DEBUG - runner.py:568] [PID:18576] Execution Started ----------------.
+2025-04-14 10:50:44,934 - WafLogger - DEBUG - runner.py:569] [PID:18576] Parsing the input arguments.
+2025-04-14 10:50:44,937 - WafLogger - DEBUG - runner.py:579] [PID:18576] Counting the number of input arguments.
+2025-04-14 10:50:45,559 - WafLogger - DEBUG - runner.py:598] [PID:18576] Temporary file created at: C:\Users\vinay\AppData\Local\Temp\tmpb55da3pd.html
+2025-04-14 10:50:45,559 - WafLogger - DEBUG - runner.py:599] [PID:18576] Please close the browser manually when you're done.
+2025-04-14 10:53:21,129 - WafLogger - DEBUG - runner.py:568] [PID:5820] Execution Started ----------------.
+2025-04-14 10:53:21,131 - WafLogger - DEBUG - runner.py:569] [PID:5820] Parsing the input arguments.
+2025-04-14 10:53:21,132 - WafLogger - ERROR - runner.py:745] [PID:5820] An error occurred: argument --help: conflicting option string: --help
+2025-04-14 10:54:38,387 - WafLogger - DEBUG - runner.py:568] [PID:13920] Execution Started ----------------.
+2025-04-14 10:54:38,388 - WafLogger - DEBUG - runner.py:569] [PID:13920] Parsing the input arguments.
+2025-04-14 10:54:38,392 - WafLogger - DEBUG - runner.py:579] [PID:13920] Counting the number of input arguments.
+2025-04-14 10:54:38,597 - WafLogger - DEBUG - runner.py:598] [PID:13920] Temporary file created at: C:\Users\vinay\AppData\Local\Temp\tmpdiid69my.html
+2025-04-14 10:54:38,597 - WafLogger - DEBUG - runner.py:599] [PID:13920] Please close the browser manually when you're done.
