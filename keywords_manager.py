@@ -282,7 +282,7 @@ class KeywordsManager(BrowserDriver):
             self.screenshot_first_str = f"{self.repo_m.tc_id}_{self.repo_m.browser_img_alt}"
 
             # Handle screenshot strategy
-            if self.is_headless:
+            if self.is_headless or self.is_running_grid:
                 self.repo_m.add_report_data(
                     sub_step="Open Browser",
                     sub_step_message="The browser opened successfully",

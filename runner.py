@@ -19,7 +19,7 @@ import os
 from logger_config import LoggerConfig
 from constants import VALID_KEYWORDS
 
-def validate_test_script(testscript_file, wafl, utils):
+def validate_test_script(testscript_file, wafl, utils, launch_browser):
     """
     Validates the test script Excel file for format, content, and keyword correctness.
 
@@ -34,53 +34,51 @@ def validate_test_script(testscript_file, wafl, utils):
     Raises:
         ValueError: If the test script is invalid.
     """
-    wafl.debug("Validating if the test script Excel file is in the correct format.")
+    wafl.info(f"Validating the test script: {testscript_file}")
+    
     if not utils.is_excel_doc(testscript_file):
         wafl.error("The test script Excel file is not in the correct format.")
         raise ValueError("The test script Excel file is not in the correct format.")
 
     wafl.debug("Reading the test script Excel file into a pandas DataFrame.")
     df = pd.read_excel(testscript_file, dtype={"Keyword": "string", "Input1": "string", "Input2": "string", "Input3": "string"})
-    wafl.debug("Checking if the 'Keyword' column of the test script Excel file contains any empty values.")
+    
     if df['Keyword'].isnull().values.any():
-        wafl.error("The 'Keyword' column in the Excel file contains empty values. Please check and correct the file.")
-        raise ValueError("The 'Keyword' column in the Excel file contains empty values. Please check and correct the file.")
+        wafl.error("The 'Keyword' column in the Excel file contains empty values.")
+        raise ValueError("The 'Keyword' column in the Excel file contains empty values.")
 
-    wafl.debug("Replacing all empty values in the pandas DataFrame with empty strings ('').")
+    wafl.debug("Replacing empty values in the DataFrame with empty strings.")
     df = df.replace(np.nan, '', regex=True)
-    wafl.debug("Iterating through the DataFrame to validate its content.")
+    
+    wafl.info("Validating the content of the test script.")
     for index, row in df.iterrows():
-        wafl.debug(f"Processing row number {index}.")
-        wafl.debug(f"Validating the keyword '{row['Keyword']}' in row number {index}.")
-        if str(row["Keyword"]) not in VALID_KEYWORDS:
-            wafl.error(f"The keyword '{row['Keyword']}' in row number {index} is invalid. Please check the test script.")
-            raise ValueError(f"The keyword '{row['Keyword']}' in the test script is invalid. Please check the test script.")
-        wafl.debug(f"The keyword '{row['Keyword']}' in row number {index} is valid.")
-        if str(row["Keyword"]) == 'wait_for_seconds':
-            wafl.debug("Validating the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input3"]) + "' to be a valid integer.")
-            if not str(row["Input3"]).strip().isdigit():
-                wafl.error(f"The value '{row['Input3']}' in the 'wait_for_seconds' keyword is invalid. It should be a positive integer.")
-                raise ValueError(f"The value '{row['Input3']}' in the 'wait_for_seconds' keyword is invalid. It should be a positive integer.")
-
-        if str(row["Keyword"]) == 'mcnp_choose_date_from_datepicker':
-            wafl.debug("Validating the date format for the 'mcnp_choose_date_from_datepicker' keyword.")
-            which_calender = str(row["Input2"]).strip()
-            if which_calender == 'cn_det_ed':
-                wafl.debug(f"Validating the date format for the calendar '{which_calender}'.")
+        keyword = str(row["Keyword"])
+        wafl.debug(f"Validating row {index}: Keyword='{keyword}'")
+        
+        if keyword not in VALID_KEYWORDS:
+            wafl.error(f"Invalid keyword '{keyword}' at row {index}.")
+            raise ValueError(f"Invalid keyword '{keyword}' in the test script.")
+        
+        if keyword == 'wait_for_seconds' and not str(row["Input3"]).strip().isdigit():
+            wafl.error(f"Invalid value '{row['Input3']}' for 'wait_for_seconds' at row {index}.")
+            raise ValueError(f"Invalid value '{row['Input3']}' for 'wait_for_seconds'.")
+        
+        if keyword == 'mcnp_choose_date_from_datepicker':
+            which_calendar = str(row["Input2"]).strip()
+            wafl.debug(f"Validating date format for calendar '{which_calendar}' at row {index}.")
+            if which_calendar == 'cn_det_ed':
                 utils.check_date_format_validity(str(row["Input3"]).strip())
-            if which_calender == 'cn_det_dd':
-                wafl.debug(f"Validating the date range format for the calendar '{which_calender}'.")
+            elif which_calendar == 'cn_det_dd':
                 utils.check_date_range_format_validity(str(row["Input3"]).strip())
-
-        if str(row["Keyword"]) == 'open_browser':
+        
+        if keyword == 'open_browser' and launch_browser == '':
             browser_given = str(row["Input3"]).strip()
-            wafl.debug("Validating the browser name provided in the test script.")
             if browser_given.lower() not in ['chrome', 'edge']:
-                wafl.error(f"The browser name '{browser_given}' provided in the test script is invalid. It should be either 'chrome' or 'edge'.")
-                raise ValueError(f"The browser name '{browser_given}' provided in the test script is invalid. It should be either 'chrome' or 'edge'. Please check.")
-
-        if str(row["Keyword"]) == 'login_jnj':
-            wafl.debug("Validating the input data for the 'login_jnj' keyword.")
+                wafl.error(f"Invalid browser name '{browser_given}' at row {index}.")
+                raise ValueError(f"Invalid browser name '{browser_given}'. It should be either 'chrome' or 'edge'.")
+        
+        if keyword == 'login_jnj':
+            wafl.debug(f"Validating 'login_jnj' inputs at row {index}.")
             element_name_data = str(row["Input1"]).strip()
             element_locator_data = str(row["Input2"]).strip()
             login_uname_pwd_data = str(row["Input3"]).strip()
@@ -90,19 +88,19 @@ def validate_test_script(testscript_file, wafl, utils):
             login_uname_pwd_data_lst = login_uname_pwd_data.split(";")
 
             if len(list(filter(None, [item.strip() for item in login_uname_pwd_data_lst]))) != 2:
-                wafl.error(f"The data '{login_uname_pwd_data}' in the 'Input3' column for the 'login_jnj' keyword is invalid. It should contain exactly 2 values separated by a semicolon (';').")
-                raise ValueError(f"The data '{login_uname_pwd_data}' in the 'Input3' column for the 'login_jnj' keyword is invalid. It should contain exactly 2 values separated by a semicolon (';').")
+                wafl.error(f"Invalid 'Input3' data '{login_uname_pwd_data}' for 'login_jnj' at row {index}.")
+                raise ValueError(f"'Input3' for 'login_jnj' must contain exactly 2 values separated by a semicolon (';').")
             
             if len(list(filter(None, [item.strip() for item in element_name_data_lst]))) != 4:
-                wafl.error(f"The data '{element_name_data}' in the 'Input1' column for the 'login_jnj' keyword is invalid. It should contain exactly 4 values separated by a semicolon (';').")
-                raise ValueError(f"The data '{element_name_data}' in the 'Input1' column for the 'login_jnj' keyword is invalid. It should contain exactly 4 values separated by a semicolon (';').")
+                wafl.error(f"Invalid 'Input1' data '{element_name_data}' for 'login_jnj' at row {index}.")
+                raise ValueError(f"'Input1' for 'login_jnj' must contain exactly 4 values separated by a semicolon (';').")
             
             if len(list(filter(None, [item.strip() for item in element_locator_data_lst]))) != 4:
-                wafl.error(f"The data '{element_locator_data}' in the 'Input2' column for the 'login_jnj' keyword is invalid. It should contain exactly 4 values separated by a semicolon (';').")
-                raise ValueError(f"The data '{element_locator_data}' in the 'Input2' column for the 'login_jnj' keyword is invalid. It should contain exactly 4 values separated by a semicolon (';').")
-
-        if str(row["Keyword"]) == 'drag_drop':
-            wafl.debug("Validating the input data for the 'drag_drop' keyword.")
+                wafl.error(f"Invalid 'Input2' data '{element_locator_data}' for 'login_jnj' at row {index}.")
+                raise ValueError(f"'Input2' for 'login_jnj' must contain exactly 4 values separated by a semicolon (';').")
+        
+        if keyword == 'drag_drop':
+            wafl.debug(f"Validating 'drag_drop' inputs at row {index}.")
             dd_element_name_data = str(row["Input1"]).strip()
             dd_element_locator_data = str(row["Input2"]).strip()
 
@@ -110,14 +108,283 @@ def validate_test_script(testscript_file, wafl, utils):
             dd_element_locator_data_lst = dd_element_locator_data.split(";")
 
             if len(list(filter(None, [item.strip() for item in dd_element_name_data_lst]))) != 2:
-                wafl.error(f"The data '{dd_element_name_data}' in the 'Input1' column for the 'drag_drop' keyword is invalid. It should contain exactly 2 values separated by a semicolon (';').")
-                raise ValueError(f"The data '{dd_element_name_data}' in the 'Input1' column for the 'drag_drop' keyword is invalid. It should contain exactly 2 values separated by a semicolon (';').")
-
+                wafl.error(f"Invalid 'Input1' data '{dd_element_name_data}' for 'drag_drop' at row {index}.")
+                raise ValueError(f"'Input1' for 'drag_drop' must contain exactly 2 values separated by a semicolon (';').")
+            
             if len(list(filter(None, [item.strip() for item in dd_element_locator_data_lst]))) != 2:
-                wafl.error(f"The data '{dd_element_locator_data}' in the 'Input2' column for the 'drag_drop' keyword is invalid. It should contain exactly 2 values separated by a semicolon (';').")
-                raise ValueError(f"The data '{dd_element_locator_data}' in the 'Input2' column for the 'drag_drop' keyword is invalid. It should contain exactly 2 values separated by a semicolon (';').")
+                wafl.error(f"Invalid 'Input2' data '{dd_element_locator_data}' for 'drag_drop' at row {index}.")
+                raise ValueError(f"'Input2' for 'drag_drop' must contain exactly 2 values separated by a semicolon (';').")
+    
+    wafl.info("Test script validation completed successfully.")
     return df
 
+def hover_mouse(row, wafl, km, object_repo_reader):
+    locator_type = "xpath"
+    if "_css" in str(row["Input2"]).strip().lower():
+        locator_type = "css"
+    if "_id" in str(row["Input2"]).strip().lower():
+        locator_type = "id"
+    wafl.info(f"Executing 'hover_mouse' at row {row.name}.")
+    km.ge_mouse_hover(
+        str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')),
+        locator_type,
+        str(row["Input1"]).strip()
+    )
+
+def drag_drop(row, wafl, km, object_repo_reader):
+    locator_type_s = "xpath"
+    locator_type_d = "xpath"
+    dd_ele_name_data = str(row["Input1"]).strip()
+    dd_ele_locator_data = str(row["Input2"]).strip()
+    dd_ele_name_data_lst = dd_ele_name_data.split(";")
+    dd_ele_locator_data_lst = dd_ele_locator_data.split(";")
+
+    if "_css" in str(dd_ele_locator_data_lst[0]).lower():
+        locator_type_s = "css"
+    if "_id" in str(dd_ele_locator_data_lst[0]).lower():
+        locator_type_s = "id"
+    if "_css" in str(dd_ele_locator_data_lst[1]).lower():
+        locator_type_d = "css"
+    if "_id" in str(dd_ele_locator_data_lst[1]).lower():
+        locator_type_d = "id"
+
+    wafl.info(f"Executing 'drag_drop' at row {row.name}.")
+    km.ge_drag_and_drop(
+        str(object_repo_reader.get_property(locator_type_s.upper(), dd_ele_locator_data_lst[0], fallback='No')),
+        locator_type_s,
+        str(object_repo_reader.get_property(locator_type_d.upper(), dd_ele_locator_data_lst[1], fallback='No')),
+        locator_type_d,
+        dd_ele_name_data_lst[0],
+        dd_ele_name_data_lst[1]
+    )
+
+def open_browser(row, wafl, km, launch_browser):
+    browser = launch_browser or str(row["Input3"]).strip()
+    wafl.info(f"Executing 'open_browser' at row {row.name}. Launching browser: {browser}.")
+    km.ge_open_browser(browser)
+
+def wait_for_seconds(row, wafl, km):
+    wafl.info(f"Executing 'wait_for_seconds' at row {row.name}. Waiting for {row['Input3']} seconds.")
+    km.ge_wait_for_seconds(int(str(row["Input3"]).strip()))
+
+def switch_to_default_content(row, wafl, km):
+    wafl.info(f"Executing 'switch_to_default_content' at row {row.name}.")
+    km.ge_switch_to_default_content()
+
+def switch_to_iframe(row, wafl, km, object_repo_reader):
+    locator_type = "xpath"
+    if "_css" in str(row["Input2"]).strip().lower():
+        locator_type = "css"
+    if "_id" in str(row["Input2"]).strip().lower():
+        locator_type = "id"
+    wafl.info(f"Executing 'switch_to_iframe' at row {row.name}.")
+    km.ge_switch_to_iframe(
+        str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')),
+        locator_type,
+        str(row["Input1"]).strip()
+    )
+
+def tc_id(row, wafl, km):
+    wafl.info(f"Executing 'tc_id' at row {row.name}.")
+    km.ge_tcid(str(row["Input3"]).strip())
+
+def tc_desc(row, wafl, km):
+    wafl.info(f"Executing 'tc_desc' at row {row.name}.")
+    km.ge_tcdesc(str(row["Input3"]).strip())
+
+def step(row, wafl, km):
+    wafl.info(f"Executing 'step' at row {row.name}.")
+    km.ge_step(step=str(row["Input1"]).strip(), result=str(row["Input2"]).strip())
+
+def login_jnj(row, wafl, km, object_repo_reader):
+    wafl.info(f"Executing 'login_jnj' at row {row.name}.")
+    login_jnj_name_data = str(row["Input1"]).strip()
+    login_jnj_locator_data = str(row["Input2"]).strip()
+    login_jnj_uname_pwd_data = str(row["Input3"]).strip()
+
+    login_jnj_name_data_lst = login_jnj_name_data.split(";")
+    login_jnj_locator_data_lst = login_jnj_locator_data.split(";")
+    login_jnj_uname_pwd_data_lst = login_jnj_uname_pwd_data.split(";")
+    login_jnj_dict = {
+        'locator_type': 'xpath',
+        'uname_data': login_jnj_uname_pwd_data_lst[0],
+        'pwd_data': login_jnj_uname_pwd_data_lst[1]
+    }
+    for i in range(len(login_jnj_name_data_lst)):
+        if i == 0:
+            login_jnj_dict['uname_element_name'] = login_jnj_name_data_lst[i]
+            login_jnj_dict['uname_locator'] = str(object_repo_reader.get_property('XPATH', login_jnj_locator_data_lst[i], fallback='No'))
+        if i == 1:
+            login_jnj_dict['proceed_element_name'] = login_jnj_name_data_lst[i]
+            login_jnj_dict['proceed_locator'] = str(object_repo_reader.get_property('XPATH', login_jnj_locator_data_lst[i], fallback='No'))
+        if i == 2:
+            login_jnj_dict['jnjpwd_element_name'] = login_jnj_name_data_lst[i]
+            login_jnj_dict['jnjpwd_locator'] = str(object_repo_reader.get_property('XPATH', login_jnj_locator_data_lst[i], fallback='No'))
+        if i == 3:
+            login_jnj_dict['signon_element_name'] = login_jnj_name_data_lst[i]
+            login_jnj_dict['signon_locator'] = str(object_repo_reader.get_property('XPATH', login_jnj_locator_data_lst[i], fallback='No'))
+    km.login_jnj(**login_jnj_dict)
+
+def enter_url(row, wafl, km):
+    wafl.info(f"Executing 'enter_url' at row {row.name}. URL: {row['Input3']}.")
+    km.ge_enter_url(str(row["Input3"]).strip())
+
+def type_keyword(row, wafl, km, object_repo_reader, utils):
+    locator_type = "xpath"
+    if "_css" in str(row["Input2"]).strip().lower():
+        locator_type = "css"
+    if "_id" in str(row["Input2"]).strip().lower():
+        locator_type = "id"
+    wafl.info(f"Executing 'type' at row {row.name}.")
+    if str(row["Input3"]).strip().lower() == 'random_notification_id':
+        km.ge_type(
+            str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')),
+            locator_type,
+            utils.generate_random_notif_id(),
+            str(row["Input1"]).strip()
+        )
+    else:
+        km.ge_type(
+            str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')),
+            locator_type,
+            row["Input3"],
+            str(row["Input1"]).strip()
+        )
+
+def check_element_enabled(row, wafl, km, object_repo_reader):
+    locator_type = "xpath"
+    if "_css" in str(row["Input2"]).strip().lower():
+        locator_type = "css"
+    if "_id" in str(row["Input2"]).strip().lower():
+        locator_type = "id"
+    wafl.info(f"Executing 'check_element_enabled' at row {row.name}.")
+    km.ge_is_element_enabled(
+        str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')),
+        locator_type,
+        str(row["Input1"]).strip()
+    )
+
+def check_element_disabled(row, wafl, km, object_repo_reader):
+    locator_type = "xpath"
+    if "_css" in str(row["Input2"]).strip().lower():
+        locator_type = "css"
+    if "_id" in str(row["Input2"]).strip().lower():
+        locator_type = "id"
+    wafl.info(f"Executing 'check_element_disabled' at row {row.name}.")
+    km.ge_is_element_disabled(
+        str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')),
+        locator_type,
+        str(row["Input1"]).strip()
+    )
+
+def check_element_displayed(row, wafl, km, object_repo_reader):
+    locator_type = "xpath"
+    if "_css" in str(row["Input2"]).strip().lower():
+        locator_type = "css"
+    if "_id" in str(row["Input2"]).strip().lower():
+        locator_type = "id"
+    wafl.info(f"Executing 'check_element_displayed' at row {row.name}.")
+    km.ge_is_element_displayed(
+        str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')),
+        locator_type,
+        str(row["Input1"]).strip()
+    )
+
+def verify_displayed_text(row, wafl, km, object_repo_reader):
+    locator_type = "xpath"
+    if "_css" in str(row["Input2"]).strip().lower():
+        locator_type = "css"
+    if "_id" in str(row["Input2"]).strip().lower():
+        locator_type = "id"
+    wafl.info(f"Executing 'verify_displayed_text' at row {row.name}.")
+    km.ge_verify_displayed_text(
+        str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')),
+        locator_type,
+        row["Input3"],
+        str(row["Input1"]).strip()
+    )
+
+def click(row, wafl, km, object_repo_reader):
+    locator_type = "xpath"
+    if "_css" in str(row["Input2"]).strip().lower():
+        locator_type = "css"
+    if "_id" in str(row["Input2"]).strip().lower():
+        locator_type = "id"
+    wafl.info(f"Executing 'click' at row {row.name}.")
+    km.ge_click(
+        str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')),
+        locator_type,
+        str(row["Input1"]).strip()
+    )
+
+def select_file(row, wafl, km, object_repo_reader):
+    locator_type = "xpath"
+    if "_css" in str(row["Input2"]).strip().lower():
+        locator_type = "css"
+    if "_id" in str(row["Input2"]).strip().lower():
+        locator_type = "id"
+    wafl.info(f"Executing 'select_file' at row {row.name}.")
+    km.ge_select_file(
+        str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')),
+        locator_type,
+        str(row["Input3"]).strip()
+    )
+
+def mcnp_choose_date_from_datepicker(row, wafl, km, object_repo_reader):
+    wafl.info(f"Executing 'mcnp_choose_date_from_datepicker' at row {row.name}.")
+    which_calendar = str(row["Input2"]).strip()
+    date_to_choose = str(row["Input3"]).strip()
+    locator_type = "xpath"
+    locator_name = str(row["Input1"]).strip()
+    cn_det_ddate_mon_txt_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_ddate_mon_txt_xpath', fallback='No'))
+    cn_det_ddate_pre_button_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_ddate_pre_button_xpath', fallback='No'))
+    cn_det_ddate_nxt_button_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_ddate_nxt_button_xpath', fallback='No'))
+    cn_det_ddate_date_list_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_ddate_date_list_xpath', fallback='No'))
+    cn_det_edate_mon_txt_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_edate_mon_txt_xpath', fallback='No'))
+    cn_det_edate_pre_button_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_edate_pre_button_xpath', fallback='No'))
+    cn_det_edate_nxt_button_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_edate_nxt_button_xpath', fallback='No'))
+    cn_det_edate_date_list_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_edate_date_list_xpath', fallback='No'))
+
+    km.choose_date_from_date_picker(
+        which_calender=which_calendar,
+        date_to_choose=date_to_choose,
+        locator_type=locator_type,
+        locator_name=locator_name,
+        cn_det_ddate_mon_txt_xpath=cn_det_ddate_mon_txt_xpath,
+        cn_det_ddate_pre_button_xpath=cn_det_ddate_pre_button_xpath,
+        cn_det_ddate_nxt_button_xpath=cn_det_ddate_nxt_button_xpath,
+        cn_det_ddate_date_list_xpath=cn_det_ddate_date_list_xpath,
+        cn_det_edate_mon_txt_xpath=cn_det_edate_mon_txt_xpath,
+        cn_det_edate_pre_button_xpath=cn_det_edate_pre_button_xpath,
+        cn_det_edate_nxt_button_xpath=cn_det_edate_nxt_button_xpath,
+        cn_det_edate_date_list_xpath=cn_det_edate_date_list_xpath
+    )
+
+def check_radio_chk_selected(row, wafl, km, object_repo_reader):
+    locator_type = "xpath"
+    if "_css" in str(row["Input2"]).strip().lower():
+        locator_type = "css"
+    if "_id" in str(row["Input2"]).strip().lower():
+        locator_type = "id"
+    wafl.info(f"Executing 'check_radio_chk_selected' at row {row.name}.")
+    km.ge_is_chk_radio_element_selected(
+        str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')),
+        locator_type,
+        str(row["Input1"]).strip()
+    )
+
+def check_radio_chk_not_selected(row, wafl, km, object_repo_reader):
+    locator_type = "xpath"
+    if "_css" in str(row["Input2"]).strip().lower():
+        locator_type = "css"
+    if "_id" in str(row["Input2"]).strip().lower():
+        locator_type = "id"
+    wafl.info(f"Executing 'check_radio_chk_not_selected' at row {row.name}.")
+    km.ge_is_chk_radio_element_not_selected(
+        str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')),
+        locator_type,
+        str(row["Input1"]).strip()
+    )
 
 def execute_test_script(df, wafl, km, object_repo_reader, utils, launch_browser):
     """
@@ -134,229 +401,48 @@ def execute_test_script(df, wafl, km, object_repo_reader, utils, launch_browser)
     Raises:
         Exception: If an error occurs during test script execution.
     """
-    wafl.debug("Looping through the data frame to execute the test script.")
+    wafl.info("Starting test script execution.")
+
+    # Define a dispatch dictionary mapping keywords to their corresponding functions
+    keyword_dispatch = {
+        'hover_mouse': lambda row: hover_mouse(row, wafl, km, object_repo_reader),
+        'drag_drop': lambda row: drag_drop(row, wafl, km, object_repo_reader),
+        'open_browser': lambda row: open_browser(row, wafl, km, launch_browser),
+        'wait_for_seconds': lambda row: wait_for_seconds(row, wafl, km),
+        'switch_to_default_content': lambda row: switch_to_default_content(row, wafl, km),
+        'switch_to_iframe': lambda row: switch_to_iframe(row, wafl, km, object_repo_reader),
+        'tc_id': lambda row: tc_id(row, wafl, km),
+        'tc_desc': lambda row: tc_desc(row, wafl, km),
+        'step': lambda row: step(row, wafl, km),
+        'login_jnj': lambda row: login_jnj(row, wafl, km, object_repo_reader),
+        'enter_url': lambda row: enter_url(row, wafl, km),
+        'type': lambda row: type_keyword(row, wafl, km, object_repo_reader, utils),
+        'check_element_enabled': lambda row: check_element_enabled(row, wafl, km, object_repo_reader),
+        'check_element_disabled': lambda row: check_element_disabled(row, wafl, km, object_repo_reader),
+        'check_element_displayed': lambda row: check_element_displayed(row, wafl, km, object_repo_reader),
+        'verify_displayed_text': lambda row: verify_displayed_text(row, wafl, km, object_repo_reader),
+        'click': lambda row: click(row, wafl, km, object_repo_reader),
+        'select_file': lambda row: select_file(row, wafl, km, object_repo_reader),
+        'mcnp_choose_date_from_datepicker': lambda row: mcnp_choose_date_from_datepicker(row, wafl, km, object_repo_reader),
+        'check_radio_chk_selected': lambda row: check_radio_chk_selected(row, wafl, km, object_repo_reader),
+        'check_radio_chk_not_selected': lambda row: check_radio_chk_not_selected(row, wafl, km, object_repo_reader),
+        # Add other keywords and their corresponding functions here...
+    }
+
     for index, row in df.iterrows():
-        wafl.debug("Reading Row Number " + str(index))
+        keyword = str(row["Keyword"])
+        wafl.debug(f"Processing row {index}: Keyword='{keyword}'")
 
-        if str(row["Keyword"]) == 'hover_mouse':
-            locator_type = "xpath"
-            if "_css" in str(row["Input2"]).strip().lower():
-                locator_type = "css"
-            if "_id" in str(row["Input2"]).strip().lower():
-                locator_type = "id"
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input2"]) + "' to the keyword manager.")
-            km.ge_mouse_hover(str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')), locator_type,str(row["Input1"]).strip())
-        
-        if str(row["Keyword"]) == 'drag_drop':
-            locator_type_s = "xpath"
-            locator_type_d = "xpath"
-            
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input2"]) + "' to the keyword manager.")
-            dd_ele_name_data = str(row["Input1"]).strip()
-            dd_ele_locator_data = str(row["Input2"]).strip()
-
-            dd_ele_name_data_lst = dd_ele_name_data.split(";")
-            dd_ele_locator_data_lst = dd_ele_locator_data.split(";")
-            
-            if "_css" in str(dd_ele_locator_data_lst[0]).lower():
-                locator_type_s = "css"
-            if "_id" in str(dd_ele_locator_data_lst[0]).lower():
-                locator_type_s = "id"
-            
-            if "_css" in str(dd_ele_locator_data_lst[1]).lower():
-                locator_type_d = "css"
-            if "_id" in str(dd_ele_locator_data_lst[1]).lower():
-                locator_type_d = "id"
-            
-            km.ge_drag_and_drop(str(object_repo_reader.get_property(locator_type_s.upper(), dd_ele_locator_data_lst[0], fallback='No')), locator_type_s,str(object_repo_reader.get_property(locator_type_d.upper(), dd_ele_locator_data_lst[1], fallback='No')), locator_type_d, dd_ele_name_data_lst[0], dd_ele_name_data_lst[1])
-        
-        if str(row["Keyword"]) == 'check_radio_chk_not_selected':
-            locator_type = "xpath"
-            if "_css" in str(row["Input2"]).strip().lower():
-                locator_type = "css"
-            if "_id" in str(row["Input2"]).strip().lower():
-                locator_type = "id"
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input2"]) + "' to the keyword manager.")
-            km.ge_is_chk_radio_element_not_selected(str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')), locator_type,str(row["Input1"]).strip())
-        
-        if str(row["Keyword"]) == 'check_radio_chk_selected':
-            locator_type = "xpath"
-            if "_css" in str(row["Input2"]).strip().lower():
-                locator_type = "css"
-            if "_id" in str(row["Input2"]).strip().lower():
-                locator_type = "id"
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input2"]) + "' to the keyword manager.")
-            km.ge_is_chk_radio_element_selected(str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')), locator_type,str(row["Input1"]).strip())
-        
-        if str(row["Keyword"]) == 'switch_to_default_content':
-            km.ge_switch_to_default_content()
-            
-        if str(row["Keyword"]) == 'switch_to_iframe':
-            locator_type = "xpath"
-            if "_css" in str(row["Input2"]).strip().lower():
-                locator_type = "css"
-            if "_id" in str(row["Input2"]).strip().lower():
-                locator_type = "id"
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input3"]) + "' to the keyword manager.")
-            km.ge_switch_to_iframe(str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')), locator_type,str(row["Input1"]).strip())
-
-        if str(row["Keyword"]) == 'tc_id':
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input3"]) + "' to the keyword manager.")
-            km.ge_tcid(str(row["Input3"]).strip())
-
-        if str(row["Keyword"]) == 'tc_desc':
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input3"]) + "' to the keyword manager.")
-            km.ge_tcdesc(str(row["Input3"]).strip())
-
-        if str(row["Keyword"]) == 'step':
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input1"]) + "' to the keyword manager.")
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input2"]) + "' to the keyword manager.")
-            km.ge_step(step=str(row["Input1"]).strip(), result=str(row["Input2"]).strip())
-
-        if str(row["Keyword"]) == 'wait_for_seconds':
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input3"]) + "' to the keyword manager.")
-            km.ge_wait_for_seconds(int(str(row["Input3"]).strip()))
-
-        if str(row["Keyword"]) == 'open_browser':
-            wafl.debug("Checking if 'launch_browser' paramater is empty.")
-            if launch_browser == '':
-                wafl.debug("The 'launch_browser' paramater is empty. Taking this paramater from test script excel file.")
-                wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input3"]) + "' to the keyword manager.")
-                km.ge_open_browser(str(row["Input3"]).strip())
+        try:
+            if keyword in keyword_dispatch:
+                keyword_dispatch[keyword](row)
             else:
-                wafl.debug("The 'launch_browser' paramater is available. Using it.")
-                wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(launch_browser) + "' to the keyword manager.")
-                km.ge_open_browser(str(launch_browser))
+                wafl.warning(f"Keyword '{keyword}' at row {index} is not implemented.")
+        except Exception as e:
+            wafl.error(f"Error executing keyword '{keyword}' at row {index}: {e}")
+            raise
 
-        if str(row["Keyword"]) == 'login_jnj':
-            login_jnj_name_data = str(row["Input1"]).strip()
-            login_jnj_locator_data = str(row["Input2"]).strip()
-            login_jnj_uname_pwd_data = str(row["Input3"]).strip()
-
-            login_jnj_name_data_lst = login_jnj_name_data.split(";")
-            login_jnj_locator_data_lst = login_jnj_locator_data.split(";")
-            login_jnj_uname_pwd_data_lst = login_jnj_uname_pwd_data.split(";")
-            login_jnj_dict = {'locator_type': 'xpath', 'uname_data': login_jnj_uname_pwd_data_lst[0], 'pwd_data': login_jnj_uname_pwd_data_lst[1]}
-            for i in range(len(login_jnj_name_data_lst)):
-                if i == 0:
-                    login_jnj_dict['uname_element_name'] = login_jnj_name_data_lst[i]
-                    login_jnj_dict['uname_locator'] = str(object_repo_reader.get_property('XPATH', login_jnj_locator_data_lst[i], fallback='No'))
-                if i == 1:
-                    login_jnj_dict['proceed_element_name'] = login_jnj_name_data_lst[i]
-                    login_jnj_dict['proceed_locator'] = str(object_repo_reader.get_property('XPATH', login_jnj_locator_data_lst[i], fallback='No'))
-                if i == 2:
-                    login_jnj_dict['jnjpwd_element_name'] = login_jnj_name_data_lst[i]
-                    login_jnj_dict['jnjpwd_locator'] = str(object_repo_reader.get_property('XPATH', login_jnj_locator_data_lst[i], fallback='No'))
-                if i == 3:
-                    login_jnj_dict['signon_element_name'] = login_jnj_name_data_lst[i]
-                    login_jnj_dict['signon_locator'] = str(object_repo_reader.get_property('XPATH', login_jnj_locator_data_lst[i], fallback='No'))
-            km.login_jnj(**login_jnj_dict)
-
-        if str(row["Keyword"]) == 'enter_url':
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input3"]) + "' to the keyword manager.")
-            km.ge_enter_url(str(row["Input3"]).strip())
-
-        if str(row["Keyword"]) == 'type':
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input2"]) + "' to the keyword manager.")
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input3"]) + "' to the keyword manager.")
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input1"]) + "' to the keyword manager.")
-            locator_type = "xpath"
-            if "_css" in str(row["Input2"]).strip().lower():
-                locator_type = "css"
-            if "_id" in str(row["Input2"]).strip().lower():
-                locator_type = "id"
-            if str(row["Input3"]).strip().lower() == 'random_notification_id':
-                km.ge_type(str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')), locator_type,utils.generate_random_notif_id(),str(row["Input1"]).strip())
-            else:
-                km.ge_type(str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')), locator_type, row["Input3"],str(row["Input1"]).strip())
-
-        if str(row["Keyword"]) == 'check_element_enabled':
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input2"]) + "' to the keyword manager.")
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input3"]) + "' to the keyword manager.")
-            locator_type = "xpath"
-            if "_css" in str(row["Input2"]).strip().lower():
-                locator_type = "css"
-            if "_id" in str(row["Input2"]).strip().lower():
-                locator_type = "id"
-            km.ge_is_element_enabled(str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')), locator_type,str(row["Input1"]).strip())
-
-        if str(row["Keyword"]) == 'check_element_disabled':
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input2"]) + "' to the keyword manager.")
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input3"]) + "' to the keyword manager.")
-            locator_type = "xpath"
-            if "_css" in str(row["Input2"]).strip().lower():
-                locator_type = "css"
-            if "_id" in str(row["Input2"]).strip().lower():
-                locator_type = "id"
-            km.ge_is_element_disabled(str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')), locator_type,str(row["Input1"]).strip())
-
-        if str(row["Keyword"]) == 'check_element_displayed':
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input2"]) + "' to the keyword manager.")
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input3"]) + "' to the keyword manager.")
-            locator_type = "xpath"
-            if "_css" in str(row["Input2"]).strip().lower():
-                locator_type = "css"
-            if "_id" in str(row["Input2"]).strip().lower():
-                locator_type = "id"
-            km.ge_is_element_displayed(str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')), locator_type,str(row["Input1"]).strip())
-
-        if str(row["Keyword"]) == 'mcnp_choose_date_from_datepicker':
-            which_calender = str(row["Input2"]).strip()
-            date_to_choose = str(row["Input3"]).strip()
-            locator_type = "xpath"
-            locator_name = str(row["Input1"]).strip()
-            cn_det_ddate_mon_txt_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_ddate_mon_txt_xpath', fallback='No'))
-            cn_det_ddate_pre_button_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_ddate_pre_button_xpath', fallback='No'))
-            cn_det_ddate_nxt_button_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_ddate_nxt_button_xpath', fallback='No'))
-            cn_det_ddate_date_list_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_ddate_date_list_xpath', fallback='No'))
-            cn_det_edate_mon_txt_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_edate_mon_txt_xpath', fallback='No'))
-            cn_det_edate_pre_button_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_edate_pre_button_xpath', fallback='No'))
-            cn_det_edate_nxt_button_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_edate_nxt_button_xpath', fallback='No'))
-            cn_det_edate_date_list_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_edate_date_list_xpath', fallback='No'))
-
-            km.choose_date_from_date_picker(which_calender=which_calender, date_to_choose=date_to_choose,
-                                            locator_type=locator_type,
-                                            locator_name=locator_name,
-                                            cn_det_ddate_mon_txt_xpath=cn_det_ddate_mon_txt_xpath,
-                                            cn_det_ddate_pre_button_xpath=cn_det_ddate_pre_button_xpath,
-                                            cn_det_ddate_nxt_button_xpath=cn_det_ddate_nxt_button_xpath,
-                                            cn_det_ddate_date_list_xpath=cn_det_ddate_date_list_xpath,
-                                            cn_det_edate_mon_txt_xpath=cn_det_edate_mon_txt_xpath,
-                                            cn_det_edate_pre_button_xpath=cn_det_edate_pre_button_xpath,
-                                            cn_det_edate_nxt_button_xpath=cn_det_edate_nxt_button_xpath,
-                                            cn_det_edate_date_list_xpath=cn_det_edate_date_list_xpath)
-
-        if str(row["Keyword"]) == 'verify_displayed_text':
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input2"]) + "' to the keyword manager.")
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input3"]) + "' to the keyword manager.")
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input1"]) + "' to the keyword manager.")
-            locator_type = "xpath"
-            if "_css" in str(row["Input2"]).strip().lower():
-                locator_type = "css"
-            if "_id" in str(row["Input2"]).strip().lower():
-                locator_type = "id"
-            km.ge_verify_displayed_text(str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')),locator_type, row["Input3"], str(row["Input1"]).strip())
-
-        if str(row["Keyword"]) == 'click':
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input2"]) + "' to the keyword manager.")
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input1"]) + "' to the keyword manager.")
-            locator_type = "xpath"
-            if "_css" in str(row["Input2"]).strip().lower():
-                locator_type = "css"
-            if "_id" in str(row["Input2"]).strip().lower():
-                locator_type = "id"
-            km.ge_click(str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')), locator_type,str(row["Input1"]).strip())
-
-        if str(row["Keyword"]) == 'select_file':
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input2"]) + "' to the keyword manager.")
-            wafl.debug("Passing the keyword '" + str(row["Keyword"]) + "' and input '" +  str(row["Input3"]) + "' to the keyword manager.")
-            locator_type = "xpath"
-            if "_css" in str(row["Input2"]).strip().lower():
-                locator_type = "css"
-            if "_id" in str(row["Input2"]).strip().lower():
-                locator_type = "id"
-            km.ge_select_file(str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')), locator_type,str(row["Input3"]).strip())
-
+    wafl.info("Test script execution completed successfully.")
 
 def start_runner(testscript_file, rlog_queue, rlock, start_props_reader, object_repo_reader, launch_browser=''):
     """
@@ -396,7 +482,7 @@ def start_runner(testscript_file, rlog_queue, rlock, start_props_reader, object_
 
     if "testscript.xlsx" in testscript_file:
         wafl.debug("The test script Excel file name ends with 'testscript.xlsx'. Proceeding with execution.")
-        df = validate_test_script(testscript_file, wafl, utils)
+        df = validate_test_script(testscript_file, wafl, utils, launch_browser)
 
         retry_count = 1
         wafl.debug("Instantiating the keyword manager.")
@@ -405,6 +491,9 @@ def start_runner(testscript_file, rlog_queue, rlock, start_props_reader, object_
         max_retries = get_max_retries(start_props_reader, rlog_queue)
 
         while retries <= max_retries:
+            # wafl.info("waiting for 20 seconds before retrying.")
+            # km.wait_for_some_time(20)
+            # object_repo_reader = ConfigReader("object_repository.properties")
             km.update_retry_count(retries + 1)
             try:
                 execute_test_script(df, wafl, km, object_repo_reader, utils, launch_browser)
@@ -426,7 +515,6 @@ def start_runner(testscript_file, rlog_queue, rlock, start_props_reader, object_
 
         wafl.debug("Closing the test and creating the test result pdf file.")
         km.ge_close()
-
 
 def get_max_retries(start_props_reader, rq):
     """
@@ -545,7 +633,6 @@ def check_before_start(start_props_reader):
         if utils.check_if_two_folder_contain_same_files(root_folder, edge_folder):
             logger.error("The 'test_scripts' folder and 'edge' folder contains same test script excel files. Make the files unique per folder.")
             raise ValueError("The 'test_scripts' folder and 'edge' folder contains same test script excel files. Make the files unique per folder.")
-
 
 if __name__ == '__main__':
     """

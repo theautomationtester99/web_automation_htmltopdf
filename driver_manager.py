@@ -55,6 +55,7 @@ class DriverManager:
         self.config_reader = ConfigReader("start.properties")
         self.is_inprivate = self._is_browser_in_private()
         self.is_headless = self._is_browser_headless()
+        self.is_running_grid = self._is_running_grid()
         start_configs = Properties()
         with open('start.properties', 'rb') as config_file:
             start_configs.load(config_file)
@@ -85,6 +86,16 @@ class DriverManager:
         """
         is_headless = self.config_reader.get_property('Browser_Settings', 'Headless', fallback='No').upper()
         return str(is_headless.lower()) == "yes"
+    
+    def _is_running_grid(self):
+        """
+        Retrieves the browser's headless mode setting from the configuration file.
+
+        Returns:
+            bool: True if the browser is configured to run in headless mode, False otherwise.
+        """
+        is_running_grid = self.config_reader.get_property('SGrid', 'run_in_selenium_grid', fallback='No').upper()
+        return str(is_running_grid.lower()) == "yes"
 
     def launch_browser(self, browser_name):
         """
