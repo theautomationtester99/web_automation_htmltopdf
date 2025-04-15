@@ -1,0 +1,158 @@
+{% if table_data|length > 1 %}
+    {% for retry_key, retry_data in table_data.items() %}
+        <h3>{{ retry_key.replace('_', ' ').capitalize() }}</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Sno</th>
+                    <th>Step</th>
+                    <th>Result</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, value in retry_data.items() %}
+                <tr>
+                    <td rowspan="{{ value.rowspan }}">{{ value.sno }}</td>
+                    <td class="fixedwidth">{{ value.step.replace('\n', '<br>') | safe }}</td>
+                    <td>{{ value.result.replace('\n', '<br>') | safe }}</td>
+                    {% if "fail" in value.overall_step_status|lower %}
+                    <td class="red-cell">{{ value.overall_step_status }}</td>
+                    {% else %}
+                    <td>{{ value.overall_step_status }}</td>
+                    {% endif %}
+                </tr>
+                {% if value.sub_steps %}
+                {% for key1, value1 in value.sub_steps.items() %}
+                <tr>
+                    <td class="fixedwidth">{{ value1.sub_step }}</td>
+                    <td>
+                        {% if value1.sub_step_message %}
+                        <span>{{ value1.sub_step_message }}</span>
+                        <br>
+                        {% endif %}
+                        {% if value1.image_src %}
+                        <img id="imga" src="{{ value1.image_src }}" alt="{{ value1.image_alt }}">
+                        {% endif %}
+                    </td>
+                    {% if "fail" in value1.sub_step_status|lower %}
+                    <td class="red-cell">{{ value1.sub_step_status }}</td>
+                    {% else %}
+                    <td>{{ value1.sub_step_status }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
+{% else %}
+    {% for retry_key, retry_data in table_data.items() %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Sno</th>
+                    <th>Step</th>
+                    <th>Result</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, value in retry_data.items() %}
+                <tr>
+                    <td rowspan="{{ value.rowspan }}">{{ value.sno }}</td>
+                    <td class="fixedwidth">{{ value.step.replace('\n', '<br>') | safe }}</td>
+                    <td>{{ value.result.replace('\n', '<br>') | safe }}</td>
+                    {% if "fail" in value.overall_step_status|lower %}
+                    <td class="red-cell">{{ value.overall_step_status }}</td>
+                    {% else %}
+                    <td>{{ value.overall_step_status }}</td>
+                    {% endif %}
+                </tr>
+                {% if value.sub_steps %}
+                {% for key1, value1 in value.sub_steps.items() %}
+                <tr>
+                    <td class="fixedwidth">{{ value1.sub_step }}</td>
+                    <td>
+                        {% if value1.sub_step_message %}
+                        <span>{{ value1.sub_step_message }}</span>
+                        <br>
+                        {% endif %}
+                        {% if value1.image_src %}
+                        <img id="imga" src="{{ value1.image_src }}" alt="{{ value1.image_alt }}">
+                        {% endif %}
+                    </td>
+                    {% if "fail" in value1.sub_step_status|lower %}
+                    <td class="red-cell">{{ value1.sub_step_status }}</td>
+                    {% else %}
+                    <td>{{ value1.sub_step_status }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
+{% endif %}
+
+<script>
+    const table_data = {
+        "retry_1": {
+            rstatus: "Fail",
+            rerror: "Network Error",
+            1: {
+                "sno": 1,
+                "step": "Open Browser",
+                "result": "Browser opened successfully",
+                "overall_step_status": "Pass",
+                "rowspan": 1,
+                "sub_steps": {}
+            },
+            2: {
+                "sno": 2,
+                "step": "Enter URL",
+                "result": "Failed to load the page",
+                "overall_step_status": "Fail",
+                "rowspan": 3,
+                "sub_steps": {
+                    1: {
+                        "sub_step": "Verify URL format",
+                        "sub_step_message": "URL format is valid",
+                        "sub_step_status": "Pass",
+                        "image_src": "",
+                        "image_alt": ""
+                    },
+                    2: {
+                        "sub_step": "Check network connectivity",
+                        "sub_step_message": "Network issue detected",
+                        "sub_step_status": "Fail",
+                        "image_src": "network_error.png",
+                        "image_alt": "Network Error"
+                    }
+                }
+            }
+        },
+        "retry_2": {
+            rstatus: "Pass",
+            1: {
+                "sno": 1,
+                "step": "Open Browser",
+                "result": "Browser opened successfully",
+                "overall_step_status": "Pass",
+                "rowspan": 1,
+                "sub_steps": {}
+            },
+            2: {
+                "sno": 2,
+                "step": "Enter URL",
+                "result": "Page loaded successfully",
+                "overall_step_status": "Pass",
+                "rowspan": 1,
+                "sub_steps": {}
+            }
+        }
+    };
+</script>
+

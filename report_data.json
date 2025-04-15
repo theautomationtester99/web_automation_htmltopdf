@@ -1,0 +1,77 @@
+{
+    "page_title": "Test Report for TC_001",
+    "test_description": "This test validates the login functionality of the application.",
+    "browser_img_src": "images/chrome_logo.png",
+    "browser_img_alt": "Chrome",
+    "os_img_src": "images/windows_logo.png",
+    "os_img_alt": "Windows",
+    "grid_img_src": "images/grid_logo.png",
+    "grid_img_alt": "Selenium Grid",
+    "browser_version": "Chrome 114.0",
+    "executed_date": "2025-04-15",
+    "overall_status_text": "FAILED",
+    "table_data": {
+        "retry_1": {
+            "rstatus": "Fail",
+            "rerror": "Network Error",
+            "1": {
+                "sno": "1",
+                "rowspan": "3",
+                "step": "Open Browser",
+                "result": "Browser opened successfully",
+                "overall_step_status": "Pass",
+                "sub_steps": {
+                    "1": {
+                        "sub_step": "Navigate to URL",
+                        "sub_step_message": "Navigated to https://example.com",
+                        "sub_step_status": "Pass"
+                    },
+                    "2": {
+                        "sub_step": "Verify page title",
+                        "sub_step_message": "Expected title: 'Example Domain', Actual title: 'Example Domain'",
+                        "sub_step_status": "Pass"
+                    }
+                }
+            },
+            "2": {
+                "sno": "2",
+                "rowspan": "1",
+                "step": "Login to Application",
+                "result": "Failed to login",
+                "overall_step_status": "Fail",
+                "sub_steps": {
+                    "1": {
+                        "sub_step": "Enter username and password",
+                        "sub_step_message": "Invalid credentials provided",
+                        "sub_step_status": "Fail"
+                    }
+                }
+            }
+        },
+        "retry_2": {
+            "rstatus": "Pass",
+            "1": {
+                "sno": "1",
+                "rowspan": "1",
+                "step": "Open Browser",
+                "result": "Browser opened successfully",
+                "overall_step_status": "Pass",
+                "sub_steps": {}
+            },
+            "2": { 
+                "sno": "2",
+                "rowspan": "2",
+                "step": "Login to Application",
+                "result": "Login successful",
+                "overall_step_status": "Pass",
+                "sub_steps": {
+                    "1": {
+                        "sub_step": "Enter username and password",
+                        "sub_step_message": "Valid credentials provided",
+                        "sub_step_status": "Pass"
+                    }
+                }
+            }
+        }
+    }
+}

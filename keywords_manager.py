@@ -20,7 +20,7 @@ class KeywordsManager(BrowserDriver):
         linux_logo_src_b64 (str): Base64 encoded string for Linux logo image.
         win_logo_src_b64 (str): Base64 encoded string for Windows logo image.
     """
-    def __init__(self, logger):
+    def __init__(self, logger, retry_count=1):
 
         super().__init__(logger)
         self.screenshot_strategy = self._get_screenshot_strategy()
@@ -28,13 +28,27 @@ class KeywordsManager(BrowserDriver):
         self.screenshot_no = 0
         self.screenshot_first_str = ""
         self.logger = logger
+        self.retry_count = retry_count
         self.repo_m = PdfReportManager(self.logger)
+        self.repo_m.current_retry = self.retry_count
         self.utils = Utils(self.logger)
         self.chrome_logo_src_b64 = CHROME_LOGO_SRC_B64
         self.edge_logo_src_b64 = EDGE_LOGO_SRC_B64
         self.linux_logo_src_b64 = LINUX_LOGO_SRC_B64
         self.win_logo_src_b64 = WIN_LOGO_SRC_B64
         self.se_grid_b64 = SE_GRID_B64
+
+    def update_retry_count(self, retry_count):
+        """
+        Updates the retry count in KeywordsManager and propagates it to PdfReportManager.
+
+        Args:
+            retry_count (int): The updated retry count.
+        """
+        self.retry_count = retry_count
+        self.repo_m.current_retry = retry_count  # Update retry count in PdfReportManager
+        # self.repo_m.step_no = 1  # Reset step number for the new retry
+        self.logger.debug(f"Retry count updated to {retry_count}")
 
     '''
     The below are the keywords that can be used generically for any application under testing.
@@ -165,6 +179,15 @@ class KeywordsManager(BrowserDriver):
         """
         self.logger.debug("Started creating pdf report and closing the browser")
         asyncio.run(self.repo_m.create_report())
+        self.close_browser()
+    
+    def ge_close_browser(self):
+        """
+        Creates a PDF report and closes the browser instance.
+
+        Logs the closure of the browser and generates a PDF report using the PdfReportManager.
+        """
+        self.logger.debug("Closing the browser")
         self.close_browser()
 
     def ge_tcid(self, tc_id):

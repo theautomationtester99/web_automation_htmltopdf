@@ -436,6 +436,24 @@ class Utils:
             if os.path.isdir(d):
                 str_lst.append(d)
         return str_lst
+    
+    def extract_first_x_chars(self, input_string, x):
+        """
+        Extracts the first x characters from the given string.
+
+        Args:
+            input_string (str): The string to extract characters from.
+            x (int): The number of characters to extract.
+
+        Returns:
+            str: The first x characters of the input string.
+        """
+        if not isinstance(input_string, str):
+            raise ValueError("Input must be a string.")
+        if not isinstance(x, int) or x < 0:
+            raise ValueError("The number of characters to extract must be a non-negative integer.")
+        
+        return input_string[:x]
 
     def get_abs_path_folder_matching_string_within_folder(self, root_folder_path, search_folder_name: str) -> str:
         """

@@ -46,10 +46,10 @@
             margin-bottom: 10px;
             padding: 5px;
         }
-        .testdescp, .testenvp, .teststatusp {
+        .testdescp, .testenvp, .teststatusp, .bubblep {
             background-color: #a1d99b;
         }
-        .testdescf, .testenvf, .teststatusf {
+        .testdescf, .testenvf, .teststatusf, .bubblef {
             background-color: #fc9272;
         }
         .testdescp, .testdescf {
@@ -57,6 +57,16 @@
             padding: 5px;
             margin: 5px;
             border-radius: 6px;
+        }
+        .bubblep, .bubblef {
+            flex: 2;
+            padding: 5px;
+            margin: 5px;
+            border-radius: 6px;
+            white-space: normal; /* Allows text to wrap */
+            word-wrap: break-word; /* Breaks long words if necessary */
+            overflow-wrap: break-word;
+            word-break: break-all;
         }
         .testenvp, .testenvf {
             flex: 0.5;
@@ -130,103 +140,173 @@
 </head>
 <body>
 
-<div class="testsummaryrow">
-    {% if "passed" in overall_status_text|lower %}
-    <div class="testdescp">
-        <div><b>Test Description:</b></div>
-        <div>{{ test_description.replace('\n', '<br>') | safe }}</div>
-    </div>
-    <div class="testenvp">
-        <div><b>Browser Details:</b></div>
-        <div>
-            <img id="browsimg" src="{{ browser_img_src }}" alt="{{ browser_img_alt }}">
-            <img id="osimg" src="{{ os_img_src }}" alt="{{ os_img_alt }}">
-            {% if grid_img_src %}
-            <img id="osimg" src="{{ grid_img_src }}">
-            {% endif %}
-        </div>
-        <div><b>Version Details:</b></div>
-        <div>{{ browser_version }}</div>
-        <br>
-        <div><b>Executed Date:</b></div>
-        <div>{{ executed_date }}</div>
-    </div>
-    <div class="teststatusp">
-        <div>{{ overall_status_text }}</div>
-    </div>
-    {% else %}
-    <div class="testdescf">
-        <div><b>Test Description:</b></div>
-        <div>{{ test_description }}</div>
-    </div>
-    <div class="testenvf">
-        <div><b>Browser Details:</b></div>
-        <div>
-            <img id="browsimg" src="{{ browser_img_src }}" alt="{{ browser_img_alt }}">
-            <img id="osimg" src="{{ os_img_src }}" alt="{{ os_img_alt }}">
-            {% if grid_img_src %}
-            <img id="osimg" src="{{ grid_img_src }}">
-            {% endif %}
-        </div>
-        <div><b>Version Details:</b></div>
-        <div>{{ browser_version }}</div>
-        <br>
-        <div><b>Executed Date:</b></div>
-        <div>{{ executed_date }}</div>
-    </div>
-    <div class="teststatusf">
-        <div>{{ overall_status_text }}</div>
-    </div>
-    {% endif %}
-
-</div>
-
-<table>
-    <thead>
-        <tr>
-            <th>Sno</th>
-            <th>Step</th>
-            <th>Result</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for key, value in table_data.items() %}
-        <tr>
-            <td rowspan="{{ value.rowspan }}">{{ value.sno }}</td>
-            <td class="fixedwidth">{{ value.step.replace('\n', '<br>') | safe }}</td>
-            <td>{{ value.result.replace('\n', '<br>') | safe }}</td>
-            {% if "fail" in value.overall_step_status|lower %}
-            <td class="red-cell">{{ value.overall_step_status }}</td>
-            {% else %}
-            <td>{{ value.overall_step_status }}</td>
-            {% endif %}
-        </tr>
-        {% if value.sub_steps %}
-        {% for key1, value1 in value.sub_steps.items() %}
-        <tr>
-            <td class="fixedwidth">{{ value1.sub_step }}</td>
-            <td>
-                {% if value1.sub_step_message %}
-                <span>{{ value1.sub_step_message }}</span>
+    <div class="testsummaryrow">
+        {% if "passed" in overall_status_text|lower %}
+            <div class="testdescp">
+                <div><b>Test Description:</b></div>
+                <div>{{ test_description.replace('\n', '<br>') | safe }}</div>
+            </div>
+            <div class="testenvp">
+                <div><b>Browser Details:</b></div>
+                <div>
+                    <img id="browsimg" src="{{ browser_img_src }}" alt="{{ browser_img_alt }}">
+                    <img id="osimg" src="{{ os_img_src }}" alt="{{ os_img_alt }}">
+                    {% if grid_img_src %}
+                        <img id="osimg" src="{{ grid_img_src }}">
+                    {% endif %}
+                </div>
+                <div><b>Version Details:</b></div>
+                <div>{{ browser_version }}</div>
                 <br>
-                {% endif %}
-                {% if value1.image_src %}
-                <img id="imga" src="{{ value1.image_src }}" alt="{{ value1.image_alt }}">
-                {% endif %}
-            </td>
-            {% if "fail" in value1.sub_step_status|lower %}
-            <td class="red-cell">{{ value1.sub_step_status }}</td>
-            {% else %}
-            <td>{{ value1.sub_step_status }}</td>
-            {% endif %}
-
-        </tr>
-        {% endfor %}
+                <div><b>Executed Date:</b></div>
+                <div>{{ executed_date }}</div>
+            </div>
+            <div class="teststatusp">
+                <div>{{ overall_status_text }}</div>
+            </div>
+        {% else %}
+            <div class="testdescf">
+                <div><b>Test Description:</b></div>
+                <div>{{ test_description }}</div>
+            </div>
+            <div class="testenvf">
+                <div><b>Browser Details:</b></div>
+                <div>
+                    <img id="browsimg" src="{{ browser_img_src }}" alt="{{ browser_img_alt }}">
+                    <img id="osimg" src="{{ os_img_src }}" alt="{{ os_img_alt }}">
+                    {% if grid_img_src %}
+                        <img id="osimg" src="{{ grid_img_src }}">
+                    {% endif %}
+                </div>
+                <div><b>Version Details:</b></div>
+                <div>{{ browser_version }}</div>
+                <br>
+                <div><b>Executed Date:</b></div>
+                <div>{{ executed_date }}</div>
+            </div>
+            <div class="teststatusf">
+                <div>{{ overall_status_text }}</div>
+            </div>
         {% endif %}
+    </div>
+    {% if table_data|length > 1 %}
+        <div class="testsummaryrow">
+            {% for retry_key, retry_data in table_data.items() %}
+                <div class="{{ 'bubblef' if retry_data.rstatus|lower == 'fail' else 'bubblep' }}">
+                    <h4>{{ retry_key.replace('retry_', 'attempt ').capitalize() }}</h4>
+                    {% if retry_data.rstatus %}
+                        <p><b>Status:</b> {{ retry_data.rstatus }}</p>
+                    {% endif %}
+                    {% if retry_data.rerror %}
+                        <p><b>Error:</b> {{ retry_data.rerror }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    {% if table_data|length > 1 %}
+        {% for retry_key, retry_data in table_data.items() %}
+            <h3>{{ retry_key.replace('retry_', 'attempt ').capitalize() }}</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sno</th>
+                        <th>Step</th>
+                        <th>Result</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, value in retry_data.items() %}
+                        {% if value is mapping %}
+                            <tr>
+                                <td rowspan="{{ value.rowspan }}">{{ value.sno }}</td>
+                                <td class="fixedwidth">{{ value.step.replace('\n', '<br>') | safe }}</td>
+                                <td>{{ value.result.replace('\n', '<br>') | safe }}</td>
+                                {% if "fail" in value.overall_step_status|lower %}
+                                    <td class="red-cell">{{ value.overall_step_status }}</td>
+                                {% else %}
+                                    <td>{{ value.overall_step_status }}</td>
+                                {% endif %}
+                            </tr>
+                            {% if value.sub_steps %}
+                                {% for key1, value1 in value.sub_steps.items() %}
+                                    <tr>
+                                        <td class="fixedwidth">{{ value1.sub_step }}</td>
+                                        <td>
+                                            {% if value1.sub_step_message %}
+                                                <span>{{ value1.sub_step_message }}</span>
+                                                <br>
+                                            {% endif %}
+                                            {% if value1.image_src %}
+                                                <img id="imga" src="{{ value1.image_src }}" alt="{{ value1.image_alt }}">
+                                            {% endif %}
+                                        </td>
+                                        {% if "fail" in value1.sub_step_status|lower %}
+                                            <td class="red-cell">{{ value1.sub_step_status }}</td>
+                                        {% else %}
+                                            <td>{{ value1.sub_step_status }}</td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
         {% endfor %}
-    </tbody>
-</table>
+    {% else %}
+        {% for retry_key, retry_data in table_data.items() %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sno</th>
+                        <th>Step</th>
+                        <th>Result</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, value in retry_data.items() %}
+                        {% if value is mapping %}
+                            <tr>
+                                <td rowspan="{{ value.rowspan }}">{{ value.sno }}</td>
+                                <td class="fixedwidth">{{ value.step.replace('\n', '<br>') | safe }}</td>
+                                <td>{{ value.result.replace('\n', '<br>') | safe }}</td>
+                                {% if "fail" in value.overall_step_status|lower %}
+                                    <td class="red-cell">{{ value.overall_step_status }}</td>
+                                {% else %}
+                                    <td>{{ value.overall_step_status }}</td>
+                                {% endif %}
+                            </tr>
+                            {% if value.sub_steps %}
+                                {% for key1, value1 in value.sub_steps.items() %}
+                                    <tr>
+                                        <td class="fixedwidth">{{ value1.sub_step }}</td>
+                                        <td>
+                                            {% if value1.sub_step_message %}
+                                                <span>{{ value1.sub_step_message }}</span>
+                                                <br>
+                                            {% endif %}
+                                            {% if value1.image_src %}
+                                                <img id="imga" src="{{ value1.image_src }}" alt="{{ value1.image_alt }}">
+                                            {% endif %}
+                                        </td>
+                                        {% if "fail" in value1.sub_step_status|lower %}
+                                            <td class="red-cell">{{ value1.sub_step_status }}</td>
+                                        {% else %}
+                                            <td>{{ value1.sub_step_status }}</td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
+    {% endif %}
 
 </body>
 </html>

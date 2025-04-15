@@ -43,7 +43,7 @@ class PdfReportManager:
         self.row_span = 0
         self.report_data = {}
         self.table_data = {}
-
+        self.current_retry = 1
         self.page_title = "",
         self.test_description = ""
         self.browser_img_src = ""
@@ -73,38 +73,48 @@ class PdfReportManager:
 
         Updates the overall status to "FAILED" if any sub-step has a status of "Fail".
         """
+        retry_key = f"retry_{self.current_retry}"  # Group data by retry attempt
+
+        if retry_key not in self.table_data:
+            self.table_data[retry_key] = {}  # Initialize retry group if not present
+            self.step_no = 0
+            self.overall_status_text = "PASSED"
+            self.table_data[retry_key]["rstatus"] = "Pass"
+        
         if "step" in data:
             self.logger.debug('Step is captured to be added to PDF report.')
             self.step_no += 1
             self.row_span = 1
-            if str(self.step_no) not in self.table_data:
-                self.table_data[str(self.step_no)] = {}
-            self.table_data[str(self.step_no)]["sno"] = str(self.step_no)
-            self.table_data[str(self.step_no)]["rowspan"] = str(self.row_span)
-            self.table_data[str(self.step_no)]["step"] = data["step"]
-            self.table_data[str(self.step_no)]["result"] = data["result"]
-            self.table_data[str(self.step_no)]["overall_step_status"] = "Pass"
+            if str(self.step_no) not in self.table_data[retry_key]:
+                self.table_data[retry_key][str(self.step_no)] = {}
+            self.table_data[retry_key][str(self.step_no)]["sno"] = str(self.step_no)
+            self.table_data[retry_key][str(self.step_no)]["rowspan"] = str(self.row_span)
+            self.table_data[retry_key][str(self.step_no)]["step"] = data["step"]
+            self.table_data[retry_key][str(self.step_no)]["result"] = data["result"]
+            self.table_data[retry_key][str(self.step_no)]["overall_step_status"] = "Pass"
             self.sub_step_no = 0
         else:
             self.logger.debug('Sub Step is captured to be added to PDF report.')
             self.sub_step_no += 1
             self.row_span += 1
-            self.table_data[str(self.step_no)]["rowspan"] = str(self.row_span)
-            if "sub_steps" not in self.table_data[str(self.step_no)]:
-                self.table_data[str(self.step_no)]["sub_steps"] = {}
+            self.table_data[retry_key][str(self.step_no)]["rowspan"] = str(self.row_span)
+            if "sub_steps" not in self.table_data[retry_key][str(self.step_no)]:
+                self.table_data[retry_key][str(self.step_no)]["sub_steps"] = {}
 
-            if str(self.sub_step_no) not in self.table_data[str(self.step_no)]["sub_steps"]:
-                self.table_data[str(self.step_no)]["sub_steps"][str(self.sub_step_no)] = {}
+            if str(self.sub_step_no) not in self.table_data[retry_key][str(self.step_no)]["sub_steps"]:
+                self.table_data[retry_key][str(self.step_no)]["sub_steps"][str(self.sub_step_no)] = {}
 
-            self.table_data[str(self.step_no)]["sub_steps"][str(self.sub_step_no)]["sub_step"] = data["sub_step"]
-            self.table_data[str(self.step_no)]["sub_steps"][str(self.sub_step_no)]["sub_step_message"] = data["sub_step_message"]
+            self.table_data[retry_key][str(self.step_no)]["sub_steps"][str(self.sub_step_no)]["sub_step"] = data["sub_step"]
+            self.table_data[retry_key][str(self.step_no)]["sub_steps"][str(self.sub_step_no)]["sub_step_message"] = data["sub_step_message"]
             if "image_src" in data:
-                self.table_data[str(self.step_no)]["sub_steps"][str(self.sub_step_no)]["image_src"] = data["image_src"]
-                self.table_data[str(self.step_no)]["sub_steps"][str(self.sub_step_no)]["image_alt"] = data["image_alt"]
-            self.table_data[str(self.step_no)]["sub_steps"][str(self.sub_step_no)]["sub_step_status"] = data["sub_step_status"]
-            self.table_data[str(self.step_no)]["overall_step_status"] = data["sub_step_status"]
+                self.table_data[retry_key][str(self.step_no)]["sub_steps"][str(self.sub_step_no)]["image_src"] = data["image_src"]
+                self.table_data[retry_key][str(self.step_no)]["sub_steps"][str(self.sub_step_no)]["image_alt"] = data["image_alt"]
+            self.table_data[retry_key][str(self.step_no)]["sub_steps"][str(self.sub_step_no)]["sub_step_status"] = data["sub_step_status"]
+            self.table_data[retry_key][str(self.step_no)]["overall_step_status"] = data["sub_step_status"]
             if str(data["sub_step_status"]).lower() == "fail":
                 self.overall_status_text = "FAILED"
+                self.table_data[retry_key]["rstatus"] = "Fail"
+                self.table_data[retry_key]["rerror"]=self.utils.extract_first_x_chars(data["sub_step_message"], 350)
 
     async def create_report(self):
         """
