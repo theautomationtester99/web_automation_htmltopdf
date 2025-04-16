@@ -5,6 +5,7 @@ from pdf_report_manager import PdfReportManager
 from utilities import Utils
 from datetime import datetime
 import asyncio
+from axe_selenium_python import Axe
 
 class KeywordsManager(BrowserDriver):
     """
@@ -358,6 +359,63 @@ class KeywordsManager(BrowserDriver):
             self.logger.debug("An error occurred: %s", e, exc_info=True)
             return False
             raise
+    
+    def ge_is_page_accessibility_compliant(self):
+        """
+        Checks the web page for accessibility compliance using axe-core.
+
+        Args:
+            row: The current row of the test script.
+            wafl: Logger instance for logging.
+            km: KeywordsManager instance for executing keywords.
+        """
+        try:
+            axe = Axe(self.driver)
+            axe.inject()  # Inject axe-core into the page
+            results = axe.run()
+
+            # Save the results to a file
+            # report_file = 'accessibility_report.json'
+            # axe.write_results(results, report_file)
+            # self.logger.info(f"Accessibility check completed. Report saved to '{report_file}'.")
+
+            # Check for violations
+            page_title = self.get_title()
+            violations = results.get('violations', [])
+            if violations:
+                self.logger.error(f"Accessibility check failed with {len(violations)} violations.")
+                all_violations = "\n"
+                for violation in violations:
+                    self.logger.error(f"Violation: {violation['id']}")
+                    all_violations += f"\nViolation: {violation['id']}\n"
+                    all_violations += f"Description: {violation['description']}\n"
+                    all_violations += f"Impact: {violation['impact']}\n"
+                    all_violations += f"Help URL: {violation['helpUrl']}\n"
+                    self.logger.error(f"Description: {violation['description']}")
+                    self.logger.error(f"Impact: {violation['impact']}")
+                    self.logger.error(f"Help URL: {violation['helpUrl']}")
+                # raise Exception(f"Accessibility check failed with {len(violations)} violations.")
+                self.repo_m.add_report_data(
+                        sub_step=f"Check if the page '{page_title}' is accessibility compliant",
+                        sub_step_message=f"The element '{page_title}' is NOT accessibility compliant. Below are the violations: {all_violations}",
+                        sub_step_status='Fail'
+                    )
+            else:
+                self.logger.info("Accessibility check passed with no violations.")
+                self.repo_m.add_report_data(
+                        sub_step=f"Check if the page '{page_title}' is accessibility compliant",
+                        sub_step_message=f"The element '{page_title}' is accessibility compliant",
+                        sub_step_status='Pass'
+                    )
+        except Exception as e:
+            self.logger.error(f"An error occurred during accessibility check: {e}", exc_info=True)
+            self.repo_m.add_report_data(
+                    sub_step=f"Check if the page '{page_title}' is accessibility compliant",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail'
+                )
+            raise
+            
     
     def ge_drag_and_drop(self, source_locator, source_locator_type, target_locator, target_locator_type, source_element_name, target_element_name):
         """

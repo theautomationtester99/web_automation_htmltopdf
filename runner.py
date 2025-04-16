@@ -19,6 +19,7 @@ import os
 from logger_config import LoggerConfig
 from constants import VALID_KEYWORDS
 
+
 def validate_test_script(testscript_file, wafl, utils, launch_browser):
     """
     Validates the test script Excel file for format, content, and keyword correctness.
@@ -157,6 +158,25 @@ def drag_drop(row, wafl, km, object_repo_reader):
         dd_ele_name_data_lst[0],
         dd_ele_name_data_lst[1]
     )
+
+def check_page_accessibility(row, wafl, km):
+    """
+    Checks the web page for accessibility compliance using axe-core.
+
+    Args:
+        row: The current row of the test script.
+        wafl: Logger instance for logging.
+        km: KeywordsManager instance for executing keywords.
+    """
+    wafl.info(f"Executing 'check_accessibility' at row {row.name}.")
+    km.ge_is_page_accessibility_compliant()
+
+    # # Save the results to a file
+    # report_file = 'accessibility_report.json'
+    # axe.write_results(results, report_file)
+    # wafl.info(f"Accessibility check completed. Report saved to '{report_file}'.")
+
+    # Check for violations
 
 def open_browser(row, wafl, km, launch_browser):
     browser = launch_browser or str(row["Input3"]).strip()
@@ -426,6 +446,7 @@ def execute_test_script(df, wafl, km, object_repo_reader, utils, launch_browser)
         'mcnp_choose_date_from_datepicker': lambda row: mcnp_choose_date_from_datepicker(row, wafl, km, object_repo_reader),
         'check_radio_chk_selected': lambda row: check_radio_chk_selected(row, wafl, km, object_repo_reader),
         'check_radio_chk_not_selected': lambda row: check_radio_chk_not_selected(row, wafl, km, object_repo_reader),
+        'check_page_accessibility': lambda row: check_page_accessibility(row, wafl, km),
         # Add other keywords and their corresponding functions here...
     }
 

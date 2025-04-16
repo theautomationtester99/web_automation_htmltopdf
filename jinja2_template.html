@@ -167,7 +167,7 @@
         {% else %}
             <div class="testdescf">
                 <div><b>Test Description:</b></div>
-                <div>{{ test_description }}</div>
+                <div>{{ test_description.replace('\n', '<br>') | safe }}</div>
             </div>
             <div class="testenvf">
                 <div><b>Browser Details:</b></div>
@@ -236,7 +236,7 @@
                                         <td class="fixedwidth">{{ value1.sub_step }}</td>
                                         <td>
                                             {% if value1.sub_step_message %}
-                                                <span>{{ value1.sub_step_message }}</span>
+                                                <span>{{ value1.sub_step_message.replace('\n', '<br>') | safe }}</span>
                                                 <br>
                                             {% endif %}
                                             {% if value1.image_src %}
@@ -286,7 +286,7 @@
                                         <td class="fixedwidth">{{ value1.sub_step }}</td>
                                         <td>
                                             {% if value1.sub_step_message %}
-                                                <span>{{ value1.sub_step_message }}</span>
+                                                <span>{{ value1.sub_step_message.replace('\n', '<br>') | safe }}</span>
                                                 <br>
                                             {% endif %}
                                             {% if value1.image_src %}

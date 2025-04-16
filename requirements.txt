@@ -31,3 +31,4 @@ pyppeteer
 pillow
 cx_Freeze
 colorama
+axe-selenium-python

@@ -1,3 +1,4 @@
+import base64
 import os
 import time
 import pyautogui
@@ -9,8 +10,6 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
-import base64
-
 from driver_manager import DriverManager
 from utilities import Utils
 
