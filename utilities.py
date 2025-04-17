@@ -3,7 +3,9 @@ import getpass
 import os
 from pathlib import Path
 import platform
+import re
 import sys
+import PyPDF2
 import numpy as np
 import cv2
 import pyautogui
@@ -63,7 +65,54 @@ class Utils:
             str: The absolute path to the test results folder.
         """
         return self.test_results_folder
+    
+    def merge_pdfs_in_parts(self):
+        folder_path = self.get_test_result_folder()
+        output_base = os.path.join(folder_path, "consolidated")
+        output_file_base = os.path.join(output_base, "Test_Results_" + self.get_datetime_string())
+        os.makedirs(os.path.dirname(output_file_base), exist_ok=True)
 
+        pdf_files = [f for f in os.listdir(folder_path) if f.endswith('.pdf')]
+        test_summary = [f for f in pdf_files if f.startswith('Test_Summary_Results')]
+        
+        grouped_pdfs = {}
+        for pdf in pdf_files:
+            match = re.match(r'(QS\d+)_test_results', pdf, re.IGNORECASE)
+            if match:
+                prefix = match.group(1).upper()
+                grouped_pdfs.setdefault(prefix, []).append(pdf)
+
+        merge_order = test_summary + sum([grouped_pdfs[key] for key in sorted(grouped_pdfs.keys())], [])
+
+        part_number = 1
+        current_output_path = f"{output_file_base}_part{part_number}.pdf"
+        pdf_writer = PyPDF2.PdfMerger()
+
+        current_size = 0
+        max_size = 100 * 1024 * 1024  # 100MB threshold
+
+        for pdf_file in merge_order:
+            pdf_writer.append(os.path.join(folder_path, pdf_file))
+            
+            current_size += os.path.getsize(os.path.join(folder_path, pdf_file))
+
+            if current_size >= max_size:
+                with open(current_output_path, "wb") as output_pdf:
+                    pdf_writer.write(output_pdf)
+
+                part_number += 1
+                current_size = 0
+                current_output_path = f"{output_file_base}_part{part_number}.pdf"
+                pdf_writer = PyPDF2.PdfMerger()  # Properly reset PdfMerger
+
+        # Save the last part
+        if pdf_writer.pages:
+            with open(current_output_path, "wb") as output_pdf:
+                pdf_writer.write(output_pdf)
+
+        self.logger.info(f"Merged PDFs saved in parts under: {output_base}")
+
+    
     def get_test_recordings_folder(self):
         """
         Gets the path to the recordings folder.

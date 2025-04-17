@@ -114,7 +114,7 @@ class KeywordsManager(BrowserDriver):
     
     def ge_switch_to_iframe(self, locator, locator_type, element_name):
         """
-        Switches to the specified iframe and logs the result in the PDF report.
+        Switches to the specified iframe using traditional locators.
 
         Args:
             locator (str): The locator for the iframe.
@@ -125,6 +125,8 @@ class KeywordsManager(BrowserDriver):
             Exception: If any error occurs while switching to the iframe.
         """
         try:
+            self.logger.debug(f"Attempting to switch to iframe '{element_name}' using traditional locators.")
+            # Traditional locator-based identification
             self.wait_for_element(locator, locator_type)
             self.scroll_into_view(locator, locator_type)
             if self.highlight_enabled:
@@ -150,7 +152,7 @@ class KeywordsManager(BrowserDriver):
                     sub_step_status='Pass'
                 )
         except Exception as e:
-            self.logger.error("An error occurred: %s", e, exc_info=True)
+            self.logger.error(f"Failed to switch to iframe '{element_name}': {e}", exc_info=True)
 
             # Handle screenshot strategy for errors
             if self.screenshot_strategy in ["always", "on-error"]:

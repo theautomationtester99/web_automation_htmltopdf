@@ -60,6 +60,12 @@ def validate_test_script(testscript_file, wafl, utils, launch_browser):
             wafl.error(f"Invalid keyword '{keyword}' at row {index}.")
             raise ValueError(f"Invalid keyword '{keyword}' in the test script.")
         
+        if keyword == 'tc_id':
+            tc_id_value = str(row["Input3"]).strip()
+            if not os.path.basename(testscript_file).split("_")[0].lower() == tc_id_value.lower():
+                wafl.error(f"TC ID '{tc_id_value}' does not match the test script file name at row {index}.")
+                raise ValueError(f"TC ID '{tc_id_value}' does not match the test script file name.")
+        
         if keyword == 'wait_for_seconds' and not str(row["Input3"]).strip().isdigit():
             wafl.error(f"Invalid value '{row['Input3']}' for 'wait_for_seconds' at row {index}.")
             raise ValueError(f"Invalid value '{row['Input3']}' for 'wait_for_seconds'.")
@@ -641,7 +647,6 @@ def check_before_start(start_props_reader):
     chrome_folder = utils.get_abs_path_folder_matching_string_within_folder(generic_path,'chrome')
     edge_folder = utils.get_abs_path_folder_matching_string_within_folder(generic_path,'edge')
 
-
     logger.debug("Checking if test_scripts folder and chrome folder contains the same files.")
 
     if os.path.exists(chrome_folder) and os.path.isdir(chrome_folder):
@@ -809,7 +814,8 @@ if __name__ == '__main__':
             elapsed_time = round(et - st)
             logger.info(utils.format_elapsed_time(elapsed_time))
             asyncio.run(prm.generate_test_summary_pdf())
-
+            utils.merge_pdfs_in_parts()
+            
         if args.start_parallel:
             st = time.time()
             check_before_start(start_props_reader)
@@ -868,6 +874,7 @@ if __name__ == '__main__':
             logger.info(utils.format_elapsed_time(elapsed_time))
 
             asyncio.run(prm.generate_test_summary_pdf())
+            utils.merge_pdfs_in_parts()
 
     except Exception as e:
         logger.error(f"An error occurred: {e}")
