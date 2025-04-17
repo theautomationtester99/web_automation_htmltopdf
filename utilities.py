@@ -83,34 +83,46 @@ class Utils:
                 grouped_pdfs.setdefault(prefix, []).append(pdf)
 
         merge_order = test_summary + sum([grouped_pdfs[key] for key in sorted(grouped_pdfs.keys())], [])
-
-        part_number = 1
-        current_output_path = f"{output_file_base}_part{part_number}.pdf"
-        pdf_writer = PyPDF2.PdfMerger()
-
-        current_size = 0
+        
+        total_size = sum(os.path.getsize(os.path.join(folder_path, pdf_file)) for pdf_file in merge_order)
+        
         max_size = 100 * 1024 * 1024  # 100MB threshold
+        
+        if total_size <= max_size:
+            self.logger.info("All PDFs are within the size limit. Merging into a single file.")
+            pdf_writer = PyPDF2.PdfMerger()
+            for pdf_file in merge_order:
+                pdf_writer.append(os.path.join(folder_path, pdf_file))
+            with open(output_file_base + ".pdf", "wb") as output_pdf:
+                pdf_writer.write(output_pdf)
+            self.logger.info(f"Merged PDF saved at: {output_file_base}.pdf")
+        else:
+            part_number = 1
+            current_output_path = f"{output_file_base}_part{part_number}.pdf"
+            pdf_writer = PyPDF2.PdfMerger()
 
-        for pdf_file in merge_order:
-            pdf_writer.append(os.path.join(folder_path, pdf_file))
-            
-            current_size += os.path.getsize(os.path.join(folder_path, pdf_file))
+            current_size = 0
 
-            if current_size >= max_size:
+            for pdf_file in merge_order:
+                pdf_writer.append(os.path.join(folder_path, pdf_file))
+                
+                current_size += os.path.getsize(os.path.join(folder_path, pdf_file))
+
+                if current_size >= max_size:
+                    with open(current_output_path, "wb") as output_pdf:
+                        pdf_writer.write(output_pdf)
+
+                    part_number += 1
+                    current_size = 0
+                    current_output_path = f"{output_file_base}_part{part_number}.pdf"
+                    pdf_writer = PyPDF2.PdfMerger()  # Properly reset PdfMerger
+
+            # Save the last part
+            if pdf_writer.pages:
                 with open(current_output_path, "wb") as output_pdf:
                     pdf_writer.write(output_pdf)
 
-                part_number += 1
-                current_size = 0
-                current_output_path = f"{output_file_base}_part{part_number}.pdf"
-                pdf_writer = PyPDF2.PdfMerger()  # Properly reset PdfMerger
-
-        # Save the last part
-        if pdf_writer.pages:
-            with open(current_output_path, "wb") as output_pdf:
-                pdf_writer.write(output_pdf)
-
-        self.logger.info(f"Merged PDFs saved in parts under: {output_base}")
+            self.logger.info(f"Merged PDFs saved in parts under: {output_base}")
 
     
     def get_test_recordings_folder(self):
