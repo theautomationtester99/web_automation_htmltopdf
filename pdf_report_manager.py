@@ -142,7 +142,7 @@ class PdfReportManager:
         self.report_data["executed_date"] = self.executed_date
         self.report_data["overall_status_text"] = self.overall_status_text
         self.report_data["table_data"] = self.table_data
-        pdf = PdfReporting(self.logger, "logo.png", "encrypted_file.jinja2", self.report_data, self.tc_id, self.tc_id + "_test_results_" + self.browser_img_alt + "_" + self.overall_status_text + "_" + self.utils.get_datetime_string())
+        pdf = PdfReporting(self.logger, "logo.png", "encrypted_file.jinja2", self.report_data, self.tc_id, self.tc_id + "_" + self.browser_img_alt + "_" + self.overall_status_text + "_" + self.utils.get_datetime_string())
 
         await pdf.generate_pdf()
 

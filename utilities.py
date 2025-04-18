@@ -1,5 +1,6 @@
 import filecmp
 import getpass
+import json
 import os
 from pathlib import Path
 import platform
@@ -17,7 +18,19 @@ import shutil
 from io import BytesIO
 import base64
 from cryptography.fernet import Fernet
-
+from googleapiclient.discovery import build
+from googleapiclient.http import MediaFileUpload
+from google.oauth2 import service_account
+import os
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from constants import SCOPES, SERVICE_ACCOUNT_FILE
+import smtplib
+import os
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
 
 class Utils:
     """
@@ -46,16 +59,23 @@ class Utils:
         Initializes the Utils class by setting up logger and folder paths for images,
         recordings, and test results.
         """
-        self.logger = logger
-        self.date_str = self.get_date_string()
-        self.date_time_str = self.get_datetime_string()
-        # self.images_folder = os.path.abspath("images\\" + self.date_str)
-        # self.recordings_folder = os.path.abspath("recordings\\" + self.date_str)
-        # self.test_results_folder = os.path.abspath("test_results\\" + self.date_str)
-        # # self.create_image_and_test_results_folders()
-        self.images_folder = os.path.abspath(os.path.join("images", self.date_str))
-        self.recordings_folder = os.path.abspath(os.path.join("recordings", self.date_str))
-        self.test_results_folder = os.path.abspath(os.path.join("test_results", self.date_str))
+        if not hasattr(self, "_initialized"):
+            self._initialized = True  # Prevents re-initialization
+            self.logger = logger
+            self.date_str = self.get_date_string()
+            self.date_time_str = self.get_datetime_string()
+            self.time_str = self.get_time_string()
+            # self.images_folder = os.path.abspath("images\\" + self.date_str)
+            # self.recordings_folder = os.path.abspath("recordings\\" + self.date_str)
+            # self.test_results_folder = os.path.abspath("test_results\\" + self.date_str)
+            # # self.create_image_and_test_results_folders()
+            # self.images_folder = os.path.abspath(os.path.join("images", self.date_str))
+            # self.recordings_folder = os.path.abspath(os.path.join("recordings", self.date_str))
+            self.test_results_folder = os.path.abspath(os.path.join("test_results", self.date_str, self.time_str))
+            self.recordings_folder = os.path.abspath(os.path.join(self.test_results_folder, "recordings"))
+            self.images_folder = os.path.abspath(os.path.join(self.test_results_folder, "images"))
+            
+            
 
     def get_test_result_folder(self):
         """
@@ -123,7 +143,6 @@ class Utils:
                     pdf_writer.write(output_pdf)
 
             self.logger.info(f"Merged PDFs saved in parts under: {output_base}")
-
     
     def get_test_recordings_folder(self):
         """
@@ -295,9 +314,25 @@ class Utils:
         """
         self.is_not_used()
         now = datetime.now()
-        date_time = now.strftime("%d%b%Y_%I%M%S%f")
+        date_time = now.strftime("%d%b%Y_%Ih%Mm%Ss%f")
         # self.logger.debug("date and time:", date_time)
         return date_time
+    
+    def get_time_string(self):
+        """
+        Generates a formatted string representing the current date and time.
+
+        Format:
+            DayMonthYear_HourMinuteSecondMicrosecond (e.g., 04Apr2025_014238123456)
+
+        Returns:
+            str: The formatted date and time string.
+        """
+        self.is_not_used()
+        now = datetime.now()
+        time_str = now.strftime("%Hh%Mm%Ss")
+        # self.logger.debug("date and time:", date_time)
+        return time_str
 
     def get_date_string(self):
         """
@@ -364,6 +399,195 @@ class Utils:
         cv2.imwrite(full_img_path, image)
         # self.logger.debug(os.path.abspath(full_img_path))
         return full_img_path
+
+    def authenticate_service_account(self):
+        service_account_info = json.loads(self.decrypt_file("enc_service_account.json.file"))
+        creds = service_account.Credentials.from_service_account_info(service_account_info, scopes=SCOPES)
+        drive_service = build("drive", "v3", credentials=creds)
+        return drive_service
+    
+    # Authenticate using the service account
+    def authenticate_service_account_file(self):
+        creds = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+        drive_service = build("drive", "v3", credentials=creds)
+        return drive_service
+
+    def get_existing_root_folder_id(self, folder_name, drive_service):
+        """Check if a folder with the given name exists and return its ID."""
+        query = f"name='{folder_name}' and mimeType='application/vnd.google-apps.folder'"
+        results = drive_service.files().list(q=query, fields="files(id, webViewLink)").execute()
+        folders = results.get("files", [])
+        
+        if folders:
+            folder_id = folders[0]["id"]
+            folder_link = folders[0]["webViewLink"]
+            self.logger.info(f"Existing folder '{folder_name}' found: {folder_link}")
+            return folder_id, folder_link
+        else:
+            return None, None
+
+    def create_folder(self, folder_name, drive_service):
+        """Create a new folder in Google Drive."""
+        folder_metadata = {"name": folder_name, "mimeType": "application/vnd.google-apps.folder"}
+        folder = drive_service.files().create(body=folder_metadata, fields="id, webViewLink").execute()
+        folder_id = folder.get("id")
+        folder_link = folder.get("webViewLink")
+        print(f"New folder '{folder_name}' created: {folder_link}")
+        return folder_id, folder_link
+
+    def get_existing_folder_id(sef, folder_name, parent_folder_id, drive_service):
+        """Check if a folder already exists in Google Drive."""
+        query = f"mimeType='application/vnd.google-apps.folder' and name='{folder_name}' and '{parent_folder_id}' in parents and trashed=false"
+        response = drive_service.files().list(q=query, fields="files(id)").execute()
+        folders = response.get("files", [])
+        return folders[0]["id"] if folders else None
+
+    def get_existing_file_id(self, file_name, parent_folder_id, drive_service):
+        """Check if a file already exists in Google Drive."""
+        query = f"name='{file_name}' and '{parent_folder_id}' in parents and trashed=false"
+        response = drive_service.files().list(q=query, fields="files(id)").execute()
+        files = response.get("files", [])
+        return files[0]["id"] if files else None
+
+    def upload_folder_to_drive(self, parent_folder_id, folder_path, drive_service):
+        """Recursively upload a folder and its contents to Google Drive, avoiding duplicates."""
+        folder_name = os.path.basename(folder_path)
+
+        # Check if folder exists, if not, create it
+        drive_folder_id = self.get_existing_folder_id(folder_name, parent_folder_id, drive_service)
+        if not drive_folder_id:
+            folder_metadata = {
+                "name": folder_name,
+                "mimeType": "application/vnd.google-apps.folder",
+                "parents": [parent_folder_id]
+            }
+            folder = drive_service.files().create(body=folder_metadata, fields="id").execute()
+            drive_folder_id = folder.get("id")
+            self.logger.info(f"Created folder '{folder_name}' in Drive (ID: {drive_folder_id})")
+        else:
+            self.logger.warn(f"Folder '{folder_name}' already exists in Drive (ID: {drive_folder_id})")
+
+        # Iterate over items in the local folder
+        for item_name in os.listdir(folder_path):
+            item_path = os.path.join(folder_path, item_name)
+
+            if os.path.isdir(item_path):
+                # Recursively upload subfolders
+                self.upload_folder_to_drive(drive_folder_id, item_path, drive_service)
+            else:
+                # Check if file exists before uploading
+                if not self.get_existing_file_id(item_name, drive_folder_id, drive_service):
+                    file_metadata = {
+                        "name": item_name,
+                        "parents": [drive_folder_id]
+                    }
+                    media = MediaFileUpload(item_path, mimetype="application/octet-stream")
+                    drive_service.files().create(body=file_metadata, media_body=media, fields="id").execute()
+                    self.logger.info(f"Uploaded file '{item_name}' to Drive in folder '{folder_name}'")
+                else:
+                    self.logger.warn(f"File '{item_name}' already exists in folder '{folder_name}', skipping upload.")
+        
+        self.logger.info(f"Files from '{folder_path}' uploaded successfully!")
+    
+    # def upload_folder_to_drive(self, parent_folder_id, folder_path, drive_service):
+    #     """Recursively upload a folder and its contents to Google Drive."""
+    #     folder_name = os.path.basename(folder_path)
+
+    #     # Create a folder in Google Drive
+    #     folder_metadata = {
+    #         "name": folder_name,
+    #         "mimeType": "application/vnd.google-apps.folder",
+    #         "parents": [parent_folder_id]
+    #     }
+    #     folder = drive_service.files().create(body=folder_metadata, fields="id").execute()
+    #     drive_folder_id = folder.get("id")
+    #     print(f"Created folder '{folder_name}' in Drive (ID: {drive_folder_id})")
+
+    #     # Iterate over items in the local folder
+    #     for item_name in os.listdir(folder_path):
+    #         item_path = os.path.join(folder_path, item_name)
+
+    #         if os.path.isdir(item_path):
+    #             # Recursively upload subfolders
+    #             self.upload_folder_to_drive(drive_folder_id, item_path, drive_service)
+    #         else:
+    #             # Upload files
+    #             file_metadata = {
+    #                 "name": item_name,
+    #                 "parents": [drive_folder_id]
+    #             }
+    #             media = MediaFileUpload(item_path, mimetype="application/octet-stream")
+    #             drive_service.files().create(body=file_metadata, media_body=media, fields="id").execute()
+    #             print(f"Uploaded file '{item_name}' to Drive in folder '{folder_name}'")
+    #     print(f"Files from '{folder_path}' uploaded successfully!")
+
+    # def grant_access_to_folder_and_contents(self, folder_id, user_email, drive_service):
+    #     """Grant read access to a specific user for an existing folder and its contents."""
+    #     permission = {
+    #         "type": "user",
+    #         "role": "reader",  # Change to 'writer' for edit access
+    #         "emailAddress": user_email
+    #     }
+        
+    #     # Grant access to the folder itself
+    #     drive_service.permissions().create(fileId=folder_id, body=permission).execute()
+    #     self.logger.info(f"Access granted to {user_email} for folder {folder_id}")
+
+    #     # List all files and subfolders within the folder
+    #     results = drive_service.files().list(q=f"'{folder_id}' in parents").execute()
+    #     files = results.get('files', [])
+
+    #     # Grant access to each file and subfolder
+    #     for file in files:
+    #         drive_service.permissions().create(fileId=file['id'], body=permission).execute()
+    #         self.logger.info(f"Access granted to {user_email} for {file['name']} ({file['id']})")
+    
+    def grant_access_to_folder_and_contents(self, folder_id, user_emails, drive_service):
+        """Remove existing permissions (except for specified users) and grant new access to a list of users for a folder and its contents."""
+
+        # Convert user_emails to a set for quick lookup
+        user_emails_set = set(user_emails)
+
+        # Fetch existing permissions for the folder
+        existing_permissions = drive_service.permissions().list(fileId=folder_id).execute()
+        for permission in existing_permissions.get('permissions', []):
+            if permission['role'] != 'owner':
+                drive_service.permissions().delete(fileId=folder_id, permissionId=permission['id']).execute()
+                self.logger.info(f"Removed permission {permission['id']} from folder {folder_id}")
+
+        # List all files and subfolders within the folder
+        results = drive_service.files().list(q=f"'{folder_id}' in parents").execute()
+        files = results.get('files', [])
+
+        for file in files:
+            # Fetch existing permissions for each file
+            existing_file_permissions = drive_service.permissions().list(fileId=file['id']).execute()
+            for permission in existing_file_permissions.get('permissions', []):
+                if permission['role'] != 'owner' and 'emailAddress' in permission:
+                    if permission['emailAddress'] not in user_emails_set:  # Only remove if not in user_emails
+                        drive_service.permissions().delete(fileId=file['id'], permissionId=permission['id']).execute()
+                        self.logger.info(f"Removed permission {permission['id']} from {file['name']} ({file['id']})")
+
+        # Grant new access to all users
+        for user_email in user_emails:
+            if not self.is_valid_gmail(user_email):
+                self.logger.warn(f"The email address {user_email} is not a gmail address. Skipping granding access to google drive.")
+                continue
+            new_permission = {
+                "type": "user",
+                "role": "reader",  # Change to 'writer' for edit access
+                "emailAddress": user_email
+            }
+
+            # Grant access to the folder
+            drive_service.permissions().create(fileId=folder_id, body=new_permission).execute()
+            self.logger.info(f"Access granted to {user_email} for folder {folder_id}")
+
+            # Grant access to each file and subfolder
+            for file in files:
+                drive_service.permissions().create(fileId=file['id'], body=new_permission).execute()
+                self.logger.info(f"Access granted to {user_email} for {file['name']} ({file['id']})")
+
 
     # def take_screenshot_full_src_tag(self):
     #     """
@@ -460,8 +684,126 @@ class Utils:
         draw.text((x, y), text, fill=(0, 0, 0), font=font, anchor='ms')
         image.save(file_name_path)
 
+    def upload_test_results_to_drive(self, recipient_email):
+        folder_name = "TestResults"
+        folder_path = "test_results"
+        # recipient_email = ["theautomationtester99@gmail.com"]
+
+        drive_service = self.authenticate_service_account()
+        folder_id, folder_link = self.get_existing_root_folder_id(folder_name, drive_service)
+        if not folder_id:
+            folder_id, folder_link = self.create_folder(folder_name, drive_service)
+        
+        self.upload_folder_to_drive(folder_id, folder_path, drive_service)
+        # self.logger.info(folder_id, folder_link)
+        self.grant_access_to_folder_and_contents(folder_id, recipient_email, drive_service)
+        return folder_link
+
+    def send_email_with_attachment(self, start_props_reader):
+        """
+        Sends individual emails with attachments from a specified folder using a Gmail account,
+        ensuring that duplicate email addresses only receive one email. If the recipient list is empty
+        or contains only blank spaces, no emails will be sent.
+
+        Parameters:
+        sender_email (str): Your Gmail email address.
+        sender_password (str): Your Gmail app password.
+        recipient_emails (list): List of recipient email addresses (duplicates and empty values will be removed).
+        subject_prefix (str): The prefix for the email subject (e.g., "Report").
+        folder_path (str): Path to the folder containing files to send.
+
+        Returns:
+        None
+        """
+        send_test_results_email = True if str(start_props_reader.get_property('Misc', 'send_test_results_email', fallback='No')).lower() == 'yes' else False
+        upload_test_results_to_drive = True if str(start_props_reader.get_property('Misc', 'upload_test_results', fallback='No')).lower() == 'yes' else False
+        
+        if send_test_results_email:
+            sender_email =  str(start_props_reader.get_property('Misc', 'sender_email', fallback='No')).lower()
+            sender_password = self.decrypt_string(str(start_props_reader.get_property('Misc', 'sender_email_password', fallback='No')))
+            recipient_emails = str(start_props_reader.get_property('Misc', 'recipient_emails', fallback='No')).lower().split(",")
+            folder_path = os.path.join(self.get_test_result_folder(), "consolidated")
+            subject_prefix = "Test Results"
+            
+            smtp_server = "smtp.gmail.com"
+            smtp_port = 587  # Gmail SMTP port
+
+            # Remove duplicate emails and filter out empty strings or whitespace-only entries
+            unique_recipients = list({email.strip() for email in recipient_emails if email.strip() and self.is_valid_email(email)})
+
+            # Check if recipient list is empty
+            if not unique_recipients:
+                self.logger.warn(f"Recipient email list is empty {recipient_emails}, contains only blank entries, or has invalid email addresses. No emails sent.")
+                return
+            
+            if not self.is_valid_email(sender_email):
+                self.logger.warn(f"Invalid sender email address {sender_email}. No emails sent.")
+                return
+            
+            if not self.is_valid_gmail(sender_email):
+                self.logger.warn(f"Sender email address {sender_email} should only a gmail account. No emails sent.")
+                return
+            
+            # Get list of files in the folder
+            files = [f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f))]
+
+            if not files:
+                self.logger.warn("No files found in the folder.")
+                return
+            
+            total_files = len(files)
+            
+            for recipient_email in unique_recipients:
+                for idx, file_name in enumerate(files, start=1):
+                    # Determine email subject
+                    subject = subject_prefix if total_files == 1 else f"{subject_prefix} - Part {idx}"
+
+                    # Create email message
+                    msg = MIMEMultipart()
+                    msg["From"] = sender_email
+                    msg["To"] = recipient_email
+                    msg["Subject"] = subject
+
+                    if upload_test_results_to_drive and self.is_valid_gmail(recipient_email):
+                        fldr_link = self.upload_test_results_to_drive(recipient_emails)
+                        body = f"Hello,\n\nPlease find attached test results summary: {file_name}\n\n Below is the link to the full test results folder uploaded to google drive:\n\n {fldr_link} \n\nBest regards."
+                    else:
+                        body = f"Hello,\n\nPlease find attached test results summary: {file_name}\n\nBest regards."
+                    msg.attach(MIMEText(body, "plain"))
+
+                    # Attach the file
+                    file_path = os.path.join(folder_path, file_name)
+                    try:
+                        with open(file_path, "rb") as attachment:
+                            part = MIMEApplication(attachment.read(), Name=file_name)
+                            part["Content-Disposition"] = f'attachment; filename="{file_name}"'
+                            msg.attach(part)
+                    except Exception as e:
+                        self.logger.error(f"Could not attach file {file_name}: {e}")
+                        continue
+
+                    try:
+                        # Connect to Gmail SMTP server
+                        server = smtplib.SMTP(smtp_server, smtp_port)
+                        server.starttls()  # Secure connection
+                        server.login(sender_email, sender_password)  # Use your app password
+
+                        # Send email
+                        server.sendmail(sender_email, recipient_email, msg.as_string())
+                        server.quit()
+
+                        self.logger.info(f"Email sent successfully to {recipient_email} with attachment: {file_name}")
+                    except Exception as e:
+                        self.logger.error(f"Error sending email to {recipient_email} for {file_name}: {e}")
+
     def is_not_used(self):
         pass
+
+    def is_valid_email(self,email):
+        return re.match(r"[^@]+@[^@]+\.[^@]+", email)
+    
+    def is_valid_gmail(self, email):
+        return re.match(r"^[a-zA-Z0-9._%+-]+@gmail\.com$", email) is not None
 
     def get_absolute_file_paths_in_dir(self, directory):
         """
@@ -759,6 +1101,44 @@ class Utils:
 
         # self.logger.debug("File encrypted successfully!")
         # return encrypted_content
+    
+    def encrypt_string(self, input_string, encryption_key="DC3HN3PdUb5z_MyYbitSyVnPU_E_WOfZkUsYR8bWKzY="):
+        """
+        Encrypts a given string using Fernet encryption.
+
+        Args:
+            input_string (str): The string to be encrypted.
+            encryption_key (str): Encryption key to use for encryption (default provided).
+
+        Returns:
+            str: Encrypted string in bytes format.
+        """
+        # Create a Fernet cipher using the encryption key
+        f = Fernet(encryption_key)
+
+        # Encrypt the input string
+        encrypted_string = f.encrypt(input_string.encode())
+
+        return encrypted_string
+    
+    def decrypt_string(self, encrypted_string, encryption_key="DC3HN3PdUb5z_MyYbitSyVnPU_E_WOfZkUsYR8bWKzY="):
+        """
+        Decrypts an encrypted string using Fernet encryption.
+
+        Args:
+            encrypted_string (bytes): The encrypted string in bytes format.
+            encryption_key (str): Encryption key used for encryption.
+
+        Returns:
+            str: Decrypted original string.
+        """
+        # Create a Fernet cipher using the encryption key
+        fernet = Fernet(encryption_key)
+
+        # Decrypt the encrypted string
+        decrypted_string = fernet.decrypt(encrypted_string).decode()
+
+        return decrypted_string
 
     def decrypt_file(self, encrypted_file_path, decryption_key="DC3HN3PdUb5z_MyYbitSyVnPU_E_WOfZkUsYR8bWKzY="):
         """
