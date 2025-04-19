@@ -37,6 +37,13 @@
 # # key generation
 # # key = Fernet.generate_key()
 # # print(f"Generated Key: {key.decode()}")
+import tmp1
+
+print(f"Screenshot strategy: {tmp1.SCREENSHOT_STRATEGY}")
+print(f"Log Level: {tmp1.LOG_LEVEL}")
+print(f"Selenium Grid URL: {tmp1.GRID_URL}")
+print(f"Appium Grid URL: {tmp1.APPIUM_URL}")
+print(f"Delete test results: {tmp1.DELETE_TEST_RESULTS}") 
 
 # key="DC3HN3PdUb5z_MyYbitSyVnPU_E_WOfZkUsYR8bWKzY="
 # input = "my deep dark secret"

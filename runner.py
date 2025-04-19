@@ -1,4 +1,5 @@
 import asyncio
+from pathlib import Path
 import re
 from multiprocessing import Process, Queue, freeze_support, Lock
 import argparse
@@ -487,7 +488,7 @@ def start_runner(testscript_file, rlog_queue, rlock, start_props_reader, object_
         ValueError: If invalid configurations or test script data are encountered.
         Exception: If an error occurs during test script execution.
     """
-    logger_config = LoggerConfig(log_queue=rlog_queue)
+    logger_config = LoggerConfig(start_props_reader,log_queue=rlog_queue)
     wafl = logger_config.logger
     # utils = Utils(wafl)
 
@@ -513,7 +514,7 @@ def start_runner(testscript_file, rlog_queue, rlock, start_props_reader, object_
 
         retry_count = 1
         wafl.debug("Instantiating the keyword manager.")
-        km = KeywordsManager(wafl, retry_count)
+        km = KeywordsManager(wafl, start_props_reader, retry_count)
         retries = 0
         max_retries = get_max_retries(start_props_reader, rlog_queue)
 
@@ -553,7 +554,7 @@ def get_max_retries(start_props_reader, rq):
     Returns:
         int: The validated max_retries value.
     """
-    logger_config = LoggerConfig(log_queue=rq)
+    logger_config = LoggerConfig(start_props_reader, log_queue=rq)
     lgr = logger_config.logger
     try:
         max_retries = int(start_props_reader.get_property('Misc', 'max_retries', fallback='0'))
@@ -567,7 +568,7 @@ def get_max_retries(start_props_reader, rq):
     
     return max_retries
 
-def take_recording(process_name: Process, record_name):
+def take_recording(process_name: Process, record_name, logger):
     """
     Records the screen while the specified process is running.
 
@@ -581,7 +582,7 @@ def take_recording(process_name: Process, record_name):
         Exception: If an error occurs during recording.
     """
     try:
-        logger = LoggerConfig().logger
+        # logger = LoggerConfig().logger
         logger.debug("Gathering screen size for recording.")
 
         SCREEN_SIZE = tuple(pyautogui.size())
@@ -634,8 +635,8 @@ def check_before_start(start_props_reader, utils):
         utils.delete_folder_and_contents("recordings")
         utils.delete_folder_and_contents("test_results")
 
-    logger.debug("Deleting the output.xlsx file.")
-    utils.delete_file("output.xlsx")
+    # logger.debug("Deleting the output.xlsx file.")
+    # utils.delete_file("output.xlsx")
     logger.debug("Creating the test_results and recordings folders.")
     utils.create_image_and_test_results_folders()
 
@@ -661,6 +662,7 @@ def check_before_start(start_props_reader, utils):
             raise ValueError("The 'test_scripts' folder and 'edge' folder contains same test script excel files. Make the files unique per folder.")
 
 if __name__ == '__main__':
+    freeze_support()
     """
     Entry point for the script.
 
@@ -684,19 +686,20 @@ if __name__ == '__main__':
         SystemExit: If the program exits successfully after completing a specific operation.
     """
     try:
-        freeze_support()
+        # base_dir = Path(sys.argv[0]).parent.resolve()
+        base_dir = Path(sys.argv[0]).parent.resolve()
         lock = Lock()
         log_queue = Queue()
 
-        logger_config = LoggerConfig(log_queue=log_queue)
+        start_props_reader = ConfigReader(base_dir/"config"/"start.properties")
+        object_repo_reader = ConfigReader(base_dir/"config"/"object_repository.properties")
+        
+        logger_config = LoggerConfig(start_props_reader, log_queue=log_queue)
         listener = logger_config.start_listener()
         logger = logger_config.logger
 
         utils = Utils(logger)
         prm = PdfReportManager(logger)
-
-        start_props_reader = ConfigReader("start.properties")
-        object_repo_reader = ConfigReader("object_repository.properties")
 
         logger.debug("Execution Started ----------------.")
         logger.debug("Parsing the input arguments.")
@@ -722,7 +725,7 @@ if __name__ == '__main__':
             raise ValueError("'--output-file' can only be used with '--encrypt-file'.")
 
         if args.help_html:
-            html_content = utils.decrypt_file("enc_help_doc.enc")
+            html_content = utils.decrypt_file(base_dir / "resources" / "enc_help_doc.enc")
             with tempfile.NamedTemporaryFile(mode="w", suffix=".html", delete=False) as temp_file:
                 temp_file.write(html_content)
                 temp_file.flush()
@@ -786,7 +789,7 @@ if __name__ == '__main__':
                             proc2 = None
                             if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
                                 logger.debug("Starting the execution recording.")
-                                proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", "")))
+                                proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", ""),logger))
                                 proc2.start()
 
                             proc1.join()
@@ -799,7 +802,7 @@ if __name__ == '__main__':
                             proc2 = None
                             if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
                                 logger.debug("Starting the execution recording.")
-                                proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", "")))
+                                proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", ""), logger))
                                 proc2.start()
 
                             proc1.join()
@@ -812,7 +815,7 @@ if __name__ == '__main__':
                             proc2 = None
                             if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
                                 logger.debug("Starting the execution recording.")
-                                proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", "")))
+                                proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", ""), logger))
                                 proc2.start()
 
                             proc1.join()

@@ -21,9 +21,9 @@ class KeywordsManager(BrowserDriver):
         linux_logo_src_b64 (str): Base64 encoded string for Linux logo image.
         win_logo_src_b64 (str): Base64 encoded string for Windows logo image.
     """
-    def __init__(self, logger, retry_count=1):
-
-        super().__init__(logger)
+    def __init__(self, logger, start_props_reader, retry_count=1):
+        super().__init__(logger, start_props_reader)
+        self.start_props_reader = start_props_reader
         self.screenshot_strategy = self._get_screenshot_strategy()
         self.highlight_enabled = self._get_highlight_element_strategy()
         self.screenshot_no = 0
@@ -65,7 +65,7 @@ class KeywordsManager(BrowserDriver):
         Returns:
             str: The value of screenshot_return (always, on-error, or never).
         """
-        start_props_reader = ConfigReader("start.properties")
+        start_props_reader = self.start_props_reader
         strategy = str(start_props_reader.get_property('Misc', 'screenshot_strategy', fallback='always')).lower()
 
         # Validate the strategy and default to "always" if invalid
@@ -89,7 +89,7 @@ class KeywordsManager(BrowserDriver):
         Returns:
             str: The value of screenshot_return (always, on-error, or never).
         """
-        start_props_reader = ConfigReader("start.properties")
+        start_props_reader = self.start_props_reader
         highlight_enabled = start_props_reader.get_property('Misc', 'highlight_elements', fallback='yes').lower() == 'yes'
 
         return highlight_enabled

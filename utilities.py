@@ -401,7 +401,8 @@ class Utils:
         return full_img_path
 
     def authenticate_service_account(self):
-        service_account_info = json.loads(self.decrypt_file("enc_service_account.json.file"))
+        base_dir = Path(sys.argv[0]).parent.resolve()
+        service_account_info = json.loads(self.decrypt_file(base_dir/"resources"/"enc_service_account.json.file"))
         creds = service_account.Credentials.from_service_account_info(service_account_info, scopes=SCOPES)
         drive_service = build("drive", "v3", credentials=creds)
         return drive_service

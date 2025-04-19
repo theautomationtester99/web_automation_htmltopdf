@@ -29,7 +29,7 @@ class DriverManager:
         driver (WebDriver): The WebDriver instance for the launched browser.
     """
 
-    def __init__(self, logger):
+    def __init__(self, logger, start_props_reader):
         """
         Initializes a new instance of the DriverManager class. Sets up the required browser configurations by
         reading properties from the 'start.properties' file.
@@ -52,19 +52,14 @@ class DriverManager:
         """
         self.logger = logger
         os.environ['WDM_SSL_VERIFY'] = '0'
-        self.config_reader = ConfigReader("start.properties")
+        self.config_reader = start_props_reader
         self.is_inprivate = self._is_browser_in_private()
         self.is_headless = self._is_browser_headless()
         self.is_running_grid = self._is_running_grid()
-        start_configs = Properties()
-        with open('start.properties', 'rb') as config_file:
-            start_configs.load(config_file)
-        self.run_in_selenium_grid = str(
-            start_configs.get('run_in_selenium_grid').data)
-        self.grid_url = str(start_configs.get('grid_url').data)
-        self.run_in_appium_grid = str(
-            start_configs.get('run_in_appium_grid').data)
-        self.appium_url = str(start_configs.get('appium_url').data)
+        self.run_in_selenium_grid = str(self.config_reader.get_property('SGrid', 'run_in_selenium_grid', fallback='No')).lower()
+        self.grid_url = str(self.config_reader.get_property('SGrid', 'grid_url', fallback='No'))
+        self.run_in_appium_grid = str(self.config_reader.get_property('SGrid', 'run_in_appium_grid', fallback='No')).lower()
+        self.appium_url = str(self.config_reader.get_property('SGrid', 'appium_url', fallback='No')).lower()
         self.grid_os_info = ""
 
     def _is_browser_in_private(self):

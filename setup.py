@@ -30,13 +30,14 @@ from cx_Freeze import setup, Executable
 
 # Files to include in the exe folder
 include_files = [
-    ('logo.png', 'logo.png'),
+    ('resources/logo.png', 'resources/logo.png'),
     ('test_scripts', 'test_scripts'),
-    ('encrypted_file.jinja2', 'encrypted_file.jinja2'),
-    ('object_repository.properties', 'object_repository.properties'),
-    ('encrypted_ts_file.jinja2', 'encrypted_ts_file.jinja2'),
-    ('start.properties', 'start.properties')
-    ('enc_help_doc.enc', 'enc_help_doc.enc')
+    ('resources/encrypted_file.jinja2', 'resources/encrypted_file.jinja2'),
+    ('config/object_repository.properties', 'config/object_repository.properties'),
+    ('resources/encrypted_ts_file.jinja2', 'resources/encrypted_ts_file.jinja2'),
+    ('config/start.properties', 'config/start.properties'),
+    ('resources/enc_service_account.json.file', 'resources/enc_service_account.json.file'),
+    ('resources/enc_help_doc.enc', 'resources/enc_help_doc.enc')
 ]
 
 setup(

@@ -34,6 +34,7 @@ class ExcelReportManager:
         self.lock = lock
         self.utils = Utils(self.logger)
         self.all_test_results_list = []
+        self.result_folder = self.utils.get_test_result_folder()
 
     def add_row(self, test_result):
         """
@@ -52,8 +53,8 @@ class ExcelReportManager:
                 - Execution date
         """
         with self.lock:
-            if self.utils.check_if_file_exists(os.path.join(".", "output.xlsx")):
-                df = pd.read_excel("output.xlsx")
+            if self.utils.check_if_file_exists(os.path.join(self.result_folder, "output.xlsx")):
+                df = pd.read_excel(os.path.join(self.result_folder, "output.xlsx"))
                 self.all_test_results_list = df.values.tolist()
                 self.all_test_results_list.append(test_result)
                 self.export_to_excel()
@@ -88,7 +89,7 @@ class ExcelReportManager:
         styler = df.style.apply(lambda _: highlighted_rows)
         # print(type(styler))
         # print(pd.__version__)
-        output_file = 'output.xlsx'
+        output_file = os.path.join(self.result_folder, "output.xlsx")
         styler.to_excel(output_file, index=False)
 
         # Auto-adjust column widths and enable wrapping

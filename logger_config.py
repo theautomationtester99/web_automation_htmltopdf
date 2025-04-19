@@ -11,7 +11,7 @@ class LoggerConfig:
     A multiprocessing-safe logger configuration class with ColorFormatter support for colored console output.
     """
 
-    def __init__(self, log_file=os.path.join('logs', 'waf.log'), log_queue=None):
+    def __init__(self, start_props_reader, log_file=os.path.join('logs', 'waf.log'), log_queue=None):
         """
         Initializes the LoggerConfig object for multiprocessing.
 
@@ -20,7 +20,7 @@ class LoggerConfig:
             log_queue (multiprocessing.Queue, optional): Queue for handling log messages.
         """
         self.log_file = log_file
-        self.config_reader = ConfigReader("start.properties")
+        self.config_reader = start_props_reader
         self.log_level = self.get_log_level_from_config()
         self.log_queue = log_queue or Queue()  # Use provided Queue or create a new one
         self.logger = self.setup_logger()

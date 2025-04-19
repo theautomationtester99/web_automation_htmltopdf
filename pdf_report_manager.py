@@ -1,3 +1,5 @@
+from pathlib import Path
+import sys
 import pandas as pd
 
 from pdf_reporting import PdfReporting
@@ -128,6 +130,8 @@ class PdfReportManager:
         The generated PDF is saved with a name containing the test case ID, browser details,
         and the execution timestamp.
         """
+        base_dir = Path(sys.argv[0]).parent.resolve()
+
         self.logger.debug('Finalizing the data to be added to PDF report.')
         self.report_data["page_title"] = self.page_title
         self.report_data["test_description"] = self.test_description
@@ -142,7 +146,7 @@ class PdfReportManager:
         self.report_data["executed_date"] = self.executed_date
         self.report_data["overall_status_text"] = self.overall_status_text
         self.report_data["table_data"] = self.table_data
-        pdf = PdfReporting(self.logger, "logo.png", "encrypted_file.jinja2", self.report_data, self.tc_id, self.tc_id + "_" + self.browser_img_alt + "_" + self.overall_status_text + "_" + self.utils.get_datetime_string())
+        pdf = PdfReporting(self.logger, base_dir/"resources"/"logo.png", base_dir/"resources"/"encrypted_file.jinja2", self.report_data, self.tc_id, self.tc_id + "_" + self.browser_img_alt + "_" + self.overall_status_text + "_" + self.utils.get_datetime_string())
 
         await pdf.generate_pdf()
 
@@ -158,13 +162,16 @@ class PdfReportManager:
         The generated summary report includes the test case results and is saved with a
         timestamped filename.
         """
+        base_dir = Path(sys.argv[0]).parent.resolve()
+        tr_folder = self.utils.get_test_result_folder()
+        
         self.logger.debug('Checking if output.xlsx file exists before creating the test summary PDF report.')
-        if self.utils.check_if_file_exists(os.path.join(".", "output.xlsx")):
+        if self.utils.check_if_file_exists(os.path.join(tr_folder, "output.xlsx")):
             self.logger.debug('Output.xlsx exists and starting to create test summary PDF report.')
-            df = pd.read_excel("output.xlsx")
+            df = pd.read_excel(os.path.join(tr_folder, "output.xlsx"))
             table_data = df.to_dict(orient='records')
 
-            ts_pdf = PdfTsReporting(self.logger, "logo.png", "encrypted_ts_file.jinja2", table_data, "Test_Summary_Results_" + self.utils.get_datetime_string())
+            ts_pdf = PdfTsReporting(self.logger, base_dir/"resources"/"logo.png", base_dir/"resources"/"encrypted_ts_file.jinja2", table_data, "Test_Summary_Results_" + self.utils.get_datetime_string())
             await ts_pdf.generate_pdf()
 
     def is_not_used(self):
