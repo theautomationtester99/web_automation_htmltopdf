@@ -775,8 +775,15 @@ if __name__ == '__main__':
             upload_tr =  True if str(start_properties.UPLOAD_TEST_RESULTS).lower() == 'yes' else False
 
             logger.debug("Gathering all files present in the test_scripts folder.")
+            
+            if getattr(sys, 'frozen', False):  # Check if running as a frozen executable
+                script_dir = os.path.dirname(sys.executable)  # Use the directory of the executable
+            else:
+                script_dir = os.path.dirname(os.path.abspath(__file__))  # Normal script behavior
 
-            generic_path = os.path.join(".", "test_scripts")
+            generic_path = os.path.join(script_dir, "test_scripts")
+
+            # generic_path = os.path.join(".", "test_scripts")
 
             for x in utils.get_absolute_file_paths_in_dir(generic_path):
                 logger.debug("Getting the file path " + x + ".")

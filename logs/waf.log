@@ -9876,3 +9876,13 @@
 2025-04-19 12:11:17,436 - WafLogger - DEBUG - pdf_ts_reporting.py:150] [PID:37868] Completed creation of test summary PDF report from template with populated data
 2025-04-19 12:11:17,704 - WafLogger - INFO - utilities.py:126] [PID:37868] All PDFs are within the size limit. Merging into a single file.
 2025-04-19 12:11:18,331 - WafLogger - INFO - utilities.py:132] [PID:37868] Merged PDF saved at: /workspace/test_results/19Apr2025/12h10m35s/consolidated/Test_Results_19Apr2025_12h11m17s690424.pdf
+2025-04-19 18:40:34,533 - WafLogger - DEBUG - runner.py:705] [PID:19272] Execution Started ----------------.
+2025-04-19 18:40:34,535 - WafLogger - DEBUG - runner.py:706] [PID:19272] Parsing the input arguments.
+2025-04-19 18:40:46,686 - WafLogger - DEBUG - runner.py:705] [PID:22420] Execution Started ----------------.
+2025-04-19 18:40:46,687 - WafLogger - DEBUG - runner.py:706] [PID:22420] Parsing the input arguments.
+2025-04-19 18:40:46,689 - WafLogger - DEBUG - runner.py:718] [PID:22420] Counting the number of input arguments.
+2025-04-19 18:40:46,690 - WafLogger - DEBUG - runner.py:763] [PID:22420] Deleting test results from Google Drive.
+2025-04-19 18:40:48,191 - WafLogger - INFO - utilities.py:439] [PID:22420] Existing folder 'TestResults' found: https://drive.google.com/drive/folders/1Fxj2BC5utuIU2Qo-RLCkTF3MBzARCoW_
+2025-04-19 18:40:49,097 - WafLogger - INFO - utilities.py:571] [PID:22420] Deleted 'test_results' from Drive.
+2025-04-19 18:40:49,097 - WafLogger - INFO - utilities.py:575] [PID:22420] All contents from folder (ID: 1Fxj2BC5utuIU2Qo-RLCkTF3MBzARCoW_) deleted successfully!
+2025-04-19 18:40:49,097 - WafLogger - DEBUG - runner.py:765] [PID:22420] Finished deleting test results from Google Drive.
