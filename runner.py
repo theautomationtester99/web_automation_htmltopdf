@@ -699,6 +699,7 @@ if __name__ == '__main__':
         logger = logger_config.logger
 
         utils = Utils(logger)
+        utils.stop_driver_processes()
         prm = PdfReportManager(logger)
 
         logger.debug("Execution Started ----------------.")

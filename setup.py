@@ -35,7 +35,6 @@ include_files = [
     ('resources/encrypted_file.jinja2', 'resources/encrypted_file.jinja2'),
     ('config/object_repository.properties', 'config/object_repository.properties'),
     ('resources/encrypted_ts_file.jinja2', 'resources/encrypted_ts_file.jinja2'),
-    ('config/start.properties', 'config/start.properties'),
     ('resources/enc_service_account.json.file', 'resources/enc_service_account.json.file'),
     ('resources/enc_help_doc.enc', 'resources/enc_help_doc.enc')
 ]

@@ -10,7 +10,7 @@ import PyPDF2
 import numpy as np
 import cv2
 import pyautogui
-from datetime import datetime
+from datetime import datetime, timezone
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
@@ -32,6 +32,7 @@ import os
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
+import psutil
 
 class Utils:
     """
@@ -86,6 +87,18 @@ class Utils:
             str: The absolute path to the test results folder.
         """
         return self.test_results_folder
+    
+    def stop_driver_processes(self):
+        driver_names = ["msedgedriver", "chromedriver"]
+        
+        for process in psutil.process_iter(attrs=["pid", "name"]):
+            try:
+                process_name = process.info["name"].lower()
+                if any(driver in process_name for driver in driver_names):
+                    print(f"Terminating {process_name} (PID: {process.info['pid']})")
+                    psutil.Process(process.info["pid"]).terminate()
+            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                pass
     
     def merge_pdfs_in_parts(self):
         folder_path = self.get_test_result_folder()
@@ -314,7 +327,7 @@ class Utils:
             str: The formatted date and time string.
         """
         self.is_not_used()
-        now = datetime.now()
+        now = datetime.now(timezone.utc)
         date_time = now.strftime("%d%b%Y_%Ih%Mm%Ss%f")
         # self.logger.debug("date and time:", date_time)
         return date_time
@@ -330,7 +343,7 @@ class Utils:
             str: The formatted date and time string.
         """
         self.is_not_used()
-        now = datetime.now()
+        now = datetime.now(timezone.utc)
         time_str = now.strftime("%Hh%Mm%Ss")
         # self.logger.debug("date and time:", date_time)
         return time_str
@@ -346,7 +359,7 @@ class Utils:
             str: The formatted date string.
         """
         self.is_not_used()
-        now = datetime.now()
+        now = datetime.now(timezone.utc)
         date_time = now.strftime("%d%b%Y")
         # self.logger.debug("date and time:", date_time)
         return date_time
