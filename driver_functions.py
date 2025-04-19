@@ -22,11 +22,11 @@ class BrowserDriver(DriverManager):
     Attributes:
         logger: Logger instance for logging browser-related activities.
     """
-    def __init__(self, logger, start_props_reader):
+    def __init__(self, logger):
         """
         Initialize the BrowserDriver instance, setting up the logger instance.
         """
-        super().__init__(logger, start_props_reader)
+        super().__init__(logger)
         self.utils = Utils(self.logger)
         self.logger = logger
 

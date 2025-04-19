@@ -25,6 +25,7 @@ import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from config import start_properties
 from constants import SCOPES, SERVICE_ACCOUNT_FILE
 import smtplib
 import os
@@ -450,6 +451,46 @@ class Utils:
         files = response.get("files", [])
         return files[0]["id"] if files else None
 
+    # def upload_folder_to_drive(self, parent_folder_id, folder_path, drive_service):
+    #     """Recursively upload a folder and its contents to Google Drive, avoiding duplicates."""
+    #     folder_name = os.path.basename(folder_path)
+
+    #     # Check if folder exists, if not, create it
+    #     drive_folder_id = self.get_existing_folder_id(folder_name, parent_folder_id, drive_service)
+    #     if not drive_folder_id:
+    #         folder_metadata = {
+    #             "name": folder_name,
+    #             "mimeType": "application/vnd.google-apps.folder",
+    #             "parents": [parent_folder_id]
+    #         }
+    #         folder = drive_service.files().create(body=folder_metadata, fields="id").execute()
+    #         drive_folder_id = folder.get("id")
+    #         self.logger.info(f"Created folder '{folder_name}' in Drive (ID: {drive_folder_id})")
+    #     else:
+    #         self.logger.warn(f"Folder '{folder_name}' already exists in Drive (ID: {drive_folder_id})")
+
+    #     # Iterate over items in the local folder
+    #     for item_name in os.listdir(folder_path):
+    #         item_path = os.path.join(folder_path, item_name)
+
+    #         if os.path.isdir(item_path):
+    #             # Recursively upload subfolders
+    #             self.upload_folder_to_drive(drive_folder_id, item_path, drive_service)
+    #         else:
+    #             # Check if file exists before uploading
+    #             if not self.get_existing_file_id(item_name, drive_folder_id, drive_service):
+    #                 file_metadata = {
+    #                     "name": item_name,
+    #                     "parents": [drive_folder_id]
+    #                 }
+    #                 media = MediaFileUpload(item_path, mimetype="application/octet-stream")
+    #                 drive_service.files().create(body=file_metadata, media_body=media, fields="id").execute()
+    #                 self.logger.info(f"Uploaded file '{item_name}' to Drive in folder '{folder_name}'")
+    #             else:
+    #                 self.logger.warn(f"File '{item_name}' already exists in folder '{folder_name}', skipping upload.")
+        
+    #     self.logger.info(f"Files from '{folder_path}' uploaded successfully!")
+    
     def upload_folder_to_drive(self, parent_folder_id, folder_path, drive_service):
         """Recursively upload a folder and its contents to Google Drive, avoiding duplicates."""
         folder_name = os.path.basename(folder_path)
@@ -468,6 +509,9 @@ class Utils:
         else:
             self.logger.warn(f"Folder '{folder_name}' already exists in Drive (ID: {drive_folder_id})")
 
+        # Get a list of existing files in the folder
+        existing_files = {file["name"]: file["id"] for file in self.list_files_in_folder(drive_folder_id, drive_service)}
+
         # Iterate over items in the local folder
         for item_name in os.listdir(folder_path):
             item_path = os.path.join(folder_path, item_name)
@@ -477,7 +521,7 @@ class Utils:
                 self.upload_folder_to_drive(drive_folder_id, item_path, drive_service)
             else:
                 # Check if file exists before uploading
-                if not self.get_existing_file_id(item_name, drive_folder_id, drive_service):
+                if item_name not in existing_files:
                     file_metadata = {
                         "name": item_name,
                         "parents": [drive_folder_id]
@@ -487,61 +531,35 @@ class Utils:
                     self.logger.info(f"Uploaded file '{item_name}' to Drive in folder '{folder_name}'")
                 else:
                     self.logger.warn(f"File '{item_name}' already exists in folder '{folder_name}', skipping upload.")
-        
+
         self.logger.info(f"Files from '{folder_path}' uploaded successfully!")
     
-    # def upload_folder_to_drive(self, parent_folder_id, folder_path, drive_service):
-    #     """Recursively upload a folder and its contents to Google Drive."""
-    #     folder_name = os.path.basename(folder_path)
+    def list_files_in_folder(self, folder_id, drive_service):
+        """Retrieve a list of files in a Google Drive folder."""
+        query = f"'{folder_id}' in parents and trashed = false"
+        response = drive_service.files().list(q=query, fields="files(id, name)").execute()
+        return response.get("files", [])
+    
+    
+    
+    def delete_folder_from_drive(self, folder_id, drive_service):
+        """Delete all files and subfolders inside a Google Drive folder."""
+        query = f"'{folder_id}' in parents and trashed = false"
+        response = drive_service.files().list(q=query, fields="files(id, name)").execute()
+        files = response.get("files", [])
 
-    #     # Create a folder in Google Drive
-    #     folder_metadata = {
-    #         "name": folder_name,
-    #         "mimeType": "application/vnd.google-apps.folder",
-    #         "parents": [parent_folder_id]
-    #     }
-    #     folder = drive_service.files().create(body=folder_metadata, fields="id").execute()
-    #     drive_folder_id = folder.get("id")
-    #     print(f"Created folder '{folder_name}' in Drive (ID: {drive_folder_id})")
+        if not files:
+            self.logger.info(f"No files found in folder (ID: {folder_id}).")
+            return
 
-    #     # Iterate over items in the local folder
-    #     for item_name in os.listdir(folder_path):
-    #         item_path = os.path.join(folder_path, item_name)
+        for file in files:
+            try:
+                drive_service.files().delete(fileId=file["id"]).execute()
+                self.logger.info(f"Deleted '{file['name']}' from Drive.")
+            except Exception as e:
+                self.logger.error(f"Failed to delete '{file['name']}': {e}")
 
-    #         if os.path.isdir(item_path):
-    #             # Recursively upload subfolders
-    #             self.upload_folder_to_drive(drive_folder_id, item_path, drive_service)
-    #         else:
-    #             # Upload files
-    #             file_metadata = {
-    #                 "name": item_name,
-    #                 "parents": [drive_folder_id]
-    #             }
-    #             media = MediaFileUpload(item_path, mimetype="application/octet-stream")
-    #             drive_service.files().create(body=file_metadata, media_body=media, fields="id").execute()
-    #             print(f"Uploaded file '{item_name}' to Drive in folder '{folder_name}'")
-    #     print(f"Files from '{folder_path}' uploaded successfully!")
-
-    # def grant_access_to_folder_and_contents(self, folder_id, user_email, drive_service):
-    #     """Grant read access to a specific user for an existing folder and its contents."""
-    #     permission = {
-    #         "type": "user",
-    #         "role": "reader",  # Change to 'writer' for edit access
-    #         "emailAddress": user_email
-    #     }
-        
-    #     # Grant access to the folder itself
-    #     drive_service.permissions().create(fileId=folder_id, body=permission).execute()
-    #     self.logger.info(f"Access granted to {user_email} for folder {folder_id}")
-
-    #     # List all files and subfolders within the folder
-    #     results = drive_service.files().list(q=f"'{folder_id}' in parents").execute()
-    #     files = results.get('files', [])
-
-    #     # Grant access to each file and subfolder
-    #     for file in files:
-    #         drive_service.permissions().create(fileId=file['id'], body=permission).execute()
-    #         self.logger.info(f"Access granted to {user_email} for {file['name']} ({file['id']})")
+        self.logger.info(f"All contents from folder (ID: {folder_id}) deleted successfully!")
     
     def grant_access_to_folder_and_contents(self, folder_id, user_emails, drive_service):
         """Remove existing permissions (except for specified users) and grant new access to a list of users for a folder and its contents."""
@@ -699,8 +717,17 @@ class Utils:
         # self.logger.info(folder_id, folder_link)
         self.grant_access_to_folder_and_contents(folder_id, recipient_email, drive_service)
         return folder_link
+    
+    def delete_test_results_from_drive(self):
+        folder_name = "TestResults"
+        drive_service = self.authenticate_service_account()
+        folder_id, folder_link = self.get_existing_root_folder_id(folder_name, drive_service)
+        if not folder_id:
+            return
+        
+        self.delete_folder_from_drive(folder_id, drive_service)
 
-    def send_email_with_attachment(self, start_props_reader):
+    def send_email_with_attachment(self):
         """
         Sends individual emails with attachments from a specified folder using a Gmail account,
         ensuring that duplicate email addresses only receive one email. If the recipient list is empty
@@ -716,13 +743,13 @@ class Utils:
         Returns:
         None
         """
-        send_test_results_email = True if str(start_props_reader.get_property('Misc', 'send_test_results_email', fallback='No')).lower() == 'yes' else False
-        upload_test_results_to_drive = True if str(start_props_reader.get_property('Misc', 'upload_test_results', fallback='No')).lower() == 'yes' else False
+        send_test_results_email = True if str(start_properties.SEND_TEST_RESULTS_EMAIL).lower() == 'yes' else False
+        upload_test_results_to_drive = True if str(start_properties.UPLOAD_TEST_RESULTS).lower() == 'yes' else False
         
         if send_test_results_email:
-            sender_email =  str(start_props_reader.get_property('Misc', 'sender_email', fallback='No')).lower()
-            sender_password = self.decrypt_string(str(start_props_reader.get_property('Misc', 'sender_email_password', fallback='No')))
-            recipient_emails = str(start_props_reader.get_property('Misc', 'recipient_emails', fallback='No')).lower().split(",")
+            sender_email =  str(start_properties.SENDER_EMAIL).lower()
+            sender_password = self.decrypt_string(str(start_properties.SENDER_EMAIL_PASSWORD))
+            recipient_emails = str(start_properties.RECIPIENT_EMAILS).lower().split(",")
             folder_path = os.path.join(self.get_test_result_folder(), "consolidated")
             subject_prefix = "Test Results"
             

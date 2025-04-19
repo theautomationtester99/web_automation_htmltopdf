@@ -4,6 +4,7 @@ import pyautogui as pag
 from appium import webdriver as appium_wd
 from appium.options.android import UiAutomator2Options
 import requests
+from config import start_properties
 from config_reader import ConfigReader
 from jproperties import Properties
 from selenium import webdriver
@@ -29,7 +30,7 @@ class DriverManager:
         driver (WebDriver): The WebDriver instance for the launched browser.
     """
 
-    def __init__(self, logger, start_props_reader):
+    def __init__(self, logger):
         """
         Initializes a new instance of the DriverManager class. Sets up the required browser configurations by
         reading properties from the 'start.properties' file.
@@ -52,14 +53,13 @@ class DriverManager:
         """
         self.logger = logger
         os.environ['WDM_SSL_VERIFY'] = '0'
-        self.config_reader = start_props_reader
         self.is_inprivate = self._is_browser_in_private()
         self.is_headless = self._is_browser_headless()
         self.is_running_grid = self._is_running_grid()
-        self.run_in_selenium_grid = str(self.config_reader.get_property('SGrid', 'run_in_selenium_grid', fallback='No')).lower()
-        self.grid_url = str(self.config_reader.get_property('SGrid', 'grid_url', fallback='No'))
-        self.run_in_appium_grid = str(self.config_reader.get_property('SGrid', 'run_in_appium_grid', fallback='No')).lower()
-        self.appium_url = str(self.config_reader.get_property('SGrid', 'appium_url', fallback='No')).lower()
+        self.run_in_selenium_grid = str(start_properties.RUN_IN_SELENIUM_GRID).lower()
+        self.grid_url = str(start_properties.GRID_URL)
+        self.run_in_appium_grid = str(start_properties.RUN_IN_APPIUM_GRID).lower()
+        self.appium_url = start_properties.APPIUM_URL
         self.grid_os_info = ""
 
     def _is_browser_in_private(self):
@@ -69,7 +69,7 @@ class DriverManager:
         Returns:
             bool: True if the browser is configured to run in private mode, False otherwise.
         """
-        is_in_private = self.config_reader.get_property('Browser_Settings', 'InPrivate', fallback='No').upper()
+        is_in_private = start_properties.INPRIVATE.upper()
         return str(is_in_private.lower())=="yes"
 
     def _is_browser_headless(self):
@@ -79,7 +79,7 @@ class DriverManager:
         Returns:
             bool: True if the browser is configured to run in headless mode, False otherwise.
         """
-        is_headless = self.config_reader.get_property('Browser_Settings', 'Headless', fallback='No').upper()
+        is_headless = start_properties.HEADLESS.upper()
         return str(is_headless.lower()) == "yes"
     
     def _is_running_grid(self):
@@ -89,7 +89,7 @@ class DriverManager:
         Returns:
             bool: True if the browser is configured to run in headless mode, False otherwise.
         """
-        is_running_grid = self.config_reader.get_property('SGrid', 'run_in_selenium_grid', fallback='No').upper()
+        is_running_grid = start_properties.RUN_IN_SELENIUM_GRID.upper()
         return str(is_running_grid.lower()) == "yes"
 
     def launch_browser(self, browser_name):

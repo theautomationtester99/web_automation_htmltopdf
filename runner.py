@@ -16,6 +16,7 @@ from excel_report_manager import ExcelReportManager
 from keywords_manager import KeywordsManager
 from pdf_report_manager import PdfReportManager
 from utilities import Utils
+from config import start_properties
 import os
 from logger_config import LoggerConfig
 from constants import VALID_KEYWORDS
@@ -472,7 +473,7 @@ def execute_test_script(df, wafl, km, object_repo_reader, utils, launch_browser)
 
     wafl.info("Test script execution completed successfully.")
 
-def start_runner(testscript_file, rlog_queue, rlock, start_props_reader, object_repo_reader, utils, launch_browser=''):
+def start_runner(testscript_file, rlog_queue, rlock, object_repo_reader, utils, launch_browser=''):
     """
     Initializes and executes the test script.
 
@@ -488,7 +489,7 @@ def start_runner(testscript_file, rlog_queue, rlock, start_props_reader, object_
         ValueError: If invalid configurations or test script data are encountered.
         Exception: If an error occurs during test script execution.
     """
-    logger_config = LoggerConfig(start_props_reader,log_queue=rlog_queue)
+    logger_config = LoggerConfig(log_queue=rlog_queue)
     wafl = logger_config.logger
     # utils = Utils(wafl)
 
@@ -496,8 +497,8 @@ def start_runner(testscript_file, rlog_queue, rlock, start_props_reader, object_
     wafl.debug(f"Test script file: {testscript_file}")
     wafl.debug(f"Launch browser parameter: {launch_browser}")
 
-    data_run_in_selenium_grid = str(start_props_reader.get_property('SGrid', 'run_in_selenium_grid', fallback='No')).lower()
-    data_run_in_appium_grid = str(start_props_reader.get_property('Appium', 'run_in_appium_grid', fallback='No')).lower()
+    data_run_in_selenium_grid = str(start_properties.RUN_IN_SELENIUM_GRID).lower()
+    data_run_in_appium_grid = str(start_properties.RUN_IN_APPIUM_GRID).lower()
 
     if data_run_in_selenium_grid == data_run_in_appium_grid == 'yes':
         wafl.error("Both 'run_in_appium_grid' and 'run_in_selenium_grid' are set to 'Yes' in 'start.properties'. Only one should be set to 'Yes'.")
@@ -514,9 +515,9 @@ def start_runner(testscript_file, rlog_queue, rlock, start_props_reader, object_
 
         retry_count = 1
         wafl.debug("Instantiating the keyword manager.")
-        km = KeywordsManager(wafl, start_props_reader, retry_count)
+        km = KeywordsManager(wafl, retry_count)
         retries = 0
-        max_retries = get_max_retries(start_props_reader, rlog_queue)
+        max_retries = get_max_retries(rlog_queue)
 
         while retries <= max_retries:
             # wafl.info("waiting for 20 seconds before retrying.")
@@ -544,7 +545,7 @@ def start_runner(testscript_file, rlog_queue, rlock, start_props_reader, object_
         wafl.debug("Closing the test and creating the test result pdf file.")
         km.ge_close()
 
-def get_max_retries(start_props_reader, rq):
+def get_max_retries(rq):
     """
     Reads the max_retries value from the properties file and enforces a maximum limit of 3.
 
@@ -554,10 +555,10 @@ def get_max_retries(start_props_reader, rq):
     Returns:
         int: The validated max_retries value.
     """
-    logger_config = LoggerConfig(start_props_reader, log_queue=rq)
+    logger_config = LoggerConfig(log_queue=rq)
     lgr = logger_config.logger
     try:
-        max_retries = int(start_props_reader.get_property('Misc', 'max_retries', fallback='0'))
+        max_retries = int(start_properties.MAX_RETRIES)
     except:
         lgr.error("Invalid value for max_retries in properties file. Defaulting to 0.")
         max_retries = 0
@@ -610,7 +611,7 @@ def take_recording(process_name: Process, record_name, logger):
         logger.error("An error occurred: %s", e, exc_info=True)
         pass
 
-def check_before_start(start_props_reader, utils):
+def check_before_start(utils):
     """
     Performs pre-execution checks and setup.
 
@@ -625,7 +626,7 @@ def check_before_start(start_props_reader, utils):
     """
     logger.debug("Loading 'start.properties' file.")
 
-    delete_test_results_images_recordings_folders_before_start = str(start_props_reader.get_property('Misc', 'delete_test_results_images_recordings_folders_before_start', fallback='No')).lower()
+    delete_test_results_images_recordings_folders_before_start = str(start_properties.DELETE_TEST_RESULTS).lower()
 
     logger.debug("Checking if in 'start.properties' file option to delete results and recording folders is set to 'yes'.")
 
@@ -690,11 +691,10 @@ if __name__ == '__main__':
         base_dir = Path(sys.argv[0]).parent.resolve()
         lock = Lock()
         log_queue = Queue()
-
-        start_props_reader = ConfigReader(base_dir/"config"/"start.properties")
+        
         object_repo_reader = ConfigReader(base_dir/"config"/"object_repository.properties")
         
-        logger_config = LoggerConfig(start_props_reader, log_queue=log_queue)
+        logger_config = LoggerConfig(log_queue=log_queue)
         listener = logger_config.start_listener()
         logger = logger_config.logger
 
@@ -707,6 +707,7 @@ if __name__ == '__main__':
         parser.add_argument("--start", action="store_true", help="Start the execution.")
         parser.add_argument("--start-parallel", action="store_true", help="Start parallel execution.")
         parser.add_argument("--version", help="Display the Version", action="store_true")
+        parser.add_argument("--delete-tr-google-drive", help="Deletes test results from google drive", action="store_true")
         parser.add_argument("--encrypt-file", help="Encrypts the file", type=str)
         parser.add_argument("--encrypt-str", help="Encrypts the string", type=str)
         parser.add_argument("--output-file", help="Specify the output file name", type=str)
@@ -714,11 +715,11 @@ if __name__ == '__main__':
         args = parser.parse_args()
 
         logger.debug("Counting the number of input arguments.")
-        active_args = sum(bool(arg) for arg in [args.start, args.start_parallel, args.version, args.encrypt_file, args.help_html, args.encrypt_str])
+        active_args = sum(bool(arg) for arg in [args.start, args.start_parallel, args.version, args.encrypt_file, args.delete_tr_google_drive, args.help_html, args.encrypt_str])
 
         if active_args > 1:
-            logger.error("Only one of '--start', --start-parallel, '--version', '--encrypt-file', '--encrypt-str' or '--help-html' can be used at a time.")
-            raise ValueError("Only one of '--start', --start-parallel, '--version', '--encrypt-file', '--encrypt-str' or '--help-html' can be used at a time.")
+            logger.error("Only one of '--start', --start-parallel, '--version', '--encrypt-file', '--encrypt-str', --delete-tr-google-drive or '--help-html' can be used at a time.")
+            raise ValueError("Only one of '--start', --start-parallel, '--version', '--encrypt-file', '--encrypt-str', --delete-tr-google-drive or '--help-html' can be used at a time.")
 
         if args.output_file and not args.encrypt_file:
             logger.error("'--output-file' can only be used with '--encrypt-file'.")
@@ -756,15 +757,21 @@ if __name__ == '__main__':
             logger.info("Version: 3.0")
             print("Version: 3.0")
             sys.exit(0)  # Exit the program successfully after encrypting the file
+            
+        if args.delete_tr_google_drive:
+            logger.debug("Deleting test results from Google Drive.")
+            utils.delete_test_results_from_drive()
+            logger.debug("Finished deleting test results from Google Drive.")
+            sys.exit(0)  # Exit the program successfully after encrypting the file
 
         if args.start:
             st = time.time()
-            check_before_start(start_props_reader, utils)
-            run_headless = True if str(start_props_reader.get_property('Browser_Settings', 'Headless', fallback='No')).lower() == 'yes' else False
-            run_in_grid =  str(start_props_reader.get_property('SGrid', 'run_in_selenium_grid', fallback='No')).lower()
-            run_in_appium =  str(start_props_reader.get_property('Appium', 'run_in_appium_grid', fallback='No')).lower()
+            check_before_start(utils)
+            run_headless = True if str(start_properties.HEADLESS).lower() == 'yes' else False
+            run_in_grid =  str(start_properties.RUN_IN_SELENIUM_GRID).lower()
+            run_in_appium =  str(start_properties.RUN_IN_APPIUM_GRID).lower()
             
-            upload_tr =  True if str(start_props_reader.get_property('Misc', 'upload_test_results', fallback='No')).lower() == 'yes' else False
+            upload_tr =  True if str(start_properties.UPLOAD_TEST_RESULTS).lower() == 'yes' else False
 
             logger.debug("Gathering all files present in the test_scripts folder.")
 
@@ -784,7 +791,7 @@ if __name__ == '__main__':
                         logger.debug("Checking if the file " + os.path.basename(x) + " is present in chrome or edge folder.")
                         if os.path.dirname(x).split(os.sep)[-1].lower() == 'chrome':
                             logger.debug("The file " + os.path.basename(x) + " is present in chrome folder. Launching the execution of test script on chrome browser.")
-                            proc1 = Process(target=start_runner,args=(x, log_queue, lock,start_props_reader,object_repo_reader, utils,'chrome', ))
+                            proc1 = Process(target=start_runner,args=(x, log_queue, lock,object_repo_reader, utils,'chrome', ))
                             proc1.start()
                             proc2 = None
                             if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
@@ -797,7 +804,7 @@ if __name__ == '__main__':
                                 proc2.join()
                         elif os.path.dirname(x).split(os.sep)[-1].lower() == 'edge':
                             logger.debug("The file " + os.path.basename(x) + " is present in edge folder. Launching the execution of test script on edge browser.")
-                            proc1 = Process(target=start_runner, args=(x, log_queue, lock,start_props_reader,object_repo_reader, utils, 'edge',))
+                            proc1 = Process(target=start_runner, args=(x, log_queue, lock,object_repo_reader, utils, 'edge',))
                             proc1.start()
                             proc2 = None
                             if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
@@ -810,7 +817,7 @@ if __name__ == '__main__':
                                 proc2.join()
                         elif os.path.dirname(x).split(os.sep)[-1].lower() == 'test_scripts':
                             logger.debug("The file " + os.path.basename(x) + " is present in test_scripts folder. Launching the execution and browser will be choosen from test script.")
-                            proc1 = Process(target=start_runner, args=(x,log_queue, lock,start_props_reader,object_repo_reader, utils,))
+                            proc1 = Process(target=start_runner, args=(x,log_queue, lock,object_repo_reader, utils,))
                             proc1.start()
                             proc2 = None
                             if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
@@ -827,16 +834,16 @@ if __name__ == '__main__':
             logger.info(utils.format_elapsed_time(elapsed_time))
             asyncio.run(prm.generate_test_summary_pdf())
             utils.merge_pdfs_in_parts()
-            utils.send_email_with_attachment(start_props_reader)
+            utils.send_email_with_attachment()
             
         if args.start_parallel:
             st = time.time()
-            check_before_start(start_props_reader, utils)
-            run_headless = True if str(start_props_reader.get_property('Browser_Settings', 'Headless', fallback='No')).lower() == 'yes' else False
-            run_in_grid =  True if str(start_props_reader.get_property('SGrid', 'run_in_selenium_grid', fallback='No')).lower() == 'yes' else False
-            run_in_appium =  True if str(start_props_reader.get_property('Appium', 'run_in_appium_grid', fallback='No')).lower() == 'yes' else False
-            number_threads =  int(start_props_reader.get_property('Parallel', 'NoThreads', fallback='5'))
-            upload_tr =  True if str(start_props_reader.get_property('Misc', 'upload_test_results', fallback='No')).lower() == 'yes' else False
+            check_before_start(utils)
+            run_headless = True if str(start_properties.HEADLESS).lower() == 'yes' else False
+            run_in_grid =  True if str(start_properties.RUN_IN_SELENIUM_GRID).lower() == 'yes' else False
+            run_in_appium =  True if str(start_properties.RUN_IN_APPIUM_GRID).lower() == 'yes' else False
+            number_threads =  int(start_properties.NO_THREADS)
+            upload_tr =  True if str(start_properties.UPLOAD_TEST_RESULTS).lower() == 'yes' else False
 
             if number_threads > 5:
                 raise ValueError("number of threads cannot be more than 5")
@@ -865,13 +872,13 @@ if __name__ == '__main__':
                         logger.debug("Checking if the file " + os.path.basename(x) + " is present in chrome or edge folder.")
                         if os.path.dirname(x).split(os.sep)[-1].lower() == 'chrome':
                             logger.debug("The file " + os.path.basename(x) + " is present in chrome folder. Launching the execution of test script on chrome browser.")
-                            processes.append(Process(target=start_runner,args=(x,log_queue, lock,start_props_reader,object_repo_reader, utils, 'chrome',)))
+                            processes.append(Process(target=start_runner,args=(x,log_queue, lock,object_repo_reader, utils, 'chrome',)))
                         elif os.path.dirname(x).split(os.sep)[-1].lower() == 'edge':
                             logger.debug("The file " + os.path.basename(x) + " is present in edge folder. Launching the execution of test script on edge browser.")
-                            processes.append(Process(target=start_runner,args=(x,log_queue, lock,start_props_reader,object_repo_reader, utils, 'edge',)))
+                            processes.append(Process(target=start_runner,args=(x,log_queue, lock,object_repo_reader, utils, 'edge',)))
                         elif os.path.dirname(x).split(os.sep)[-1].lower() == 'test_scripts':
                             logger.debug("The file " + os.path.basename(x) + " is present in test_scripts folder. Launching the execution and browser will be choosen from test script.")
-                            processes.append(Process(target=start_runner, args=(x,log_queue, lock,start_props_reader,object_repo_reader, utils,)))
+                            processes.append(Process(target=start_runner, args=(x,log_queue, lock,object_repo_reader, utils,)))
 
             for batch_start in range(0, len(processes), number_threads):
                 batch = processes[batch_start:batch_start + number_threads]
@@ -889,7 +896,7 @@ if __name__ == '__main__':
 
             asyncio.run(prm.generate_test_summary_pdf())
             utils.merge_pdfs_in_parts()
-            utils.send_email_with_attachment(start_props_reader)
+            utils.send_email_with_attachment()
 
     except Exception as e:
         logger.error(f"An error occurred: {e}")

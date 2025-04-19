@@ -1,4 +1,4 @@
-from config_reader import ConfigReader
+from config import start_properties
 from constants import CHROME_LOGO_SRC_B64, EDGE_LOGO_SRC_B64, LINUX_LOGO_SRC_B64, SE_GRID_B64, WIN_LOGO_SRC_B64
 from driver_functions import BrowserDriver
 from pdf_report_manager import PdfReportManager
@@ -21,9 +21,8 @@ class KeywordsManager(BrowserDriver):
         linux_logo_src_b64 (str): Base64 encoded string for Linux logo image.
         win_logo_src_b64 (str): Base64 encoded string for Windows logo image.
     """
-    def __init__(self, logger, start_props_reader, retry_count=1):
-        super().__init__(logger, start_props_reader)
-        self.start_props_reader = start_props_reader
+    def __init__(self, logger, retry_count=1):
+        super().__init__(logger)
         self.screenshot_strategy = self._get_screenshot_strategy()
         self.highlight_enabled = self._get_highlight_element_strategy()
         self.screenshot_no = 0
@@ -65,8 +64,7 @@ class KeywordsManager(BrowserDriver):
         Returns:
             str: The value of screenshot_return (always, on-error, or never).
         """
-        start_props_reader = self.start_props_reader
-        strategy = str(start_props_reader.get_property('Misc', 'screenshot_strategy', fallback='always')).lower()
+        strategy = str(start_properties.SCREENSHOT_STRATEGY).lower()
 
         # Validate the strategy and default to "always" if invalid
         if strategy not in ["always", "on-error", "never"]:
@@ -89,8 +87,7 @@ class KeywordsManager(BrowserDriver):
         Returns:
             str: The value of screenshot_return (always, on-error, or never).
         """
-        start_props_reader = self.start_props_reader
-        highlight_enabled = start_props_reader.get_property('Misc', 'highlight_elements', fallback='yes').lower() == 'yes'
+        highlight_enabled = start_properties.HIGHLIGHT_ELEMENTS.lower() == 'yes'
 
         return highlight_enabled
 
