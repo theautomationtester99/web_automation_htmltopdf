@@ -625,6 +625,13 @@ def check_before_start(utils):
         ValueError: If duplicate test scripts are found in the `test_scripts` folder and its subfolders.
     """
     logger.debug("Loading 'start.properties' file.")
+    
+    if getattr(sys, 'frozen', False):  # Check if running as a frozen executable
+        script_dir = os.path.dirname(sys.executable)  # Use the directory of the executable
+    else:
+        script_dir = os.path.dirname(os.path.abspath(__file__))  # Normal script behavior
+
+    generic_tr_path = os.path.join(script_dir, "test_results")
 
     delete_test_results_images_recordings_folders_before_start = str(start_properties.DELETE_TEST_RESULTS).lower()
 
@@ -632,9 +639,9 @@ def check_before_start(utils):
 
     if delete_test_results_images_recordings_folders_before_start.lower() == 'yes':
         logger.debug("Deleting the test_results and recordings folders.")
-        utils.delete_folder_and_contents("images")
-        utils.delete_folder_and_contents("recordings")
-        utils.delete_folder_and_contents("test_results")
+        # utils.delete_folder_and_contents("images")
+        # utils.delete_folder_and_contents("recordings")
+        utils.delete_folder_and_contents(generic_tr_path)
 
     # logger.debug("Deleting the output.xlsx file.")
     # utils.delete_file("output.xlsx")
