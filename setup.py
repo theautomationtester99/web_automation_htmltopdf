@@ -26,25 +26,52 @@ Usage:
         3. Type and run: `runner.exe start`.
 """
 
+import os
 from cx_Freeze import setup, Executable
 
-# Files to include in the exe folder
+# # Files to include in the exe folder
+# include_files = [
+#     ('resources/logo.png', 'resources/logo.png'),
+#     ('test_scripts', 'test_scripts'),
+#     ('resources/encrypted_file.jinja2', 'resources/encrypted_file.jinja2'),
+#     ('config/object_repository.properties', 'config/object_repository.properties'),
+#     ('resources/encrypted_ts_file.jinja2', 'resources/encrypted_ts_file.jinja2'),
+#     ('resources/enc_service_account.json.file', 'resources/enc_service_account.json.file'),
+#     ('resources/enc_help_doc.enc', 'resources/enc_help_doc.enc')
+# ]
+
+# setup(
+#     name="WebAutFramework",
+#     version="1.0",
+#     description="Keyword Framework",
+#     options={"build_exe": {"include_files": include_files}},
+#     executables=[Executable("runner.py", base=None)]
+# )
+
+# Get the project directory (absolute path)
+project_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Define the build folder inside the project directory
+build_dir = os.path.join(project_dir, "build")
+
+# Get absolute paths for included files
 include_files = [
-    ('resources/logo.png', 'resources/logo.png'),
-    ('test_scripts', 'test_scripts'),
-    ('resources/encrypted_file.jinja2', 'resources/encrypted_file.jinja2'),
-    ('config/object_repository.properties', 'config/object_repository.properties'),
-    ('resources/encrypted_ts_file.jinja2', 'resources/encrypted_ts_file.jinja2'),
-    ('resources/enc_service_account.json.file', 'resources/enc_service_account.json.file'),
-    ('resources/enc_help_doc.enc', 'resources/enc_help_doc.enc')
+    (os.path.join(project_dir, 'resources/logo.png'), 'resources/logo.png'),
+    (os.path.join(project_dir, 'test_scripts'), 'test_scripts'),
+    (os.path.join(project_dir, 'resources/encrypted_file.jinja2'), 'resources/encrypted_file.jinja2'),
+    (os.path.join(project_dir, 'config/object_repository.properties'), 'config/object_repository.properties'),
+    (os.path.join(project_dir, 'resources/encrypted_ts_file.jinja2'), 'resources/encrypted_ts_file.jinja2'),
+    (os.path.join(project_dir, 'resources/enc_service_account.json.file'), 'resources/enc_service_account.json.file'),
+    (os.path.join(project_dir, 'resources/enc_help_doc.enc'), 'resources/enc_help_doc.enc')
 ]
 
+# Configure the setup
 setup(
     name="WebAutFramework",
     version="1.0",
     description="Keyword Framework",
-    options={"build_exe": {"include_files": include_files}},
-    executables=[Executable("runner.py", base=None)]
+    options={"build_exe": {"include_files": include_files, "build_exe": build_dir}},
+    executables=[Executable(os.path.join(project_dir, "runner.py"), base=None)]
 )
 
 # run "python setup.py build" command in prompt

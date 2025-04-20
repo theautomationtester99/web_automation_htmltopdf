@@ -73,7 +73,13 @@ class Utils:
             # # self.create_image_and_test_results_folders()
             # self.images_folder = os.path.abspath(os.path.join("images", self.date_str))
             # self.recordings_folder = os.path.abspath(os.path.join("recordings", self.date_str))
-            self.test_results_folder = os.path.abspath(os.path.join("test_results", self.date_str, self.time_str))
+            if getattr(sys, 'frozen', False):  # Check if running as a frozen executable
+                script_dir = os.path.dirname(sys.executable)  # Use the directory of the executable
+            else:
+                script_dir = os.path.dirname(os.path.abspath(__file__))  # Normal script behavior
+
+            generic_path = os.path.join(script_dir, "test_results")
+            self.test_results_folder = os.path.abspath(os.path.join(generic_path, self.date_str, self.time_str))
             self.recordings_folder = os.path.abspath(os.path.join(self.test_results_folder, "recordings"))
             self.images_folder = os.path.abspath(os.path.join(self.test_results_folder, "images"))
             

@@ -642,8 +642,15 @@ def check_before_start(utils):
     utils.create_image_and_test_results_folders()
 
     logger.debug("Starting analysis of the contents of the test_scripts folders.")
+    
+    if getattr(sys, 'frozen', False):  # Check if running as a frozen executable
+        script_dir = os.path.dirname(sys.executable)  # Use the directory of the executable
+    else:
+        script_dir = os.path.dirname(os.path.abspath(__file__))  # Normal script behavior
 
-    generic_path = os.path.join(".", "test_scripts")
+    generic_path = os.path.join(script_dir, "test_scripts")
+
+    # generic_path = os.path.join(".", "test_scripts")
 
     root_folder = utils.get_abs_path_folder_matching_string_within_folder(generic_path, 'test_scripts')
     chrome_folder = utils.get_abs_path_folder_matching_string_within_folder(generic_path,'chrome')
@@ -861,8 +868,15 @@ if __name__ == '__main__':
                 raise ValueError("Parallel execution can only be run in headless mode.")
 
             logger.debug("Gathering all files present in the test_scripts folder.")
+            
+            if getattr(sys, 'frozen', False):  # Check if running as a frozen executable
+                script_dir = os.path.dirname(sys.executable)  # Use the directory of the executable
+            else:
+                script_dir = os.path.dirname(os.path.abspath(__file__))  # Normal script behavior
 
-            generic_path = os.path.join(".", "test_scripts")
+            generic_path = os.path.join(script_dir, "test_scripts")
+
+            # generic_path = os.path.join(".", "test_scripts")
 
             processes = []
 
