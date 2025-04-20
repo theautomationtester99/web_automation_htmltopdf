@@ -724,7 +724,15 @@ class Utils:
 
     def upload_test_results_to_drive(self, recipient_email):
         folder_name = "TestResults"
-        folder_path = "test_results"
+        
+        if getattr(sys, 'frozen', False):  # Check if running as a frozen executable
+            script_dir = os.path.dirname(sys.executable)  # Use the directory of the executable
+        else:
+            script_dir = os.path.dirname(os.path.abspath(__file__))  # Normal script behavior
+
+        generic_path = os.path.join(script_dir, "test_scripts")
+
+        folder_path = generic_path
         # recipient_email = ["theautomationtester99@gmail.com"]
 
         drive_service = self.authenticate_service_account()
