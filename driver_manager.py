@@ -142,7 +142,7 @@ class DriverManager:
                 if self.is_headless:
                     options.add_argument("--headless")
                 self.driver = webdriver.Remote(command_executor=self.grid_url, options=options)
-                self.driver.maximize_window()
+                # self.driver.maximize_window()
                 # self.driver = webdriver.Chrome(ChromeDriverManager().install())
                 # Query the Selenium Grid API for node status
                 try:
@@ -173,7 +173,7 @@ class DriverManager:
                 # edge_options.add_argument("-inprivate")
                 edge_options.add_argument("--disable-extensions")
                 self.driver = webdriver.Remote(command_executor=self.grid_url, options=edge_options)
-                self.driver.maximize_window()
+                # self.driver.maximize_window()
                 pag.press('esc')
 
                 # self.driver = webdriver.Edge(EdgeChromiumDriverManager().install())
@@ -220,7 +220,7 @@ class DriverManager:
                 # edge_options.add_argument("-inprivate")
                 edge_options.add_argument("--disable-extensions")
                 self.driver = webdriver.Remote(command_executor=self.grid_url, options=edge_options)
-                self.driver.maximize_window()
+                # self.driver.maximize_window()
                 pag.press('esc')
 
                 # self.driver = webdriver.Edge(EdgeChromiumDriverManager().install())
@@ -239,7 +239,7 @@ class DriverManager:
                 self.driver = webdriver.Chrome(options=options)
                 # self.driver = webdriver.Chrome(options=options, service=ChromeService(ChromeDriverManager().install()))
                 # self.driver = webdriver.Chrome(options=options)
-                self.driver.maximize_window()
+                # self.driver.maximize_window()
                 # self.driver = webdriver.Chrome(ChromeDriverManager().install())
             if browser_name.lower() == "edge":
                 prefs = {"credentials_enable_service": False, "profile.password_manager_enabled": False, "browse.show_hub_apps_tower": False, "browser.show_hub_apps_tower_pinned": False}
@@ -291,7 +291,7 @@ class DriverManager:
                 # edge_options.add_argument("--user-data-dir=new_profile_dir")
                 # self.driver = webdriver.Edge(options=edge_options, service=EdgeService(EdgeChromiumDriverManager().install()))
                 self.driver = webdriver.Edge(options=edge_options)
-                self.driver.maximize_window()
+                # self.driver.maximize_window()
                 # self.driver = webdriver.Edge(EdgeChromiumDriverManager().install())
                 # time.sleep(5)
                 # pag.press('esc')
