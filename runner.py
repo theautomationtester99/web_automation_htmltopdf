@@ -864,11 +864,18 @@ if __name__ == '__main__':
             run_headless = True if str(start_properties.HEADLESS).lower() == 'yes' else False
             run_in_grid =  True if str(start_properties.RUN_IN_SELENIUM_GRID).lower() == 'yes' else False
             run_in_appium =  True if str(start_properties.RUN_IN_APPIUM_GRID).lower() == 'yes' else False
-            number_threads =  int(start_properties.NO_THREADS)
+            # number_threads =  int(start_properties.NO_THREADS)
             upload_tr =  True if str(start_properties.UPLOAD_TEST_RESULTS).lower() == 'yes' else False
-
-            if number_threads > 5:
-                raise ValueError("number of threads cannot be more than 5")
+            
+            try:
+                number_threads = int(start_properties.NO_THREADS)
+            except:
+                logger.error("Invalid value for number of threads. Defaulting to 2.")
+                number_threads = 2
+            
+            # Enforce the maximum limit of 2
+            if number_threads > 10:
+                number_threads = 2
 
             if not run_headless and not run_in_grid:
                 logger.error("Parallel execution can only be run in headless mode.")

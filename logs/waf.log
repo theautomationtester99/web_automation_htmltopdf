@@ -3052,3 +3052,1313 @@
 2025-04-21 14:34:36,021 - WafLogger - INFO - utilities.py:632] [PID:9940] Access granted to theautomationtester99@gmail.com for test_results (1Gq10QORZCDRnXW3F8K7izxgzKt38MMn2)
 2025-04-21 14:35:04,360 - WafLogger - INFO - utilities.py:855] [PID:9940] Email sent successfully to theautomationtester99@gmail.com with attachment: Test_Results_21Apr2025_09h02m53s562585.pdf
 2025-04-21 14:35:33,132 - WafLogger - INFO - utilities.py:855] [PID:9940] Email sent successfully to theautomationtester@hotmail.com with attachment: Test_Results_21Apr2025_09h02m53s562585.pdf
+2025-04-21 14:50:05,685 - WafLogger - DEBUG - runner.py:719] [PID:3636] Execution Started ----------------.
+2025-04-21 14:50:05,687 - WafLogger - DEBUG - runner.py:720] [PID:3636] Parsing the input arguments.
+2025-04-21 14:50:16,313 - WafLogger - DEBUG - runner.py:719] [PID:21352] Execution Started ----------------.
+2025-04-21 14:50:16,314 - WafLogger - DEBUG - runner.py:720] [PID:21352] Parsing the input arguments.
+2025-04-21 14:50:16,315 - WafLogger - DEBUG - runner.py:732] [PID:21352] Counting the number of input arguments.
+2025-04-21 14:50:16,315 - WafLogger - DEBUG - runner.py:777] [PID:21352] Deleting test results from Google Drive.
+2025-04-21 14:50:18,023 - WafLogger - INFO - utilities.py:450] [PID:21352] Existing folder 'TestResults' found: https://drive.google.com/drive/folders/1Fxj2BC5utuIU2Qo-RLCkTF3MBzARCoW_
+2025-04-21 14:50:19,116 - WafLogger - INFO - utilities.py:582] [PID:21352] Deleted 'test_results' from Drive.
+2025-04-21 14:50:19,116 - WafLogger - INFO - utilities.py:586] [PID:21352] All contents from folder (ID: 1Fxj2BC5utuIU2Qo-RLCkTF3MBzARCoW_) deleted successfully!
+2025-04-21 14:50:19,116 - WafLogger - DEBUG - runner.py:779] [PID:21352] Finished deleting test results from Google Drive.
+2025-04-21 15:25:18,110 - WafLogger - ERROR - runner.py:931] [PID:1852] An error occurred: Utils.get_hostname() takes 0 positional arguments but 1 was given
+2025-04-21 15:25:48,110 - WafLogger - DEBUG - runner.py:719] [PID:4896] Execution Started ----------------.
+2025-04-21 15:25:48,110 - WafLogger - DEBUG - runner.py:720] [PID:4896] Parsing the input arguments.
+2025-04-21 15:25:48,112 - WafLogger - DEBUG - runner.py:732] [PID:4896] Counting the number of input arguments.
+2025-04-21 15:25:48,112 - WafLogger - DEBUG - runner.py:627] [PID:4896] Loading 'start.properties' file.
+2025-04-21 15:25:48,112 - WafLogger - DEBUG - runner.py:638] [PID:4896] Checking if in 'start.properties' file option to delete results and recording folders is set to 'yes'.
+2025-04-21 15:25:48,112 - WafLogger - DEBUG - runner.py:641] [PID:4896] Deleting the test_results and recordings folders.
+2025-04-21 15:25:48,264 - WafLogger - DEBUG - utilities.py:213] [PID:4896] Folder and its content removed
+2025-04-21 15:25:48,264 - WafLogger - DEBUG - runner.py:648] [PID:4896] Creating the test_results and recordings folders.
+2025-04-21 15:25:48,267 - WafLogger - DEBUG - runner.py:651] [PID:4896] Starting analysis of the contents of the test_scripts folders.
+2025-04-21 15:25:48,269 - WafLogger - DEBUG - runner.py:666] [PID:4896] Checking if test_scripts folder and chrome folder contains the same files.
+2025-04-21 15:25:48,269 - WafLogger - DEBUG - runner.py:673] [PID:4896] Checking if test_scripts folder and edge folder contains the same files.
+2025-04-21 15:25:48,270 - WafLogger - DEBUG - runner.py:877] [PID:4896] Gathering all files present in the test_scripts folder.
+2025-04-21 15:25:48,271 - WafLogger - DEBUG - runner.py:891] [PID:4896] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\QS002_tesQScrip1t.xlsx.
+2025-04-21 15:25:48,271 - WafLogger - DEBUG - runner.py:892] [PID:4896] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 15:25:48,271 - WafLogger - DEBUG - runner.py:891] [PID:4896] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\QS003_testscript1.xlsx.
+2025-04-21 15:25:48,271 - WafLogger - DEBUG - runner.py:892] [PID:4896] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 15:25:48,271 - WafLogger - DEBUG - runner.py:891] [PID:4896] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\QS004_testscript1.xlsx.
+2025-04-21 15:25:48,271 - WafLogger - DEBUG - runner.py:892] [PID:4896] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 15:25:48,271 - WafLogger - DEBUG - runner.py:891] [PID:4896] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\tc001_testscript1.xlsx.
+2025-04-21 15:25:48,271 - WafLogger - DEBUG - runner.py:892] [PID:4896] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 15:25:48,271 - WafLogger - DEBUG - runner.py:891] [PID:4896] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\tc002_testscript1.xlsx.
+2025-04-21 15:25:48,271 - WafLogger - DEBUG - runner.py:892] [PID:4896] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 15:25:48,271 - WafLogger - DEBUG - runner.py:891] [PID:4896] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\tc003_testscript2.xlsx.
+2025-04-21 15:25:48,271 - WafLogger - DEBUG - runner.py:892] [PID:4896] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 15:25:48,271 - WafLogger - DEBUG - runner.py:891] [PID:4896] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS002_testscript.xlsx.
+2025-04-21 15:25:48,271 - WafLogger - DEBUG - runner.py:892] [PID:4896] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 15:25:48,271 - WafLogger - DEBUG - runner.py:895] [PID:4896] The file path D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS002_testscript.xlsx contains 'testscript.xlsx' in the end.
+2025-04-21 15:25:48,271 - WafLogger - DEBUG - runner.py:896] [PID:4896] Checking if the file name starts with 'ts' (case insensitive).
+2025-04-21 15:25:48,272 - WafLogger - DEBUG - runner.py:900] [PID:4896] The file name QS002_testscript.xlsx starts with 'ts' (case insensitive).
+2025-04-21 15:25:48,272 - WafLogger - DEBUG - runner.py:901] [PID:4896] Checking if the file QS002_testscript.xlsx is present in chrome or edge folder.
+2025-04-21 15:25:48,272 - WafLogger - DEBUG - runner.py:903] [PID:4896] The file QS002_testscript.xlsx is present in chrome folder. Launching the execution of test script on chrome browser.
+2025-04-21 15:25:48,272 - WafLogger - DEBUG - runner.py:891] [PID:4896] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS001_testscript.xlsx.
+2025-04-21 15:25:48,272 - WafLogger - DEBUG - runner.py:892] [PID:4896] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 15:25:48,272 - WafLogger - DEBUG - runner.py:895] [PID:4896] The file path D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS001_testscript.xlsx contains 'testscript.xlsx' in the end.
+2025-04-21 15:25:48,272 - WafLogger - DEBUG - runner.py:896] [PID:4896] Checking if the file name starts with 'ts' (case insensitive).
+2025-04-21 15:25:48,272 - WafLogger - DEBUG - runner.py:900] [PID:4896] The file name QS001_testscript.xlsx starts with 'ts' (case insensitive).
+2025-04-21 15:25:48,272 - WafLogger - DEBUG - runner.py:901] [PID:4896] Checking if the file QS001_testscript.xlsx is present in chrome or edge folder.
+2025-04-21 15:25:48,272 - WafLogger - DEBUG - runner.py:906] [PID:4896] The file QS001_testscript.xlsx is present in edge folder. Launching the execution of test script on edge browser.
+2025-04-21 15:25:50,637 - WafLogger - INFO - runner.py:496] [PID:15440] Starting test script execution.
+2025-04-21 15:25:50,638 - WafLogger - DEBUG - runner.py:497] [PID:15440] Test script file: D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS002_testscript.xlsx
+2025-04-21 15:25:50,638 - WafLogger - DEBUG - runner.py:498] [PID:15440] Launch browser parameter: chrome
+2025-04-21 15:25:50,638 - WafLogger - DEBUG - runner.py:507] [PID:15440] Instantiating excel report manager
+2025-04-21 15:25:50,638 - WafLogger - DEBUG - runner.py:510] [PID:15440] Checking if the test script excel file name ends with 'testscript.xlsx'
+2025-04-21 15:25:50,638 - WafLogger - DEBUG - runner.py:513] [PID:15440] The test script Excel file name ends with 'testscript.xlsx'. Proceeding with execution.
+2025-04-21 15:25:50,638 - WafLogger - INFO - runner.py:40] [PID:15440] Validating the test script: D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS002_testscript.xlsx
+2025-04-21 15:25:50,681 - WafLogger - INFO - runner.py:496] [PID:5248] Starting test script execution.
+2025-04-21 15:25:50,681 - WafLogger - DEBUG - runner.py:497] [PID:5248] Test script file: D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS001_testscript.xlsx
+2025-04-21 15:25:50,681 - WafLogger - DEBUG - runner.py:498] [PID:5248] Launch browser parameter: edge
+2025-04-21 15:25:50,681 - WafLogger - DEBUG - runner.py:507] [PID:5248] Instantiating excel report manager
+2025-04-21 15:25:50,682 - WafLogger - DEBUG - runner.py:510] [PID:5248] Checking if the test script excel file name ends with 'testscript.xlsx'
+2025-04-21 15:25:50,682 - WafLogger - DEBUG - runner.py:513] [PID:5248] The test script Excel file name ends with 'testscript.xlsx'. Proceeding with execution.
+2025-04-21 15:25:50,682 - WafLogger - INFO - runner.py:40] [PID:5248] Validating the test script: D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS001_testscript.xlsx
+2025-04-21 15:25:50,715 - WafLogger - DEBUG - runner.py:46] [PID:15440] Reading the test script Excel file into a pandas DataFrame.
+2025-04-21 15:25:50,722 - WafLogger - DEBUG - runner.py:46] [PID:5248] Reading the test script Excel file into a pandas DataFrame.
+2025-04-21 15:25:50,777 - WafLogger - DEBUG - runner.py:53] [PID:15440] Replacing empty values in the DataFrame with empty strings.
+2025-04-21 15:25:50,778 - WafLogger - INFO - runner.py:56] [PID:15440] Validating the content of the test script.
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:15440] Validating row 0: Keyword='tc_id'
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:15440] Validating row 1: Keyword='tc_desc'
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:15440] Validating row 2: Keyword='step'
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:15440] Validating row 3: Keyword='open_browser'
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:15440] Validating row 4: Keyword='enter_url'
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:15440] Validating row 5: Keyword='step'
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:15440] Validating row 6: Keyword='click'
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:15440] Validating row 7: Keyword='wait_for_seconds'
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:15440] Validating row 8: Keyword='click'
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:15440] Validating row 9: Keyword='wait_for_seconds'
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:15440] Validating row 10: Keyword='switch_to_iframe'
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:15440] Validating row 11: Keyword='click'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:59] [PID:15440] Validating row 12: Keyword='click'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:59] [PID:15440] Validating row 13: Keyword='click'
+2025-04-21 15:25:50,780 - WafLogger - INFO - runner.py:127] [PID:15440] Test script validation completed successfully.
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:517] [PID:15440] Instantiating the keyword manager.
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - keywords_manager.py:51] [PID:15440] Retry count updated to 1
+2025-04-21 15:25:50,780 - WafLogger - INFO - runner.py:432] [PID:15440] Starting test script execution.
+2025-04-21 15:25:50,777 - WafLogger - DEBUG - runner.py:53] [PID:5248] Replacing empty values in the DataFrame with empty strings.
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:463] [PID:15440] Processing row 0: Keyword='tc_id'
+2025-04-21 15:25:50,778 - WafLogger - INFO - runner.py:56] [PID:5248] Validating the content of the test script.
+2025-04-21 15:25:50,780 - WafLogger - INFO - runner.py:216] [PID:15440] Executing 'tc_id' at row 0.
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 0: Keyword='tc_id'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - keywords_manager.py:200] [PID:15440] Setting the test report of the PDF report
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 1: Keyword='tc_desc'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:463] [PID:15440] Processing row 1: Keyword='tc_desc'
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 2: Keyword='step'
+2025-04-21 15:25:50,780 - WafLogger - INFO - runner.py:220] [PID:15440] Executing 'tc_desc' at row 1.
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 3: Keyword='open_browser'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - keywords_manager.py:212] [PID:15440] Setting the test description in the PDF report
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 4: Keyword='enter_url'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:463] [PID:15440] Processing row 2: Keyword='step'
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 5: Keyword='step'
+2025-04-21 15:25:50,780 - WafLogger - INFO - runner.py:224] [PID:15440] Executing 'step' at row 2.
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 6: Keyword='click'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - keywords_manager.py:222] [PID:15440] Populating the test details table in the PDF report
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 7: Keyword='step'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:15440] Step is captured to be added to PDF report.
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 8: Keyword='click'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:463] [PID:15440] Processing row 3: Keyword='open_browser'
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 9: Keyword='step'
+2025-04-21 15:25:50,780 - WafLogger - INFO - runner.py:191] [PID:15440] Executing 'open_browser' at row 3. Launching browser: chrome.
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 10: Keyword='switch_to_iframe'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - keywords_manager.py:246] [PID:15440] Launching chrome .......
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 11: Keyword='click'
+2025-04-21 15:25:50,779 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 12: Keyword='check_radio_chk_selected'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 13: Keyword='click'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 14: Keyword='check_radio_chk_selected'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 15: Keyword='click'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 16: Keyword='check_radio_chk_selected'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 17: Keyword='step'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 18: Keyword='click'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 19: Keyword='check_radio_chk_selected'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 20: Keyword='check_radio_chk_not_selected'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 21: Keyword='click'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 22: Keyword='check_radio_chk_selected'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 23: Keyword='check_radio_chk_not_selected'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 24: Keyword='click'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 25: Keyword='check_radio_chk_selected'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 26: Keyword='check_radio_chk_not_selected'
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:59] [PID:5248] Validating row 27: Keyword='click'
+2025-04-21 15:25:50,780 - WafLogger - INFO - runner.py:127] [PID:5248] Test script validation completed successfully.
+2025-04-21 15:25:50,780 - WafLogger - DEBUG - runner.py:517] [PID:5248] Instantiating the keyword manager.
+2025-04-21 15:25:50,781 - WafLogger - DEBUG - keywords_manager.py:51] [PID:5248] Retry count updated to 1
+2025-04-21 15:25:50,781 - WafLogger - INFO - runner.py:432] [PID:5248] Starting test script execution.
+2025-04-21 15:25:50,781 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 0: Keyword='tc_id'
+2025-04-21 15:25:50,781 - WafLogger - INFO - runner.py:216] [PID:5248] Executing 'tc_id' at row 0.
+2025-04-21 15:25:50,781 - WafLogger - DEBUG - keywords_manager.py:200] [PID:5248] Setting the test report of the PDF report
+2025-04-21 15:25:50,781 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 1: Keyword='tc_desc'
+2025-04-21 15:25:50,781 - WafLogger - INFO - runner.py:220] [PID:5248] Executing 'tc_desc' at row 1.
+2025-04-21 15:25:50,781 - WafLogger - DEBUG - keywords_manager.py:212] [PID:5248] Setting the test description in the PDF report
+2025-04-21 15:25:50,781 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 2: Keyword='step'
+2025-04-21 15:25:50,781 - WafLogger - INFO - runner.py:224] [PID:5248] Executing 'step' at row 2.
+2025-04-21 15:25:50,781 - WafLogger - DEBUG - keywords_manager.py:222] [PID:5248] Populating the test details table in the PDF report
+2025-04-21 15:25:50,781 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:5248] Step is captured to be added to PDF report.
+2025-04-21 15:25:50,782 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 3: Keyword='open_browser'
+2025-04-21 15:25:50,782 - WafLogger - INFO - runner.py:191] [PID:5248] Executing 'open_browser' at row 3. Launching browser: edge.
+2025-04-21 15:25:50,782 - WafLogger - DEBUG - keywords_manager.py:246] [PID:5248] Launching edge .......
+2025-04-21 15:25:53,207 - WafLogger - DEBUG - keywords_manager.py:248] [PID:5248] Capturing the OS where the browser is running.
+2025-04-21 15:25:53,207 - WafLogger - DEBUG - keywords_manager.py:256] [PID:5248] Capturing the OS where the browser is running in local machine.
+2025-04-21 15:25:53,207 - WafLogger - DEBUG - keywords_manager.py:265] [PID:5248] Populating the OS details in the PDF report as Windows
+2025-04-21 15:25:53,207 - WafLogger - DEBUG - keywords_manager.py:276] [PID:5248] Populating the browser details in the PDF report as edge
+2025-04-21 15:25:53,207 - WafLogger - DEBUG - keywords_manager.py:340] [PID:5248] Returning Browser Version.
+2025-04-21 15:25:53,207 - WafLogger - DEBUG - driver_functions.py:52] [PID:5248] Capturing Browser Version
+2025-04-21 15:25:53,207 - WafLogger - DEBUG - keywords_manager.py:281] [PID:5248] Populating the step result details in the PDF report.
+2025-04-21 15:25:53,207 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:5248] Sub Step is captured to be added to PDF report.
+2025-04-21 15:25:53,208 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 4: Keyword='enter_url'
+2025-04-21 15:25:53,208 - WafLogger - INFO - runner.py:257] [PID:5248] Executing 'enter_url' at row 4. URL: https://jqueryui.com/.
+2025-04-21 15:25:53,208 - WafLogger - DEBUG - keywords_manager.py:887] [PID:5248] Opening URL
+2025-04-21 15:25:53,208 - WafLogger - DEBUG - driver_functions.py:63] [PID:5248] Opening URL https://jqueryui.com/
+2025-04-21 15:25:54,426 - WafLogger - DEBUG - keywords_manager.py:248] [PID:15440] Capturing the OS where the browser is running.
+2025-04-21 15:25:54,426 - WafLogger - DEBUG - keywords_manager.py:256] [PID:15440] Capturing the OS where the browser is running in local machine.
+2025-04-21 15:25:54,426 - WafLogger - DEBUG - keywords_manager.py:265] [PID:15440] Populating the OS details in the PDF report as Windows
+2025-04-21 15:25:54,426 - WafLogger - DEBUG - keywords_manager.py:271] [PID:15440] Populating the browser details in the PDF report as chrome
+2025-04-21 15:25:54,426 - WafLogger - DEBUG - keywords_manager.py:340] [PID:15440] Returning Browser Version.
+2025-04-21 15:25:54,426 - WafLogger - DEBUG - driver_functions.py:52] [PID:15440] Capturing Browser Version
+2025-04-21 15:25:54,426 - WafLogger - DEBUG - keywords_manager.py:281] [PID:15440] Populating the step result details in the PDF report.
+2025-04-21 15:25:54,426 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:15440] Sub Step is captured to be added to PDF report.
+2025-04-21 15:25:54,427 - WafLogger - DEBUG - runner.py:463] [PID:15440] Processing row 4: Keyword='enter_url'
+2025-04-21 15:25:54,427 - WafLogger - INFO - runner.py:257] [PID:15440] Executing 'enter_url' at row 4. URL: https://jqueryui.com/.
+2025-04-21 15:25:54,427 - WafLogger - DEBUG - keywords_manager.py:887] [PID:15440] Opening URL
+2025-04-21 15:25:54,427 - WafLogger - DEBUG - driver_functions.py:63] [PID:15440] Opening URL https://jqueryui.com/
+2025-04-21 15:25:57,642 - WafLogger - DEBUG - keywords_manager.py:892] [PID:5248] Populating the step result details in the PDF report.
+2025-04-21 15:25:58,122 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:5248] Sub Step is captured to be added to PDF report.
+2025-04-21 15:25:58,123 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 5: Keyword='step'
+2025-04-21 15:25:58,123 - WafLogger - INFO - runner.py:224] [PID:5248] Executing 'step' at row 5.
+2025-04-21 15:25:58,123 - WafLogger - DEBUG - keywords_manager.py:222] [PID:5248] Populating the test details table in the PDF report
+2025-04-21 15:25:58,123 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:5248] Step is captured to be added to PDF report.
+2025-04-21 15:25:58,123 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 6: Keyword='click'
+2025-04-21 15:25:58,123 - WafLogger - INFO - runner.py:341] [PID:5248] Executing 'click' at row 6.
+2025-04-21 15:25:58,140 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a and locator_type: css
+2025-04-21 15:25:58,147 - WafLogger - DEBUG - driver_functions.py:103] [PID:5248] scrolling to element with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a locator_type: css
+2025-04-21 15:25:58,155 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a and locator_type: css
+2025-04-21 15:25:58,778 - WafLogger - DEBUG - keywords_manager.py:892] [PID:15440] Populating the step result details in the PDF report.
+2025-04-21 15:25:59,082 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:15440] Sub Step is captured to be added to PDF report.
+2025-04-21 15:25:59,083 - WafLogger - DEBUG - runner.py:463] [PID:15440] Processing row 5: Keyword='step'
+2025-04-21 15:25:59,083 - WafLogger - INFO - runner.py:224] [PID:15440] Executing 'step' at row 5.
+2025-04-21 15:25:59,083 - WafLogger - DEBUG - keywords_manager.py:222] [PID:15440] Populating the test details table in the PDF report
+2025-04-21 15:25:59,083 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:15440] Step is captured to be added to PDF report.
+2025-04-21 15:25:59,083 - WafLogger - DEBUG - runner.py:463] [PID:15440] Processing row 6: Keyword='click'
+2025-04-21 15:25:59,083 - WafLogger - INFO - runner.py:341] [PID:15440] Executing 'click' at row 6.
+2025-04-21 15:25:59,099 - WafLogger - DEBUG - driver_functions.py:451] [PID:15440] Element found with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a and locator_type: css
+2025-04-21 15:25:59,112 - WafLogger - DEBUG - driver_functions.py:103] [PID:15440] scrolling to element with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a locator_type: css
+2025-04-21 15:25:59,119 - WafLogger - DEBUG - driver_functions.py:451] [PID:15440] Element found with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a and locator_type: css
+2025-04-21 15:25:59,539 - WafLogger - DEBUG - driver_functions.py:526] [PID:5248] clicked on element with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a locator_type: css
+2025-04-21 15:26:00,529 - WafLogger - DEBUG - driver_functions.py:526] [PID:15440] clicked on element with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a locator_type: css
+2025-04-21 15:26:01,540 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:5248] Populating the step result details in the PDF report.
+2025-04-21 15:26:01,739 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:5248] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:01,740 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 7: Keyword='step'
+2025-04-21 15:26:01,740 - WafLogger - INFO - runner.py:224] [PID:5248] Executing 'step' at row 7.
+2025-04-21 15:26:01,740 - WafLogger - DEBUG - keywords_manager.py:222] [PID:5248] Populating the test details table in the PDF report
+2025-04-21 15:26:01,740 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:5248] Step is captured to be added to PDF report.
+2025-04-21 15:26:01,740 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 8: Keyword='click'
+2025-04-21 15:26:01,740 - WafLogger - INFO - runner.py:341] [PID:5248] Executing 'click' at row 8.
+2025-04-21 15:26:01,753 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: #content > div.demo-list > ul > li:nth-child(2)> a and locator_type: css
+2025-04-21 15:26:01,756 - WafLogger - DEBUG - driver_functions.py:103] [PID:5248] scrolling to element with locator: #content > div.demo-list > ul > li:nth-child(2)> a locator_type: css
+2025-04-21 15:26:01,763 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: #content > div.demo-list > ul > li:nth-child(2)> a and locator_type: css
+2025-04-21 15:26:01,823 - WafLogger - DEBUG - driver_functions.py:526] [PID:5248] clicked on element with locator: #content > div.demo-list > ul > li:nth-child(2)> a locator_type: css
+2025-04-21 15:26:02,530 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:15440] Populating the step result details in the PDF report.
+2025-04-21 15:26:02,753 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:15440] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:02,753 - WafLogger - DEBUG - runner.py:463] [PID:15440] Processing row 7: Keyword='wait_for_seconds'
+2025-04-21 15:26:02,753 - WafLogger - INFO - runner.py:195] [PID:15440] Executing 'wait_for_seconds' at row 7. Waiting for 2 seconds.
+2025-04-21 15:26:02,753 - WafLogger - DEBUG - keywords_manager.py:232] [PID:15440] Pausing the execution for 2 seconds
+2025-04-21 15:26:03,824 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:5248] Populating the step result details in the PDF report.
+2025-04-21 15:26:04,070 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:5248] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:04,070 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 9: Keyword='step'
+2025-04-21 15:26:04,070 - WafLogger - INFO - runner.py:224] [PID:5248] Executing 'step' at row 9.
+2025-04-21 15:26:04,070 - WafLogger - DEBUG - keywords_manager.py:222] [PID:5248] Populating the test details table in the PDF report
+2025-04-21 15:26:04,070 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:5248] Step is captured to be added to PDF report.
+2025-04-21 15:26:04,070 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 10: Keyword='switch_to_iframe'
+2025-04-21 15:26:04,070 - WafLogger - INFO - runner.py:208] [PID:5248] Executing 'switch_to_iframe' at row 10.
+2025-04-21 15:26:04,070 - WafLogger - DEBUG - keywords_manager.py:125] [PID:5248] Attempting to switch to iframe 'iframe' using traditional locators.
+2025-04-21 15:26:04,070 - WafLogger - DEBUG - driver_functions.py:921] [PID:5248] Waiting for maximum :: 10 :: seconds for element to be clickable
+2025-04-21 15:26:04,113 - WafLogger - DEBUG - driver_functions.py:927] [PID:5248] Element appeared on the web page
+2025-04-21 15:26:04,125 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: #content > iframe and locator_type: css
+2025-04-21 15:26:04,135 - WafLogger - DEBUG - driver_functions.py:103] [PID:5248] scrolling to element with locator: #content > iframe locator_type: css
+2025-04-21 15:26:04,145 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: #content > iframe and locator_type: css
+2025-04-21 15:26:04,479 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:5248] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:04,480 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 11: Keyword='click'
+2025-04-21 15:26:04,480 - WafLogger - INFO - runner.py:341] [PID:5248] Executing 'click' at row 11.
+2025-04-21 15:26:04,492 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] and locator_type: css
+2025-04-21 15:26:04,498 - WafLogger - DEBUG - driver_functions.py:103] [PID:5248] scrolling to element with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] locator_type: css
+2025-04-21 15:26:04,510 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] and locator_type: css
+2025-04-21 15:26:04,688 - WafLogger - DEBUG - driver_functions.py:526] [PID:5248] clicked on element with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] locator_type: css
+2025-04-21 15:26:04,755 - WafLogger - DEBUG - runner.py:463] [PID:15440] Processing row 8: Keyword='click'
+2025-04-21 15:26:04,755 - WafLogger - INFO - runner.py:341] [PID:15440] Executing 'click' at row 8.
+2025-04-21 15:26:04,778 - WafLogger - DEBUG - driver_functions.py:451] [PID:15440] Element found with locator: #content > div.demo-list > ul > li:nth-child(2)> a and locator_type: css
+2025-04-21 15:26:04,790 - WafLogger - DEBUG - driver_functions.py:103] [PID:15440] scrolling to element with locator: #content > div.demo-list > ul > li:nth-child(2)> a locator_type: css
+2025-04-21 15:26:04,805 - WafLogger - DEBUG - driver_functions.py:451] [PID:15440] Element found with locator: #content > div.demo-list > ul > li:nth-child(2)> a and locator_type: css
+2025-04-21 15:26:04,883 - WafLogger - DEBUG - driver_functions.py:526] [PID:15440] clicked on element with locator: #content > div.demo-list > ul > li:nth-child(2)> a locator_type: css
+2025-04-21 15:26:06,689 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:5248] Populating the step result details in the PDF report.
+2025-04-21 15:26:06,884 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:15440] Populating the step result details in the PDF report.
+2025-04-21 15:26:06,926 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:5248] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:06,926 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 12: Keyword='check_radio_chk_selected'
+2025-04-21 15:26:06,927 - WafLogger - INFO - runner.py:397] [PID:5248] Executing 'check_radio_chk_selected' at row 12.
+2025-04-21 15:26:06,927 - WafLogger - DEBUG - keywords_manager.py:623] [PID:5248] Checking if element is selected.
+2025-04-21 15:26:06,941 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: body > div > fieldset:nth-child(3) > input#radio-1 and locator_type: css
+2025-04-21 15:26:06,956 - WafLogger - DEBUG - driver_functions.py:865] [PID:5248] Element is with locator: body > div > fieldset:nth-child(3) > input#radio-1 and locator_type: css is selected
+2025-04-21 15:26:06,957 - WafLogger - DEBUG - keywords_manager.py:629] [PID:5248] Element is selected.
+2025-04-21 15:26:07,134 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:15440] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:07,134 - WafLogger - DEBUG - runner.py:463] [PID:15440] Processing row 9: Keyword='wait_for_seconds'
+2025-04-21 15:26:07,135 - WafLogger - INFO - runner.py:195] [PID:15440] Executing 'wait_for_seconds' at row 9. Waiting for 10 seconds.
+2025-04-21 15:26:07,135 - WafLogger - DEBUG - keywords_manager.py:232] [PID:15440] Pausing the execution for 10 seconds
+2025-04-21 15:26:07,199 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:5248] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:07,199 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 13: Keyword='click'
+2025-04-21 15:26:07,199 - WafLogger - INFO - runner.py:341] [PID:5248] Executing 'click' at row 13.
+2025-04-21 15:26:07,210 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] and locator_type: css
+2025-04-21 15:26:07,216 - WafLogger - DEBUG - driver_functions.py:103] [PID:5248] scrolling to element with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] locator_type: css
+2025-04-21 15:26:07,221 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] and locator_type: css
+2025-04-21 15:26:07,314 - WafLogger - DEBUG - driver_functions.py:526] [PID:5248] clicked on element with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] locator_type: css
+2025-04-21 15:26:09,314 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:5248] Populating the step result details in the PDF report.
+2025-04-21 15:26:09,548 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:5248] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:09,548 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 14: Keyword='check_radio_chk_selected'
+2025-04-21 15:26:09,548 - WafLogger - INFO - runner.py:397] [PID:5248] Executing 'check_radio_chk_selected' at row 14.
+2025-04-21 15:26:09,548 - WafLogger - DEBUG - keywords_manager.py:623] [PID:5248] Checking if element is selected.
+2025-04-21 15:26:09,559 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: body > div > fieldset:nth-child(3) > input#radio-2 and locator_type: css
+2025-04-21 15:26:09,570 - WafLogger - DEBUG - driver_functions.py:865] [PID:5248] Element is with locator: body > div > fieldset:nth-child(3) > input#radio-2 and locator_type: css is selected
+2025-04-21 15:26:09,570 - WafLogger - DEBUG - keywords_manager.py:629] [PID:5248] Element is selected.
+2025-04-21 15:26:09,822 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:5248] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:09,823 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 15: Keyword='click'
+2025-04-21 15:26:09,823 - WafLogger - INFO - runner.py:341] [PID:5248] Executing 'click' at row 15.
+2025-04-21 15:26:09,838 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] and locator_type: css
+2025-04-21 15:26:09,847 - WafLogger - DEBUG - driver_functions.py:103] [PID:5248] scrolling to element with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] locator_type: css
+2025-04-21 15:26:09,855 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] and locator_type: css
+2025-04-21 15:26:10,015 - WafLogger - DEBUG - driver_functions.py:526] [PID:5248] clicked on element with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] locator_type: css
+2025-04-21 15:26:12,016 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:5248] Populating the step result details in the PDF report.
+2025-04-21 15:26:12,215 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:5248] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:12,215 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 16: Keyword='check_radio_chk_selected'
+2025-04-21 15:26:12,215 - WafLogger - INFO - runner.py:397] [PID:5248] Executing 'check_radio_chk_selected' at row 16.
+2025-04-21 15:26:12,215 - WafLogger - DEBUG - keywords_manager.py:623] [PID:5248] Checking if element is selected.
+2025-04-21 15:26:12,229 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: body > div > fieldset:nth-child(3) > input#radio-3 and locator_type: css
+2025-04-21 15:26:12,238 - WafLogger - DEBUG - driver_functions.py:865] [PID:5248] Element is with locator: body > div > fieldset:nth-child(3) > input#radio-3 and locator_type: css is selected
+2025-04-21 15:26:12,238 - WafLogger - DEBUG - keywords_manager.py:629] [PID:5248] Element is selected.
+2025-04-21 15:26:12,419 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:5248] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:12,420 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 17: Keyword='step'
+2025-04-21 15:26:12,420 - WafLogger - INFO - runner.py:224] [PID:5248] Executing 'step' at row 17.
+2025-04-21 15:26:12,420 - WafLogger - DEBUG - keywords_manager.py:222] [PID:5248] Populating the test details table in the PDF report
+2025-04-21 15:26:12,420 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:5248] Step is captured to be added to PDF report.
+2025-04-21 15:26:12,420 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 18: Keyword='click'
+2025-04-21 15:26:12,420 - WafLogger - INFO - runner.py:341] [PID:5248] Executing 'click' at row 18.
+2025-04-21 15:26:12,434 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-1"] and locator_type: css
+2025-04-21 15:26:12,440 - WafLogger - DEBUG - driver_functions.py:103] [PID:5248] scrolling to element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-1"] locator_type: css
+2025-04-21 15:26:12,450 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-1"] and locator_type: css
+2025-04-21 15:26:12,558 - WafLogger - DEBUG - driver_functions.py:526] [PID:5248] clicked on element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-1"] locator_type: css
+2025-04-21 15:26:14,558 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:5248] Populating the step result details in the PDF report.
+2025-04-21 15:26:14,741 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:5248] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:14,742 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 19: Keyword='check_radio_chk_selected'
+2025-04-21 15:26:14,742 - WafLogger - INFO - runner.py:397] [PID:5248] Executing 'check_radio_chk_selected' at row 19.
+2025-04-21 15:26:14,742 - WafLogger - DEBUG - keywords_manager.py:623] [PID:5248] Checking if element is selected.
+2025-04-21 15:26:14,754 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: #checkbox-1 and locator_type: css
+2025-04-21 15:26:14,765 - WafLogger - DEBUG - driver_functions.py:865] [PID:5248] Element is with locator: #checkbox-1 and locator_type: css is selected
+2025-04-21 15:26:14,765 - WafLogger - DEBUG - keywords_manager.py:629] [PID:5248] Element is selected.
+2025-04-21 15:26:14,940 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:5248] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:14,940 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 20: Keyword='check_radio_chk_not_selected'
+2025-04-21 15:26:14,940 - WafLogger - INFO - runner.py:410] [PID:5248] Executing 'check_radio_chk_not_selected' at row 20.
+2025-04-21 15:26:14,940 - WafLogger - DEBUG - keywords_manager.py:690] [PID:5248] Checking if element is NOT selected.
+2025-04-21 15:26:14,956 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: #checkbox-2 and locator_type: css
+2025-04-21 15:26:14,966 - WafLogger - DEBUG - driver_functions.py:867] [PID:5248] Element is with locator: #checkbox-2 and locator_type: css is NOT selected
+2025-04-21 15:26:14,966 - WafLogger - DEBUG - keywords_manager.py:696] [PID:5248] Element is NOT selected.
+2025-04-21 15:26:15,149 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:5248] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:15,149 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 21: Keyword='click'
+2025-04-21 15:26:15,149 - WafLogger - INFO - runner.py:341] [PID:5248] Executing 'click' at row 21.
+2025-04-21 15:26:15,160 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-2"] and locator_type: css
+2025-04-21 15:26:15,164 - WafLogger - DEBUG - driver_functions.py:103] [PID:5248] scrolling to element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-2"] locator_type: css
+2025-04-21 15:26:15,170 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-2"] and locator_type: css
+2025-04-21 15:26:15,261 - WafLogger - DEBUG - driver_functions.py:526] [PID:5248] clicked on element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-2"] locator_type: css
+2025-04-21 15:26:17,135 - WafLogger - DEBUG - runner.py:463] [PID:15440] Processing row 10: Keyword='switch_to_iframe'
+2025-04-21 15:26:17,135 - WafLogger - INFO - runner.py:208] [PID:15440] Executing 'switch_to_iframe' at row 10.
+2025-04-21 15:26:17,135 - WafLogger - DEBUG - keywords_manager.py:125] [PID:15440] Attempting to switch to iframe 'iframe' using traditional locators.
+2025-04-21 15:26:17,135 - WafLogger - DEBUG - driver_functions.py:921] [PID:15440] Waiting for maximum :: 10 :: seconds for element to be clickable
+2025-04-21 15:26:17,185 - WafLogger - DEBUG - driver_functions.py:927] [PID:15440] Element appeared on the web page
+2025-04-21 15:26:17,191 - WafLogger - DEBUG - driver_functions.py:451] [PID:15440] Element found with locator: #content > iframe and locator_type: css
+2025-04-21 15:26:17,195 - WafLogger - DEBUG - driver_functions.py:103] [PID:15440] scrolling to element with locator: #content > iframe locator_type: css
+2025-04-21 15:26:17,199 - WafLogger - DEBUG - driver_functions.py:451] [PID:15440] Element found with locator: #content > iframe and locator_type: css
+2025-04-21 15:26:17,262 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:5248] Populating the step result details in the PDF report.
+2025-04-21 15:26:17,428 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:15440] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:17,429 - WafLogger - DEBUG - runner.py:463] [PID:15440] Processing row 11: Keyword='click'
+2025-04-21 15:26:17,429 - WafLogger - INFO - runner.py:341] [PID:15440] Executing 'click' at row 11.
+2025-04-21 15:26:17,442 - WafLogger - DEBUG - driver_functions.py:451] [PID:15440] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] and locator_type: css
+2025-04-21 15:26:17,448 - WafLogger - DEBUG - driver_functions.py:103] [PID:15440] scrolling to element with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] locator_type: css
+2025-04-21 15:26:17,456 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:5248] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:17,457 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 22: Keyword='check_radio_chk_selected'
+2025-04-21 15:26:17,457 - WafLogger - INFO - runner.py:397] [PID:5248] Executing 'check_radio_chk_selected' at row 22.
+2025-04-21 15:26:17,457 - WafLogger - DEBUG - keywords_manager.py:623] [PID:5248] Checking if element is selected.
+2025-04-21 15:26:17,461 - WafLogger - DEBUG - driver_functions.py:451] [PID:15440] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] and locator_type: css
+2025-04-21 15:26:17,467 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: #checkbox-2 and locator_type: css
+2025-04-21 15:26:17,480 - WafLogger - DEBUG - driver_functions.py:865] [PID:5248] Element is with locator: #checkbox-2 and locator_type: css is selected
+2025-04-21 15:26:17,481 - WafLogger - DEBUG - keywords_manager.py:629] [PID:5248] Element is selected.
+2025-04-21 15:26:17,591 - WafLogger - DEBUG - driver_functions.py:526] [PID:15440] clicked on element with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] locator_type: css
+2025-04-21 15:26:17,671 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:5248] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:17,672 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 23: Keyword='check_radio_chk_not_selected'
+2025-04-21 15:26:17,672 - WafLogger - INFO - runner.py:410] [PID:5248] Executing 'check_radio_chk_not_selected' at row 23.
+2025-04-21 15:26:17,672 - WafLogger - DEBUG - keywords_manager.py:690] [PID:5248] Checking if element is NOT selected.
+2025-04-21 15:26:17,685 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: #checkbox-3 and locator_type: css
+2025-04-21 15:26:17,692 - WafLogger - DEBUG - driver_functions.py:867] [PID:5248] Element is with locator: #checkbox-3 and locator_type: css is NOT selected
+2025-04-21 15:26:17,692 - WafLogger - DEBUG - keywords_manager.py:696] [PID:5248] Element is NOT selected.
+2025-04-21 15:26:17,890 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:5248] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:17,890 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 24: Keyword='click'
+2025-04-21 15:26:17,890 - WafLogger - INFO - runner.py:341] [PID:5248] Executing 'click' at row 24.
+2025-04-21 15:26:17,900 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-3"] and locator_type: css
+2025-04-21 15:26:17,906 - WafLogger - DEBUG - driver_functions.py:103] [PID:5248] scrolling to element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-3"] locator_type: css
+2025-04-21 15:26:17,912 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-3"] and locator_type: css
+2025-04-21 15:26:18,009 - WafLogger - DEBUG - driver_functions.py:526] [PID:5248] clicked on element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-3"] locator_type: css
+2025-04-21 15:26:19,593 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:15440] Populating the step result details in the PDF report.
+2025-04-21 15:26:19,807 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:15440] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:19,808 - WafLogger - DEBUG - runner.py:463] [PID:15440] Processing row 12: Keyword='click'
+2025-04-21 15:26:19,808 - WafLogger - INFO - runner.py:341] [PID:15440] Executing 'click' at row 12.
+2025-04-21 15:26:19,820 - WafLogger - DEBUG - driver_functions.py:451] [PID:15440] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] and locator_type: css
+2025-04-21 15:26:19,827 - WafLogger - DEBUG - driver_functions.py:103] [PID:15440] scrolling to element with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] locator_type: css
+2025-04-21 15:26:19,834 - WafLogger - DEBUG - driver_functions.py:451] [PID:15440] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] and locator_type: css
+2025-04-21 15:26:19,912 - WafLogger - DEBUG - driver_functions.py:526] [PID:15440] clicked on element with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] locator_type: css
+2025-04-21 15:26:20,011 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:5248] Populating the step result details in the PDF report.
+2025-04-21 15:26:20,191 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:5248] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:20,191 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 25: Keyword='check_radio_chk_selected'
+2025-04-21 15:26:20,191 - WafLogger - INFO - runner.py:397] [PID:5248] Executing 'check_radio_chk_selected' at row 25.
+2025-04-21 15:26:20,191 - WafLogger - DEBUG - keywords_manager.py:623] [PID:5248] Checking if element is selected.
+2025-04-21 15:26:20,202 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: #checkbox-3 and locator_type: css
+2025-04-21 15:26:20,212 - WafLogger - DEBUG - driver_functions.py:865] [PID:5248] Element is with locator: #checkbox-3 and locator_type: css is selected
+2025-04-21 15:26:20,212 - WafLogger - DEBUG - keywords_manager.py:629] [PID:5248] Element is selected.
+2025-04-21 15:26:20,388 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:5248] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:20,388 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 26: Keyword='check_radio_chk_not_selected'
+2025-04-21 15:26:20,388 - WafLogger - INFO - runner.py:410] [PID:5248] Executing 'check_radio_chk_not_selected' at row 26.
+2025-04-21 15:26:20,388 - WafLogger - DEBUG - keywords_manager.py:690] [PID:5248] Checking if element is NOT selected.
+2025-04-21 15:26:20,401 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: #checkbox-4 and locator_type: css
+2025-04-21 15:26:20,409 - WafLogger - DEBUG - driver_functions.py:867] [PID:5248] Element is with locator: #checkbox-4 and locator_type: css is NOT selected
+2025-04-21 15:26:20,409 - WafLogger - DEBUG - keywords_manager.py:696] [PID:5248] Element is NOT selected.
+2025-04-21 15:26:20,602 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:5248] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:20,602 - WafLogger - DEBUG - runner.py:463] [PID:5248] Processing row 27: Keyword='click'
+2025-04-21 15:26:20,602 - WafLogger - INFO - runner.py:341] [PID:5248] Executing 'click' at row 27.
+2025-04-21 15:26:20,613 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-4"] and locator_type: css
+2025-04-21 15:26:20,617 - WafLogger - DEBUG - driver_functions.py:103] [PID:5248] scrolling to element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-4"] locator_type: css
+2025-04-21 15:26:20,622 - WafLogger - DEBUG - driver_functions.py:451] [PID:5248] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-4"] and locator_type: css
+2025-04-21 15:26:20,714 - WafLogger - DEBUG - driver_functions.py:526] [PID:5248] clicked on element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-4"] locator_type: css
+2025-04-21 15:26:21,913 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:15440] Populating the step result details in the PDF report.
+2025-04-21 15:26:22,129 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:15440] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:22,130 - WafLogger - DEBUG - runner.py:463] [PID:15440] Processing row 13: Keyword='click'
+2025-04-21 15:26:22,130 - WafLogger - INFO - runner.py:341] [PID:15440] Executing 'click' at row 13.
+2025-04-21 15:26:22,142 - WafLogger - DEBUG - driver_functions.py:451] [PID:15440] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] and locator_type: css
+2025-04-21 15:26:22,148 - WafLogger - DEBUG - driver_functions.py:103] [PID:15440] scrolling to element with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] locator_type: css
+2025-04-21 15:26:22,154 - WafLogger - DEBUG - driver_functions.py:451] [PID:15440] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] and locator_type: css
+2025-04-21 15:26:22,241 - WafLogger - DEBUG - driver_functions.py:526] [PID:15440] clicked on element with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] locator_type: css
+2025-04-21 15:26:22,714 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:5248] Populating the step result details in the PDF report.
+2025-04-21 15:26:22,909 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:5248] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:22,909 - WafLogger - INFO - runner.py:474] [PID:5248] Test script execution completed successfully.
+2025-04-21 15:26:22,909 - WafLogger - INFO - runner.py:529] [PID:5248] Test script 'D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS001_testscript.xlsx' executed successfully.
+2025-04-21 15:26:22,909 - WafLogger - DEBUG - runner.py:542] [PID:5248] Adding row to test summary results excel file.
+2025-04-21 15:26:23,443 - WafLogger - DEBUG - runner.py:545] [PID:5248] Closing the test and creating the test result pdf file.
+2025-04-21 15:26:23,443 - WafLogger - DEBUG - keywords_manager.py:180] [PID:5248] Started creating pdf report and closing the browser
+2025-04-21 15:26:23,446 - WafLogger - DEBUG - pdf_report_manager.py:135] [PID:5248] Finalizing the data to be added to PDF report.
+2025-04-21 15:26:23,447 - WafLogger - DEBUG - pdf_reporting.py:65] [PID:5248] Encoding the logo png file
+2025-04-21 15:26:23,460 - WafLogger - DEBUG - pdf_reporting.py:113] [PID:5248] Decrypting the PDF report template
+2025-04-21 15:26:23,507 - WafLogger - DEBUG - pdf_reporting.py:122] [PID:5248] Generated the PDF report template with appropriate data
+2025-04-21 15:26:23,507 - WafLogger - DEBUG - pdf_reporting.py:76] [PID:5248] Creating the PDF report header template
+2025-04-21 15:26:23,507 - WafLogger - DEBUG - pdf_reporting.py:95] [PID:5248] Creating the PDF report footer template
+2025-04-21 15:26:23,507 - WafLogger - DEBUG - pdf_reporting.py:138] [PID:5248] Starting creation of PDF report from template with populated data
+2025-04-21 15:26:24,242 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:15440] Populating the step result details in the PDF report.
+2025-04-21 15:26:24,517 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:15440] Sub Step is captured to be added to PDF report.
+2025-04-21 15:26:24,517 - WafLogger - INFO - runner.py:474] [PID:15440] Test script execution completed successfully.
+2025-04-21 15:26:24,517 - WafLogger - INFO - runner.py:529] [PID:15440] Test script 'D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS002_testscript.xlsx' executed successfully.
+2025-04-21 15:26:24,517 - WafLogger - DEBUG - runner.py:542] [PID:15440] Adding row to test summary results excel file.
+2025-04-21 15:26:24,935 - WafLogger - DEBUG - runner.py:545] [PID:15440] Closing the test and creating the test result pdf file.
+2025-04-21 15:26:24,935 - WafLogger - DEBUG - keywords_manager.py:180] [PID:15440] Started creating pdf report and closing the browser
+2025-04-21 15:26:24,937 - WafLogger - DEBUG - pdf_report_manager.py:135] [PID:15440] Finalizing the data to be added to PDF report.
+2025-04-21 15:26:24,937 - WafLogger - DEBUG - pdf_reporting.py:65] [PID:15440] Encoding the logo png file
+2025-04-21 15:26:24,938 - WafLogger - DEBUG - pdf_reporting.py:113] [PID:15440] Decrypting the PDF report template
+2025-04-21 15:26:24,959 - WafLogger - DEBUG - pdf_reporting.py:122] [PID:15440] Generated the PDF report template with appropriate data
+2025-04-21 15:26:24,959 - WafLogger - DEBUG - pdf_reporting.py:76] [PID:15440] Creating the PDF report header template
+2025-04-21 15:26:24,959 - WafLogger - DEBUG - pdf_reporting.py:95] [PID:15440] Creating the PDF report footer template
+2025-04-21 15:26:24,959 - WafLogger - DEBUG - pdf_reporting.py:138] [PID:15440] Starting creation of PDF report from template with populated data
+2025-04-21 15:26:27,100 - WafLogger - DEBUG - pdf_reporting.py:163] [PID:15440] Completed creation of PDF report from template with populated data
+2025-04-21 15:26:27,159 - WafLogger - DEBUG - driver_functions.py:41] [PID:15440] Closing Browser
+2025-04-21 15:26:27,803 - WafLogger - DEBUG - pdf_reporting.py:163] [PID:5248] Completed creation of PDF report from template with populated data
+2025-04-21 15:26:27,848 - WafLogger - DEBUG - driver_functions.py:41] [PID:5248] Closing Browser
+2025-04-21 15:26:34,355 - WafLogger - INFO - runner.py:924] [PID:4896] 0hrs:0min:46sec:0ms
+2025-04-21 15:26:34,358 - WafLogger - DEBUG - pdf_report_manager.py:168] [PID:4896] Checking if output.xlsx file exists before creating the test summary PDF report.
+2025-04-21 15:26:34,358 - WafLogger - DEBUG - pdf_report_manager.py:170] [PID:4896] Output.xlsx exists and starting to create test summary PDF report.
+2025-04-21 15:26:34,397 - WafLogger - DEBUG - pdf_ts_reporting.py:51] [PID:4896] Encoding the logo png file
+2025-04-21 15:26:34,398 - WafLogger - DEBUG - pdf_ts_reporting.py:99] [PID:4896] Decrypting the test summary report PDF template
+2025-04-21 15:26:34,465 - WafLogger - DEBUG - pdf_ts_reporting.py:108] [PID:4896] Generated the test summary report PDF template with appropriate data
+2025-04-21 15:26:34,466 - WafLogger - DEBUG - pdf_ts_reporting.py:62] [PID:4896] Creating the test summary report PDF header template
+2025-04-21 15:26:34,466 - WafLogger - DEBUG - pdf_ts_reporting.py:81] [PID:4896] Creating the test summary report PDF footer template
+2025-04-21 15:26:34,466 - WafLogger - DEBUG - pdf_ts_reporting.py:126] [PID:4896] Starting creation of test dummary PDF report from template with populated data
+2025-04-21 15:26:35,313 - WafLogger - DEBUG - pdf_ts_reporting.py:150] [PID:4896] Completed creation of test summary PDF report from template with populated data
+2025-04-21 15:26:35,362 - WafLogger - INFO - utilities.py:120] [PID:4896] ['QS001_EDGE_PASSED_21Apr2025_09h56m23s446182.pdf', 'QS002_CHROME_PASSED_21Apr2025_09h56m24s937376.pdf', 'Test_Summary_Results_21Apr2025_09h56m34s397523.pdf']
+2025-04-21 15:26:35,362 - WafLogger - INFO - utilities.py:124] [PID:4896] Processing PDF: QS001_EDGE_PASSED_21Apr2025_09h56m23s446182.pdf
+2025-04-21 15:26:35,363 - WafLogger - INFO - utilities.py:124] [PID:4896] Processing PDF: QS002_CHROME_PASSED_21Apr2025_09h56m24s937376.pdf
+2025-04-21 15:26:35,363 - WafLogger - INFO - utilities.py:124] [PID:4896] Processing PDF: Test_Summary_Results_21Apr2025_09h56m34s397523.pdf
+2025-04-21 15:26:35,363 - WafLogger - INFO - utilities.py:132] [PID:4896] Merge order: ['Test_Summary_Results_21Apr2025_09h56m34s397523.pdf', 'QS001_EDGE_PASSED_21Apr2025_09h56m23s446182.pdf', 'QS002_CHROME_PASSED_21Apr2025_09h56m24s937376.pdf']
+2025-04-21 15:26:35,363 - WafLogger - INFO - utilities.py:139] [PID:4896] All PDFs are within the size limit. Merging into a single file.
+2025-04-21 15:26:35,488 - WafLogger - INFO - utilities.py:145] [PID:4896] Merged PDF saved at: D:\allprojects\web_automation_htmltopdf\test_results\vinaybabu_pc\21Apr2025\09h55m47s\consolidated\Test_Results_21Apr2025_09h56m35s362454.pdf
+2025-04-21 19:44:01,816 - WafLogger - DEBUG - runner.py:719] [PID:5508] Execution Started ----------------.
+2025-04-21 19:44:01,817 - WafLogger - DEBUG - runner.py:720] [PID:5508] Parsing the input arguments.
+2025-04-21 19:44:01,818 - WafLogger - DEBUG - runner.py:732] [PID:5508] Counting the number of input arguments.
+2025-04-21 19:44:01,818 - WafLogger - DEBUG - runner.py:627] [PID:5508] Loading 'start.properties' file.
+2025-04-21 19:44:01,818 - WafLogger - DEBUG - runner.py:638] [PID:5508] Checking if in 'start.properties' file option to delete results and recording folders is set to 'yes'.
+2025-04-21 19:44:01,818 - WafLogger - DEBUG - runner.py:641] [PID:5508] Deleting the test_results and recordings folders.
+2025-04-21 19:44:01,997 - WafLogger - DEBUG - utilities.py:213] [PID:5508] Folder and its content removed
+2025-04-21 19:44:01,997 - WafLogger - DEBUG - runner.py:648] [PID:5508] Creating the test_results and recordings folders.
+2025-04-21 19:44:02,000 - WafLogger - DEBUG - runner.py:651] [PID:5508] Starting analysis of the contents of the test_scripts folders.
+2025-04-21 19:44:02,007 - WafLogger - DEBUG - runner.py:666] [PID:5508] Checking if test_scripts folder and chrome folder contains the same files.
+2025-04-21 19:44:02,025 - WafLogger - DEBUG - runner.py:673] [PID:5508] Checking if test_scripts folder and edge folder contains the same files.
+2025-04-21 19:44:02,027 - WafLogger - DEBUG - runner.py:884] [PID:5508] Gathering all files present in the test_scripts folder.
+2025-04-21 19:44:02,028 - WafLogger - DEBUG - runner.py:898] [PID:5508] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\QS002_tesQScrip1t.xlsx.
+2025-04-21 19:44:02,028 - WafLogger - DEBUG - runner.py:899] [PID:5508] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 19:44:02,028 - WafLogger - DEBUG - runner.py:898] [PID:5508] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\QS003_testscript1.xlsx.
+2025-04-21 19:44:02,028 - WafLogger - DEBUG - runner.py:899] [PID:5508] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 19:44:02,028 - WafLogger - DEBUG - runner.py:898] [PID:5508] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\QS004_testscript1.xlsx.
+2025-04-21 19:44:02,028 - WafLogger - DEBUG - runner.py:899] [PID:5508] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 19:44:02,028 - WafLogger - DEBUG - runner.py:898] [PID:5508] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\tc001_testscript1.xlsx.
+2025-04-21 19:44:02,028 - WafLogger - DEBUG - runner.py:899] [PID:5508] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 19:44:02,028 - WafLogger - DEBUG - runner.py:898] [PID:5508] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\tc002_testscript1.xlsx.
+2025-04-21 19:44:02,028 - WafLogger - DEBUG - runner.py:899] [PID:5508] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 19:44:02,028 - WafLogger - DEBUG - runner.py:898] [PID:5508] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\tc003_testscript2.xlsx.
+2025-04-21 19:44:02,028 - WafLogger - DEBUG - runner.py:899] [PID:5508] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 19:44:02,030 - WafLogger - DEBUG - runner.py:898] [PID:5508] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS002_testscript.xlsx.
+2025-04-21 19:44:02,030 - WafLogger - DEBUG - runner.py:899] [PID:5508] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 19:44:02,030 - WafLogger - DEBUG - runner.py:902] [PID:5508] The file path D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS002_testscript.xlsx contains 'testscript.xlsx' in the end.
+2025-04-21 19:44:02,030 - WafLogger - DEBUG - runner.py:903] [PID:5508] Checking if the file name starts with 'ts' (case insensitive).
+2025-04-21 19:44:02,031 - WafLogger - DEBUG - runner.py:907] [PID:5508] The file name QS002_testscript.xlsx starts with 'ts' (case insensitive).
+2025-04-21 19:44:02,031 - WafLogger - DEBUG - runner.py:908] [PID:5508] Checking if the file QS002_testscript.xlsx is present in chrome or edge folder.
+2025-04-21 19:44:02,031 - WafLogger - DEBUG - runner.py:910] [PID:5508] The file QS002_testscript.xlsx is present in chrome folder. Launching the execution of test script on chrome browser.
+2025-04-21 19:44:02,033 - WafLogger - DEBUG - runner.py:898] [PID:5508] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS001_testscript.xlsx.
+2025-04-21 19:44:02,033 - WafLogger - DEBUG - runner.py:899] [PID:5508] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 19:44:02,033 - WafLogger - DEBUG - runner.py:902] [PID:5508] The file path D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS001_testscript.xlsx contains 'testscript.xlsx' in the end.
+2025-04-21 19:44:02,033 - WafLogger - DEBUG - runner.py:903] [PID:5508] Checking if the file name starts with 'ts' (case insensitive).
+2025-04-21 19:44:02,033 - WafLogger - DEBUG - runner.py:907] [PID:5508] The file name QS001_testscript.xlsx starts with 'ts' (case insensitive).
+2025-04-21 19:44:02,033 - WafLogger - DEBUG - runner.py:908] [PID:5508] Checking if the file QS001_testscript.xlsx is present in chrome or edge folder.
+2025-04-21 19:44:02,033 - WafLogger - DEBUG - runner.py:913] [PID:5508] The file QS001_testscript.xlsx is present in edge folder. Launching the execution of test script on edge browser.
+2025-04-21 19:44:04,019 - WafLogger - INFO - runner.py:496] [PID:9556] Starting test script execution.
+2025-04-21 19:44:04,019 - WafLogger - DEBUG - runner.py:497] [PID:9556] Test script file: D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS002_testscript.xlsx
+2025-04-21 19:44:04,019 - WafLogger - DEBUG - runner.py:498] [PID:9556] Launch browser parameter: chrome
+2025-04-21 19:44:04,019 - WafLogger - DEBUG - runner.py:507] [PID:9556] Instantiating excel report manager
+2025-04-21 19:44:04,019 - WafLogger - DEBUG - runner.py:510] [PID:9556] Checking if the test script excel file name ends with 'testscript.xlsx'
+2025-04-21 19:44:04,019 - WafLogger - DEBUG - runner.py:513] [PID:9556] The test script Excel file name ends with 'testscript.xlsx'. Proceeding with execution.
+2025-04-21 19:44:04,019 - WafLogger - INFO - runner.py:40] [PID:9556] Validating the test script: D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS002_testscript.xlsx
+2025-04-21 19:44:04,043 - WafLogger - DEBUG - runner.py:46] [PID:9556] Reading the test script Excel file into a pandas DataFrame.
+2025-04-21 19:44:04,056 - WafLogger - INFO - runner.py:496] [PID:7696] Starting test script execution.
+2025-04-21 19:44:04,057 - WafLogger - DEBUG - runner.py:497] [PID:7696] Test script file: D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS001_testscript.xlsx
+2025-04-21 19:44:04,057 - WafLogger - DEBUG - runner.py:498] [PID:7696] Launch browser parameter: edge
+2025-04-21 19:44:04,057 - WafLogger - DEBUG - runner.py:507] [PID:7696] Instantiating excel report manager
+2025-04-21 19:44:04,057 - WafLogger - DEBUG - runner.py:510] [PID:7696] Checking if the test script excel file name ends with 'testscript.xlsx'
+2025-04-21 19:44:04,057 - WafLogger - DEBUG - runner.py:513] [PID:7696] The test script Excel file name ends with 'testscript.xlsx'. Proceeding with execution.
+2025-04-21 19:44:04,057 - WafLogger - INFO - runner.py:40] [PID:7696] Validating the test script: D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS001_testscript.xlsx
+2025-04-21 19:44:04,062 - WafLogger - DEBUG - runner.py:53] [PID:9556] Replacing empty values in the DataFrame with empty strings.
+2025-04-21 19:44:04,063 - WafLogger - INFO - runner.py:56] [PID:9556] Validating the content of the test script.
+2025-04-21 19:44:04,063 - WafLogger - DEBUG - runner.py:59] [PID:9556] Validating row 0: Keyword='tc_id'
+2025-04-21 19:44:04,063 - WafLogger - DEBUG - runner.py:59] [PID:9556] Validating row 1: Keyword='tc_desc'
+2025-04-21 19:44:04,063 - WafLogger - DEBUG - runner.py:59] [PID:9556] Validating row 2: Keyword='step'
+2025-04-21 19:44:04,063 - WafLogger - DEBUG - runner.py:59] [PID:9556] Validating row 3: Keyword='open_browser'
+2025-04-21 19:44:04,063 - WafLogger - DEBUG - runner.py:59] [PID:9556] Validating row 4: Keyword='enter_url'
+2025-04-21 19:44:04,063 - WafLogger - DEBUG - runner.py:59] [PID:9556] Validating row 5: Keyword='step'
+2025-04-21 19:44:04,064 - WafLogger - DEBUG - runner.py:59] [PID:9556] Validating row 6: Keyword='click'
+2025-04-21 19:44:04,064 - WafLogger - DEBUG - runner.py:59] [PID:9556] Validating row 7: Keyword='wait_for_seconds'
+2025-04-21 19:44:04,064 - WafLogger - DEBUG - runner.py:59] [PID:9556] Validating row 8: Keyword='click'
+2025-04-21 19:44:04,064 - WafLogger - DEBUG - runner.py:59] [PID:9556] Validating row 9: Keyword='wait_for_seconds'
+2025-04-21 19:44:04,064 - WafLogger - DEBUG - runner.py:59] [PID:9556] Validating row 10: Keyword='switch_to_iframe'
+2025-04-21 19:44:04,064 - WafLogger - DEBUG - runner.py:59] [PID:9556] Validating row 11: Keyword='click'
+2025-04-21 19:44:04,064 - WafLogger - DEBUG - runner.py:59] [PID:9556] Validating row 12: Keyword='click'
+2025-04-21 19:44:04,064 - WafLogger - DEBUG - runner.py:59] [PID:9556] Validating row 13: Keyword='click'
+2025-04-21 19:44:04,064 - WafLogger - INFO - runner.py:127] [PID:9556] Test script validation completed successfully.
+2025-04-21 19:44:04,064 - WafLogger - DEBUG - runner.py:517] [PID:9556] Instantiating the keyword manager.
+2025-04-21 19:44:04,064 - WafLogger - DEBUG - keywords_manager.py:51] [PID:9556] Retry count updated to 1
+2025-04-21 19:44:04,064 - WafLogger - INFO - runner.py:432] [PID:9556] Starting test script execution.
+2025-04-21 19:44:04,064 - WafLogger - DEBUG - runner.py:463] [PID:9556] Processing row 0: Keyword='tc_id'
+2025-04-21 19:44:04,064 - WafLogger - INFO - runner.py:216] [PID:9556] Executing 'tc_id' at row 0.
+2025-04-21 19:44:04,064 - WafLogger - DEBUG - keywords_manager.py:200] [PID:9556] Setting the test report of the PDF report
+2025-04-21 19:44:04,066 - WafLogger - DEBUG - runner.py:463] [PID:9556] Processing row 1: Keyword='tc_desc'
+2025-04-21 19:44:04,066 - WafLogger - INFO - runner.py:220] [PID:9556] Executing 'tc_desc' at row 1.
+2025-04-21 19:44:04,066 - WafLogger - DEBUG - keywords_manager.py:212] [PID:9556] Setting the test description in the PDF report
+2025-04-21 19:44:04,066 - WafLogger - DEBUG - runner.py:463] [PID:9556] Processing row 2: Keyword='step'
+2025-04-21 19:44:04,066 - WafLogger - INFO - runner.py:224] [PID:9556] Executing 'step' at row 2.
+2025-04-21 19:44:04,066 - WafLogger - DEBUG - keywords_manager.py:222] [PID:9556] Populating the test details table in the PDF report
+2025-04-21 19:44:04,066 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:9556] Step is captured to be added to PDF report.
+2025-04-21 19:44:04,066 - WafLogger - DEBUG - runner.py:463] [PID:9556] Processing row 3: Keyword='open_browser'
+2025-04-21 19:44:04,066 - WafLogger - INFO - runner.py:191] [PID:9556] Executing 'open_browser' at row 3. Launching browser: chrome.
+2025-04-21 19:44:04,066 - WafLogger - DEBUG - keywords_manager.py:246] [PID:9556] Launching chrome .......
+2025-04-21 19:44:04,077 - WafLogger - DEBUG - runner.py:46] [PID:7696] Reading the test script Excel file into a pandas DataFrame.
+2025-04-21 19:44:04,091 - WafLogger - DEBUG - runner.py:53] [PID:7696] Replacing empty values in the DataFrame with empty strings.
+2025-04-21 19:44:04,092 - WafLogger - INFO - runner.py:56] [PID:7696] Validating the content of the test script.
+2025-04-21 19:44:04,092 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 0: Keyword='tc_id'
+2025-04-21 19:44:04,093 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 1: Keyword='tc_desc'
+2025-04-21 19:44:04,093 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 2: Keyword='step'
+2025-04-21 19:44:04,093 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 3: Keyword='open_browser'
+2025-04-21 19:44:04,093 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 4: Keyword='enter_url'
+2025-04-21 19:44:04,093 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 5: Keyword='step'
+2025-04-21 19:44:04,093 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 6: Keyword='click'
+2025-04-21 19:44:04,093 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 7: Keyword='step'
+2025-04-21 19:44:04,093 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 8: Keyword='click'
+2025-04-21 19:44:04,093 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 9: Keyword='step'
+2025-04-21 19:44:04,093 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 10: Keyword='switch_to_iframe'
+2025-04-21 19:44:04,093 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 11: Keyword='click'
+2025-04-21 19:44:04,093 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 12: Keyword='check_radio_chk_selected'
+2025-04-21 19:44:04,093 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 13: Keyword='click'
+2025-04-21 19:44:04,093 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 14: Keyword='check_radio_chk_selected'
+2025-04-21 19:44:04,093 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 15: Keyword='click'
+2025-04-21 19:44:04,094 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 16: Keyword='check_radio_chk_selected'
+2025-04-21 19:44:04,094 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 17: Keyword='step'
+2025-04-21 19:44:04,094 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 18: Keyword='click'
+2025-04-21 19:44:04,094 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 19: Keyword='check_radio_chk_selected'
+2025-04-21 19:44:04,094 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 20: Keyword='check_radio_chk_not_selected'
+2025-04-21 19:44:04,094 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 21: Keyword='click'
+2025-04-21 19:44:04,094 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 22: Keyword='check_radio_chk_selected'
+2025-04-21 19:44:04,094 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 23: Keyword='check_radio_chk_not_selected'
+2025-04-21 19:44:04,094 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 24: Keyword='click'
+2025-04-21 19:44:04,094 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 25: Keyword='check_radio_chk_selected'
+2025-04-21 19:44:04,094 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 26: Keyword='check_radio_chk_not_selected'
+2025-04-21 19:44:04,094 - WafLogger - DEBUG - runner.py:59] [PID:7696] Validating row 27: Keyword='click'
+2025-04-21 19:44:04,094 - WafLogger - INFO - runner.py:127] [PID:7696] Test script validation completed successfully.
+2025-04-21 19:44:04,094 - WafLogger - DEBUG - runner.py:517] [PID:7696] Instantiating the keyword manager.
+2025-04-21 19:44:04,094 - WafLogger - DEBUG - keywords_manager.py:51] [PID:7696] Retry count updated to 1
+2025-04-21 19:44:04,094 - WafLogger - INFO - runner.py:432] [PID:7696] Starting test script execution.
+2025-04-21 19:44:04,095 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 0: Keyword='tc_id'
+2025-04-21 19:44:04,095 - WafLogger - INFO - runner.py:216] [PID:7696] Executing 'tc_id' at row 0.
+2025-04-21 19:44:04,095 - WafLogger - DEBUG - keywords_manager.py:200] [PID:7696] Setting the test report of the PDF report
+2025-04-21 19:44:04,095 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 1: Keyword='tc_desc'
+2025-04-21 19:44:04,095 - WafLogger - INFO - runner.py:220] [PID:7696] Executing 'tc_desc' at row 1.
+2025-04-21 19:44:04,095 - WafLogger - DEBUG - keywords_manager.py:212] [PID:7696] Setting the test description in the PDF report
+2025-04-21 19:44:04,095 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 2: Keyword='step'
+2025-04-21 19:44:04,095 - WafLogger - INFO - runner.py:224] [PID:7696] Executing 'step' at row 2.
+2025-04-21 19:44:04,095 - WafLogger - DEBUG - keywords_manager.py:222] [PID:7696] Populating the test details table in the PDF report
+2025-04-21 19:44:04,095 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:7696] Step is captured to be added to PDF report.
+2025-04-21 19:44:04,095 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 3: Keyword='open_browser'
+2025-04-21 19:44:04,095 - WafLogger - INFO - runner.py:191] [PID:7696] Executing 'open_browser' at row 3. Launching browser: edge.
+2025-04-21 19:44:04,095 - WafLogger - DEBUG - keywords_manager.py:246] [PID:7696] Launching edge .......
+2025-04-21 19:44:05,958 - WafLogger - DEBUG - keywords_manager.py:248] [PID:7696] Capturing the OS where the browser is running.
+2025-04-21 19:44:05,958 - WafLogger - DEBUG - keywords_manager.py:256] [PID:7696] Capturing the OS where the browser is running in local machine.
+2025-04-21 19:44:05,958 - WafLogger - DEBUG - keywords_manager.py:265] [PID:7696] Populating the OS details in the PDF report as Windows
+2025-04-21 19:44:05,958 - WafLogger - DEBUG - keywords_manager.py:276] [PID:7696] Populating the browser details in the PDF report as edge
+2025-04-21 19:44:05,958 - WafLogger - DEBUG - keywords_manager.py:340] [PID:7696] Returning Browser Version.
+2025-04-21 19:44:05,958 - WafLogger - DEBUG - driver_functions.py:52] [PID:7696] Capturing Browser Version
+2025-04-21 19:44:05,958 - WafLogger - DEBUG - keywords_manager.py:281] [PID:7696] Populating the step result details in the PDF report.
+2025-04-21 19:44:05,958 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:7696] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:05,959 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 4: Keyword='enter_url'
+2025-04-21 19:44:05,959 - WafLogger - INFO - runner.py:257] [PID:7696] Executing 'enter_url' at row 4. URL: https://jqueryui.com/.
+2025-04-21 19:44:05,959 - WafLogger - DEBUG - keywords_manager.py:887] [PID:7696] Opening URL
+2025-04-21 19:44:05,959 - WafLogger - DEBUG - driver_functions.py:63] [PID:7696] Opening URL https://jqueryui.com/
+2025-04-21 19:44:06,666 - WafLogger - DEBUG - keywords_manager.py:248] [PID:9556] Capturing the OS where the browser is running.
+2025-04-21 19:44:06,666 - WafLogger - DEBUG - keywords_manager.py:256] [PID:9556] Capturing the OS where the browser is running in local machine.
+2025-04-21 19:44:06,666 - WafLogger - DEBUG - keywords_manager.py:265] [PID:9556] Populating the OS details in the PDF report as Windows
+2025-04-21 19:44:06,666 - WafLogger - DEBUG - keywords_manager.py:271] [PID:9556] Populating the browser details in the PDF report as chrome
+2025-04-21 19:44:06,666 - WafLogger - DEBUG - keywords_manager.py:340] [PID:9556] Returning Browser Version.
+2025-04-21 19:44:06,666 - WafLogger - DEBUG - driver_functions.py:52] [PID:9556] Capturing Browser Version
+2025-04-21 19:44:06,666 - WafLogger - DEBUG - keywords_manager.py:281] [PID:9556] Populating the step result details in the PDF report.
+2025-04-21 19:44:06,666 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:9556] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:06,666 - WafLogger - DEBUG - runner.py:463] [PID:9556] Processing row 4: Keyword='enter_url'
+2025-04-21 19:44:06,666 - WafLogger - INFO - runner.py:257] [PID:9556] Executing 'enter_url' at row 4. URL: https://jqueryui.com/.
+2025-04-21 19:44:06,666 - WafLogger - DEBUG - keywords_manager.py:887] [PID:9556] Opening URL
+2025-04-21 19:44:06,666 - WafLogger - DEBUG - driver_functions.py:63] [PID:9556] Opening URL https://jqueryui.com/
+2025-04-21 19:44:09,089 - WafLogger - DEBUG - keywords_manager.py:892] [PID:9556] Populating the step result details in the PDF report.
+2025-04-21 19:44:09,338 - WafLogger - DEBUG - keywords_manager.py:892] [PID:7696] Populating the step result details in the PDF report.
+2025-04-21 19:44:09,817 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:7696] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:09,818 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 5: Keyword='step'
+2025-04-21 19:44:09,818 - WafLogger - INFO - runner.py:224] [PID:7696] Executing 'step' at row 5.
+2025-04-21 19:44:09,818 - WafLogger - DEBUG - keywords_manager.py:222] [PID:7696] Populating the test details table in the PDF report
+2025-04-21 19:44:09,818 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:7696] Step is captured to be added to PDF report.
+2025-04-21 19:44:09,818 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 6: Keyword='click'
+2025-04-21 19:44:09,818 - WafLogger - INFO - runner.py:341] [PID:7696] Executing 'click' at row 6.
+2025-04-21 19:44:09,823 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:9556] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:09,824 - WafLogger - DEBUG - runner.py:463] [PID:9556] Processing row 5: Keyword='step'
+2025-04-21 19:44:09,824 - WafLogger - INFO - runner.py:224] [PID:9556] Executing 'step' at row 5.
+2025-04-21 19:44:09,824 - WafLogger - DEBUG - keywords_manager.py:222] [PID:9556] Populating the test details table in the PDF report
+2025-04-21 19:44:09,824 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:9556] Step is captured to be added to PDF report.
+2025-04-21 19:44:09,825 - WafLogger - DEBUG - runner.py:463] [PID:9556] Processing row 6: Keyword='click'
+2025-04-21 19:44:09,825 - WafLogger - INFO - runner.py:341] [PID:9556] Executing 'click' at row 6.
+2025-04-21 19:44:09,837 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a and locator_type: css
+2025-04-21 19:44:09,842 - WafLogger - DEBUG - driver_functions.py:451] [PID:9556] Element found with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a and locator_type: css
+2025-04-21 19:44:09,847 - WafLogger - DEBUG - driver_functions.py:103] [PID:7696] scrolling to element with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a locator_type: css
+2025-04-21 19:44:09,851 - WafLogger - DEBUG - driver_functions.py:103] [PID:9556] scrolling to element with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a locator_type: css
+2025-04-21 19:44:09,855 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a and locator_type: css
+2025-04-21 19:44:09,862 - WafLogger - DEBUG - driver_functions.py:451] [PID:9556] Element found with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a and locator_type: css
+2025-04-21 19:44:11,127 - WafLogger - DEBUG - driver_functions.py:526] [PID:7696] clicked on element with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a locator_type: css
+2025-04-21 19:44:11,181 - WafLogger - DEBUG - driver_functions.py:526] [PID:9556] clicked on element with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a locator_type: css
+2025-04-21 19:44:13,128 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:7696] Populating the step result details in the PDF report.
+2025-04-21 19:44:13,182 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:9556] Populating the step result details in the PDF report.
+2025-04-21 19:44:13,341 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:7696] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:13,342 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 7: Keyword='step'
+2025-04-21 19:44:13,342 - WafLogger - INFO - runner.py:224] [PID:7696] Executing 'step' at row 7.
+2025-04-21 19:44:13,342 - WafLogger - DEBUG - keywords_manager.py:222] [PID:7696] Populating the test details table in the PDF report
+2025-04-21 19:44:13,342 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:7696] Step is captured to be added to PDF report.
+2025-04-21 19:44:13,342 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 8: Keyword='click'
+2025-04-21 19:44:13,342 - WafLogger - INFO - runner.py:341] [PID:7696] Executing 'click' at row 8.
+2025-04-21 19:44:13,356 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: #content > div.demo-list > ul > li:nth-child(2)> a and locator_type: css
+2025-04-21 19:44:13,361 - WafLogger - DEBUG - driver_functions.py:103] [PID:7696] scrolling to element with locator: #content > div.demo-list > ul > li:nth-child(2)> a locator_type: css
+2025-04-21 19:44:13,367 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: #content > div.demo-list > ul > li:nth-child(2)> a and locator_type: css
+2025-04-21 19:44:13,446 - WafLogger - DEBUG - driver_functions.py:526] [PID:7696] clicked on element with locator: #content > div.demo-list > ul > li:nth-child(2)> a locator_type: css
+2025-04-21 19:44:13,446 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:9556] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:13,447 - WafLogger - DEBUG - runner.py:463] [PID:9556] Processing row 7: Keyword='wait_for_seconds'
+2025-04-21 19:44:13,447 - WafLogger - INFO - runner.py:195] [PID:9556] Executing 'wait_for_seconds' at row 7. Waiting for 2 seconds.
+2025-04-21 19:44:13,447 - WafLogger - DEBUG - keywords_manager.py:232] [PID:9556] Pausing the execution for 2 seconds
+2025-04-21 19:44:15,446 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:7696] Populating the step result details in the PDF report.
+2025-04-21 19:44:15,447 - WafLogger - DEBUG - runner.py:463] [PID:9556] Processing row 8: Keyword='click'
+2025-04-21 19:44:15,447 - WafLogger - INFO - runner.py:341] [PID:9556] Executing 'click' at row 8.
+2025-04-21 19:44:15,464 - WafLogger - DEBUG - driver_functions.py:451] [PID:9556] Element found with locator: #content > div.demo-list > ul > li:nth-child(2)> a and locator_type: css
+2025-04-21 19:44:15,474 - WafLogger - DEBUG - driver_functions.py:103] [PID:9556] scrolling to element with locator: #content > div.demo-list > ul > li:nth-child(2)> a locator_type: css
+2025-04-21 19:44:15,484 - WafLogger - DEBUG - driver_functions.py:451] [PID:9556] Element found with locator: #content > div.demo-list > ul > li:nth-child(2)> a and locator_type: css
+2025-04-21 19:44:15,559 - WafLogger - DEBUG - driver_functions.py:526] [PID:9556] clicked on element with locator: #content > div.demo-list > ul > li:nth-child(2)> a locator_type: css
+2025-04-21 19:44:15,727 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:7696] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:15,727 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 9: Keyword='step'
+2025-04-21 19:44:15,727 - WafLogger - INFO - runner.py:224] [PID:7696] Executing 'step' at row 9.
+2025-04-21 19:44:15,727 - WafLogger - DEBUG - keywords_manager.py:222] [PID:7696] Populating the test details table in the PDF report
+2025-04-21 19:44:15,727 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:7696] Step is captured to be added to PDF report.
+2025-04-21 19:44:15,728 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 10: Keyword='switch_to_iframe'
+2025-04-21 19:44:15,728 - WafLogger - INFO - runner.py:208] [PID:7696] Executing 'switch_to_iframe' at row 10.
+2025-04-21 19:44:15,728 - WafLogger - DEBUG - keywords_manager.py:125] [PID:7696] Attempting to switch to iframe 'iframe' using traditional locators.
+2025-04-21 19:44:15,728 - WafLogger - DEBUG - driver_functions.py:921] [PID:7696] Waiting for maximum :: 10 :: seconds for element to be clickable
+2025-04-21 19:44:15,895 - WafLogger - DEBUG - driver_functions.py:927] [PID:7696] Element appeared on the web page
+2025-04-21 19:44:15,905 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: #content > iframe and locator_type: css
+2025-04-21 19:44:15,911 - WafLogger - DEBUG - driver_functions.py:103] [PID:7696] scrolling to element with locator: #content > iframe locator_type: css
+2025-04-21 19:44:15,917 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: #content > iframe and locator_type: css
+2025-04-21 19:44:16,164 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:7696] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:16,165 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 11: Keyword='click'
+2025-04-21 19:44:16,165 - WafLogger - INFO - runner.py:341] [PID:7696] Executing 'click' at row 11.
+2025-04-21 19:44:16,179 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] and locator_type: css
+2025-04-21 19:44:16,189 - WafLogger - DEBUG - driver_functions.py:103] [PID:7696] scrolling to element with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] locator_type: css
+2025-04-21 19:44:16,199 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] and locator_type: css
+2025-04-21 19:44:16,317 - WafLogger - DEBUG - driver_functions.py:526] [PID:7696] clicked on element with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] locator_type: css
+2025-04-21 19:44:17,560 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:9556] Populating the step result details in the PDF report.
+2025-04-21 19:44:17,814 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:9556] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:17,814 - WafLogger - DEBUG - runner.py:463] [PID:9556] Processing row 9: Keyword='wait_for_seconds'
+2025-04-21 19:44:17,814 - WafLogger - INFO - runner.py:195] [PID:9556] Executing 'wait_for_seconds' at row 9. Waiting for 10 seconds.
+2025-04-21 19:44:17,815 - WafLogger - DEBUG - keywords_manager.py:232] [PID:9556] Pausing the execution for 10 seconds
+2025-04-21 19:44:18,318 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:7696] Populating the step result details in the PDF report.
+2025-04-21 19:44:18,587 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:7696] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:18,588 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 12: Keyword='check_radio_chk_selected'
+2025-04-21 19:44:18,588 - WafLogger - INFO - runner.py:397] [PID:7696] Executing 'check_radio_chk_selected' at row 12.
+2025-04-21 19:44:18,588 - WafLogger - DEBUG - keywords_manager.py:623] [PID:7696] Checking if element is selected.
+2025-04-21 19:44:18,603 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: body > div > fieldset:nth-child(3) > input#radio-1 and locator_type: css
+2025-04-21 19:44:18,617 - WafLogger - DEBUG - driver_functions.py:865] [PID:7696] Element is with locator: body > div > fieldset:nth-child(3) > input#radio-1 and locator_type: css is selected
+2025-04-21 19:44:18,617 - WafLogger - DEBUG - keywords_manager.py:629] [PID:7696] Element is selected.
+2025-04-21 19:44:18,852 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:7696] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:18,852 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 13: Keyword='click'
+2025-04-21 19:44:18,852 - WafLogger - INFO - runner.py:341] [PID:7696] Executing 'click' at row 13.
+2025-04-21 19:44:18,869 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] and locator_type: css
+2025-04-21 19:44:18,875 - WafLogger - DEBUG - driver_functions.py:103] [PID:7696] scrolling to element with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] locator_type: css
+2025-04-21 19:44:18,881 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] and locator_type: css
+2025-04-21 19:44:18,970 - WafLogger - DEBUG - driver_functions.py:526] [PID:7696] clicked on element with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] locator_type: css
+2025-04-21 19:44:20,971 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:7696] Populating the step result details in the PDF report.
+2025-04-21 19:44:21,180 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:7696] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:21,180 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 14: Keyword='check_radio_chk_selected'
+2025-04-21 19:44:21,180 - WafLogger - INFO - runner.py:397] [PID:7696] Executing 'check_radio_chk_selected' at row 14.
+2025-04-21 19:44:21,180 - WafLogger - DEBUG - keywords_manager.py:623] [PID:7696] Checking if element is selected.
+2025-04-21 19:44:21,200 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: body > div > fieldset:nth-child(3) > input#radio-2 and locator_type: css
+2025-04-21 19:44:21,211 - WafLogger - DEBUG - driver_functions.py:865] [PID:7696] Element is with locator: body > div > fieldset:nth-child(3) > input#radio-2 and locator_type: css is selected
+2025-04-21 19:44:21,211 - WafLogger - DEBUG - keywords_manager.py:629] [PID:7696] Element is selected.
+2025-04-21 19:44:21,460 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:7696] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:21,460 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 15: Keyword='click'
+2025-04-21 19:44:21,460 - WafLogger - INFO - runner.py:341] [PID:7696] Executing 'click' at row 15.
+2025-04-21 19:44:21,475 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] and locator_type: css
+2025-04-21 19:44:21,486 - WafLogger - DEBUG - driver_functions.py:103] [PID:7696] scrolling to element with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] locator_type: css
+2025-04-21 19:44:21,493 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] and locator_type: css
+2025-04-21 19:44:21,612 - WafLogger - DEBUG - driver_functions.py:526] [PID:7696] clicked on element with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] locator_type: css
+2025-04-21 19:44:23,613 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:7696] Populating the step result details in the PDF report.
+2025-04-21 19:44:23,932 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:7696] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:23,932 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 16: Keyword='check_radio_chk_selected'
+2025-04-21 19:44:23,932 - WafLogger - INFO - runner.py:397] [PID:7696] Executing 'check_radio_chk_selected' at row 16.
+2025-04-21 19:44:23,932 - WafLogger - DEBUG - keywords_manager.py:623] [PID:7696] Checking if element is selected.
+2025-04-21 19:44:23,950 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: body > div > fieldset:nth-child(3) > input#radio-3 and locator_type: css
+2025-04-21 19:44:23,961 - WafLogger - DEBUG - driver_functions.py:865] [PID:7696] Element is with locator: body > div > fieldset:nth-child(3) > input#radio-3 and locator_type: css is selected
+2025-04-21 19:44:23,961 - WafLogger - DEBUG - keywords_manager.py:629] [PID:7696] Element is selected.
+2025-04-21 19:44:24,236 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:7696] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:24,237 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 17: Keyword='step'
+2025-04-21 19:44:24,237 - WafLogger - INFO - runner.py:224] [PID:7696] Executing 'step' at row 17.
+2025-04-21 19:44:24,237 - WafLogger - DEBUG - keywords_manager.py:222] [PID:7696] Populating the test details table in the PDF report
+2025-04-21 19:44:24,237 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:7696] Step is captured to be added to PDF report.
+2025-04-21 19:44:24,237 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 18: Keyword='click'
+2025-04-21 19:44:24,237 - WafLogger - INFO - runner.py:341] [PID:7696] Executing 'click' at row 18.
+2025-04-21 19:44:24,255 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-1"] and locator_type: css
+2025-04-21 19:44:24,265 - WafLogger - DEBUG - driver_functions.py:103] [PID:7696] scrolling to element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-1"] locator_type: css
+2025-04-21 19:44:24,276 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-1"] and locator_type: css
+2025-04-21 19:44:24,394 - WafLogger - DEBUG - driver_functions.py:526] [PID:7696] clicked on element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-1"] locator_type: css
+2025-04-21 19:44:26,395 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:7696] Populating the step result details in the PDF report.
+2025-04-21 19:44:26,663 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:7696] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:26,664 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 19: Keyword='check_radio_chk_selected'
+2025-04-21 19:44:26,664 - WafLogger - INFO - runner.py:397] [PID:7696] Executing 'check_radio_chk_selected' at row 19.
+2025-04-21 19:44:26,664 - WafLogger - DEBUG - keywords_manager.py:623] [PID:7696] Checking if element is selected.
+2025-04-21 19:44:26,682 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: #checkbox-1 and locator_type: css
+2025-04-21 19:44:26,695 - WafLogger - DEBUG - driver_functions.py:865] [PID:7696] Element is with locator: #checkbox-1 and locator_type: css is selected
+2025-04-21 19:44:26,695 - WafLogger - DEBUG - keywords_manager.py:629] [PID:7696] Element is selected.
+2025-04-21 19:44:26,924 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:7696] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:26,924 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 20: Keyword='check_radio_chk_not_selected'
+2025-04-21 19:44:26,924 - WafLogger - INFO - runner.py:410] [PID:7696] Executing 'check_radio_chk_not_selected' at row 20.
+2025-04-21 19:44:26,924 - WafLogger - DEBUG - keywords_manager.py:690] [PID:7696] Checking if element is NOT selected.
+2025-04-21 19:44:26,939 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: #checkbox-2 and locator_type: css
+2025-04-21 19:44:26,950 - WafLogger - DEBUG - driver_functions.py:867] [PID:7696] Element is with locator: #checkbox-2 and locator_type: css is NOT selected
+2025-04-21 19:44:26,950 - WafLogger - DEBUG - keywords_manager.py:696] [PID:7696] Element is NOT selected.
+2025-04-21 19:44:27,218 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:7696] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:27,218 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 21: Keyword='click'
+2025-04-21 19:44:27,218 - WafLogger - INFO - runner.py:341] [PID:7696] Executing 'click' at row 21.
+2025-04-21 19:44:27,233 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-2"] and locator_type: css
+2025-04-21 19:44:27,243 - WafLogger - DEBUG - driver_functions.py:103] [PID:7696] scrolling to element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-2"] locator_type: css
+2025-04-21 19:44:27,254 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-2"] and locator_type: css
+2025-04-21 19:44:27,355 - WafLogger - DEBUG - driver_functions.py:526] [PID:7696] clicked on element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-2"] locator_type: css
+2025-04-21 19:44:27,816 - WafLogger - DEBUG - runner.py:463] [PID:9556] Processing row 10: Keyword='switch_to_iframe'
+2025-04-21 19:44:27,816 - WafLogger - INFO - runner.py:208] [PID:9556] Executing 'switch_to_iframe' at row 10.
+2025-04-21 19:44:27,816 - WafLogger - DEBUG - keywords_manager.py:125] [PID:9556] Attempting to switch to iframe 'iframe' using traditional locators.
+2025-04-21 19:44:27,816 - WafLogger - DEBUG - driver_functions.py:921] [PID:9556] Waiting for maximum :: 10 :: seconds for element to be clickable
+2025-04-21 19:44:27,875 - WafLogger - DEBUG - driver_functions.py:927] [PID:9556] Element appeared on the web page
+2025-04-21 19:44:27,883 - WafLogger - DEBUG - driver_functions.py:451] [PID:9556] Element found with locator: #content > iframe and locator_type: css
+2025-04-21 19:44:27,887 - WafLogger - DEBUG - driver_functions.py:103] [PID:9556] scrolling to element with locator: #content > iframe locator_type: css
+2025-04-21 19:44:27,893 - WafLogger - DEBUG - driver_functions.py:451] [PID:9556] Element found with locator: #content > iframe and locator_type: css
+2025-04-21 19:44:28,183 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:9556] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:28,184 - WafLogger - DEBUG - runner.py:463] [PID:9556] Processing row 11: Keyword='click'
+2025-04-21 19:44:28,184 - WafLogger - INFO - runner.py:341] [PID:9556] Executing 'click' at row 11.
+2025-04-21 19:44:28,200 - WafLogger - DEBUG - driver_functions.py:451] [PID:9556] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] and locator_type: css
+2025-04-21 19:44:28,210 - WafLogger - DEBUG - driver_functions.py:103] [PID:9556] scrolling to element with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] locator_type: css
+2025-04-21 19:44:28,222 - WafLogger - DEBUG - driver_functions.py:451] [PID:9556] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] and locator_type: css
+2025-04-21 19:44:28,360 - WafLogger - DEBUG - driver_functions.py:526] [PID:9556] clicked on element with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] locator_type: css
+2025-04-21 19:44:29,356 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:7696] Populating the step result details in the PDF report.
+2025-04-21 19:44:29,609 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:7696] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:29,610 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 22: Keyword='check_radio_chk_selected'
+2025-04-21 19:44:29,610 - WafLogger - INFO - runner.py:397] [PID:7696] Executing 'check_radio_chk_selected' at row 22.
+2025-04-21 19:44:29,610 - WafLogger - DEBUG - keywords_manager.py:623] [PID:7696] Checking if element is selected.
+2025-04-21 19:44:29,622 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: #checkbox-2 and locator_type: css
+2025-04-21 19:44:29,632 - WafLogger - DEBUG - driver_functions.py:865] [PID:7696] Element is with locator: #checkbox-2 and locator_type: css is selected
+2025-04-21 19:44:29,632 - WafLogger - DEBUG - keywords_manager.py:629] [PID:7696] Element is selected.
+2025-04-21 19:44:29,863 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:7696] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:29,863 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 23: Keyword='check_radio_chk_not_selected'
+2025-04-21 19:44:29,863 - WafLogger - INFO - runner.py:410] [PID:7696] Executing 'check_radio_chk_not_selected' at row 23.
+2025-04-21 19:44:29,863 - WafLogger - DEBUG - keywords_manager.py:690] [PID:7696] Checking if element is NOT selected.
+2025-04-21 19:44:29,880 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: #checkbox-3 and locator_type: css
+2025-04-21 19:44:29,893 - WafLogger - DEBUG - driver_functions.py:867] [PID:7696] Element is with locator: #checkbox-3 and locator_type: css is NOT selected
+2025-04-21 19:44:29,894 - WafLogger - DEBUG - keywords_manager.py:696] [PID:7696] Element is NOT selected.
+2025-04-21 19:44:30,163 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:7696] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:30,163 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 24: Keyword='click'
+2025-04-21 19:44:30,163 - WafLogger - INFO - runner.py:341] [PID:7696] Executing 'click' at row 24.
+2025-04-21 19:44:30,180 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-3"] and locator_type: css
+2025-04-21 19:44:30,188 - WafLogger - DEBUG - driver_functions.py:103] [PID:7696] scrolling to element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-3"] locator_type: css
+2025-04-21 19:44:30,197 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-3"] and locator_type: css
+2025-04-21 19:44:30,284 - WafLogger - DEBUG - driver_functions.py:526] [PID:7696] clicked on element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-3"] locator_type: css
+2025-04-21 19:44:30,360 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:9556] Populating the step result details in the PDF report.
+2025-04-21 19:44:30,594 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:9556] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:30,594 - WafLogger - DEBUG - runner.py:463] [PID:9556] Processing row 12: Keyword='click'
+2025-04-21 19:44:30,594 - WafLogger - INFO - runner.py:341] [PID:9556] Executing 'click' at row 12.
+2025-04-21 19:44:30,609 - WafLogger - DEBUG - driver_functions.py:451] [PID:9556] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] and locator_type: css
+2025-04-21 19:44:30,618 - WafLogger - DEBUG - driver_functions.py:103] [PID:9556] scrolling to element with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] locator_type: css
+2025-04-21 19:44:30,627 - WafLogger - DEBUG - driver_functions.py:451] [PID:9556] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] and locator_type: css
+2025-04-21 19:44:30,756 - WafLogger - DEBUG - driver_functions.py:526] [PID:9556] clicked on element with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] locator_type: css
+2025-04-21 19:44:32,285 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:7696] Populating the step result details in the PDF report.
+2025-04-21 19:44:32,592 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:7696] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:32,592 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 25: Keyword='check_radio_chk_selected'
+2025-04-21 19:44:32,592 - WafLogger - INFO - runner.py:397] [PID:7696] Executing 'check_radio_chk_selected' at row 25.
+2025-04-21 19:44:32,592 - WafLogger - DEBUG - keywords_manager.py:623] [PID:7696] Checking if element is selected.
+2025-04-21 19:44:32,606 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: #checkbox-3 and locator_type: css
+2025-04-21 19:44:32,615 - WafLogger - DEBUG - driver_functions.py:865] [PID:7696] Element is with locator: #checkbox-3 and locator_type: css is selected
+2025-04-21 19:44:32,616 - WafLogger - DEBUG - keywords_manager.py:629] [PID:7696] Element is selected.
+2025-04-21 19:44:32,757 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:9556] Populating the step result details in the PDF report.
+2025-04-21 19:44:32,908 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:7696] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:32,908 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 26: Keyword='check_radio_chk_not_selected'
+2025-04-21 19:44:32,908 - WafLogger - INFO - runner.py:410] [PID:7696] Executing 'check_radio_chk_not_selected' at row 26.
+2025-04-21 19:44:32,908 - WafLogger - DEBUG - keywords_manager.py:690] [PID:7696] Checking if element is NOT selected.
+2025-04-21 19:44:32,926 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: #checkbox-4 and locator_type: css
+2025-04-21 19:44:32,936 - WafLogger - DEBUG - driver_functions.py:867] [PID:7696] Element is with locator: #checkbox-4 and locator_type: css is NOT selected
+2025-04-21 19:44:32,936 - WafLogger - DEBUG - keywords_manager.py:696] [PID:7696] Element is NOT selected.
+2025-04-21 19:44:33,044 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:9556] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:33,044 - WafLogger - DEBUG - runner.py:463] [PID:9556] Processing row 13: Keyword='click'
+2025-04-21 19:44:33,044 - WafLogger - INFO - runner.py:341] [PID:9556] Executing 'click' at row 13.
+2025-04-21 19:44:33,061 - WafLogger - DEBUG - driver_functions.py:451] [PID:9556] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] and locator_type: css
+2025-04-21 19:44:33,067 - WafLogger - DEBUG - driver_functions.py:103] [PID:9556] scrolling to element with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] locator_type: css
+2025-04-21 19:44:33,076 - WafLogger - DEBUG - driver_functions.py:451] [PID:9556] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] and locator_type: css
+2025-04-21 19:44:33,175 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:7696] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:33,176 - WafLogger - DEBUG - runner.py:463] [PID:7696] Processing row 27: Keyword='click'
+2025-04-21 19:44:33,177 - WafLogger - DEBUG - driver_functions.py:526] [PID:9556] clicked on element with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] locator_type: css
+2025-04-21 19:44:33,176 - WafLogger - INFO - runner.py:341] [PID:7696] Executing 'click' at row 27.
+2025-04-21 19:44:33,188 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-4"] and locator_type: css
+2025-04-21 19:44:33,193 - WafLogger - DEBUG - driver_functions.py:103] [PID:7696] scrolling to element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-4"] locator_type: css
+2025-04-21 19:44:33,198 - WafLogger - DEBUG - driver_functions.py:451] [PID:7696] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-4"] and locator_type: css
+2025-04-21 19:44:33,278 - WafLogger - DEBUG - driver_functions.py:526] [PID:7696] clicked on element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-4"] locator_type: css
+2025-04-21 19:44:35,177 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:9556] Populating the step result details in the PDF report.
+2025-04-21 19:44:35,278 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:7696] Populating the step result details in the PDF report.
+2025-04-21 19:44:35,473 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:9556] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:35,474 - WafLogger - INFO - runner.py:474] [PID:9556] Test script execution completed successfully.
+2025-04-21 19:44:35,474 - WafLogger - INFO - runner.py:529] [PID:9556] Test script 'D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS002_testscript.xlsx' executed successfully.
+2025-04-21 19:44:35,474 - WafLogger - DEBUG - runner.py:542] [PID:9556] Adding row to test summary results excel file.
+2025-04-21 19:44:35,519 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:7696] Sub Step is captured to be added to PDF report.
+2025-04-21 19:44:35,519 - WafLogger - INFO - runner.py:474] [PID:7696] Test script execution completed successfully.
+2025-04-21 19:44:35,519 - WafLogger - INFO - runner.py:529] [PID:7696] Test script 'D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS001_testscript.xlsx' executed successfully.
+2025-04-21 19:44:35,519 - WafLogger - DEBUG - runner.py:542] [PID:7696] Adding row to test summary results excel file.
+2025-04-21 19:44:37,141 - WafLogger - DEBUG - runner.py:545] [PID:9556] Closing the test and creating the test result pdf file.
+2025-04-21 19:44:37,141 - WafLogger - DEBUG - keywords_manager.py:180] [PID:9556] Started creating pdf report and closing the browser
+2025-04-21 19:44:37,146 - WafLogger - DEBUG - pdf_report_manager.py:135] [PID:9556] Finalizing the data to be added to PDF report.
+2025-04-21 19:44:37,146 - WafLogger - DEBUG - pdf_reporting.py:65] [PID:9556] Encoding the logo png file
+2025-04-21 19:44:37,191 - WafLogger - DEBUG - pdf_reporting.py:113] [PID:9556] Decrypting the PDF report template
+2025-04-21 19:44:37,340 - WafLogger - DEBUG - pdf_reporting.py:122] [PID:9556] Generated the PDF report template with appropriate data
+2025-04-21 19:44:37,340 - WafLogger - DEBUG - pdf_reporting.py:76] [PID:9556] Creating the PDF report header template
+2025-04-21 19:44:37,340 - WafLogger - DEBUG - pdf_reporting.py:95] [PID:9556] Creating the PDF report footer template
+2025-04-21 19:44:37,340 - WafLogger - DEBUG - pdf_reporting.py:138] [PID:9556] Starting creation of PDF report from template with populated data
+2025-04-21 19:44:37,881 - WafLogger - DEBUG - runner.py:545] [PID:7696] Closing the test and creating the test result pdf file.
+2025-04-21 19:44:37,881 - WafLogger - DEBUG - keywords_manager.py:180] [PID:7696] Started creating pdf report and closing the browser
+2025-04-21 19:44:37,883 - WafLogger - DEBUG - pdf_report_manager.py:135] [PID:7696] Finalizing the data to be added to PDF report.
+2025-04-21 19:44:37,883 - WafLogger - DEBUG - pdf_reporting.py:65] [PID:7696] Encoding the logo png file
+2025-04-21 19:44:37,884 - WafLogger - DEBUG - pdf_reporting.py:113] [PID:7696] Decrypting the PDF report template
+2025-04-21 19:44:37,913 - WafLogger - DEBUG - pdf_reporting.py:122] [PID:7696] Generated the PDF report template with appropriate data
+2025-04-21 19:44:37,913 - WafLogger - DEBUG - pdf_reporting.py:76] [PID:7696] Creating the PDF report header template
+2025-04-21 19:44:37,913 - WafLogger - DEBUG - pdf_reporting.py:95] [PID:7696] Creating the PDF report footer template
+2025-04-21 19:44:37,913 - WafLogger - DEBUG - pdf_reporting.py:138] [PID:7696] Starting creation of PDF report from template with populated data
+2025-04-21 19:44:40,205 - WafLogger - DEBUG - pdf_reporting.py:163] [PID:9556] Completed creation of PDF report from template with populated data
+2025-04-21 19:44:40,255 - WafLogger - DEBUG - driver_functions.py:41] [PID:9556] Closing Browser
+2025-04-21 19:44:41,781 - WafLogger - DEBUG - pdf_reporting.py:163] [PID:7696] Completed creation of PDF report from template with populated data
+2025-04-21 19:44:41,869 - WafLogger - DEBUG - driver_functions.py:41] [PID:7696] Closing Browser
+2025-04-21 19:44:48,397 - WafLogger - INFO - runner.py:931] [PID:5508] 0hrs:0min:47sec:0ms
+2025-04-21 19:44:48,399 - WafLogger - DEBUG - pdf_report_manager.py:168] [PID:5508] Checking if output.xlsx file exists before creating the test summary PDF report.
+2025-04-21 19:44:48,399 - WafLogger - DEBUG - pdf_report_manager.py:170] [PID:5508] Output.xlsx exists and starting to create test summary PDF report.
+2025-04-21 19:44:48,432 - WafLogger - DEBUG - pdf_ts_reporting.py:51] [PID:5508] Encoding the logo png file
+2025-04-21 19:44:48,433 - WafLogger - DEBUG - pdf_ts_reporting.py:99] [PID:5508] Decrypting the test summary report PDF template
+2025-04-21 19:44:48,477 - WafLogger - DEBUG - pdf_ts_reporting.py:108] [PID:5508] Generated the test summary report PDF template with appropriate data
+2025-04-21 19:44:48,477 - WafLogger - DEBUG - pdf_ts_reporting.py:62] [PID:5508] Creating the test summary report PDF header template
+2025-04-21 19:44:48,477 - WafLogger - DEBUG - pdf_ts_reporting.py:81] [PID:5508] Creating the test summary report PDF footer template
+2025-04-21 19:44:48,477 - WafLogger - DEBUG - pdf_ts_reporting.py:126] [PID:5508] Starting creation of test dummary PDF report from template with populated data
+2025-04-21 19:44:49,382 - WafLogger - DEBUG - pdf_ts_reporting.py:150] [PID:5508] Completed creation of test summary PDF report from template with populated data
+2025-04-21 19:44:49,431 - WafLogger - INFO - utilities.py:120] [PID:5508] ['QS001_EDGE_PASSED_21Apr2025.pdf', 'QS002_CHROME_PASSED_21Apr2025.pdf', 'Test_Summary_Results_21Apr2025.pdf']
+2025-04-21 19:44:49,431 - WafLogger - INFO - utilities.py:124] [PID:5508] Processing PDF: QS001_EDGE_PASSED_21Apr2025.pdf
+2025-04-21 19:44:49,431 - WafLogger - INFO - utilities.py:124] [PID:5508] Processing PDF: QS002_CHROME_PASSED_21Apr2025.pdf
+2025-04-21 19:44:49,431 - WafLogger - INFO - utilities.py:124] [PID:5508] Processing PDF: Test_Summary_Results_21Apr2025.pdf
+2025-04-21 19:44:49,431 - WafLogger - INFO - utilities.py:132] [PID:5508] Merge order: ['Test_Summary_Results_21Apr2025.pdf', 'QS001_EDGE_PASSED_21Apr2025.pdf', 'QS002_CHROME_PASSED_21Apr2025.pdf']
+2025-04-21 19:44:49,431 - WafLogger - INFO - utilities.py:139] [PID:5508] All PDFs are within the size limit. Merging into a single file.
+2025-04-21 19:44:49,598 - WafLogger - INFO - utilities.py:145] [PID:5508] Merged PDF saved at: D:\allprojects\web_automation_htmltopdf\test_results\vinaybabu_pc\21Apr2025\14h14m01s\consolidated\Test_Results_21Apr2025_02h14m49s430779.pdf
+2025-04-21 21:20:04,156 - WafLogger - DEBUG - runner.py:719] [PID:8684] Execution Started ----------------.
+2025-04-21 21:20:04,158 - WafLogger - DEBUG - runner.py:720] [PID:8684] Parsing the input arguments.
+2025-04-21 21:20:04,159 - WafLogger - DEBUG - runner.py:732] [PID:8684] Counting the number of input arguments.
+2025-04-21 21:20:04,160 - WafLogger - DEBUG - runner.py:627] [PID:8684] Loading 'start.properties' file.
+2025-04-21 21:20:04,160 - WafLogger - DEBUG - runner.py:638] [PID:8684] Checking if in 'start.properties' file option to delete results and recording folders is set to 'yes'.
+2025-04-21 21:20:04,160 - WafLogger - DEBUG - runner.py:641] [PID:8684] Deleting the test_results and recordings folders.
+2025-04-21 21:20:04,279 - WafLogger - DEBUG - utilities.py:215] [PID:8684] Folder and its content removed
+2025-04-21 21:20:04,279 - WafLogger - DEBUG - runner.py:648] [PID:8684] Creating the test_results and recordings folders.
+2025-04-21 21:20:04,283 - WafLogger - DEBUG - runner.py:651] [PID:8684] Starting analysis of the contents of the test_scripts folders.
+2025-04-21 21:20:04,285 - WafLogger - DEBUG - runner.py:666] [PID:8684] Checking if test_scripts folder and chrome folder contains the same files.
+2025-04-21 21:20:04,286 - WafLogger - DEBUG - runner.py:673] [PID:8684] Checking if test_scripts folder and edge folder contains the same files.
+2025-04-21 21:20:04,287 - WafLogger - DEBUG - runner.py:791] [PID:8684] Gathering all files present in the test_scripts folder.
+2025-04-21 21:20:04,289 - WafLogger - DEBUG - runner.py:803] [PID:8684] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\QS002_tesQScrip1t.xlsx.
+2025-04-21 21:20:04,289 - WafLogger - DEBUG - runner.py:804] [PID:8684] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 21:20:04,289 - WafLogger - DEBUG - runner.py:803] [PID:8684] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\QS003_testscript1.xlsx.
+2025-04-21 21:20:04,289 - WafLogger - DEBUG - runner.py:804] [PID:8684] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 21:20:04,289 - WafLogger - DEBUG - runner.py:803] [PID:8684] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\QS004_testscript1.xlsx.
+2025-04-21 21:20:04,289 - WafLogger - DEBUG - runner.py:804] [PID:8684] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 21:20:04,289 - WafLogger - DEBUG - runner.py:803] [PID:8684] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\tc001_testscript1.xlsx.
+2025-04-21 21:20:04,289 - WafLogger - DEBUG - runner.py:804] [PID:8684] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 21:20:04,289 - WafLogger - DEBUG - runner.py:803] [PID:8684] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\tc002_testscript1.xlsx.
+2025-04-21 21:20:04,290 - WafLogger - DEBUG - runner.py:804] [PID:8684] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 21:20:04,290 - WafLogger - DEBUG - runner.py:803] [PID:8684] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\tc003_testscript2.xlsx.
+2025-04-21 21:20:04,290 - WafLogger - DEBUG - runner.py:804] [PID:8684] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 21:20:04,291 - WafLogger - DEBUG - runner.py:803] [PID:8684] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS002_testscript.xlsx.
+2025-04-21 21:20:04,291 - WafLogger - DEBUG - runner.py:804] [PID:8684] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 21:20:04,291 - WafLogger - DEBUG - runner.py:807] [PID:8684] The file path D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS002_testscript.xlsx contains 'testscript.xlsx' in the end.
+2025-04-21 21:20:04,291 - WafLogger - DEBUG - runner.py:808] [PID:8684] Checking if the file name starts with 'ts' (case insensitive).
+2025-04-21 21:20:04,292 - WafLogger - DEBUG - runner.py:812] [PID:8684] The file name QS002_testscript.xlsx starts with 'ts' (case insensitive).
+2025-04-21 21:20:04,292 - WafLogger - DEBUG - runner.py:813] [PID:8684] Checking if the file QS002_testscript.xlsx is present in chrome or edge folder.
+2025-04-21 21:20:04,292 - WafLogger - DEBUG - runner.py:815] [PID:8684] The file QS002_testscript.xlsx is present in chrome folder. Launching the execution of test script on chrome browser.
+2025-04-21 21:20:04,370 - WafLogger - DEBUG - runner.py:820] [PID:8684] Starting the execution recording.
+2025-04-21 21:20:04,370 - WafLogger - DEBUG - runner.py:587] [PID:8684] Gathering screen size for recording.
+2025-04-21 21:20:04,373 - WafLogger - DEBUG - runner.py:592] [PID:8684] Setting FPS for recording.
+2025-04-21 21:20:04,739 - WafLogger - DEBUG - runner.py:598] [PID:8684] Starting recording.
+2025-04-21 21:20:06,851 - WafLogger - INFO - runner.py:496] [PID:21348] Starting test script execution.
+2025-04-21 21:20:06,852 - WafLogger - DEBUG - runner.py:497] [PID:21348] Test script file: D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS002_testscript.xlsx
+2025-04-21 21:20:06,852 - WafLogger - DEBUG - runner.py:498] [PID:21348] Launch browser parameter: chrome
+2025-04-21 21:20:06,852 - WafLogger - DEBUG - runner.py:507] [PID:21348] Instantiating excel report manager
+2025-04-21 21:20:06,852 - WafLogger - DEBUG - runner.py:510] [PID:21348] Checking if the test script excel file name ends with 'testscript.xlsx'
+2025-04-21 21:20:06,852 - WafLogger - DEBUG - runner.py:513] [PID:21348] The test script Excel file name ends with 'testscript.xlsx'. Proceeding with execution.
+2025-04-21 21:20:06,852 - WafLogger - INFO - runner.py:40] [PID:21348] Validating the test script: D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS002_testscript.xlsx
+2025-04-21 21:20:06,960 - WafLogger - DEBUG - runner.py:46] [PID:21348] Reading the test script Excel file into a pandas DataFrame.
+2025-04-21 21:20:07,039 - WafLogger - DEBUG - runner.py:53] [PID:21348] Replacing empty values in the DataFrame with empty strings.
+2025-04-21 21:20:07,042 - WafLogger - INFO - runner.py:56] [PID:21348] Validating the content of the test script.
+2025-04-21 21:20:07,042 - WafLogger - DEBUG - runner.py:59] [PID:21348] Validating row 0: Keyword='tc_id'
+2025-04-21 21:20:07,043 - WafLogger - DEBUG - runner.py:59] [PID:21348] Validating row 1: Keyword='tc_desc'
+2025-04-21 21:20:07,043 - WafLogger - DEBUG - runner.py:59] [PID:21348] Validating row 2: Keyword='step'
+2025-04-21 21:20:07,043 - WafLogger - DEBUG - runner.py:59] [PID:21348] Validating row 3: Keyword='open_browser'
+2025-04-21 21:20:07,043 - WafLogger - DEBUG - runner.py:59] [PID:21348] Validating row 4: Keyword='enter_url'
+2025-04-21 21:20:07,043 - WafLogger - DEBUG - runner.py:59] [PID:21348] Validating row 5: Keyword='step'
+2025-04-21 21:20:07,043 - WafLogger - DEBUG - runner.py:59] [PID:21348] Validating row 6: Keyword='click'
+2025-04-21 21:20:07,043 - WafLogger - DEBUG - runner.py:59] [PID:21348] Validating row 7: Keyword='wait_for_seconds'
+2025-04-21 21:20:07,043 - WafLogger - DEBUG - runner.py:59] [PID:21348] Validating row 8: Keyword='click'
+2025-04-21 21:20:07,044 - WafLogger - DEBUG - runner.py:59] [PID:21348] Validating row 9: Keyword='wait_for_seconds'
+2025-04-21 21:20:07,044 - WafLogger - DEBUG - runner.py:59] [PID:21348] Validating row 10: Keyword='switch_to_iframe'
+2025-04-21 21:20:07,044 - WafLogger - DEBUG - runner.py:59] [PID:21348] Validating row 11: Keyword='click'
+2025-04-21 21:20:07,044 - WafLogger - DEBUG - runner.py:59] [PID:21348] Validating row 12: Keyword='click'
+2025-04-21 21:20:07,044 - WafLogger - DEBUG - runner.py:59] [PID:21348] Validating row 13: Keyword='click'
+2025-04-21 21:20:07,044 - WafLogger - INFO - runner.py:127] [PID:21348] Test script validation completed successfully.
+2025-04-21 21:20:07,044 - WafLogger - DEBUG - runner.py:517] [PID:21348] Instantiating the keyword manager.
+2025-04-21 21:20:07,044 - WafLogger - DEBUG - keywords_manager.py:51] [PID:21348] Retry count updated to 1
+2025-04-21 21:20:07,044 - WafLogger - INFO - runner.py:432] [PID:21348] Starting test script execution.
+2025-04-21 21:20:07,045 - WafLogger - DEBUG - runner.py:463] [PID:21348] Processing row 0: Keyword='tc_id'
+2025-04-21 21:20:07,045 - WafLogger - INFO - runner.py:216] [PID:21348] Executing 'tc_id' at row 0.
+2025-04-21 21:20:07,045 - WafLogger - DEBUG - keywords_manager.py:200] [PID:21348] Setting the test report of the PDF report
+2025-04-21 21:20:07,045 - WafLogger - DEBUG - runner.py:463] [PID:21348] Processing row 1: Keyword='tc_desc'
+2025-04-21 21:20:07,045 - WafLogger - INFO - runner.py:220] [PID:21348] Executing 'tc_desc' at row 1.
+2025-04-21 21:20:07,045 - WafLogger - DEBUG - keywords_manager.py:212] [PID:21348] Setting the test description in the PDF report
+2025-04-21 21:20:07,045 - WafLogger - DEBUG - runner.py:463] [PID:21348] Processing row 2: Keyword='step'
+2025-04-21 21:20:07,045 - WafLogger - INFO - runner.py:224] [PID:21348] Executing 'step' at row 2.
+2025-04-21 21:20:07,045 - WafLogger - DEBUG - keywords_manager.py:222] [PID:21348] Populating the test details table in the PDF report
+2025-04-21 21:20:07,045 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:21348] Step is captured to be added to PDF report.
+2025-04-21 21:20:07,045 - WafLogger - DEBUG - runner.py:463] [PID:21348] Processing row 3: Keyword='open_browser'
+2025-04-21 21:20:07,045 - WafLogger - INFO - runner.py:191] [PID:21348] Executing 'open_browser' at row 3. Launching browser: chrome.
+2025-04-21 21:20:07,045 - WafLogger - DEBUG - keywords_manager.py:246] [PID:21348] Launching chrome .......
+2025-04-21 21:20:11,546 - WafLogger - DEBUG - keywords_manager.py:248] [PID:21348] Capturing the OS where the browser is running.
+2025-04-21 21:20:11,546 - WafLogger - DEBUG - keywords_manager.py:256] [PID:21348] Capturing the OS where the browser is running in local machine.
+2025-04-21 21:20:11,548 - WafLogger - DEBUG - keywords_manager.py:265] [PID:21348] Populating the OS details in the PDF report as Windows
+2025-04-21 21:20:11,548 - WafLogger - DEBUG - keywords_manager.py:271] [PID:21348] Populating the browser details in the PDF report as chrome
+2025-04-21 21:20:11,548 - WafLogger - DEBUG - keywords_manager.py:340] [PID:21348] Returning Browser Version.
+2025-04-21 21:20:11,548 - WafLogger - DEBUG - driver_functions.py:52] [PID:21348] Capturing Browser Version
+2025-04-21 21:20:11,548 - WafLogger - DEBUG - keywords_manager.py:281] [PID:21348] Populating the step result details in the PDF report.
+2025-04-21 21:20:11,846 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:21348] Sub Step is captured to be added to PDF report.
+2025-04-21 21:20:11,846 - WafLogger - DEBUG - runner.py:463] [PID:21348] Processing row 4: Keyword='enter_url'
+2025-04-21 21:20:11,847 - WafLogger - INFO - runner.py:257] [PID:21348] Executing 'enter_url' at row 4. URL: https://jqueryui.com/.
+2025-04-21 21:20:11,847 - WafLogger - DEBUG - keywords_manager.py:887] [PID:21348] Opening URL
+2025-04-21 21:20:11,847 - WafLogger - DEBUG - driver_functions.py:63] [PID:21348] Opening URL https://jqueryui.com/
+2025-04-21 21:20:15,216 - WafLogger - DEBUG - keywords_manager.py:892] [PID:21348] Populating the step result details in the PDF report.
+2025-04-21 21:20:15,511 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:21348] Sub Step is captured to be added to PDF report.
+2025-04-21 21:20:15,512 - WafLogger - DEBUG - runner.py:463] [PID:21348] Processing row 5: Keyword='step'
+2025-04-21 21:20:15,512 - WafLogger - INFO - runner.py:224] [PID:21348] Executing 'step' at row 5.
+2025-04-21 21:20:15,512 - WafLogger - DEBUG - keywords_manager.py:222] [PID:21348] Populating the test details table in the PDF report
+2025-04-21 21:20:15,512 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:21348] Step is captured to be added to PDF report.
+2025-04-21 21:20:15,512 - WafLogger - DEBUG - runner.py:463] [PID:21348] Processing row 6: Keyword='click'
+2025-04-21 21:20:15,512 - WafLogger - INFO - runner.py:341] [PID:21348] Executing 'click' at row 6.
+2025-04-21 21:20:15,527 - WafLogger - DEBUG - driver_functions.py:451] [PID:21348] Element found with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a and locator_type: css
+2025-04-21 21:20:15,538 - WafLogger - DEBUG - driver_functions.py:103] [PID:21348] scrolling to element with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a locator_type: css
+2025-04-21 21:20:15,546 - WafLogger - DEBUG - driver_functions.py:451] [PID:21348] Element found with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a and locator_type: css
+2025-04-21 21:20:16,907 - WafLogger - DEBUG - driver_functions.py:526] [PID:21348] clicked on element with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a locator_type: css
+2025-04-21 21:20:18,908 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:21348] Populating the step result details in the PDF report.
+2025-04-21 21:20:19,368 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:21348] Sub Step is captured to be added to PDF report.
+2025-04-21 21:20:19,369 - WafLogger - DEBUG - runner.py:463] [PID:21348] Processing row 7: Keyword='wait_for_seconds'
+2025-04-21 21:20:19,369 - WafLogger - INFO - runner.py:195] [PID:21348] Executing 'wait_for_seconds' at row 7. Waiting for 2 seconds.
+2025-04-21 21:20:19,369 - WafLogger - DEBUG - keywords_manager.py:232] [PID:21348] Pausing the execution for 2 seconds
+2025-04-21 21:20:21,371 - WafLogger - DEBUG - runner.py:463] [PID:21348] Processing row 8: Keyword='click'
+2025-04-21 21:20:21,372 - WafLogger - INFO - runner.py:341] [PID:21348] Executing 'click' at row 8.
+2025-04-21 21:20:21,387 - WafLogger - DEBUG - driver_functions.py:451] [PID:21348] Element found with locator: #content > div.demo-list > ul > li:nth-child(2)> a and locator_type: css
+2025-04-21 21:20:21,396 - WafLogger - DEBUG - driver_functions.py:103] [PID:21348] scrolling to element with locator: #content > div.demo-list > ul > li:nth-child(2)> a locator_type: css
+2025-04-21 21:20:21,406 - WafLogger - DEBUG - driver_functions.py:451] [PID:21348] Element found with locator: #content > div.demo-list > ul > li:nth-child(2)> a and locator_type: css
+2025-04-21 21:20:21,536 - WafLogger - DEBUG - driver_functions.py:526] [PID:21348] clicked on element with locator: #content > div.demo-list > ul > li:nth-child(2)> a locator_type: css
+2025-04-21 21:20:23,537 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:21348] Populating the step result details in the PDF report.
+2025-04-21 21:20:23,846 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:21348] Sub Step is captured to be added to PDF report.
+2025-04-21 21:20:23,846 - WafLogger - DEBUG - runner.py:463] [PID:21348] Processing row 9: Keyword='wait_for_seconds'
+2025-04-21 21:20:23,847 - WafLogger - INFO - runner.py:195] [PID:21348] Executing 'wait_for_seconds' at row 9. Waiting for 10 seconds.
+2025-04-21 21:20:23,847 - WafLogger - DEBUG - keywords_manager.py:232] [PID:21348] Pausing the execution for 10 seconds
+2025-04-21 21:20:33,848 - WafLogger - DEBUG - runner.py:463] [PID:21348] Processing row 10: Keyword='switch_to_iframe'
+2025-04-21 21:20:33,848 - WafLogger - INFO - runner.py:208] [PID:21348] Executing 'switch_to_iframe' at row 10.
+2025-04-21 21:20:33,848 - WafLogger - DEBUG - keywords_manager.py:125] [PID:21348] Attempting to switch to iframe 'iframe' using traditional locators.
+2025-04-21 21:20:33,848 - WafLogger - DEBUG - driver_functions.py:921] [PID:21348] Waiting for maximum :: 10 :: seconds for element to be clickable
+2025-04-21 21:20:33,897 - WafLogger - DEBUG - driver_functions.py:927] [PID:21348] Element appeared on the web page
+2025-04-21 21:20:33,910 - WafLogger - DEBUG - driver_functions.py:451] [PID:21348] Element found with locator: #content > iframe and locator_type: css
+2025-04-21 21:20:33,920 - WafLogger - DEBUG - driver_functions.py:103] [PID:21348] scrolling to element with locator: #content > iframe locator_type: css
+2025-04-21 21:20:33,931 - WafLogger - DEBUG - driver_functions.py:451] [PID:21348] Element found with locator: #content > iframe and locator_type: css
+2025-04-21 21:20:34,311 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:21348] Sub Step is captured to be added to PDF report.
+2025-04-21 21:20:34,312 - WafLogger - DEBUG - runner.py:463] [PID:21348] Processing row 11: Keyword='click'
+2025-04-21 21:20:34,312 - WafLogger - INFO - runner.py:341] [PID:21348] Executing 'click' at row 11.
+2025-04-21 21:20:34,329 - WafLogger - DEBUG - driver_functions.py:451] [PID:21348] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] and locator_type: css
+2025-04-21 21:20:34,340 - WafLogger - DEBUG - driver_functions.py:103] [PID:21348] scrolling to element with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] locator_type: css
+2025-04-21 21:20:34,353 - WafLogger - DEBUG - driver_functions.py:451] [PID:21348] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] and locator_type: css
+2025-04-21 21:20:34,538 - WafLogger - DEBUG - driver_functions.py:526] [PID:21348] clicked on element with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] locator_type: css
+2025-04-21 21:20:36,540 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:21348] Populating the step result details in the PDF report.
+2025-04-21 21:20:36,834 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:21348] Sub Step is captured to be added to PDF report.
+2025-04-21 21:20:36,835 - WafLogger - DEBUG - runner.py:463] [PID:21348] Processing row 12: Keyword='click'
+2025-04-21 21:20:36,835 - WafLogger - INFO - runner.py:341] [PID:21348] Executing 'click' at row 12.
+2025-04-21 21:20:36,851 - WafLogger - DEBUG - driver_functions.py:451] [PID:21348] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] and locator_type: css
+2025-04-21 21:20:36,856 - WafLogger - DEBUG - driver_functions.py:103] [PID:21348] scrolling to element with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] locator_type: css
+2025-04-21 21:20:36,865 - WafLogger - DEBUG - driver_functions.py:451] [PID:21348] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] and locator_type: css
+2025-04-21 21:20:36,990 - WafLogger - DEBUG - driver_functions.py:526] [PID:21348] clicked on element with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] locator_type: css
+2025-04-21 21:20:38,991 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:21348] Populating the step result details in the PDF report.
+2025-04-21 21:20:39,272 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:21348] Sub Step is captured to be added to PDF report.
+2025-04-21 21:20:39,272 - WafLogger - DEBUG - runner.py:463] [PID:21348] Processing row 13: Keyword='click'
+2025-04-21 21:20:39,272 - WafLogger - INFO - runner.py:341] [PID:21348] Executing 'click' at row 13.
+2025-04-21 21:20:39,285 - WafLogger - DEBUG - driver_functions.py:451] [PID:21348] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] and locator_type: css
+2025-04-21 21:20:39,296 - WafLogger - DEBUG - driver_functions.py:103] [PID:21348] scrolling to element with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] locator_type: css
+2025-04-21 21:20:39,305 - WafLogger - DEBUG - driver_functions.py:451] [PID:21348] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] and locator_type: css
+2025-04-21 21:20:39,426 - WafLogger - DEBUG - driver_functions.py:526] [PID:21348] clicked on element with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] locator_type: css
+2025-04-21 21:20:41,427 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:21348] Populating the step result details in the PDF report.
+2025-04-21 21:20:41,691 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:21348] Sub Step is captured to be added to PDF report.
+2025-04-21 21:20:41,691 - WafLogger - INFO - runner.py:474] [PID:21348] Test script execution completed successfully.
+2025-04-21 21:20:41,691 - WafLogger - INFO - runner.py:529] [PID:21348] Test script 'D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS002_testscript.xlsx' executed successfully.
+2025-04-21 21:20:41,691 - WafLogger - DEBUG - runner.py:542] [PID:21348] Adding row to test summary results excel file.
+2025-04-21 21:20:42,631 - WafLogger - DEBUG - runner.py:545] [PID:21348] Closing the test and creating the test result pdf file.
+2025-04-21 21:20:42,631 - WafLogger - DEBUG - keywords_manager.py:180] [PID:21348] Started creating pdf report and closing the browser
+2025-04-21 21:20:42,635 - WafLogger - DEBUG - pdf_report_manager.py:135] [PID:21348] Finalizing the data to be added to PDF report.
+2025-04-21 21:20:42,635 - WafLogger - DEBUG - pdf_reporting.py:65] [PID:21348] Encoding the logo png file
+2025-04-21 21:20:42,646 - WafLogger - DEBUG - pdf_reporting.py:113] [PID:21348] Decrypting the PDF report template
+2025-04-21 21:20:42,726 - WafLogger - DEBUG - pdf_reporting.py:122] [PID:21348] Generated the PDF report template with appropriate data
+2025-04-21 21:20:42,727 - WafLogger - DEBUG - pdf_reporting.py:76] [PID:21348] Creating the PDF report header template
+2025-04-21 21:20:42,727 - WafLogger - DEBUG - pdf_reporting.py:95] [PID:21348] Creating the PDF report footer template
+2025-04-21 21:20:42,727 - WafLogger - DEBUG - pdf_reporting.py:138] [PID:21348] Starting creation of PDF report from template with populated data
+2025-04-21 21:20:46,374 - WafLogger - DEBUG - pdf_reporting.py:163] [PID:21348] Completed creation of PDF report from template with populated data
+2025-04-21 21:20:46,457 - WafLogger - DEBUG - driver_functions.py:41] [PID:21348] Closing Browser
+2025-04-21 21:20:53,301 - WafLogger - DEBUG - runner.py:609] [PID:8684] Finished recording.
+2025-04-21 21:20:56,204 - WafLogger - DEBUG - runner.py:803] [PID:8684] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS001_testscript.xlsx.
+2025-04-21 21:20:56,204 - WafLogger - DEBUG - runner.py:804] [PID:8684] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-21 21:20:56,204 - WafLogger - DEBUG - runner.py:807] [PID:8684] The file path D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS001_testscript.xlsx contains 'testscript.xlsx' in the end.
+2025-04-21 21:20:56,204 - WafLogger - DEBUG - runner.py:808] [PID:8684] Checking if the file name starts with 'ts' (case insensitive).
+2025-04-21 21:20:56,204 - WafLogger - DEBUG - runner.py:812] [PID:8684] The file name QS001_testscript.xlsx starts with 'ts' (case insensitive).
+2025-04-21 21:20:56,204 - WafLogger - DEBUG - runner.py:813] [PID:8684] Checking if the file QS001_testscript.xlsx is present in chrome or edge folder.
+2025-04-21 21:20:56,204 - WafLogger - DEBUG - runner.py:828] [PID:8684] The file QS001_testscript.xlsx is present in edge folder. Launching the execution of test script on edge browser.
+2025-04-21 21:20:56,269 - WafLogger - DEBUG - runner.py:833] [PID:8684] Starting the execution recording.
+2025-04-21 21:20:56,269 - WafLogger - DEBUG - runner.py:587] [PID:8684] Gathering screen size for recording.
+2025-04-21 21:20:56,269 - WafLogger - DEBUG - runner.py:592] [PID:8684] Setting FPS for recording.
+2025-04-21 21:20:56,271 - WafLogger - DEBUG - runner.py:598] [PID:8684] Starting recording.
+2025-04-21 21:20:58,825 - WafLogger - INFO - runner.py:496] [PID:10424] Starting test script execution.
+2025-04-21 21:20:58,825 - WafLogger - DEBUG - runner.py:497] [PID:10424] Test script file: D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS001_testscript.xlsx
+2025-04-21 21:20:58,826 - WafLogger - DEBUG - runner.py:498] [PID:10424] Launch browser parameter: edge
+2025-04-21 21:20:58,826 - WafLogger - DEBUG - runner.py:507] [PID:10424] Instantiating excel report manager
+2025-04-21 21:20:58,826 - WafLogger - DEBUG - runner.py:510] [PID:10424] Checking if the test script excel file name ends with 'testscript.xlsx'
+2025-04-21 21:20:58,826 - WafLogger - DEBUG - runner.py:513] [PID:10424] The test script Excel file name ends with 'testscript.xlsx'. Proceeding with execution.
+2025-04-21 21:20:58,826 - WafLogger - INFO - runner.py:40] [PID:10424] Validating the test script: D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS001_testscript.xlsx
+2025-04-21 21:20:58,840 - WafLogger - DEBUG - runner.py:46] [PID:10424] Reading the test script Excel file into a pandas DataFrame.
+2025-04-21 21:20:58,869 - WafLogger - DEBUG - runner.py:53] [PID:10424] Replacing empty values in the DataFrame with empty strings.
+2025-04-21 21:20:58,870 - WafLogger - INFO - runner.py:56] [PID:10424] Validating the content of the test script.
+2025-04-21 21:20:58,871 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 0: Keyword='tc_id'
+2025-04-21 21:20:58,871 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 1: Keyword='tc_desc'
+2025-04-21 21:20:58,871 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 2: Keyword='step'
+2025-04-21 21:20:58,871 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 3: Keyword='open_browser'
+2025-04-21 21:20:58,871 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 4: Keyword='enter_url'
+2025-04-21 21:20:58,871 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 5: Keyword='step'
+2025-04-21 21:20:58,871 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 6: Keyword='click'
+2025-04-21 21:20:58,871 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 7: Keyword='step'
+2025-04-21 21:20:58,871 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 8: Keyword='click'
+2025-04-21 21:20:58,871 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 9: Keyword='step'
+2025-04-21 21:20:58,871 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 10: Keyword='switch_to_iframe'
+2025-04-21 21:20:58,871 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 11: Keyword='click'
+2025-04-21 21:20:58,871 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 12: Keyword='check_radio_chk_selected'
+2025-04-21 21:20:58,872 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 13: Keyword='click'
+2025-04-21 21:20:58,872 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 14: Keyword='check_radio_chk_selected'
+2025-04-21 21:20:58,872 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 15: Keyword='click'
+2025-04-21 21:20:58,872 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 16: Keyword='check_radio_chk_selected'
+2025-04-21 21:20:58,872 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 17: Keyword='step'
+2025-04-21 21:20:58,872 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 18: Keyword='click'
+2025-04-21 21:20:58,872 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 19: Keyword='check_radio_chk_selected'
+2025-04-21 21:20:58,872 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 20: Keyword='check_radio_chk_not_selected'
+2025-04-21 21:20:58,872 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 21: Keyword='click'
+2025-04-21 21:20:58,872 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 22: Keyword='check_radio_chk_selected'
+2025-04-21 21:20:58,872 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 23: Keyword='check_radio_chk_not_selected'
+2025-04-21 21:20:58,872 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 24: Keyword='click'
+2025-04-21 21:20:58,872 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 25: Keyword='check_radio_chk_selected'
+2025-04-21 21:20:58,872 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 26: Keyword='check_radio_chk_not_selected'
+2025-04-21 21:20:58,872 - WafLogger - DEBUG - runner.py:59] [PID:10424] Validating row 27: Keyword='click'
+2025-04-21 21:20:58,872 - WafLogger - INFO - runner.py:127] [PID:10424] Test script validation completed successfully.
+2025-04-21 21:20:58,872 - WafLogger - DEBUG - runner.py:517] [PID:10424] Instantiating the keyword manager.
+2025-04-21 21:20:58,873 - WafLogger - DEBUG - keywords_manager.py:51] [PID:10424] Retry count updated to 1
+2025-04-21 21:20:58,873 - WafLogger - INFO - runner.py:432] [PID:10424] Starting test script execution.
+2025-04-21 21:20:58,873 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 0: Keyword='tc_id'
+2025-04-21 21:20:58,873 - WafLogger - INFO - runner.py:216] [PID:10424] Executing 'tc_id' at row 0.
+2025-04-21 21:20:58,873 - WafLogger - DEBUG - keywords_manager.py:200] [PID:10424] Setting the test report of the PDF report
+2025-04-21 21:20:58,873 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 1: Keyword='tc_desc'
+2025-04-21 21:20:58,873 - WafLogger - INFO - runner.py:220] [PID:10424] Executing 'tc_desc' at row 1.
+2025-04-21 21:20:58,873 - WafLogger - DEBUG - keywords_manager.py:212] [PID:10424] Setting the test description in the PDF report
+2025-04-21 21:20:58,873 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 2: Keyword='step'
+2025-04-21 21:20:58,873 - WafLogger - INFO - runner.py:224] [PID:10424] Executing 'step' at row 2.
+2025-04-21 21:20:58,873 - WafLogger - DEBUG - keywords_manager.py:222] [PID:10424] Populating the test details table in the PDF report
+2025-04-21 21:20:58,873 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:10424] Step is captured to be added to PDF report.
+2025-04-21 21:20:58,873 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 3: Keyword='open_browser'
+2025-04-21 21:20:58,873 - WafLogger - INFO - runner.py:191] [PID:10424] Executing 'open_browser' at row 3. Launching browser: edge.
+2025-04-21 21:20:58,873 - WafLogger - DEBUG - keywords_manager.py:246] [PID:10424] Launching edge .......
+2025-04-21 21:21:00,955 - WafLogger - DEBUG - keywords_manager.py:248] [PID:10424] Capturing the OS where the browser is running.
+2025-04-21 21:21:00,955 - WafLogger - DEBUG - keywords_manager.py:256] [PID:10424] Capturing the OS where the browser is running in local machine.
+2025-04-21 21:21:00,955 - WafLogger - DEBUG - keywords_manager.py:265] [PID:10424] Populating the OS details in the PDF report as Windows
+2025-04-21 21:21:00,955 - WafLogger - DEBUG - keywords_manager.py:276] [PID:10424] Populating the browser details in the PDF report as edge
+2025-04-21 21:21:00,956 - WafLogger - DEBUG - keywords_manager.py:340] [PID:10424] Returning Browser Version.
+2025-04-21 21:21:00,956 - WafLogger - DEBUG - driver_functions.py:52] [PID:10424] Capturing Browser Version
+2025-04-21 21:21:00,956 - WafLogger - DEBUG - keywords_manager.py:281] [PID:10424] Populating the step result details in the PDF report.
+2025-04-21 21:21:01,293 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:10424] Sub Step is captured to be added to PDF report.
+2025-04-21 21:21:01,294 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 4: Keyword='enter_url'
+2025-04-21 21:21:01,294 - WafLogger - INFO - runner.py:257] [PID:10424] Executing 'enter_url' at row 4. URL: https://jqueryui.com/.
+2025-04-21 21:21:01,294 - WafLogger - DEBUG - keywords_manager.py:887] [PID:10424] Opening URL
+2025-04-21 21:21:01,294 - WafLogger - DEBUG - driver_functions.py:63] [PID:10424] Opening URL https://jqueryui.com/
+2025-04-21 21:21:03,932 - WafLogger - DEBUG - keywords_manager.py:892] [PID:10424] Populating the step result details in the PDF report.
+2025-04-21 21:21:04,372 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:10424] Sub Step is captured to be added to PDF report.
+2025-04-21 21:21:04,373 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 5: Keyword='step'
+2025-04-21 21:21:04,373 - WafLogger - INFO - runner.py:224] [PID:10424] Executing 'step' at row 5.
+2025-04-21 21:21:04,373 - WafLogger - DEBUG - keywords_manager.py:222] [PID:10424] Populating the test details table in the PDF report
+2025-04-21 21:21:04,373 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:10424] Step is captured to be added to PDF report.
+2025-04-21 21:21:04,373 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 6: Keyword='click'
+2025-04-21 21:21:04,373 - WafLogger - INFO - runner.py:341] [PID:10424] Executing 'click' at row 6.
+2025-04-21 21:21:04,410 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a and locator_type: css
+2025-04-21 21:21:04,418 - WafLogger - DEBUG - driver_functions.py:103] [PID:10424] scrolling to element with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a locator_type: css
+2025-04-21 21:21:04,430 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a and locator_type: css
+2025-04-21 21:21:05,897 - WafLogger - DEBUG - driver_functions.py:526] [PID:10424] clicked on element with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a locator_type: css
+2025-04-21 21:21:07,899 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:10424] Populating the step result details in the PDF report.
+2025-04-21 21:21:08,166 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:10424] Sub Step is captured to be added to PDF report.
+2025-04-21 21:21:08,167 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 7: Keyword='step'
+2025-04-21 21:21:08,167 - WafLogger - INFO - runner.py:224] [PID:10424] Executing 'step' at row 7.
+2025-04-21 21:21:08,167 - WafLogger - DEBUG - keywords_manager.py:222] [PID:10424] Populating the test details table in the PDF report
+2025-04-21 21:21:08,167 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:10424] Step is captured to be added to PDF report.
+2025-04-21 21:21:08,167 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 8: Keyword='click'
+2025-04-21 21:21:08,167 - WafLogger - INFO - runner.py:341] [PID:10424] Executing 'click' at row 8.
+2025-04-21 21:21:08,184 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: #content > div.demo-list > ul > li:nth-child(2)> a and locator_type: css
+2025-04-21 21:21:08,195 - WafLogger - DEBUG - driver_functions.py:103] [PID:10424] scrolling to element with locator: #content > div.demo-list > ul > li:nth-child(2)> a locator_type: css
+2025-04-21 21:21:08,206 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: #content > div.demo-list > ul > li:nth-child(2)> a and locator_type: css
+2025-04-21 21:21:08,382 - WafLogger - DEBUG - driver_functions.py:526] [PID:10424] clicked on element with locator: #content > div.demo-list > ul > li:nth-child(2)> a locator_type: css
+2025-04-21 21:21:10,383 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:10424] Populating the step result details in the PDF report.
+2025-04-21 21:21:10,657 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:10424] Sub Step is captured to be added to PDF report.
+2025-04-21 21:21:10,658 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 9: Keyword='step'
+2025-04-21 21:21:10,658 - WafLogger - INFO - runner.py:224] [PID:10424] Executing 'step' at row 9.
+2025-04-21 21:21:10,658 - WafLogger - DEBUG - keywords_manager.py:222] [PID:10424] Populating the test details table in the PDF report
+2025-04-21 21:21:10,658 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:10424] Step is captured to be added to PDF report.
+2025-04-21 21:21:10,658 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 10: Keyword='switch_to_iframe'
+2025-04-21 21:21:10,658 - WafLogger - INFO - runner.py:208] [PID:10424] Executing 'switch_to_iframe' at row 10.
+2025-04-21 21:21:10,658 - WafLogger - DEBUG - keywords_manager.py:125] [PID:10424] Attempting to switch to iframe 'iframe' using traditional locators.
+2025-04-21 21:21:10,658 - WafLogger - DEBUG - driver_functions.py:921] [PID:10424] Waiting for maximum :: 10 :: seconds for element to be clickable
+2025-04-21 21:21:10,716 - WafLogger - DEBUG - driver_functions.py:927] [PID:10424] Element appeared on the web page
+2025-04-21 21:21:10,729 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: #content > iframe and locator_type: css
+2025-04-21 21:21:10,741 - WafLogger - DEBUG - driver_functions.py:103] [PID:10424] scrolling to element with locator: #content > iframe locator_type: css
+2025-04-21 21:21:10,749 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: #content > iframe and locator_type: css
+2025-04-21 21:21:11,100 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:10424] Sub Step is captured to be added to PDF report.
+2025-04-21 21:21:11,100 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 11: Keyword='click'
+2025-04-21 21:21:11,100 - WafLogger - INFO - runner.py:341] [PID:10424] Executing 'click' at row 11.
+2025-04-21 21:21:11,140 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] and locator_type: css
+2025-04-21 21:21:11,146 - WafLogger - DEBUG - driver_functions.py:103] [PID:10424] scrolling to element with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] locator_type: css
+2025-04-21 21:21:11,160 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] and locator_type: css
+2025-04-21 21:21:11,339 - WafLogger - DEBUG - driver_functions.py:526] [PID:10424] clicked on element with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] locator_type: css
+2025-04-21 21:21:13,340 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:10424] Populating the step result details in the PDF report.
+2025-04-21 21:21:13,672 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:10424] Sub Step is captured to be added to PDF report.
+2025-04-21 21:21:13,673 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 12: Keyword='check_radio_chk_selected'
+2025-04-21 21:21:13,673 - WafLogger - INFO - runner.py:397] [PID:10424] Executing 'check_radio_chk_selected' at row 12.
+2025-04-21 21:21:13,673 - WafLogger - DEBUG - keywords_manager.py:623] [PID:10424] Checking if element is selected.
+2025-04-21 21:21:13,689 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: body > div > fieldset:nth-child(3) > input#radio-1 and locator_type: css
+2025-04-21 21:21:13,704 - WafLogger - DEBUG - driver_functions.py:865] [PID:10424] Element is with locator: body > div > fieldset:nth-child(3) > input#radio-1 and locator_type: css is selected
+2025-04-21 21:21:13,704 - WafLogger - DEBUG - keywords_manager.py:629] [PID:10424] Element is selected.
+2025-04-21 21:21:14,049 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:10424] Sub Step is captured to be added to PDF report.
+2025-04-21 21:21:14,049 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 13: Keyword='click'
+2025-04-21 21:21:14,049 - WafLogger - INFO - runner.py:341] [PID:10424] Executing 'click' at row 13.
+2025-04-21 21:21:14,064 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] and locator_type: css
+2025-04-21 21:21:14,073 - WafLogger - DEBUG - driver_functions.py:103] [PID:10424] scrolling to element with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] locator_type: css
+2025-04-21 21:21:14,079 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] and locator_type: css
+2025-04-21 21:21:14,211 - WafLogger - DEBUG - driver_functions.py:526] [PID:10424] clicked on element with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] locator_type: css
+2025-04-21 21:21:16,212 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:10424] Populating the step result details in the PDF report.
+2025-04-21 21:21:16,511 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:10424] Sub Step is captured to be added to PDF report.
+2025-04-21 21:21:16,513 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 14: Keyword='check_radio_chk_selected'
+2025-04-21 21:21:16,513 - WafLogger - INFO - runner.py:397] [PID:10424] Executing 'check_radio_chk_selected' at row 14.
+2025-04-21 21:21:16,513 - WafLogger - DEBUG - keywords_manager.py:623] [PID:10424] Checking if element is selected.
+2025-04-21 21:21:16,528 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: body > div > fieldset:nth-child(3) > input#radio-2 and locator_type: css
+2025-04-21 21:21:16,541 - WafLogger - DEBUG - driver_functions.py:865] [PID:10424] Element is with locator: body > div > fieldset:nth-child(3) > input#radio-2 and locator_type: css is selected
+2025-04-21 21:21:16,541 - WafLogger - DEBUG - keywords_manager.py:629] [PID:10424] Element is selected.
+2025-04-21 21:21:16,772 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:10424] Sub Step is captured to be added to PDF report.
+2025-04-21 21:21:16,773 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 15: Keyword='click'
+2025-04-21 21:21:16,773 - WafLogger - INFO - runner.py:341] [PID:10424] Executing 'click' at row 15.
+2025-04-21 21:21:16,791 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] and locator_type: css
+2025-04-21 21:21:16,799 - WafLogger - DEBUG - driver_functions.py:103] [PID:10424] scrolling to element with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] locator_type: css
+2025-04-21 21:21:16,806 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] and locator_type: css
+2025-04-21 21:21:16,939 - WafLogger - DEBUG - driver_functions.py:526] [PID:10424] clicked on element with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] locator_type: css
+2025-04-21 21:21:18,940 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:10424] Populating the step result details in the PDF report.
+2025-04-21 21:21:19,541 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:10424] Sub Step is captured to be added to PDF report.
+2025-04-21 21:21:19,542 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 16: Keyword='check_radio_chk_selected'
+2025-04-21 21:21:19,542 - WafLogger - INFO - runner.py:397] [PID:10424] Executing 'check_radio_chk_selected' at row 16.
+2025-04-21 21:21:19,542 - WafLogger - DEBUG - keywords_manager.py:623] [PID:10424] Checking if element is selected.
+2025-04-21 21:21:19,560 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: body > div > fieldset:nth-child(3) > input#radio-3 and locator_type: css
+2025-04-21 21:21:19,575 - WafLogger - DEBUG - driver_functions.py:865] [PID:10424] Element is with locator: body > div > fieldset:nth-child(3) > input#radio-3 and locator_type: css is selected
+2025-04-21 21:21:19,575 - WafLogger - DEBUG - keywords_manager.py:629] [PID:10424] Element is selected.
+2025-04-21 21:21:19,973 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:10424] Sub Step is captured to be added to PDF report.
+2025-04-21 21:21:19,974 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 17: Keyword='step'
+2025-04-21 21:21:19,974 - WafLogger - INFO - runner.py:224] [PID:10424] Executing 'step' at row 17.
+2025-04-21 21:21:19,974 - WafLogger - DEBUG - keywords_manager.py:222] [PID:10424] Populating the test details table in the PDF report
+2025-04-21 21:21:19,974 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:10424] Step is captured to be added to PDF report.
+2025-04-21 21:21:19,974 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 18: Keyword='click'
+2025-04-21 21:21:19,975 - WafLogger - INFO - runner.py:341] [PID:10424] Executing 'click' at row 18.
+2025-04-21 21:21:19,987 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-1"] and locator_type: css
+2025-04-21 21:21:19,993 - WafLogger - DEBUG - driver_functions.py:103] [PID:10424] scrolling to element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-1"] locator_type: css
+2025-04-21 21:21:20,002 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-1"] and locator_type: css
+2025-04-21 21:21:20,199 - WafLogger - DEBUG - driver_functions.py:526] [PID:10424] clicked on element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-1"] locator_type: css
+2025-04-21 21:21:22,200 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:10424] Populating the step result details in the PDF report.
+2025-04-21 21:21:22,481 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:10424] Sub Step is captured to be added to PDF report.
+2025-04-21 21:21:22,481 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 19: Keyword='check_radio_chk_selected'
+2025-04-21 21:21:22,481 - WafLogger - INFO - runner.py:397] [PID:10424] Executing 'check_radio_chk_selected' at row 19.
+2025-04-21 21:21:22,482 - WafLogger - DEBUG - keywords_manager.py:623] [PID:10424] Checking if element is selected.
+2025-04-21 21:21:22,496 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: #checkbox-1 and locator_type: css
+2025-04-21 21:21:22,513 - WafLogger - DEBUG - driver_functions.py:865] [PID:10424] Element is with locator: #checkbox-1 and locator_type: css is selected
+2025-04-21 21:21:22,513 - WafLogger - DEBUG - keywords_manager.py:629] [PID:10424] Element is selected.
+2025-04-21 21:21:22,769 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:10424] Sub Step is captured to be added to PDF report.
+2025-04-21 21:21:22,770 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 20: Keyword='check_radio_chk_not_selected'
+2025-04-21 21:21:22,770 - WafLogger - INFO - runner.py:410] [PID:10424] Executing 'check_radio_chk_not_selected' at row 20.
+2025-04-21 21:21:22,770 - WafLogger - DEBUG - keywords_manager.py:690] [PID:10424] Checking if element is NOT selected.
+2025-04-21 21:21:22,786 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: #checkbox-2 and locator_type: css
+2025-04-21 21:21:22,797 - WafLogger - DEBUG - driver_functions.py:867] [PID:10424] Element is with locator: #checkbox-2 and locator_type: css is NOT selected
+2025-04-21 21:21:22,797 - WafLogger - DEBUG - keywords_manager.py:696] [PID:10424] Element is NOT selected.
+2025-04-21 21:21:23,105 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:10424] Sub Step is captured to be added to PDF report.
+2025-04-21 21:21:23,106 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 21: Keyword='click'
+2025-04-21 21:21:23,106 - WafLogger - INFO - runner.py:341] [PID:10424] Executing 'click' at row 21.
+2025-04-21 21:21:23,119 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-2"] and locator_type: css
+2025-04-21 21:21:23,125 - WafLogger - DEBUG - driver_functions.py:103] [PID:10424] scrolling to element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-2"] locator_type: css
+2025-04-21 21:21:23,136 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-2"] and locator_type: css
+2025-04-21 21:21:23,307 - WafLogger - DEBUG - driver_functions.py:526] [PID:10424] clicked on element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-2"] locator_type: css
+2025-04-21 21:21:25,309 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:10424] Populating the step result details in the PDF report.
+2025-04-21 21:21:25,636 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:10424] Sub Step is captured to be added to PDF report.
+2025-04-21 21:21:25,636 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 22: Keyword='check_radio_chk_selected'
+2025-04-21 21:21:25,636 - WafLogger - INFO - runner.py:397] [PID:10424] Executing 'check_radio_chk_selected' at row 22.
+2025-04-21 21:21:25,636 - WafLogger - DEBUG - keywords_manager.py:623] [PID:10424] Checking if element is selected.
+2025-04-21 21:21:25,648 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: #checkbox-2 and locator_type: css
+2025-04-21 21:21:25,661 - WafLogger - DEBUG - driver_functions.py:865] [PID:10424] Element is with locator: #checkbox-2 and locator_type: css is selected
+2025-04-21 21:21:25,661 - WafLogger - DEBUG - keywords_manager.py:629] [PID:10424] Element is selected.
+2025-04-21 21:21:25,956 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:10424] Sub Step is captured to be added to PDF report.
+2025-04-21 21:21:25,957 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 23: Keyword='check_radio_chk_not_selected'
+2025-04-21 21:21:25,957 - WafLogger - INFO - runner.py:410] [PID:10424] Executing 'check_radio_chk_not_selected' at row 23.
+2025-04-21 21:21:25,957 - WafLogger - DEBUG - keywords_manager.py:690] [PID:10424] Checking if element is NOT selected.
+2025-04-21 21:21:25,970 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: #checkbox-3 and locator_type: css
+2025-04-21 21:21:25,977 - WafLogger - DEBUG - driver_functions.py:867] [PID:10424] Element is with locator: #checkbox-3 and locator_type: css is NOT selected
+2025-04-21 21:21:25,977 - WafLogger - DEBUG - keywords_manager.py:696] [PID:10424] Element is NOT selected.
+2025-04-21 21:21:26,290 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:10424] Sub Step is captured to be added to PDF report.
+2025-04-21 21:21:26,291 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 24: Keyword='click'
+2025-04-21 21:21:26,291 - WafLogger - INFO - runner.py:341] [PID:10424] Executing 'click' at row 24.
+2025-04-21 21:21:26,302 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-3"] and locator_type: css
+2025-04-21 21:21:26,309 - WafLogger - DEBUG - driver_functions.py:103] [PID:10424] scrolling to element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-3"] locator_type: css
+2025-04-21 21:21:26,322 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-3"] and locator_type: css
+2025-04-21 21:21:26,451 - WafLogger - DEBUG - driver_functions.py:526] [PID:10424] clicked on element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-3"] locator_type: css
+2025-04-21 21:21:28,452 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:10424] Populating the step result details in the PDF report.
+2025-04-21 21:21:28,986 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:10424] Sub Step is captured to be added to PDF report.
+2025-04-21 21:21:28,986 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 25: Keyword='check_radio_chk_selected'
+2025-04-21 21:21:28,987 - WafLogger - INFO - runner.py:397] [PID:10424] Executing 'check_radio_chk_selected' at row 25.
+2025-04-21 21:21:28,987 - WafLogger - DEBUG - keywords_manager.py:623] [PID:10424] Checking if element is selected.
+2025-04-21 21:21:28,996 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: #checkbox-3 and locator_type: css
+2025-04-21 21:21:29,004 - WafLogger - DEBUG - driver_functions.py:865] [PID:10424] Element is with locator: #checkbox-3 and locator_type: css is selected
+2025-04-21 21:21:29,004 - WafLogger - DEBUG - keywords_manager.py:629] [PID:10424] Element is selected.
+2025-04-21 21:21:29,307 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:10424] Sub Step is captured to be added to PDF report.
+2025-04-21 21:21:29,307 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 26: Keyword='check_radio_chk_not_selected'
+2025-04-21 21:21:29,307 - WafLogger - INFO - runner.py:410] [PID:10424] Executing 'check_radio_chk_not_selected' at row 26.
+2025-04-21 21:21:29,307 - WafLogger - DEBUG - keywords_manager.py:690] [PID:10424] Checking if element is NOT selected.
+2025-04-21 21:21:29,319 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: #checkbox-4 and locator_type: css
+2025-04-21 21:21:29,326 - WafLogger - DEBUG - driver_functions.py:867] [PID:10424] Element is with locator: #checkbox-4 and locator_type: css is NOT selected
+2025-04-21 21:21:29,327 - WafLogger - DEBUG - keywords_manager.py:696] [PID:10424] Element is NOT selected.
+2025-04-21 21:21:29,609 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:10424] Sub Step is captured to be added to PDF report.
+2025-04-21 21:21:29,609 - WafLogger - DEBUG - runner.py:463] [PID:10424] Processing row 27: Keyword='click'
+2025-04-21 21:21:29,609 - WafLogger - INFO - runner.py:341] [PID:10424] Executing 'click' at row 27.
+2025-04-21 21:21:29,619 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-4"] and locator_type: css
+2025-04-21 21:21:29,624 - WafLogger - DEBUG - driver_functions.py:103] [PID:10424] scrolling to element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-4"] locator_type: css
+2025-04-21 21:21:29,638 - WafLogger - DEBUG - driver_functions.py:451] [PID:10424] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-4"] and locator_type: css
+2025-04-21 21:21:29,771 - WafLogger - DEBUG - driver_functions.py:526] [PID:10424] clicked on element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-4"] locator_type: css
+2025-04-21 21:21:31,772 - WafLogger - DEBUG - keywords_manager.py:1093] [PID:10424] Populating the step result details in the PDF report.
+2025-04-21 21:21:32,030 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:10424] Sub Step is captured to be added to PDF report.
+2025-04-21 21:21:32,030 - WafLogger - INFO - runner.py:474] [PID:10424] Test script execution completed successfully.
+2025-04-21 21:21:32,030 - WafLogger - INFO - runner.py:529] [PID:10424] Test script 'D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS001_testscript.xlsx' executed successfully.
+2025-04-21 21:21:32,030 - WafLogger - DEBUG - runner.py:542] [PID:10424] Adding row to test summary results excel file.
+2025-04-21 21:21:32,795 - WafLogger - DEBUG - runner.py:545] [PID:10424] Closing the test and creating the test result pdf file.
+2025-04-21 21:21:32,795 - WafLogger - DEBUG - keywords_manager.py:180] [PID:10424] Started creating pdf report and closing the browser
+2025-04-21 21:21:32,797 - WafLogger - DEBUG - pdf_report_manager.py:135] [PID:10424] Finalizing the data to be added to PDF report.
+2025-04-21 21:21:32,797 - WafLogger - DEBUG - pdf_reporting.py:65] [PID:10424] Encoding the logo png file
+2025-04-21 21:21:32,798 - WafLogger - DEBUG - pdf_reporting.py:113] [PID:10424] Decrypting the PDF report template
+2025-04-21 21:21:32,844 - WafLogger - DEBUG - pdf_reporting.py:122] [PID:10424] Generated the PDF report template with appropriate data
+2025-04-21 21:21:32,844 - WafLogger - DEBUG - pdf_reporting.py:76] [PID:10424] Creating the PDF report header template
+2025-04-21 21:21:32,844 - WafLogger - DEBUG - pdf_reporting.py:95] [PID:10424] Creating the PDF report footer template
+2025-04-21 21:21:32,844 - WafLogger - DEBUG - pdf_reporting.py:138] [PID:10424] Starting creation of PDF report from template with populated data
+2025-04-21 21:21:41,436 - WafLogger - DEBUG - pdf_reporting.py:163] [PID:10424] Completed creation of PDF report from template with populated data
+2025-04-21 21:21:41,532 - WafLogger - DEBUG - driver_functions.py:41] [PID:10424] Closing Browser
+2025-04-21 21:21:48,362 - WafLogger - DEBUG - runner.py:609] [PID:8684] Finished recording.
+2025-04-21 21:21:50,824 - WafLogger - INFO - runner.py:856] [PID:8684] 0hrs:1min:47sec:0ms
+2025-04-21 21:21:50,827 - WafLogger - DEBUG - pdf_report_manager.py:168] [PID:8684] Checking if output.xlsx file exists before creating the test summary PDF report.
+2025-04-21 21:21:50,827 - WafLogger - DEBUG - pdf_report_manager.py:170] [PID:8684] Output.xlsx exists and starting to create test summary PDF report.
+2025-04-21 21:21:50,879 - WafLogger - DEBUG - pdf_ts_reporting.py:51] [PID:8684] Encoding the logo png file
+2025-04-21 21:21:50,882 - WafLogger - DEBUG - pdf_ts_reporting.py:99] [PID:8684] Decrypting the test summary report PDF template
+2025-04-21 21:21:50,913 - WafLogger - DEBUG - pdf_ts_reporting.py:108] [PID:8684] Generated the test summary report PDF template with appropriate data
+2025-04-21 21:21:50,913 - WafLogger - DEBUG - pdf_ts_reporting.py:62] [PID:8684] Creating the test summary report PDF header template
+2025-04-21 21:21:50,914 - WafLogger - DEBUG - pdf_ts_reporting.py:81] [PID:8684] Creating the test summary report PDF footer template
+2025-04-21 21:21:50,914 - WafLogger - DEBUG - pdf_ts_reporting.py:126] [PID:8684] Starting creation of test dummary PDF report from template with populated data
+2025-04-21 21:21:51,819 - WafLogger - DEBUG - pdf_ts_reporting.py:150] [PID:8684] Completed creation of test summary PDF report from template with populated data
+2025-04-21 21:21:51,886 - WafLogger - INFO - utilities.py:122] [PID:8684] ['QS001_EDGE_PASSED_21Apr2025.pdf', 'QS002_CHROME_PASSED_21Apr2025.pdf', 'Test_Summary_Results_21Apr2025.pdf']
+2025-04-21 21:21:51,886 - WafLogger - INFO - utilities.py:126] [PID:8684] Processing PDF: QS001_EDGE_PASSED_21Apr2025.pdf
+2025-04-21 21:21:51,887 - WafLogger - INFO - utilities.py:126] [PID:8684] Processing PDF: QS002_CHROME_PASSED_21Apr2025.pdf
+2025-04-21 21:21:51,887 - WafLogger - INFO - utilities.py:126] [PID:8684] Processing PDF: Test_Summary_Results_21Apr2025.pdf
+2025-04-21 21:21:51,887 - WafLogger - INFO - utilities.py:134] [PID:8684] Merge order: ['Test_Summary_Results_21Apr2025.pdf', 'QS001_EDGE_PASSED_21Apr2025.pdf', 'QS002_CHROME_PASSED_21Apr2025.pdf']
+2025-04-21 21:21:51,887 - WafLogger - INFO - utilities.py:141] [PID:8684] All PDFs are within the size limit. Merging into a single file.
+2025-04-21 21:21:52,165 - WafLogger - INFO - utilities.py:147] [PID:8684] Merged PDF saved at: D:\allprojects\web_automation_htmltopdf\test_results\vinaybabu_pc\21Apr2025\15h50m03s\consolidated\Test_Results_21Apr2025_03h51m51s886971.pdf
+2025-04-21 21:22:45,213 - WafLogger - INFO - utilities.py:889] [PID:8684] Email sent successfully to theautomationtester@hotmail.com with attachment: Test_Results_21Apr2025_03h51m51s886971.pdf
+2025-04-21 21:23:37,935 - WafLogger - INFO - utilities.py:889] [PID:8684] Email sent successfully to theautomationtester99@gmail.com with attachment: Test_Results_21Apr2025_03h51m51s886971.pdf
+2025-04-21 21:23:42,350 - WafLogger - INFO - utilities.py:780] [PID:8684] ZIP file created: D:\allprojects\web_automation_htmltopdf\test_results\vinaybabu_pc\21Apr2025\15h50m03s\recordings.zip
+2025-04-21 21:23:42,458 - WafLogger - INFO - utilities.py:791] [PID:8684] Split completed: 3 parts created.
+2025-04-21 21:23:42,459 - WafLogger - INFO - utilities.py:903] [PID:8684] Split ZIP into 3 parts.
+2025-04-21 21:25:20,433 - WafLogger - INFO - utilities.py:937] [PID:8684] Email sent successfully to theautomationtester@hotmail.com with attachment: recordings.zip.part1
+2025-04-21 21:26:59,189 - WafLogger - INFO - utilities.py:937] [PID:8684] Email sent successfully to theautomationtester@hotmail.com with attachment: recordings.zip.part2
+2025-04-21 21:27:44,122 - WafLogger - INFO - utilities.py:937] [PID:8684] Email sent successfully to theautomationtester@hotmail.com with attachment: recordings.zip.part3
+2025-04-21 21:29:22,991 - WafLogger - INFO - utilities.py:937] [PID:8684] Email sent successfully to theautomationtester99@gmail.com with attachment: recordings.zip.part1
+2025-04-21 21:31:01,758 - WafLogger - INFO - utilities.py:937] [PID:8684] Email sent successfully to theautomationtester99@gmail.com with attachment: recordings.zip.part2
+2025-04-21 21:31:47,315 - WafLogger - INFO - utilities.py:937] [PID:8684] Email sent successfully to theautomationtester99@gmail.com with attachment: recordings.zip.part3

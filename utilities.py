@@ -1,11 +1,14 @@
 import filecmp
 import getpass
+import glob
 import json
 import os
 from pathlib import Path
 import platform
 import re
+import socket
 import sys
+import zipfile
 import PyPDF2
 import numpy as np
 import cv2
@@ -67,6 +70,7 @@ class Utils:
             self.date_str = self.get_date_string()
             self.date_time_str = self.get_datetime_string()
             self.time_str = self.get_time_string()
+            self.hostname = self.sanitize_string(self.get_hostname())
             # self.images_folder = os.path.abspath("images\\" + self.date_str)
             # self.recordings_folder = os.path.abspath("recordings\\" + self.date_str)
             # self.test_results_folder = os.path.abspath("test_results\\" + self.date_str)
@@ -79,7 +83,7 @@ class Utils:
                 script_dir = os.path.dirname(os.path.abspath(__file__))  # Normal script behavior
 
             generic_path = os.path.join(script_dir, "test_results")
-            self.test_results_folder = os.path.abspath(os.path.join(generic_path, self.date_str, self.time_str))
+            self.test_results_folder = os.path.abspath(os.path.join(generic_path, self.hostname, self.date_str, self.time_str))
             self.recordings_folder = os.path.abspath(os.path.join(self.test_results_folder, "recordings"))
             self.images_folder = os.path.abspath(os.path.join(self.test_results_folder, "images"))
             
@@ -726,6 +730,14 @@ class Utils:
         # (0,0,0)-black color text
         draw.text((x, y), text, fill=(0, 0, 0), font=font, anchor='ms')
         image.save(file_name_path)
+        
+    def sanitize_string(self, input_str: str) -> str:
+        # Replace all non-alphanumeric and non-underscore characters with '_'
+        return re.sub(r'[^a-zA-Z0-9_]', '_', input_str)
+    
+    def get_hostname(self) -> str:
+        """Returns the hostname of the system."""
+        return socket.gethostname()
 
     def upload_test_results_to_drive(self, recipient_email):
         folder_name = "TestResults"
@@ -758,6 +770,26 @@ class Utils:
             return
         
         self.delete_folder_from_drive(folder_id, drive_service)
+    
+    def zip_folder(self, folder_path, zip_name):
+        """Compress a folder into a ZIP file."""
+        with zipfile.ZipFile(zip_name, 'w', zipfile.ZIP_DEFLATED) as zipf:
+            for root, _, files in os.walk(folder_path):
+                for file in files:
+                    zipf.write(os.path.join(root, file), os.path.relpath(os.path.join(root, file), folder_path))
+        self.logger.info(f"ZIP file created: {zip_name}")
+
+    def split_zip(self, zip_path, part_size=15*1024*1024):
+        """Split ZIP into 15MB chunks."""
+        with open(zip_path, 'rb') as zip_file:
+            index = 1
+            while chunk := zip_file.read(part_size):
+                part_filename = f"{zip_path}.part{index}"
+                with open(part_filename, 'wb') as part:
+                    part.write(chunk)
+                index += 1
+        self.logger.info(f"Split completed: {index - 1} parts created.")
+        return glob.glob(f"{zip_path}.part*")  # Return list of split parts
 
     def send_email_with_attachment(self):
         """
@@ -782,8 +814,10 @@ class Utils:
             sender_email =  str(start_properties.SENDER_EMAIL).lower()
             sender_password = self.decrypt_string(str(start_properties.SENDER_EMAIL_PASSWORD))
             recipient_emails = str(start_properties.RECIPIENT_EMAILS).lower().split(",")
+            zip_folder_path = os.path.join(self.get_test_result_folder(), "recordings")
             folder_path = os.path.join(self.get_test_result_folder(), "consolidated")
             subject_prefix = "Test Results"
+            zip_subject_prefix = "Recordings"
             
             smtp_server = "smtp.gmail.com"
             smtp_port = 587  # Gmail SMTP port
@@ -816,7 +850,7 @@ class Utils:
             for recipient_email in unique_recipients:
                 for idx, file_name in enumerate(files, start=1):
                     # Determine email subject
-                    subject = subject_prefix if total_files == 1 else f"{subject_prefix} - Part {idx}"
+                    subject = subject_prefix if total_files == 1 else f"{subject_prefix} - Part {idx}/{total_files}"
 
                     # Create email message
                     msg = MIMEMultipart()
@@ -855,6 +889,63 @@ class Utils:
                         self.logger.info(f"Email sent successfully to {recipient_email} with attachment: {file_name}")
                     except Exception as e:
                         self.logger.error(f"Error sending email to {recipient_email} for {file_name}: {e}")
+            
+            # **Check if recordings folder contains at least one file**
+            if not any(os.path.isfile(os.path.join(zip_folder_path, f)) for f in os.listdir(zip_folder_path)):
+                self.logger.warn(f"No files found in 'recordings' folder. Zipping and sending email skipped.")
+                return
+            
+            zip_name = os.path.join(self.get_test_result_folder(), "recordings.zip")
+            self.zip_folder(zip_folder_path, zip_name)  # Using defined function
+
+            # **Call existing function to split the ZIP into 15MB parts**
+            split_files = self.split_zip(zip_name)  # Using defined function
+            self.logger.info(f"Split ZIP into {len(split_files)} parts.")
+
+            # **Preserving your email logic, now sending split files**
+            total_zip_files = len(split_files)  # Update file count to reflect split ZIP files
+            
+            for recipient_email in unique_recipients:
+                for idx, file_path in enumerate(split_files, start=1):
+                    zip_subject = zip_subject_prefix if total_zip_files == 1 else f"{subject_prefix} - Part {idx}/{total_zip_files}"
+
+                    msg = MIMEMultipart()
+                    msg["From"] = sender_email
+                    msg["To"] = recipient_email
+                    msg["Subject"] = zip_subject
+                    
+                    body_single = f"Hello,\n\nAttached is recordings zip.\n\nBest regards."
+                    body = body_single if total_zip_files == 1 else f"Hello,\n\nPlease find attached recordings zip - Part {idx}/{total_zip_files}\n\nBest regards."
+                
+                    msg.attach(MIMEText(body, "plain"))
+
+                    try:
+                        with open(file_path, "rb") as attachment:
+                            part = MIMEApplication(attachment.read(), Name=os.path.basename(file_path))
+                            part["Content-Disposition"] = f'attachment; filename="{os.path.basename(file_path)}"'
+                            msg.attach(part)
+                    except Exception as e:
+                        self.logger.error(f"Could not attach file {os.path.basename(file_path)}: {e}")
+                        continue
+
+                    try:
+                        server = smtplib.SMTP(smtp_server, smtp_port)
+                        server.starttls()
+                        server.login(sender_email, sender_password)
+                        server.sendmail(sender_email, recipient_email, msg.as_string())
+                        server.quit()
+                        self.logger.info(f"Email sent successfully to {recipient_email} with attachment: {os.path.basename(file_path)}")
+                    except Exception as e:
+                        self.logger.error(f"Error sending email to {recipient_email} for {os.path.basename(file_path)}: {e}")
+            
+            # **Delete ZIP files after emails are sent**
+            zip_files = [zip_name] + split_files  # Includes main ZIP and all split parts
+            for file in zip_files:
+                try:
+                    os.remove(file)
+                    self.logger.info(f"Deleted file: {file}")
+                except Exception as e:
+                    self.logger.error(f"Error deleting {file}: {e}")
 
     def is_not_used(self):
         pass
