@@ -2,6 +2,7 @@ import logging
 from logging.handlers import RotatingFileHandler, QueueHandler, QueueListener
 import os
 from multiprocessing import Queue
+import sys
 from color_formatter import ColorFormatter
 from config import start_properties
 
@@ -11,7 +12,7 @@ class LoggerConfig:
     A multiprocessing-safe logger configuration class with ColorFormatter support for colored console output.
     """
 
-    def __init__(self, log_file=os.path.join('logs', 'waf.log'), log_queue=None):
+    def __init__(self, log_file='', log_queue=None):
         """
         Initializes the LoggerConfig object for multiprocessing.
 
@@ -19,6 +20,14 @@ class LoggerConfig:
             log_file (str, optional): Path to the log file. Defaults to 'logs/waf.log'.
             log_queue (multiprocessing.Queue, optional): Queue for handling log messages.
         """
+        if getattr(sys, 'frozen', False):  # Check if running as a frozen executable
+            script_dir = os.path.dirname(sys.executable)  # Use the directory of the executable
+        else:
+            script_dir = os.path.dirname(os.path.abspath(__file__))  # Normal script behavior
+
+        generic_path = os.path.join(script_dir, "logs")
+        log_file = os.path.join(generic_path, 'waf.log')
+        
         self.log_file = log_file
         self.log_level = self.get_log_level_from_config()
         self.log_queue = log_queue or Queue()  # Use provided Queue or create a new one

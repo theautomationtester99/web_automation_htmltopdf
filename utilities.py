@@ -115,14 +115,19 @@ class Utils:
         pdf_files = [f for f in os.listdir(folder_path) if f.endswith('.pdf')]
         test_summary = [f for f in pdf_files if f.startswith('Test_Summary_Results')]
         
+        self.logger.info(pdf_files)
+        
         grouped_pdfs = {}
         for pdf in pdf_files:
-            match = re.match(r'(QS\d+)_test_results', pdf, re.IGNORECASE)
+            self.logger.info(f"Processing PDF: {pdf}")
+            match = re.match(r'(QS\d+)_', pdf, re.IGNORECASE)
             if match:
                 prefix = match.group(1).upper()
                 grouped_pdfs.setdefault(prefix, []).append(pdf)
 
         merge_order = test_summary + sum([grouped_pdfs[key] for key in sorted(grouped_pdfs.keys())], [])
+        
+        self.logger.info(f"Merge order: {merge_order}")
         
         total_size = sum(os.path.getsize(os.path.join(folder_path, pdf_file)) for pdf_file in merge_order)
         
@@ -730,7 +735,7 @@ class Utils:
         else:
             script_dir = os.path.dirname(os.path.abspath(__file__))  # Normal script behavior
 
-        generic_path = os.path.join(script_dir, "test_scripts")
+        generic_path = os.path.join(script_dir, "test_results")
 
         folder_path = generic_path
         # recipient_email = ["theautomationtester99@gmail.com"]

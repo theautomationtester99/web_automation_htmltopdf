@@ -108,8 +108,8 @@ class PdfTsReporting:
         self.logger.debug("Generated the test summary report PDF template with appropriate data")
 
         # Save the populated HTML to a file
-        with open("output.html", "w") as f:
-            f.write(output)
+        # with open("output.html", "w") as f:
+        #     f.write(output)
 
         # print("HTML file generated successfully!")
         return output
