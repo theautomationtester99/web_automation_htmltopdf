@@ -109,6 +109,7 @@ class Utils:
                     self.logger.info(f"Terminating {process_name} (PID: {process.info['pid']})")
                     psutil.Process(process.info["pid"]).terminate()
             except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                self.logger.error(f"Error terminating process: {process.info['name']} (PID: {process.info['pid']})")
                 pass
     
     def merge_pdfs_in_parts(self):
