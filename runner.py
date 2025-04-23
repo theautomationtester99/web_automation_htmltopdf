@@ -20,7 +20,7 @@ from config import start_properties
 import os
 from logger_config import LoggerConfig
 from constants import VALID_KEYWORDS
-
+import psutil
 
 def validate_test_script(testscript_file, wafl, utils, launch_browser):
     """
@@ -414,6 +414,51 @@ def check_radio_chk_not_selected(row, wafl, km, object_repo_reader):
         str(row["Input1"]).strip()
     )
 
+def write_pid_to_file(pid, file_name="processes.txt"):
+    """Write the process ID to a text file."""
+    if getattr(sys, 'frozen', False):  # Check if running as a frozen executable
+        script_dir = os.path.dirname(sys.executable)  # Use the directory of the executable
+    else:
+        script_dir = os.path.dirname(os.path.abspath(__file__))  # Normal script behavior
+
+    pid_file_path = os.path.join(script_dir, file_name)
+    with open(pid_file_path, "a") as file:
+        file.write(f"{pid}\n")
+
+def read_pids_from_file(file_name="processes.txt"):
+    """Read all PIDs from a text file."""
+    if getattr(sys, 'frozen', False):  # Check if running as a frozen executable
+        script_dir = os.path.dirname(sys.executable)  # Use the directory of the executable
+    else:
+        script_dir = os.path.dirname(os.path.abspath(__file__))  # Normal script behavior
+
+    pid_file_path = os.path.join(script_dir, file_name)
+    if os.path.exists(pid_file_path):
+        with open(pid_file_path, "r") as file:
+            return [int(pid.strip()) for pid in file.readlines()]
+    return []
+
+def stop_running_processes(pids):
+    """Stop processes using the PIDs."""
+    for pid in pids:
+        try:
+            process = psutil.Process(pid)
+            process.terminate()  # Terminate the process
+            print(f"Stopped process with PID: {pid}")
+        except psutil.NoSuchProcess:
+            print(f"No process found with PID: {pid}")
+
+def clear_pid_file(file_name="processes.txt"):
+    """Clear the content of the PID file."""
+    if getattr(sys, 'frozen', False):  # Check if running as a frozen executable
+        script_dir = os.path.dirname(sys.executable)  # Use the directory of the executable
+    else:
+        script_dir = os.path.dirname(os.path.abspath(__file__))  # Normal script behavior
+
+    pid_file_path = os.path.join(script_dir, file_name)
+    if os.path.exists(pid_file_path):
+        open(pid_file_path, "w").close()
+
 def execute_test_script(df, wafl, km, object_repo_reader, utils, launch_browser):
     """
     Executes the test script based on the validated DataFrame.
@@ -714,6 +759,10 @@ if __name__ == '__main__':
 
         utils = Utils(logger)
         utils.stop_driver_processes()
+        # Stop running processes from previous execution
+        pids = read_pids_from_file()
+        stop_running_processes(pids)
+        clear_pid_file()  # Clear the file after stopping processes
         prm = PdfReportManager(logger)
 
         logger.debug("Execution Started ----------------.")
@@ -815,11 +864,13 @@ if __name__ == '__main__':
                             logger.debug("The file " + os.path.basename(x) + " is present in chrome folder. Launching the execution of test script on chrome browser.")
                             proc1 = Process(target=start_runner,args=(x, log_queue, lock,object_repo_reader, utils,'chrome', ),name="ChromeRunnerProcess")
                             proc1.start()
+                            write_pid_to_file(proc1.pid)
                             proc2 = None
                             if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
                                 logger.debug("Starting the execution recording.")
                                 proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", ""),logger), name="RecordingProcess")
                                 proc2.start()
+                                write_pid_to_file(proc2.pid)
 
                             proc1.join()
                             if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
@@ -828,11 +879,13 @@ if __name__ == '__main__':
                             logger.debug("The file " + os.path.basename(x) + " is present in edge folder. Launching the execution of test script on edge browser.")
                             proc1 = Process(target=start_runner, args=(x, log_queue, lock,object_repo_reader, utils, 'edge',), name="EdgeRunnerProcess")
                             proc1.start()
+                            write_pid_to_file(proc1.pid)
                             proc2 = None
                             if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
                                 logger.debug("Starting the execution recording.")
                                 proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", ""), logger), name="RecordingProcess")
                                 proc2.start()
+                                write_pid_to_file(proc2.pid)
 
                             proc1.join()
                             if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
@@ -841,11 +894,13 @@ if __name__ == '__main__':
                             logger.debug("The file " + os.path.basename(x) + " is present in test_scripts folder. Launching the execution and browser will be choosen from test script.")
                             proc1 = Process(target=start_runner, args=(x,log_queue, lock,object_repo_reader, utils,), name="TestScriptsRunnerProcess")
                             proc1.start()
+                            write_pid_to_file(proc1.pid)
                             proc2 = None
                             if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
                                 logger.debug("Starting the execution recording.")
                                 proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", ""), logger),name="RecordingProcess")
                                 proc2.start()
+                                write_pid_to_file(proc2.pid)
 
                             proc1.join()
                             if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
@@ -921,6 +976,7 @@ if __name__ == '__main__':
 
                 for process in batch:
                     process.start()
+                    write_pid_to_file(process.pid)
 
                 for process in batch:
                     process.join()
