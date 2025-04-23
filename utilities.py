@@ -104,8 +104,9 @@ class Utils:
         for process in psutil.process_iter(attrs=["pid", "name"]):
             try:
                 process_name = process.info["name"].lower()
+                self.logger.warn(f"Process name: {process_name}")
                 if any(driver in process_name for driver in driver_names):
-                    print(f"Terminating {process_name} (PID: {process.info['pid']})")
+                    self.logger.info(f"Terminating {process_name} (PID: {process.info['pid']})")
                     psutil.Process(process.info["pid"]).terminate()
             except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
                 pass
