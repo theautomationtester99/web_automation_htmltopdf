@@ -813,12 +813,12 @@ if __name__ == '__main__':
                         logger.debug("Checking if the file " + os.path.basename(x) + " is present in chrome or edge folder.")
                         if os.path.dirname(x).split(os.sep)[-1].lower() == 'chrome':
                             logger.debug("The file " + os.path.basename(x) + " is present in chrome folder. Launching the execution of test script on chrome browser.")
-                            proc1 = Process(target=start_runner,args=(x, log_queue, lock,object_repo_reader, utils,'chrome', ))
+                            proc1 = Process(target=start_runner,args=(x, log_queue, lock,object_repo_reader, utils,'chrome', ),name="ChromeRunnerProcess")
                             proc1.start()
                             proc2 = None
                             if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
                                 logger.debug("Starting the execution recording.")
-                                proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", ""),logger))
+                                proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", ""),logger), name="RecordingProcess")
                                 proc2.start()
 
                             proc1.join()
@@ -826,12 +826,12 @@ if __name__ == '__main__':
                                 proc2.join()
                         elif os.path.dirname(x).split(os.sep)[-1].lower() == 'edge':
                             logger.debug("The file " + os.path.basename(x) + " is present in edge folder. Launching the execution of test script on edge browser.")
-                            proc1 = Process(target=start_runner, args=(x, log_queue, lock,object_repo_reader, utils, 'edge',))
+                            proc1 = Process(target=start_runner, args=(x, log_queue, lock,object_repo_reader, utils, 'edge',), name="EdgeRunnerProcess")
                             proc1.start()
                             proc2 = None
                             if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
                                 logger.debug("Starting the execution recording.")
-                                proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", ""), logger))
+                                proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", ""), logger), name="RecordingProcess")
                                 proc2.start()
 
                             proc1.join()
@@ -839,12 +839,12 @@ if __name__ == '__main__':
                                 proc2.join()
                         elif os.path.dirname(x).split(os.sep)[-1].lower() == 'test_scripts':
                             logger.debug("The file " + os.path.basename(x) + " is present in test_scripts folder. Launching the execution and browser will be choosen from test script.")
-                            proc1 = Process(target=start_runner, args=(x,log_queue, lock,object_repo_reader, utils,))
+                            proc1 = Process(target=start_runner, args=(x,log_queue, lock,object_repo_reader, utils,), name="TestScriptsRunnerProcess")
                             proc1.start()
                             proc2 = None
                             if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
                                 logger.debug("Starting the execution recording.")
-                                proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", ""), logger))
+                                proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", ""), logger),name="RecordingProcess")
                                 proc2.start()
 
                             proc1.join()
@@ -908,13 +908,13 @@ if __name__ == '__main__':
                         logger.debug("Checking if the file " + os.path.basename(x) + " is present in chrome or edge folder.")
                         if os.path.dirname(x).split(os.sep)[-1].lower() == 'chrome':
                             logger.debug("The file " + os.path.basename(x) + " is present in chrome folder. Launching the execution of test script on chrome browser.")
-                            processes.append(Process(target=start_runner,args=(x,log_queue, lock,object_repo_reader, utils, 'chrome',)))
+                            processes.append(Process(target=start_runner,args=(x,log_queue, lock,object_repo_reader, utils, 'chrome',), name="ChromeRunnerProcess"))
                         elif os.path.dirname(x).split(os.sep)[-1].lower() == 'edge':
                             logger.debug("The file " + os.path.basename(x) + " is present in edge folder. Launching the execution of test script on edge browser.")
-                            processes.append(Process(target=start_runner,args=(x,log_queue, lock,object_repo_reader, utils, 'edge',)))
+                            processes.append(Process(target=start_runner,args=(x,log_queue, lock,object_repo_reader, utils, 'edge',), name="EdgeRunnerProcess"))
                         elif os.path.dirname(x).split(os.sep)[-1].lower() == 'test_scripts':
                             logger.debug("The file " + os.path.basename(x) + " is present in test_scripts folder. Launching the execution and browser will be choosen from test script.")
-                            processes.append(Process(target=start_runner, args=(x,log_queue, lock,object_repo_reader, utils,)))
+                            processes.append(Process(target=start_runner, args=(x,log_queue, lock,object_repo_reader, utils,), name="TestScriptsRunnerProcess"))
 
             for batch_start in range(0, len(processes), number_threads):
                 batch = processes[batch_start:batch_start + number_threads]

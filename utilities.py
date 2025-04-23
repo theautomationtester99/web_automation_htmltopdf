@@ -99,7 +99,7 @@ class Utils:
         return self.test_results_folder
     
     def stop_driver_processes(self):
-        driver_names = ["msedgedriver", "chromedriver", "runner", "runner.exe", "chrome", "msedge", "firefox", "geckodriver"]
+        driver_names = ["msedgedriver", "chromedriver","msedgedriver.exe", "chromedriver.exe", "chromerunnerprocess", "edgerunnerprocess", "recordingprocess", "chrome", "msedge", "firefox", "geckodriver", "chromerunnerprocess.exe", "edgerunnerprocess.exe", "recordingprocess.exe"]
         
         for process in psutil.process_iter(attrs=["pid", "name"]):
             try:
@@ -108,9 +108,13 @@ class Utils:
                 if any(driver in process_name for driver in driver_names):
                     self.logger.info(f"Terminating {process_name} (PID: {process.info['pid']})")
                     psutil.Process(process.info["pid"]).terminate()
-            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-                self.logger.error(f"Error terminating process: {process.info['name']} (PID: {process.info['pid']})")
-                pass
+            except (psutil.NoSuchProcess, psutil.ZombieProcess):
+                self.logger.warn(f"Process already terminated: {process.info.get('name', 'Unknown')} (PID: {process.info.get('pid', 'Unknown')})")
+            except psutil.AccessDenied:
+                self.logger.error(f"Access denied for process: {process.info.get('name', 'Unknown')} (PID: {process.info.get('pid', 'Unknown')})")
+            except Exception as e:
+                self.logger.error(f"Unexpected error: {str(e)}")
+
     
     def merge_pdfs_in_parts(self):
         folder_path = self.get_test_result_folder()
