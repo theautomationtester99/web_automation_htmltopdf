@@ -99,7 +99,7 @@ class Utils:
         return self.test_results_folder
     
     def stop_driver_processes(self):
-        driver_names = ["msedgedriver", "chromedriver"]
+        driver_names = ["msedgedriver", "chromedriver", "runner", "runner.exe"]
         
         for process in psutil.process_iter(attrs=["pid", "name"]):
             try:
