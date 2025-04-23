@@ -438,15 +438,15 @@ def read_pids_from_file(file_name="processes.txt"):
             return [int(pid.strip()) for pid in file.readlines()]
     return []
 
-def stop_running_processes(pids):
+def stop_running_processes(pids, wafl):
     """Stop processes using the PIDs."""
     for pid in pids:
         try:
             process = psutil.Process(pid)
             process.terminate()  # Terminate the process
-            print(f"Stopped process with PID: {pid}")
+            wafl.info(f"Stopped process with PID: {pid}")
         except psutil.NoSuchProcess:
-            print(f"No process found with PID: {pid}")
+            wafl.info(f"No process found with PID: {pid}")
 
 def clear_pid_file(file_name="processes.txt"):
     """Clear the content of the PID file."""
@@ -761,7 +761,7 @@ if __name__ == '__main__':
         utils.stop_driver_processes()
         # Stop running processes from previous execution
         pids = read_pids_from_file()
-        stop_running_processes(pids)
+        stop_running_processes(pids, logger)
         clear_pid_file()  # Clear the file after stopping processes
         prm = PdfReportManager(logger)
 

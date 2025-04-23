@@ -40,6 +40,7 @@ class BrowserDriver(DriverManager):
         """
         self.logger.debug("Closing Browser")
         self.driver.quit()
+        self.logger.info("Closing Browser SUCCESSFUL")
 
     def get_browser_version(self):
         """

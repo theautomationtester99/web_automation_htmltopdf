@@ -177,8 +177,9 @@ class KeywordsManager(BrowserDriver):
 
         Logs the closure of the browser and generates a PDF report using the PdfReportManager.
         """
-        self.logger.debug("Started creating pdf report and closing the browser")
+        self.logger.debug("Started creating pdf report")
         asyncio.run(self.repo_m.create_report())
+        self.logger.debug("Closing the browser")
         self.close_browser()
     
     def ge_close_browser(self):
