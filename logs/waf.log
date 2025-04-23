@@ -4679,3 +4679,964 @@
 2025-04-23 14:00:10,017 - WafLogger - WARNING - utilities.py:107] [PID:10724] Process name: rancher desktop.exe
 2025-04-23 14:00:10,017 - WafLogger - WARNING - utilities.py:107] [PID:10724] Process name: code.exe
 2025-04-23 14:00:10,017 - WafLogger - WARNING - utilities.py:107] [PID:10724] Process name: openconsole.exe
+2025-04-23 16:15:20,437 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: system idle process
+2025-04-23 16:15:20,437 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: system
+2025-04-23 16:15:20,444 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: 
+2025-04-23 16:15:20,452 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: registry
+2025-04-23 16:15:20,461 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: smss.exe
+2025-04-23 16:15:20,468 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: csrss.exe
+2025-04-23 16:15:20,475 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wininit.exe
+2025-04-23 16:15:20,480 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: csrss.exe
+2025-04-23 16:15:20,487 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: winlogon.exe
+2025-04-23 16:15:20,487 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wsl.exe
+2025-04-23 16:15:20,494 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: services.exe
+2025-04-23 16:15:20,500 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: lsaiso.exe
+2025-04-23 16:15:20,506 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: lsass.exe
+2025-04-23 16:15:20,512 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: dellsupportassistremedationservice.exe
+2025-04-23 16:15:20,513 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: utorrentie.exe
+2025-04-23 16:15:20,519 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,525 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: fontdrvhost.exe
+2025-04-23 16:15:20,530 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: fontdrvhost.exe
+2025-04-23 16:15:20,530 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: powershell.exe
+2025-04-23 16:15:20,537 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wudfhost.exe
+2025-04-23 16:15:20,543 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,550 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wudfhost.exe
+2025-04-23 16:15:20,550 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: securityhealthsystray.exe
+2025-04-23 16:15:20,558 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,565 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,572 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: dwm.exe
+2025-04-23 16:15:20,579 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,579 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: msedge.exe
+2025-04-23 16:15:20,579 - WafLogger - INFO - utilities.py:109] [PID:15800] Terminating msedge.exe (PID: 1752)
+2025-04-23 16:15:20,588 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: dell.d3.winsvc.exe
+2025-04-23 16:15:20,588 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: msedgewebview2.exe
+2025-04-23 16:15:20,588 - WafLogger - INFO - utilities.py:109] [PID:15800] Terminating msedgewebview2.exe (PID: 1768)
+2025-04-23 16:15:20,595 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,605 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,613 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,613 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: shellhost.exe
+2025-04-23 16:15:20,623 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,640 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,653 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,675 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,693 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,704 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wmiapsrv.exe
+2025-04-23 16:15:20,704 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: msedgewebview2.exe
+2025-04-23 16:15:20,704 - WafLogger - INFO - utilities.py:109] [PID:15800] Terminating msedgewebview2.exe (PID: 2144)
+2025-04-23 16:15:20,714 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,727 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,739 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,747 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,749 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wslhost.exe
+2025-04-23 16:15:20,760 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,773 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: intelcphdcpsvc.exe
+2025-04-23 16:15:20,792 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,805 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,816 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,829 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,848 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,857 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,865 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,871 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,879 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,880 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: adobecollabsync.exe
+2025-04-23 16:15:20,880 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: openconsole.exe
+2025-04-23 16:15:20,880 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: code.exe
+2025-04-23 16:15:20,886 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: igfxcuiservicen.exe
+2025-04-23 16:15:20,894 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,909 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,922 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,923 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: dllhost.exe
+2025-04-23 16:15:20,934 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,935 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:20,948 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,961 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,974 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: memcompression
+2025-04-23 16:15:20,987 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,998 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:20,998 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: code.exe
+2025-04-23 16:15:21,009 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,010 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: webviewhost.exe
+2025-04-23 16:15:21,019 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,031 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,032 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: msedgewebview2.exe
+2025-04-23 16:15:21,032 - WafLogger - INFO - utilities.py:109] [PID:15800] Terminating msedgewebview2.exe (PID: 3804)
+2025-04-23 16:15:21,044 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,045 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: runtimebroker.exe
+2025-04-23 16:15:21,054 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,054 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: skype.exe
+2025-04-23 16:15:21,064 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,072 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: spoolsv.exe
+2025-04-23 16:15:21,073 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: runtimebroker.exe
+2025-04-23 16:15:21,081 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,088 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,088 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: anydesk.exe
+2025-04-23 16:15:21,096 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: armsvc.exe
+2025-04-23 16:15:21,104 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,111 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,118 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: dell.techhub.exe
+2025-04-23 16:15:21,134 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,142 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,150 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,158 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: aggregatorhost.exe
+2025-04-23 16:15:21,158 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: explorer.exe
+2025-04-23 16:15:21,166 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: oneapp.igcc.winservice.exe
+2025-04-23 16:15:21,173 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: intelaudioservice.exe
+2025-04-23 16:15:21,184 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,191 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: esif_uf.exe
+2025-04-23 16:15:21,198 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: officeclicktorun.exe
+2025-04-23 16:15:21,210 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,218 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: jhi_service.exe
+2025-04-23 16:15:21,230 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: ipoverusbsvc.exe
+2025-04-23 16:15:21,238 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: smpd.exe
+2025-04-23 16:15:21,246 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,252 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: dell.techhub.analytics.subagent.exe
+2025-04-23 16:15:21,259 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: rstmwservice.exe
+2025-04-23 16:15:21,268 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: rtkauduservice64.exe
+2025-04-23 16:15:21,268 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wsl.exe
+2025-04-23 16:15:21,277 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,283 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: smartbytenetworkservice.exe
+2025-04-23 16:15:21,289 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: smartbyteanalyticsservice.exe
+2025-04-23 16:15:21,296 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: mpdefendercoreservice.exe
+2025-04-23 16:15:21,303 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,303 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: skype.exe
+2025-04-23 16:15:21,309 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,315 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: msmpeng.exe
+2025-04-23 16:15:21,323 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: teamviewer_service.exe
+2025-04-23 16:15:21,330 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,336 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: vmcompute.exe
+2025-04-23 16:15:21,344 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: dell.update.subagent.exe
+2025-04-23 16:15:21,352 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wmiregistrationservice.exe
+2025-04-23 16:15:21,359 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,366 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wslservice.exe
+2025-04-23 16:15:21,366 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: uihost.exe
+2025-04-23 16:15:21,374 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: dashost.exe
+2025-04-23 16:15:21,383 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,393 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: servicehost.exe
+2025-04-23 16:15:21,400 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,409 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,418 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: supportassistagent.exe
+2025-04-23 16:15:21,427 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,433 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,434 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: code.exe
+2025-04-23 16:15:21,441 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,448 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,449 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wsl.exe
+2025-04-23 16:15:21,457 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,458 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: msedgewebview2.exe
+2025-04-23 16:15:21,458 - WafLogger - INFO - utilities.py:109] [PID:15800] Terminating msedgewebview2.exe (PID: 6572)
+2025-04-23 16:15:21,467 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,468 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: code.exe
+2025-04-23 16:15:21,480 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: vmmemwsl
+2025-04-23 16:15:21,493 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: rapsservice.exe
+2025-04-23 16:15:21,493 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: mcafee-security-ft.exe
+2025-04-23 16:15:21,505 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wmiprvse.exe
+2025-04-23 16:15:21,505 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: powershell.exe
+2025-04-23 16:15:21,505 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: utorrent.exe
+2025-04-23 16:15:21,514 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: raps.exe
+2025-04-23 16:15:21,522 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,523 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wsl.exe
+2025-04-23 16:15:21,530 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: ddvdatacollector.exe
+2025-04-23 16:15:21,537 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: ddvcollectorsvcapi.exe
+2025-04-23 16:15:21,537 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: msedgewebview2.exe
+2025-04-23 16:15:21,537 - WafLogger - INFO - utilities.py:109] [PID:15800] Terminating msedgewebview2.exe (PID: 7640)
+2025-04-23 16:15:21,547 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: dell.coreservices.client.exe
+2025-04-23 16:15:21,556 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: dell.techhub.datamanager.subagent.exe
+2025-04-23 16:15:21,564 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: dell.techhub.instrumentation.subagent.exe
+2025-04-23 16:15:21,572 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,581 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,588 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: dell.techhub.diagnostics.subagent.exe
+2025-04-23 16:15:21,595 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,604 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,604 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: helper.exe
+2025-04-23 16:15:21,605 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: msedgewebview2.exe
+2025-04-23 16:15:21,605 - WafLogger - INFO - utilities.py:109] [PID:15800] Terminating msedgewebview2.exe (PID: 8696)
+2025-04-23 16:15:21,616 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wmiprvse.exe
+2025-04-23 16:15:21,616 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: code.exe
+2025-04-23 16:15:21,616 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: msedgewebview2.exe
+2025-04-23 16:15:21,616 - WafLogger - INFO - utilities.py:109] [PID:15800] Terminating msedgewebview2.exe (PID: 9000)
+2025-04-23 16:15:21,617 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: lockapp.exe
+2025-04-23 16:15:21,634 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wlanext.exe
+2025-04-23 16:15:21,634 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,643 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: fusionservice.exe
+2025-04-23 16:15:21,653 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: dell.techhub.instrumentation.userprocess.exe
+2025-04-23 16:15:21,653 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: sihost.exe
+2025-04-23 16:15:21,653 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,653 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: smartscreen.exe
+2025-04-23 16:15:21,654 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,654 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,654 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: openconsole.exe
+2025-04-23 16:15:21,654 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,660 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,661 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: taskhostw.exe
+2025-04-23 16:15:21,678 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,679 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: igfxemn.exe
+2025-04-23 16:15:21,679 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: taskhostw.exe
+2025-04-23 16:15:21,679 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,679 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,685 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: vmwp.exe
+2025-04-23 16:15:21,686 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,693 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: searchindexer.exe
+2025-04-23 16:15:21,705 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,705 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,716 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,721 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,728 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,734 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: ngciso.exe
+2025-04-23 16:15:21,741 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,742 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: msedgewebview2.exe
+2025-04-23 16:15:21,742 - WafLogger - INFO - utilities.py:109] [PID:15800] Terminating msedgewebview2.exe (PID: 10904)
+2025-04-23 16:15:21,742 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: vnc-viewer-7.13.1-windows-64bit.exe
+2025-04-23 16:15:21,742 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: runtimebroker.exe
+2025-04-23 16:15:21,742 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wsl-helper.exe
+2025-04-23 16:15:21,748 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: rtkauduservice64.exe
+2025-04-23 16:15:21,749 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: utorrentie.exe
+2025-04-23 16:15:21,757 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,757 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: whatsapp.exe
+2025-04-23 16:15:21,757 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: code.exe
+2025-04-23 16:15:21,757 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wsl.exe
+2025-04-23 16:15:21,757 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: mcafee-security.exe
+2025-04-23 16:15:21,757 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,758 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,758 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: powershell.exe
+2025-04-23 16:15:21,758 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: host-switch.exe
+2025-04-23 16:15:21,758 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,765 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,765 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: searchhost.exe
+2025-04-23 16:15:21,766 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: startmenuexperiencehost.exe
+2025-04-23 16:15:21,766 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,766 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: runtimebroker.exe
+2025-04-23 16:15:21,766 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wslhost.exe
+2025-04-23 16:15:21,766 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: widgets.exe
+2025-04-23 16:15:21,778 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,779 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: runtimebroker.exe
+2025-04-23 16:15:21,779 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: runtimebroker.exe
+2025-04-23 16:15:21,780 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: skype.exe
+2025-04-23 16:15:21,780 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wsl.exe
+2025-04-23 16:15:21,780 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: skype.exe
+2025-04-23 16:15:21,780 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: code.exe
+2025-04-23 16:15:21,780 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: useroobebroker.exe
+2025-04-23 16:15:21,781 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: widgetservice.exe
+2025-04-23 16:15:21,781 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: msedgewebview2.exe
+2025-04-23 16:15:21,781 - WafLogger - INFO - utilities.py:109] [PID:15800] Terminating msedgewebview2.exe (PID: 13032)
+2025-04-23 16:15:21,782 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: msedgewebview2.exe
+2025-04-23 16:15:21,782 - WafLogger - INFO - utilities.py:109] [PID:15800] Terminating msedgewebview2.exe (PID: 13148)
+2025-04-23 16:15:21,783 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: code.exe
+2025-04-23 16:15:21,784 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: rtkauduservice64.exe
+2025-04-23 16:15:21,784 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,784 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: skype.exe
+2025-04-23 16:15:21,784 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: ctfmon.exe
+2025-04-23 16:15:21,794 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: msrdc.exe
+2025-04-23 16:15:21,794 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: pet.exe
+2025-04-23 16:15:21,795 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wslhost.exe
+2025-04-23 16:15:21,795 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: runtimebroker.exe
+2025-04-23 16:15:21,795 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,795 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: applicationframehost.exe
+2025-04-23 16:15:21,795 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,795 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,795 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wavessvc64.exe
+2025-04-23 16:15:21,804 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: windowsterminal.exe
+2025-04-23 16:15:21,810 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,820 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: securityhealthservice.exe
+2025-04-23 16:15:21,820 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,830 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: serviceshell.exe
+2025-04-23 16:15:21,831 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: msrdc.exe
+2025-04-23 16:15:21,831 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: textinputhost.exe
+2025-04-23 16:15:21,831 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: sdxhelper.exe
+2025-04-23 16:15:21,838 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: nissrv.exe
+2025-04-23 16:15:21,838 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,839 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: python.exe
+2025-04-23 16:15:21,839 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wslhost.exe
+2025-04-23 16:15:21,839 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wslhost.exe
+2025-04-23 16:15:21,851 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,856 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,857 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: crossdeviceservice.exe
+2025-04-23 16:15:21,863 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: svchost.exe
+2025-04-23 16:15:21,863 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: runtimebroker.exe
+2025-04-23 16:15:21,864 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,864 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: code.exe
+2025-04-23 16:15:21,864 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: docker.exe
+2025-04-23 16:15:21,864 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: runtimebroker.exe
+2025-04-23 16:15:21,864 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: cmd.exe
+2025-04-23 16:15:21,864 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,864 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wslhost.exe
+2025-04-23 16:15:21,864 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: vnc-viewer-7.13.1-windows-64bit.exe
+2025-04-23 16:15:21,865 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: anydesk.exe
+2025-04-23 16:15:21,871 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: ddvrulesprocessor.exe
+2025-04-23 16:15:21,871 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: sharex.exe
+2025-04-23 16:15:21,871 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: msedgewebview2.exe
+2025-04-23 16:15:21,871 - WafLogger - INFO - utilities.py:109] [PID:15800] Terminating msedgewebview2.exe (PID: 18244)
+2025-04-23 16:15:21,873 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wslhost.exe
+2025-04-23 16:15:21,873 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: systemsettings.exe
+2025-04-23 16:15:21,873 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: runtimebroker.exe
+2025-04-23 16:15:21,873 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: ms-teams.exe
+2025-04-23 16:15:21,888 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: msedgewebview2.exe
+2025-04-23 16:15:21,888 - WafLogger - INFO - utilities.py:109] [PID:15800] Terminating msedgewebview2.exe (PID: 18852)
+2025-04-23 16:15:21,921 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: dllhost.exe
+2025-04-23 16:15:21,921 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: dllhost.exe
+2025-04-23 16:15:21,921 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,921 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,921 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: adobecollabsync.exe
+2025-04-23 16:15:21,921 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: rancher desktop.exe
+2025-04-23 16:15:21,921 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: code.exe
+2025-04-23 16:15:21,921 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: cmd.exe
+2025-04-23 16:15:21,921 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: dllhost.exe
+2025-04-23 16:15:21,922 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: rancher desktop.exe
+2025-04-23 16:15:21,922 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: code.exe
+2025-04-23 16:15:21,922 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wslrelay.exe
+2025-04-23 16:15:21,922 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,922 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wsl.exe
+2025-04-23 16:15:21,922 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,922 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,922 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: conhost.exe
+2025-04-23 16:15:21,922 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wsl.exe
+2025-04-23 16:15:21,933 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: rancher desktop.exe
+2025-04-23 16:15:21,933 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: wslhost.exe
+2025-04-23 16:15:21,933 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: powershell.exe
+2025-04-23 16:15:21,934 - WafLogger - WARNING - utilities.py:107] [PID:15800] Process name: openconsole.exe
+2025-04-23 16:15:21,934 - WafLogger - DEBUG - runner.py:768] [PID:15800] Execution Started ----------------.
+2025-04-23 16:15:21,934 - WafLogger - DEBUG - runner.py:769] [PID:15800] Parsing the input arguments.
+2025-04-23 16:15:21,936 - WafLogger - DEBUG - runner.py:781] [PID:15800] Counting the number of input arguments.
+2025-04-23 16:15:21,936 - WafLogger - DEBUG - runner.py:672] [PID:15800] Loading 'start.properties' file.
+2025-04-23 16:15:21,936 - WafLogger - DEBUG - runner.py:683] [PID:15800] Checking if in 'start.properties' file option to delete results and recording folders is set to 'yes'.
+2025-04-23 16:15:21,936 - WafLogger - DEBUG - runner.py:686] [PID:15800] Deleting the test_results and recordings folders.
+2025-04-23 16:15:22,073 - WafLogger - DEBUG - utilities.py:221] [PID:15800] Folder and its content removed
+2025-04-23 16:15:22,073 - WafLogger - DEBUG - runner.py:693] [PID:15800] Creating the test_results and recordings folders.
+2025-04-23 16:15:22,076 - WafLogger - DEBUG - runner.py:696] [PID:15800] Starting analysis of the contents of the test_scripts folders.
+2025-04-23 16:15:22,077 - WafLogger - DEBUG - runner.py:711] [PID:15800] Checking if test_scripts folder and chrome folder contains the same files.
+2025-04-23 16:15:22,078 - WafLogger - DEBUG - runner.py:718] [PID:15800] Checking if test_scripts folder and edge folder contains the same files.
+2025-04-23 16:15:22,079 - WafLogger - DEBUG - runner.py:939] [PID:15800] Gathering all files present in the test_scripts folder.
+2025-04-23 16:15:22,081 - WafLogger - DEBUG - runner.py:953] [PID:15800] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\QS002_tesQScrip1t.xlsx.
+2025-04-23 16:15:22,081 - WafLogger - DEBUG - runner.py:954] [PID:15800] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-23 16:15:22,081 - WafLogger - DEBUG - runner.py:953] [PID:15800] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\QS003_testscript1.xlsx.
+2025-04-23 16:15:22,081 - WafLogger - DEBUG - runner.py:954] [PID:15800] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-23 16:15:22,081 - WafLogger - DEBUG - runner.py:953] [PID:15800] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\QS004_testscript1.xlsx.
+2025-04-23 16:15:22,081 - WafLogger - DEBUG - runner.py:954] [PID:15800] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-23 16:15:22,081 - WafLogger - DEBUG - runner.py:953] [PID:15800] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\tc001_testscript1.xlsx.
+2025-04-23 16:15:22,081 - WafLogger - DEBUG - runner.py:954] [PID:15800] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-23 16:15:22,081 - WafLogger - DEBUG - runner.py:953] [PID:15800] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\tc002_testscript1.xlsx.
+2025-04-23 16:15:22,081 - WafLogger - DEBUG - runner.py:954] [PID:15800] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-23 16:15:22,081 - WafLogger - DEBUG - runner.py:953] [PID:15800] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\tc003_testscript2.xlsx.
+2025-04-23 16:15:22,081 - WafLogger - DEBUG - runner.py:954] [PID:15800] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-23 16:15:22,082 - WafLogger - DEBUG - runner.py:953] [PID:15800] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS002_testscript.xlsx.
+2025-04-23 16:15:22,082 - WafLogger - DEBUG - runner.py:954] [PID:15800] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-23 16:15:22,083 - WafLogger - DEBUG - runner.py:957] [PID:15800] The file path D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS002_testscript.xlsx contains 'testscript.xlsx' in the end.
+2025-04-23 16:15:22,083 - WafLogger - DEBUG - runner.py:958] [PID:15800] Checking if the file name starts with 'ts' (case insensitive).
+2025-04-23 16:15:22,083 - WafLogger - DEBUG - runner.py:962] [PID:15800] The file name QS002_testscript.xlsx starts with 'ts' (case insensitive).
+2025-04-23 16:15:22,083 - WafLogger - DEBUG - runner.py:963] [PID:15800] Checking if the file QS002_testscript.xlsx is present in chrome or edge folder.
+2025-04-23 16:15:22,083 - WafLogger - DEBUG - runner.py:965] [PID:15800] The file QS002_testscript.xlsx is present in chrome folder. Launching the execution of test script on chrome browser.
+2025-04-23 16:15:22,083 - WafLogger - DEBUG - runner.py:953] [PID:15800] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS004_testscript.xlsx.
+2025-04-23 16:15:22,083 - WafLogger - DEBUG - runner.py:954] [PID:15800] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-23 16:15:22,084 - WafLogger - DEBUG - runner.py:957] [PID:15800] The file path D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS004_testscript.xlsx contains 'testscript.xlsx' in the end.
+2025-04-23 16:15:22,084 - WafLogger - DEBUG - runner.py:958] [PID:15800] Checking if the file name starts with 'ts' (case insensitive).
+2025-04-23 16:15:22,084 - WafLogger - DEBUG - runner.py:962] [PID:15800] The file name QS004_testscript.xlsx starts with 'ts' (case insensitive).
+2025-04-23 16:15:22,084 - WafLogger - DEBUG - runner.py:963] [PID:15800] Checking if the file QS004_testscript.xlsx is present in chrome or edge folder.
+2025-04-23 16:15:22,084 - WafLogger - DEBUG - runner.py:965] [PID:15800] The file QS004_testscript.xlsx is present in chrome folder. Launching the execution of test script on chrome browser.
+2025-04-23 16:15:22,084 - WafLogger - DEBUG - runner.py:953] [PID:15800] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS001_testscript.xlsx.
+2025-04-23 16:15:22,084 - WafLogger - DEBUG - runner.py:954] [PID:15800] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-23 16:15:22,084 - WafLogger - DEBUG - runner.py:957] [PID:15800] The file path D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS001_testscript.xlsx contains 'testscript.xlsx' in the end.
+2025-04-23 16:15:22,084 - WafLogger - DEBUG - runner.py:958] [PID:15800] Checking if the file name starts with 'ts' (case insensitive).
+2025-04-23 16:15:22,084 - WafLogger - DEBUG - runner.py:962] [PID:15800] The file name QS001_testscript.xlsx starts with 'ts' (case insensitive).
+2025-04-23 16:15:22,084 - WafLogger - DEBUG - runner.py:963] [PID:15800] Checking if the file QS001_testscript.xlsx is present in chrome or edge folder.
+2025-04-23 16:15:22,085 - WafLogger - DEBUG - runner.py:968] [PID:15800] The file QS001_testscript.xlsx is present in edge folder. Launching the execution of test script on edge browser.
+2025-04-23 16:15:22,085 - WafLogger - DEBUG - runner.py:953] [PID:15800] Getting the file path D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS003_testscript.xlsx.
+2025-04-23 16:15:22,085 - WafLogger - DEBUG - runner.py:954] [PID:15800] Checking if the file path contains 'testscript.xlsx' in the end.
+2025-04-23 16:15:22,085 - WafLogger - DEBUG - runner.py:957] [PID:15800] The file path D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS003_testscript.xlsx contains 'testscript.xlsx' in the end.
+2025-04-23 16:15:22,085 - WafLogger - DEBUG - runner.py:958] [PID:15800] Checking if the file name starts with 'ts' (case insensitive).
+2025-04-23 16:15:22,085 - WafLogger - DEBUG - runner.py:962] [PID:15800] The file name QS003_testscript.xlsx starts with 'ts' (case insensitive).
+2025-04-23 16:15:22,085 - WafLogger - DEBUG - runner.py:963] [PID:15800] Checking if the file QS003_testscript.xlsx is present in chrome or edge folder.
+2025-04-23 16:15:22,085 - WafLogger - DEBUG - runner.py:968] [PID:15800] The file QS003_testscript.xlsx is present in edge folder. Launching the execution of test script on edge browser.
+2025-04-23 16:15:31,461 - WafLogger - INFO - runner.py:541] [PID:13472] Starting test script execution.
+2025-04-23 16:15:31,461 - WafLogger - INFO - runner.py:541] [PID:11212] Starting test script execution.
+2025-04-23 16:15:31,461 - WafLogger - INFO - runner.py:541] [PID:16140] Starting test script execution.
+2025-04-23 16:15:31,461 - WafLogger - INFO - runner.py:541] [PID:15140] Starting test script execution.
+2025-04-23 16:15:31,461 - WafLogger - DEBUG - runner.py:542] [PID:16140] Test script file: D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS001_testscript.xlsx
+2025-04-23 16:15:31,462 - WafLogger - DEBUG - runner.py:543] [PID:16140] Launch browser parameter: edge
+2025-04-23 16:15:31,462 - WafLogger - DEBUG - runner.py:552] [PID:16140] Instantiating excel report manager
+2025-04-23 16:15:31,462 - WafLogger - DEBUG - runner.py:555] [PID:16140] Checking if the test script excel file name ends with 'testscript.xlsx'
+2025-04-23 16:15:31,461 - WafLogger - DEBUG - runner.py:542] [PID:11212] Test script file: D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS002_testscript.xlsx
+2025-04-23 16:15:31,462 - WafLogger - DEBUG - runner.py:558] [PID:16140] The test script Excel file name ends with 'testscript.xlsx'. Proceeding with execution.
+2025-04-23 16:15:31,462 - WafLogger - INFO - runner.py:40] [PID:16140] Validating the test script: D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS001_testscript.xlsx
+2025-04-23 16:15:31,462 - WafLogger - DEBUG - runner.py:543] [PID:11212] Launch browser parameter: chrome
+2025-04-23 16:15:31,461 - WafLogger - DEBUG - runner.py:542] [PID:15140] Test script file: D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS004_testscript.xlsx
+2025-04-23 16:15:31,462 - WafLogger - DEBUG - runner.py:552] [PID:11212] Instantiating excel report manager
+2025-04-23 16:15:31,462 - WafLogger - DEBUG - runner.py:555] [PID:11212] Checking if the test script excel file name ends with 'testscript.xlsx'
+2025-04-23 16:15:31,462 - WafLogger - DEBUG - runner.py:543] [PID:15140] Launch browser parameter: chrome
+2025-04-23 16:15:31,462 - WafLogger - DEBUG - runner.py:558] [PID:11212] The test script Excel file name ends with 'testscript.xlsx'. Proceeding with execution.
+2025-04-23 16:15:31,462 - WafLogger - DEBUG - runner.py:552] [PID:15140] Instantiating excel report manager
+2025-04-23 16:15:31,461 - WafLogger - DEBUG - runner.py:542] [PID:13472] Test script file: D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS003_testscript.xlsx
+2025-04-23 16:15:31,462 - WafLogger - INFO - runner.py:40] [PID:11212] Validating the test script: D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS002_testscript.xlsx
+2025-04-23 16:15:31,462 - WafLogger - DEBUG - runner.py:555] [PID:15140] Checking if the test script excel file name ends with 'testscript.xlsx'
+2025-04-23 16:15:31,462 - WafLogger - DEBUG - runner.py:543] [PID:13472] Launch browser parameter: edge
+2025-04-23 16:15:31,462 - WafLogger - DEBUG - runner.py:558] [PID:15140] The test script Excel file name ends with 'testscript.xlsx'. Proceeding with execution.
+2025-04-23 16:15:31,462 - WafLogger - DEBUG - runner.py:552] [PID:13472] Instantiating excel report manager
+2025-04-23 16:15:31,462 - WafLogger - INFO - runner.py:40] [PID:15140] Validating the test script: D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS004_testscript.xlsx
+2025-04-23 16:15:31,462 - WafLogger - DEBUG - runner.py:555] [PID:13472] Checking if the test script excel file name ends with 'testscript.xlsx'
+2025-04-23 16:15:31,462 - WafLogger - DEBUG - runner.py:558] [PID:13472] The test script Excel file name ends with 'testscript.xlsx'. Proceeding with execution.
+2025-04-23 16:15:31,462 - WafLogger - INFO - runner.py:40] [PID:13472] Validating the test script: D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS003_testscript.xlsx
+2025-04-23 16:15:31,647 - WafLogger - DEBUG - runner.py:46] [PID:16140] Reading the test script Excel file into a pandas DataFrame.
+2025-04-23 16:15:31,672 - WafLogger - DEBUG - runner.py:46] [PID:13472] Reading the test script Excel file into a pandas DataFrame.
+2025-04-23 16:15:31,688 - WafLogger - DEBUG - runner.py:46] [PID:11212] Reading the test script Excel file into a pandas DataFrame.
+2025-04-23 16:15:31,730 - WafLogger - DEBUG - runner.py:53] [PID:11212] Replacing empty values in the DataFrame with empty strings.
+2025-04-23 16:15:31,732 - WafLogger - INFO - runner.py:56] [PID:11212] Validating the content of the test script.
+2025-04-23 16:15:31,733 - WafLogger - DEBUG - runner.py:59] [PID:11212] Validating row 0: Keyword='tc_id'
+2025-04-23 16:15:31,733 - WafLogger - DEBUG - runner.py:59] [PID:11212] Validating row 1: Keyword='tc_desc'
+2025-04-23 16:15:31,733 - WafLogger - DEBUG - runner.py:59] [PID:11212] Validating row 2: Keyword='step'
+2025-04-23 16:15:31,733 - WafLogger - DEBUG - runner.py:59] [PID:11212] Validating row 3: Keyword='open_browser'
+2025-04-23 16:15:31,734 - WafLogger - DEBUG - runner.py:59] [PID:11212] Validating row 4: Keyword='enter_url'
+2025-04-23 16:15:31,734 - WafLogger - DEBUG - runner.py:59] [PID:11212] Validating row 5: Keyword='step'
+2025-04-23 16:15:31,734 - WafLogger - DEBUG - runner.py:59] [PID:11212] Validating row 6: Keyword='click'
+2025-04-23 16:15:31,734 - WafLogger - DEBUG - runner.py:59] [PID:11212] Validating row 7: Keyword='wait_for_seconds'
+2025-04-23 16:15:31,734 - WafLogger - DEBUG - runner.py:59] [PID:11212] Validating row 8: Keyword='click'
+2025-04-23 16:15:31,734 - WafLogger - DEBUG - runner.py:59] [PID:11212] Validating row 9: Keyword='wait_for_seconds'
+2025-04-23 16:15:31,734 - WafLogger - DEBUG - runner.py:59] [PID:11212] Validating row 10: Keyword='switch_to_iframe'
+2025-04-23 16:15:31,734 - WafLogger - DEBUG - runner.py:59] [PID:11212] Validating row 11: Keyword='click'
+2025-04-23 16:15:31,735 - WafLogger - DEBUG - runner.py:59] [PID:11212] Validating row 12: Keyword='click'
+2025-04-23 16:15:31,735 - WafLogger - DEBUG - runner.py:59] [PID:11212] Validating row 13: Keyword='click'
+2025-04-23 16:15:31,735 - WafLogger - INFO - runner.py:127] [PID:11212] Test script validation completed successfully.
+2025-04-23 16:15:31,735 - WafLogger - DEBUG - runner.py:562] [PID:11212] Instantiating the keyword manager.
+2025-04-23 16:15:31,735 - WafLogger - DEBUG - keywords_manager.py:51] [PID:11212] Retry count updated to 1
+2025-04-23 16:15:31,735 - WafLogger - INFO - runner.py:477] [PID:11212] Starting test script execution.
+2025-04-23 16:15:31,736 - WafLogger - DEBUG - runner.py:508] [PID:11212] Processing row 0: Keyword='tc_id'
+2025-04-23 16:15:31,736 - WafLogger - INFO - runner.py:216] [PID:11212] Executing 'tc_id' at row 0.
+2025-04-23 16:15:31,736 - WafLogger - DEBUG - keywords_manager.py:201] [PID:11212] Setting the test report of the PDF report
+2025-04-23 16:15:31,736 - WafLogger - DEBUG - runner.py:508] [PID:11212] Processing row 1: Keyword='tc_desc'
+2025-04-23 16:15:31,736 - WafLogger - INFO - runner.py:220] [PID:11212] Executing 'tc_desc' at row 1.
+2025-04-23 16:15:31,736 - WafLogger - DEBUG - keywords_manager.py:213] [PID:11212] Setting the test description in the PDF report
+2025-04-23 16:15:31,736 - WafLogger - DEBUG - runner.py:508] [PID:11212] Processing row 2: Keyword='step'
+2025-04-23 16:15:31,736 - WafLogger - INFO - runner.py:224] [PID:11212] Executing 'step' at row 2.
+2025-04-23 16:15:31,736 - WafLogger - DEBUG - keywords_manager.py:223] [PID:11212] Populating the test details table in the PDF report
+2025-04-23 16:15:31,737 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:11212] Step is captured to be added to PDF report.
+2025-04-23 16:15:31,737 - WafLogger - DEBUG - runner.py:508] [PID:11212] Processing row 3: Keyword='open_browser'
+2025-04-23 16:15:31,730 - WafLogger - DEBUG - runner.py:53] [PID:16140] Replacing empty values in the DataFrame with empty strings.
+2025-04-23 16:15:31,737 - WafLogger - INFO - runner.py:191] [PID:11212] Executing 'open_browser' at row 3. Launching browser: chrome.
+2025-04-23 16:15:31,732 - WafLogger - INFO - runner.py:56] [PID:16140] Validating the content of the test script.
+2025-04-23 16:15:31,737 - WafLogger - DEBUG - keywords_manager.py:247] [PID:11212] Launching chrome .......
+2025-04-23 16:15:31,733 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 0: Keyword='tc_id'
+2025-04-23 16:15:31,733 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 1: Keyword='tc_desc'
+2025-04-23 16:15:31,733 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 2: Keyword='step'
+2025-04-23 16:15:31,733 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 3: Keyword='open_browser'
+2025-04-23 16:15:31,734 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 4: Keyword='enter_url'
+2025-04-23 16:15:31,734 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 5: Keyword='step'
+2025-04-23 16:15:31,734 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 6: Keyword='click'
+2025-04-23 16:15:31,734 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 7: Keyword='step'
+2025-04-23 16:15:31,734 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 8: Keyword='click'
+2025-04-23 16:15:31,734 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 9: Keyword='step'
+2025-04-23 16:15:31,734 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 10: Keyword='switch_to_iframe'
+2025-04-23 16:15:31,734 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 11: Keyword='click'
+2025-04-23 16:15:31,735 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 12: Keyword='check_radio_chk_selected'
+2025-04-23 16:15:31,735 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 13: Keyword='click'
+2025-04-23 16:15:31,735 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 14: Keyword='check_radio_chk_selected'
+2025-04-23 16:15:31,735 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 15: Keyword='click'
+2025-04-23 16:15:31,735 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 16: Keyword='check_radio_chk_selected'
+2025-04-23 16:15:31,735 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 17: Keyword='step'
+2025-04-23 16:15:31,735 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 18: Keyword='click'
+2025-04-23 16:15:31,735 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 19: Keyword='check_radio_chk_selected'
+2025-04-23 16:15:31,736 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 20: Keyword='check_radio_chk_not_selected'
+2025-04-23 16:15:31,736 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 21: Keyword='click'
+2025-04-23 16:15:31,736 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 22: Keyword='check_radio_chk_selected'
+2025-04-23 16:15:31,736 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 23: Keyword='check_radio_chk_not_selected'
+2025-04-23 16:15:31,736 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 24: Keyword='click'
+2025-04-23 16:15:31,736 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 25: Keyword='check_radio_chk_selected'
+2025-04-23 16:15:31,736 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 26: Keyword='check_radio_chk_not_selected'
+2025-04-23 16:15:31,737 - WafLogger - DEBUG - runner.py:59] [PID:16140] Validating row 27: Keyword='click'
+2025-04-23 16:15:31,737 - WafLogger - INFO - runner.py:127] [PID:16140] Test script validation completed successfully.
+2025-04-23 16:15:31,737 - WafLogger - DEBUG - runner.py:562] [PID:16140] Instantiating the keyword manager.
+2025-04-23 16:15:31,737 - WafLogger - DEBUG - keywords_manager.py:51] [PID:16140] Retry count updated to 1
+2025-04-23 16:15:31,738 - WafLogger - INFO - runner.py:477] [PID:16140] Starting test script execution.
+2025-04-23 16:15:31,738 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 0: Keyword='tc_id'
+2025-04-23 16:15:31,738 - WafLogger - INFO - runner.py:216] [PID:16140] Executing 'tc_id' at row 0.
+2025-04-23 16:15:31,739 - WafLogger - DEBUG - keywords_manager.py:201] [PID:16140] Setting the test report of the PDF report
+2025-04-23 16:15:31,739 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 1: Keyword='tc_desc'
+2025-04-23 16:15:31,739 - WafLogger - INFO - runner.py:220] [PID:16140] Executing 'tc_desc' at row 1.
+2025-04-23 16:15:31,739 - WafLogger - DEBUG - keywords_manager.py:213] [PID:16140] Setting the test description in the PDF report
+2025-04-23 16:15:31,739 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 2: Keyword='step'
+2025-04-23 16:15:31,739 - WafLogger - INFO - runner.py:224] [PID:16140] Executing 'step' at row 2.
+2025-04-23 16:15:31,740 - WafLogger - DEBUG - keywords_manager.py:223] [PID:16140] Populating the test details table in the PDF report
+2025-04-23 16:15:31,740 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:16140] Step is captured to be added to PDF report.
+2025-04-23 16:15:31,740 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 3: Keyword='open_browser'
+2025-04-23 16:15:31,740 - WafLogger - INFO - runner.py:191] [PID:16140] Executing 'open_browser' at row 3. Launching browser: edge.
+2025-04-23 16:15:31,740 - WafLogger - DEBUG - keywords_manager.py:247] [PID:16140] Launching edge .......
+2025-04-23 16:15:31,769 - WafLogger - DEBUG - runner.py:46] [PID:15140] Reading the test script Excel file into a pandas DataFrame.
+2025-04-23 16:15:31,773 - WafLogger - DEBUG - runner.py:53] [PID:13472] Replacing empty values in the DataFrame with empty strings.
+2025-04-23 16:15:31,774 - WafLogger - INFO - runner.py:56] [PID:13472] Validating the content of the test script.
+2025-04-23 16:15:31,775 - WafLogger - DEBUG - runner.py:59] [PID:13472] Validating row 0: Keyword='tc_id'
+2025-04-23 16:15:31,775 - WafLogger - DEBUG - runner.py:59] [PID:13472] Validating row 1: Keyword='tc_desc'
+2025-04-23 16:15:31,775 - WafLogger - DEBUG - runner.py:59] [PID:13472] Validating row 2: Keyword='step'
+2025-04-23 16:15:31,776 - WafLogger - DEBUG - runner.py:59] [PID:13472] Validating row 3: Keyword='open_browser'
+2025-04-23 16:15:31,776 - WafLogger - DEBUG - runner.py:59] [PID:13472] Validating row 4: Keyword='enter_url'
+2025-04-23 16:15:31,776 - WafLogger - INFO - runner.py:127] [PID:13472] Test script validation completed successfully.
+2025-04-23 16:15:31,776 - WafLogger - DEBUG - runner.py:562] [PID:13472] Instantiating the keyword manager.
+2025-04-23 16:15:31,776 - WafLogger - DEBUG - keywords_manager.py:51] [PID:13472] Retry count updated to 1
+2025-04-23 16:15:31,776 - WafLogger - INFO - runner.py:477] [PID:13472] Starting test script execution.
+2025-04-23 16:15:31,777 - WafLogger - DEBUG - runner.py:508] [PID:13472] Processing row 0: Keyword='tc_id'
+2025-04-23 16:15:31,777 - WafLogger - INFO - runner.py:216] [PID:13472] Executing 'tc_id' at row 0.
+2025-04-23 16:15:31,778 - WafLogger - DEBUG - keywords_manager.py:201] [PID:13472] Setting the test report of the PDF report
+2025-04-23 16:15:31,778 - WafLogger - DEBUG - runner.py:508] [PID:13472] Processing row 1: Keyword='tc_desc'
+2025-04-23 16:15:31,778 - WafLogger - INFO - runner.py:220] [PID:13472] Executing 'tc_desc' at row 1.
+2025-04-23 16:15:31,778 - WafLogger - DEBUG - keywords_manager.py:213] [PID:13472] Setting the test description in the PDF report
+2025-04-23 16:15:31,778 - WafLogger - DEBUG - runner.py:508] [PID:13472] Processing row 2: Keyword='step'
+2025-04-23 16:15:31,778 - WafLogger - INFO - runner.py:224] [PID:13472] Executing 'step' at row 2.
+2025-04-23 16:15:31,778 - WafLogger - DEBUG - keywords_manager.py:223] [PID:13472] Populating the test details table in the PDF report
+2025-04-23 16:15:31,778 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:13472] Step is captured to be added to PDF report.
+2025-04-23 16:15:31,778 - WafLogger - DEBUG - runner.py:508] [PID:13472] Processing row 3: Keyword='open_browser'
+2025-04-23 16:15:31,778 - WafLogger - INFO - runner.py:191] [PID:13472] Executing 'open_browser' at row 3. Launching browser: edge.
+2025-04-23 16:15:31,778 - WafLogger - DEBUG - keywords_manager.py:247] [PID:13472] Launching edge .......
+2025-04-23 16:15:31,797 - WafLogger - DEBUG - runner.py:53] [PID:15140] Replacing empty values in the DataFrame with empty strings.
+2025-04-23 16:15:31,798 - WafLogger - INFO - runner.py:56] [PID:15140] Validating the content of the test script.
+2025-04-23 16:15:31,799 - WafLogger - DEBUG - runner.py:59] [PID:15140] Validating row 0: Keyword='tc_id'
+2025-04-23 16:15:31,799 - WafLogger - DEBUG - runner.py:59] [PID:15140] Validating row 1: Keyword='tc_desc'
+2025-04-23 16:15:31,799 - WafLogger - DEBUG - runner.py:59] [PID:15140] Validating row 2: Keyword='step'
+2025-04-23 16:15:31,799 - WafLogger - DEBUG - runner.py:59] [PID:15140] Validating row 3: Keyword='open_browser'
+2025-04-23 16:15:31,799 - WafLogger - DEBUG - runner.py:59] [PID:15140] Validating row 4: Keyword='enter_url'
+2025-04-23 16:15:31,799 - WafLogger - INFO - runner.py:127] [PID:15140] Test script validation completed successfully.
+2025-04-23 16:15:31,800 - WafLogger - DEBUG - runner.py:562] [PID:15140] Instantiating the keyword manager.
+2025-04-23 16:15:31,800 - WafLogger - DEBUG - keywords_manager.py:51] [PID:15140] Retry count updated to 1
+2025-04-23 16:15:31,800 - WafLogger - INFO - runner.py:477] [PID:15140] Starting test script execution.
+2025-04-23 16:15:31,800 - WafLogger - DEBUG - runner.py:508] [PID:15140] Processing row 0: Keyword='tc_id'
+2025-04-23 16:15:31,800 - WafLogger - INFO - runner.py:216] [PID:15140] Executing 'tc_id' at row 0.
+2025-04-23 16:15:31,800 - WafLogger - DEBUG - keywords_manager.py:201] [PID:15140] Setting the test report of the PDF report
+2025-04-23 16:15:31,800 - WafLogger - DEBUG - runner.py:508] [PID:15140] Processing row 1: Keyword='tc_desc'
+2025-04-23 16:15:31,800 - WafLogger - INFO - runner.py:220] [PID:15140] Executing 'tc_desc' at row 1.
+2025-04-23 16:15:31,800 - WafLogger - DEBUG - keywords_manager.py:213] [PID:15140] Setting the test description in the PDF report
+2025-04-23 16:15:31,801 - WafLogger - DEBUG - runner.py:508] [PID:15140] Processing row 2: Keyword='step'
+2025-04-23 16:15:31,801 - WafLogger - INFO - runner.py:224] [PID:15140] Executing 'step' at row 2.
+2025-04-23 16:15:31,801 - WafLogger - DEBUG - keywords_manager.py:223] [PID:15140] Populating the test details table in the PDF report
+2025-04-23 16:15:31,801 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:15140] Step is captured to be added to PDF report.
+2025-04-23 16:15:31,801 - WafLogger - DEBUG - runner.py:508] [PID:15140] Processing row 3: Keyword='open_browser'
+2025-04-23 16:15:31,801 - WafLogger - INFO - runner.py:191] [PID:15140] Executing 'open_browser' at row 3. Launching browser: chrome.
+2025-04-23 16:15:31,801 - WafLogger - DEBUG - keywords_manager.py:247] [PID:15140] Launching chrome .......
+2025-04-23 16:15:34,084 - WafLogger - DEBUG - keywords_manager.py:249] [PID:16140] Capturing the OS where the browser is running.
+2025-04-23 16:15:34,084 - WafLogger - DEBUG - keywords_manager.py:257] [PID:16140] Capturing the OS where the browser is running in local machine.
+2025-04-23 16:15:34,084 - WafLogger - DEBUG - keywords_manager.py:266] [PID:16140] Populating the OS details in the PDF report as Windows
+2025-04-23 16:15:34,084 - WafLogger - DEBUG - keywords_manager.py:277] [PID:16140] Populating the browser details in the PDF report as edge
+2025-04-23 16:15:34,084 - WafLogger - DEBUG - keywords_manager.py:341] [PID:16140] Returning Browser Version.
+2025-04-23 16:15:34,084 - WafLogger - DEBUG - driver_functions.py:53] [PID:16140] Capturing Browser Version
+2025-04-23 16:15:34,084 - WafLogger - DEBUG - keywords_manager.py:282] [PID:16140] Populating the step result details in the PDF report.
+2025-04-23 16:15:34,084 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:16140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:15:34,084 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 4: Keyword='enter_url'
+2025-04-23 16:15:34,085 - WafLogger - INFO - runner.py:257] [PID:16140] Executing 'enter_url' at row 4. URL: https://jqueryui.com/.
+2025-04-23 16:15:34,085 - WafLogger - DEBUG - keywords_manager.py:888] [PID:16140] Opening URL
+2025-04-23 16:15:34,085 - WafLogger - DEBUG - driver_functions.py:64] [PID:16140] Opening URL https://jqueryui.com/
+2025-04-23 16:15:36,488 - WafLogger - DEBUG - keywords_manager.py:249] [PID:13472] Capturing the OS where the browser is running.
+2025-04-23 16:15:36,489 - WafLogger - DEBUG - keywords_manager.py:257] [PID:13472] Capturing the OS where the browser is running in local machine.
+2025-04-23 16:15:36,489 - WafLogger - DEBUG - keywords_manager.py:266] [PID:13472] Populating the OS details in the PDF report as Windows
+2025-04-23 16:15:36,489 - WafLogger - DEBUG - keywords_manager.py:277] [PID:13472] Populating the browser details in the PDF report as edge
+2025-04-23 16:15:36,489 - WafLogger - DEBUG - keywords_manager.py:341] [PID:13472] Returning Browser Version.
+2025-04-23 16:15:36,489 - WafLogger - DEBUG - driver_functions.py:53] [PID:13472] Capturing Browser Version
+2025-04-23 16:15:36,489 - WafLogger - DEBUG - keywords_manager.py:282] [PID:13472] Populating the step result details in the PDF report.
+2025-04-23 16:15:36,489 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:13472] Sub Step is captured to be added to PDF report.
+2025-04-23 16:15:36,490 - WafLogger - DEBUG - runner.py:508] [PID:13472] Processing row 4: Keyword='enter_url'
+2025-04-23 16:15:36,490 - WafLogger - INFO - runner.py:257] [PID:13472] Executing 'enter_url' at row 4. URL: https://www.google.com.
+2025-04-23 16:15:36,490 - WafLogger - DEBUG - keywords_manager.py:888] [PID:13472] Opening URL
+2025-04-23 16:15:36,490 - WafLogger - DEBUG - driver_functions.py:64] [PID:13472] Opening URL https://www.google.com
+2025-04-23 16:15:37,958 - WafLogger - DEBUG - keywords_manager.py:249] [PID:15140] Capturing the OS where the browser is running.
+2025-04-23 16:15:37,959 - WafLogger - DEBUG - keywords_manager.py:257] [PID:15140] Capturing the OS where the browser is running in local machine.
+2025-04-23 16:15:37,960 - WafLogger - DEBUG - keywords_manager.py:249] [PID:11212] Capturing the OS where the browser is running.
+2025-04-23 16:15:37,961 - WafLogger - DEBUG - keywords_manager.py:257] [PID:11212] Capturing the OS where the browser is running in local machine.
+2025-04-23 16:15:37,961 - WafLogger - DEBUG - keywords_manager.py:266] [PID:11212] Populating the OS details in the PDF report as Windows
+2025-04-23 16:15:37,961 - WafLogger - DEBUG - keywords_manager.py:272] [PID:11212] Populating the browser details in the PDF report as chrome
+2025-04-23 16:15:37,961 - WafLogger - DEBUG - keywords_manager.py:341] [PID:11212] Returning Browser Version.
+2025-04-23 16:15:37,961 - WafLogger - DEBUG - driver_functions.py:53] [PID:11212] Capturing Browser Version
+2025-04-23 16:15:37,961 - WafLogger - DEBUG - keywords_manager.py:282] [PID:11212] Populating the step result details in the PDF report.
+2025-04-23 16:15:37,961 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:11212] Sub Step is captured to be added to PDF report.
+2025-04-23 16:15:37,962 - WafLogger - DEBUG - runner.py:508] [PID:11212] Processing row 4: Keyword='enter_url'
+2025-04-23 16:15:37,962 - WafLogger - INFO - runner.py:257] [PID:11212] Executing 'enter_url' at row 4. URL: https://jqueryui.com/.
+2025-04-23 16:15:37,962 - WafLogger - DEBUG - keywords_manager.py:888] [PID:11212] Opening URL
+2025-04-23 16:15:37,963 - WafLogger - DEBUG - driver_functions.py:64] [PID:11212] Opening URL https://jqueryui.com/
+2025-04-23 16:15:37,959 - WafLogger - DEBUG - keywords_manager.py:266] [PID:15140] Populating the OS details in the PDF report as Windows
+2025-04-23 16:15:37,959 - WafLogger - DEBUG - keywords_manager.py:272] [PID:15140] Populating the browser details in the PDF report as chrome
+2025-04-23 16:15:37,959 - WafLogger - DEBUG - keywords_manager.py:341] [PID:15140] Returning Browser Version.
+2025-04-23 16:15:37,959 - WafLogger - DEBUG - driver_functions.py:53] [PID:15140] Capturing Browser Version
+2025-04-23 16:15:37,959 - WafLogger - DEBUG - keywords_manager.py:282] [PID:15140] Populating the step result details in the PDF report.
+2025-04-23 16:15:37,959 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:15140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:15:37,960 - WafLogger - DEBUG - runner.py:508] [PID:15140] Processing row 4: Keyword='enter_url'
+2025-04-23 16:15:37,960 - WafLogger - INFO - runner.py:257] [PID:15140] Executing 'enter_url' at row 4. URL: https://www.google.com.
+2025-04-23 16:15:37,960 - WafLogger - DEBUG - keywords_manager.py:888] [PID:15140] Opening URL
+2025-04-23 16:15:37,960 - WafLogger - DEBUG - driver_functions.py:64] [PID:15140] Opening URL https://www.google.com
+2025-04-23 16:15:40,951 - WafLogger - DEBUG - keywords_manager.py:893] [PID:13472] Populating the step result details in the PDF report.
+2025-04-23 16:15:41,429 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:13472] Sub Step is captured to be added to PDF report.
+2025-04-23 16:15:41,430 - WafLogger - INFO - runner.py:519] [PID:13472] Test script execution completed successfully.
+2025-04-23 16:15:41,430 - WafLogger - INFO - runner.py:574] [PID:13472] Test script 'D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS003_testscript.xlsx' executed successfully.
+2025-04-23 16:15:41,430 - WafLogger - DEBUG - runner.py:587] [PID:13472] Adding row to test summary results excel file.
+2025-04-23 16:15:43,039 - WafLogger - DEBUG - runner.py:590] [PID:13472] Closing the test and creating the test result pdf file.
+2025-04-23 16:15:43,039 - WafLogger - DEBUG - keywords_manager.py:180] [PID:13472] Started creating pdf report
+2025-04-23 16:15:43,044 - WafLogger - DEBUG - pdf_report_manager.py:135] [PID:13472] Finalizing the data to be added to PDF report.
+2025-04-23 16:15:43,044 - WafLogger - DEBUG - pdf_reporting.py:65] [PID:13472] Encoding the logo png file
+2025-04-23 16:15:43,100 - WafLogger - DEBUG - pdf_reporting.py:113] [PID:13472] Decrypting the PDF report template
+2025-04-23 16:15:43,211 - WafLogger - DEBUG - pdf_reporting.py:122] [PID:13472] Generated the PDF report template with appropriate data
+2025-04-23 16:15:43,211 - WafLogger - DEBUG - pdf_reporting.py:76] [PID:13472] Creating the PDF report header template
+2025-04-23 16:15:43,211 - WafLogger - DEBUG - pdf_reporting.py:95] [PID:13472] Creating the PDF report footer template
+2025-04-23 16:15:43,211 - WafLogger - DEBUG - pdf_reporting.py:138] [PID:13472] Starting creation of PDF report from template with populated data
+2025-04-23 16:15:43,637 - WafLogger - DEBUG - keywords_manager.py:893] [PID:15140] Populating the step result details in the PDF report.
+2025-04-23 16:15:43,997 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:15140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:15:43,998 - WafLogger - INFO - runner.py:519] [PID:15140] Test script execution completed successfully.
+2025-04-23 16:15:43,998 - WafLogger - INFO - runner.py:574] [PID:15140] Test script 'D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS004_testscript.xlsx' executed successfully.
+2025-04-23 16:15:43,998 - WafLogger - DEBUG - runner.py:587] [PID:15140] Adding row to test summary results excel file.
+2025-04-23 16:15:45,325 - WafLogger - DEBUG - pdf_reporting.py:163] [PID:13472] Completed creation of PDF report from template with populated data
+2025-04-23 16:15:45,421 - WafLogger - DEBUG - keywords_manager.py:182] [PID:13472] Closing the browser
+2025-04-23 16:15:45,421 - WafLogger - DEBUG - driver_functions.py:41] [PID:13472] Closing Browser
+2025-04-23 16:15:45,539 - WafLogger - DEBUG - runner.py:590] [PID:15140] Closing the test and creating the test result pdf file.
+2025-04-23 16:15:45,540 - WafLogger - DEBUG - keywords_manager.py:180] [PID:15140] Started creating pdf report
+2025-04-23 16:15:45,545 - WafLogger - DEBUG - pdf_report_manager.py:135] [PID:15140] Finalizing the data to be added to PDF report.
+2025-04-23 16:15:45,545 - WafLogger - DEBUG - pdf_reporting.py:65] [PID:15140] Encoding the logo png file
+2025-04-23 16:15:45,547 - WafLogger - DEBUG - pdf_reporting.py:113] [PID:15140] Decrypting the PDF report template
+2025-04-23 16:15:45,628 - WafLogger - DEBUG - pdf_reporting.py:122] [PID:15140] Generated the PDF report template with appropriate data
+2025-04-23 16:15:45,628 - WafLogger - DEBUG - pdf_reporting.py:76] [PID:15140] Creating the PDF report header template
+2025-04-23 16:15:45,628 - WafLogger - DEBUG - pdf_reporting.py:95] [PID:15140] Creating the PDF report footer template
+2025-04-23 16:15:45,628 - WafLogger - DEBUG - pdf_reporting.py:138] [PID:15140] Starting creation of PDF report from template with populated data
+2025-04-23 16:15:47,003 - WafLogger - DEBUG - pdf_reporting.py:163] [PID:15140] Completed creation of PDF report from template with populated data
+2025-04-23 16:15:47,090 - WafLogger - DEBUG - keywords_manager.py:182] [PID:15140] Closing the browser
+2025-04-23 16:15:47,090 - WafLogger - DEBUG - driver_functions.py:41] [PID:15140] Closing Browser
+2025-04-23 16:15:48,803 - WafLogger - INFO - driver_functions.py:43] [PID:13472] Closing Browser SUCCESSFUL
+2025-04-23 16:15:49,335 - WafLogger - INFO - driver_functions.py:43] [PID:15140] Closing Browser SUCCESSFUL
+2025-04-23 16:16:10,885 - WafLogger - DEBUG - keywords_manager.py:893] [PID:16140] Populating the step result details in the PDF report.
+2025-04-23 16:16:11,259 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:16140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:16:11,260 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 5: Keyword='step'
+2025-04-23 16:16:11,260 - WafLogger - INFO - runner.py:224] [PID:16140] Executing 'step' at row 5.
+2025-04-23 16:16:11,260 - WafLogger - DEBUG - keywords_manager.py:223] [PID:16140] Populating the test details table in the PDF report
+2025-04-23 16:16:11,260 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:16140] Step is captured to be added to PDF report.
+2025-04-23 16:16:11,260 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 6: Keyword='click'
+2025-04-23 16:16:11,260 - WafLogger - INFO - runner.py:341] [PID:16140] Executing 'click' at row 6.
+2025-04-23 16:16:11,277 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a and locator_type: css
+2025-04-23 16:16:11,284 - WafLogger - DEBUG - driver_functions.py:104] [PID:16140] scrolling to element with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a locator_type: css
+2025-04-23 16:16:11,291 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a and locator_type: css
+2025-04-23 16:16:15,501 - WafLogger - DEBUG - keywords_manager.py:893] [PID:11212] Populating the step result details in the PDF report.
+2025-04-23 16:16:15,876 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:11212] Sub Step is captured to be added to PDF report.
+2025-04-23 16:16:15,877 - WafLogger - DEBUG - runner.py:508] [PID:11212] Processing row 5: Keyword='step'
+2025-04-23 16:16:15,877 - WafLogger - INFO - runner.py:224] [PID:11212] Executing 'step' at row 5.
+2025-04-23 16:16:15,877 - WafLogger - DEBUG - keywords_manager.py:223] [PID:11212] Populating the test details table in the PDF report
+2025-04-23 16:16:15,877 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:11212] Step is captured to be added to PDF report.
+2025-04-23 16:16:15,878 - WafLogger - DEBUG - runner.py:508] [PID:11212] Processing row 6: Keyword='click'
+2025-04-23 16:16:15,878 - WafLogger - INFO - runner.py:341] [PID:11212] Executing 'click' at row 6.
+2025-04-23 16:16:15,897 - WafLogger - DEBUG - driver_functions.py:451] [PID:11212] Element found with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a and locator_type: css
+2025-04-23 16:16:15,909 - WafLogger - DEBUG - driver_functions.py:104] [PID:11212] scrolling to element with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a locator_type: css
+2025-04-23 16:16:15,918 - WafLogger - DEBUG - driver_functions.py:451] [PID:11212] Element found with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a and locator_type: css
+2025-04-23 16:16:16,877 - WafLogger - DEBUG - driver_functions.py:526] [PID:11212] clicked on element with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a locator_type: css
+2025-04-23 16:16:18,877 - WafLogger - DEBUG - keywords_manager.py:1094] [PID:11212] Populating the step result details in the PDF report.
+2025-04-23 16:16:19,086 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:11212] Sub Step is captured to be added to PDF report.
+2025-04-23 16:16:19,087 - WafLogger - DEBUG - runner.py:508] [PID:11212] Processing row 7: Keyword='wait_for_seconds'
+2025-04-23 16:16:19,087 - WafLogger - INFO - runner.py:195] [PID:11212] Executing 'wait_for_seconds' at row 7. Waiting for 2 seconds.
+2025-04-23 16:16:19,087 - WafLogger - DEBUG - keywords_manager.py:233] [PID:11212] Pausing the execution for 2 seconds
+2025-04-23 16:16:21,088 - WafLogger - DEBUG - runner.py:508] [PID:11212] Processing row 8: Keyword='click'
+2025-04-23 16:16:21,088 - WafLogger - INFO - runner.py:341] [PID:11212] Executing 'click' at row 8.
+2025-04-23 16:16:21,103 - WafLogger - ERROR - driver_functions.py:453] [PID:11212] Element not found with locator: #content > div.demo-list > ul > li:nth-child(2)> a and locator_type: css
+2025-04-23 16:16:21,103 - WafLogger - ERROR - driver_functions.py:106] [PID:11212] cannot send data on the element with locator: #content > div.demo-list > ul > li:nth-child(2)> a locator_type: css
+2025-04-23 16:16:21,103 - WafLogger - ERROR - keywords_manager.py:1115] [PID:11212] An error occurred: Message: no such element: Unable to locate element: {"method":"css selector","selector":"#content > div.demo-list > ul > li:nth-child(2)> a"}
+  (Session info: chrome=135.0.7049.97); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF7139C5305+78597]
+	GetHandleVerifier [0x00007FF7139C5360+78688]
+	(No symbol) [0x00007FF7137791AA]
+	(No symbol) [0x00007FF7137CF149]
+	(No symbol) [0x00007FF7137CF3FC]
+	(No symbol) [0x00007FF713822467]
+	(No symbol) [0x00007FF7137F712F]
+	(No symbol) [0x00007FF71381F2BB]
+	(No symbol) [0x00007FF7137F6EC3]
+	(No symbol) [0x00007FF7137C03F8]
+	(No symbol) [0x00007FF7137C1163]
+	GetHandleVerifier [0x00007FF713C6EEBD+2870973]
+	GetHandleVerifier [0x00007FF713C69668+2848360]
+	GetHandleVerifier [0x00007FF713C86943+2967875]
+	GetHandleVerifier [0x00007FF7139E014A+188746]
+	GetHandleVerifier [0x00007FF7139E842F+222255]
+	GetHandleVerifier [0x00007FF7139CD284+111236]
+	GetHandleVerifier [0x00007FF7139CD432+111666]
+	GetHandleVerifier [0x00007FF7139B3559+5465]
+	BaseThreadInitThunk [0x00007FFAA53FE8D7+23]
+	RtlUserThreadStart [0x00007FFAA64F14FC+44]
+Traceback (most recent call last):
+  File "D:\allprojects\web_automation_htmltopdf\keywords_manager.py", line 1089, in ge_click
+    self.scroll_into_view(locator, locator_type)
+  File "D:\allprojects\web_automation_htmltopdf\driver_functions.py", line 102, in scroll_into_view
+    element = self.get_element(locator, locator_type)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\allprojects\web_automation_htmltopdf\driver_functions.py", line 450, in get_element
+    element = self.driver.find_element(by_type, locator)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 742, in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\site-packages\selenium\webdriver\remote\webdriver.py", line 348, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python312\Lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 229, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":"#content > div.demo-list > ul > li:nth-child(2)> a"}
+  (Session info: chrome=135.0.7049.97); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF7139C5305+78597]
+	GetHandleVerifier [0x00007FF7139C5360+78688]
+	(No symbol) [0x00007FF7137791AA]
+	(No symbol) [0x00007FF7137CF149]
+	(No symbol) [0x00007FF7137CF3FC]
+	(No symbol) [0x00007FF713822467]
+	(No symbol) [0x00007FF7137F712F]
+	(No symbol) [0x00007FF71381F2BB]
+	(No symbol) [0x00007FF7137F6EC3]
+	(No symbol) [0x00007FF7137C03F8]
+	(No symbol) [0x00007FF7137C1163]
+	GetHandleVerifier [0x00007FF713C6EEBD+2870973]
+	GetHandleVerifier [0x00007FF713C69668+2848360]
+	GetHandleVerifier [0x00007FF713C86943+2967875]
+	GetHandleVerifier [0x00007FF7139E014A+188746]
+	GetHandleVerifier [0x00007FF7139E842F+222255]
+	GetHandleVerifier [0x00007FF7139CD284+111236]
+	GetHandleVerifier [0x00007FF7139CD432+111666]
+	GetHandleVerifier [0x00007FF7139B3559+5465]
+	BaseThreadInitThunk [0x00007FFAA53FE8D7+23]
+	RtlUserThreadStart [0x00007FFAA64F14FC+44]
+
+2025-04-23 16:16:21,199 - WafLogger - DEBUG - keywords_manager.py:1116] [PID:11212] Populating the step result details in the PDF report.
+2025-04-23 16:16:21,365 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:11212] Sub Step is captured to be added to PDF report.
+2025-04-23 16:16:21,365 - WafLogger - ERROR - runner.py:516] [PID:11212] Error executing keyword 'click' at row 8: Message: no such element: Unable to locate element: {"method":"css selector","selector":"#content > div.demo-list > ul > li:nth-child(2)> a"}
+  (Session info: chrome=135.0.7049.97); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF7139C5305+78597]
+	GetHandleVerifier [0x00007FF7139C5360+78688]
+	(No symbol) [0x00007FF7137791AA]
+	(No symbol) [0x00007FF7137CF149]
+	(No symbol) [0x00007FF7137CF3FC]
+	(No symbol) [0x00007FF713822467]
+	(No symbol) [0x00007FF7137F712F]
+	(No symbol) [0x00007FF71381F2BB]
+	(No symbol) [0x00007FF7137F6EC3]
+	(No symbol) [0x00007FF7137C03F8]
+	(No symbol) [0x00007FF7137C1163]
+	GetHandleVerifier [0x00007FF713C6EEBD+2870973]
+	GetHandleVerifier [0x00007FF713C69668+2848360]
+	GetHandleVerifier [0x00007FF713C86943+2967875]
+	GetHandleVerifier [0x00007FF7139E014A+188746]
+	GetHandleVerifier [0x00007FF7139E842F+222255]
+	GetHandleVerifier [0x00007FF7139CD284+111236]
+	GetHandleVerifier [0x00007FF7139CD432+111666]
+	GetHandleVerifier [0x00007FF7139B3559+5465]
+	BaseThreadInitThunk [0x00007FFAA53FE8D7+23]
+	RtlUserThreadStart [0x00007FFAA64F14FC+44]
+
+2025-04-23 16:16:21,367 - WafLogger - ERROR - runner.py:577] [PID:11212] Test script 'D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS002_testscript.xlsx' failed on attempt 0. Error: Message: no such element: Unable to locate element: {"method":"css selector","selector":"#content > div.demo-list > ul > li:nth-child(2)> a"}
+  (Session info: chrome=135.0.7049.97); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+	GetHandleVerifier [0x00007FF7139C5305+78597]
+	GetHandleVerifier [0x00007FF7139C5360+78688]
+	(No symbol) [0x00007FF7137791AA]
+	(No symbol) [0x00007FF7137CF149]
+	(No symbol) [0x00007FF7137CF3FC]
+	(No symbol) [0x00007FF713822467]
+	(No symbol) [0x00007FF7137F712F]
+	(No symbol) [0x00007FF71381F2BB]
+	(No symbol) [0x00007FF7137F6EC3]
+	(No symbol) [0x00007FF7137C03F8]
+	(No symbol) [0x00007FF7137C1163]
+	GetHandleVerifier [0x00007FF713C6EEBD+2870973]
+	GetHandleVerifier [0x00007FF713C69668+2848360]
+	GetHandleVerifier [0x00007FF713C86943+2967875]
+	GetHandleVerifier [0x00007FF7139E014A+188746]
+	GetHandleVerifier [0x00007FF7139E842F+222255]
+	GetHandleVerifier [0x00007FF7139CD284+111236]
+	GetHandleVerifier [0x00007FF7139CD432+111666]
+	GetHandleVerifier [0x00007FF7139B3559+5465]
+	BaseThreadInitThunk [0x00007FFAA53FE8D7+23]
+	RtlUserThreadStart [0x00007FFAA64F14FC+44]
+
+2025-04-23 16:16:21,367 - WafLogger - ERROR - runner.py:579] [PID:11212] Test script 'D:\allprojects\web_automation_htmltopdf\test_scripts\chrome\QS002_testscript.xlsx' failed after 1 attempts.
+2025-04-23 16:16:21,367 - WafLogger - DEBUG - runner.py:587] [PID:11212] Adding row to test summary results excel file.
+2025-04-23 16:16:22,118 - WafLogger - DEBUG - runner.py:590] [PID:11212] Closing the test and creating the test result pdf file.
+2025-04-23 16:16:22,118 - WafLogger - DEBUG - keywords_manager.py:180] [PID:11212] Started creating pdf report
+2025-04-23 16:16:22,121 - WafLogger - DEBUG - pdf_report_manager.py:135] [PID:11212] Finalizing the data to be added to PDF report.
+2025-04-23 16:16:22,121 - WafLogger - DEBUG - pdf_reporting.py:65] [PID:11212] Encoding the logo png file
+2025-04-23 16:16:22,122 - WafLogger - DEBUG - pdf_reporting.py:113] [PID:11212] Decrypting the PDF report template
+2025-04-23 16:16:22,169 - WafLogger - DEBUG - pdf_reporting.py:122] [PID:11212] Generated the PDF report template with appropriate data
+2025-04-23 16:16:22,169 - WafLogger - DEBUG - pdf_reporting.py:76] [PID:11212] Creating the PDF report header template
+2025-04-23 16:16:22,169 - WafLogger - DEBUG - pdf_reporting.py:95] [PID:11212] Creating the PDF report footer template
+2025-04-23 16:16:22,169 - WafLogger - DEBUG - pdf_reporting.py:138] [PID:11212] Starting creation of PDF report from template with populated data
+2025-04-23 16:16:23,541 - WafLogger - DEBUG - pdf_reporting.py:163] [PID:11212] Completed creation of PDF report from template with populated data
+2025-04-23 16:16:23,601 - WafLogger - DEBUG - keywords_manager.py:182] [PID:11212] Closing the browser
+2025-04-23 16:16:23,602 - WafLogger - DEBUG - driver_functions.py:41] [PID:11212] Closing Browser
+2025-04-23 16:16:25,791 - WafLogger - INFO - driver_functions.py:43] [PID:11212] Closing Browser SUCCESSFUL
+2025-04-23 16:16:44,237 - WafLogger - DEBUG - driver_functions.py:526] [PID:16140] clicked on element with locator: #sidebar > aside:nth-child(2) > ul > li:nth-child(4) > a locator_type: css
+2025-04-23 16:16:46,238 - WafLogger - DEBUG - keywords_manager.py:1094] [PID:16140] Populating the step result details in the PDF report.
+2025-04-23 16:16:46,548 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:16140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:16:46,549 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 7: Keyword='step'
+2025-04-23 16:16:46,549 - WafLogger - INFO - runner.py:224] [PID:16140] Executing 'step' at row 7.
+2025-04-23 16:16:46,550 - WafLogger - DEBUG - keywords_manager.py:223] [PID:16140] Populating the test details table in the PDF report
+2025-04-23 16:16:46,550 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:16140] Step is captured to be added to PDF report.
+2025-04-23 16:16:46,550 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 8: Keyword='click'
+2025-04-23 16:16:46,550 - WafLogger - INFO - runner.py:341] [PID:16140] Executing 'click' at row 8.
+2025-04-23 16:16:46,570 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: #content > div.demo-list > ul > li:nth-child(2)> a and locator_type: css
+2025-04-23 16:16:46,580 - WafLogger - DEBUG - driver_functions.py:104] [PID:16140] scrolling to element with locator: #content > div.demo-list > ul > li:nth-child(2)> a locator_type: css
+2025-04-23 16:16:46,589 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: #content > div.demo-list > ul > li:nth-child(2)> a and locator_type: css
+2025-04-23 16:16:46,678 - WafLogger - DEBUG - driver_functions.py:526] [PID:16140] clicked on element with locator: #content > div.demo-list > ul > li:nth-child(2)> a locator_type: css
+2025-04-23 16:16:48,678 - WafLogger - DEBUG - keywords_manager.py:1094] [PID:16140] Populating the step result details in the PDF report.
+2025-04-23 16:16:48,941 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:16140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:16:48,941 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 9: Keyword='step'
+2025-04-23 16:16:48,941 - WafLogger - INFO - runner.py:224] [PID:16140] Executing 'step' at row 9.
+2025-04-23 16:16:48,941 - WafLogger - DEBUG - keywords_manager.py:223] [PID:16140] Populating the test details table in the PDF report
+2025-04-23 16:16:48,941 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:16140] Step is captured to be added to PDF report.
+2025-04-23 16:16:48,941 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 10: Keyword='switch_to_iframe'
+2025-04-23 16:16:48,942 - WafLogger - INFO - runner.py:208] [PID:16140] Executing 'switch_to_iframe' at row 10.
+2025-04-23 16:16:48,942 - WafLogger - DEBUG - keywords_manager.py:125] [PID:16140] Attempting to switch to iframe 'iframe' using traditional locators.
+2025-04-23 16:16:48,942 - WafLogger - DEBUG - driver_functions.py:921] [PID:16140] Waiting for maximum :: 10 :: seconds for element to be clickable
+2025-04-23 16:16:48,995 - WafLogger - DEBUG - driver_functions.py:927] [PID:16140] Element appeared on the web page
+2025-04-23 16:16:49,003 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: #content > iframe and locator_type: css
+2025-04-23 16:16:49,008 - WafLogger - DEBUG - driver_functions.py:104] [PID:16140] scrolling to element with locator: #content > iframe locator_type: css
+2025-04-23 16:16:49,013 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: #content > iframe and locator_type: css
+2025-04-23 16:16:49,272 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:16140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:16:49,273 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 11: Keyword='click'
+2025-04-23 16:16:49,273 - WafLogger - INFO - runner.py:341] [PID:16140] Executing 'click' at row 11.
+2025-04-23 16:16:49,291 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] and locator_type: css
+2025-04-23 16:16:49,299 - WafLogger - DEBUG - driver_functions.py:104] [PID:16140] scrolling to element with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] locator_type: css
+2025-04-23 16:16:49,309 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] and locator_type: css
+2025-04-23 16:16:49,425 - WafLogger - DEBUG - driver_functions.py:526] [PID:16140] clicked on element with locator: body > div > fieldset:nth-child(3) > label[for="radio-1"] locator_type: css
+2025-04-23 16:16:51,426 - WafLogger - DEBUG - keywords_manager.py:1094] [PID:16140] Populating the step result details in the PDF report.
+2025-04-23 16:16:51,645 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:16140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:16:51,646 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 12: Keyword='check_radio_chk_selected'
+2025-04-23 16:16:51,646 - WafLogger - INFO - runner.py:397] [PID:16140] Executing 'check_radio_chk_selected' at row 12.
+2025-04-23 16:16:51,646 - WafLogger - DEBUG - keywords_manager.py:624] [PID:16140] Checking if element is selected.
+2025-04-23 16:16:51,661 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: body > div > fieldset:nth-child(3) > input#radio-1 and locator_type: css
+2025-04-23 16:16:51,676 - WafLogger - DEBUG - driver_functions.py:865] [PID:16140] Element is with locator: body > div > fieldset:nth-child(3) > input#radio-1 and locator_type: css is selected
+2025-04-23 16:16:51,676 - WafLogger - DEBUG - keywords_manager.py:630] [PID:16140] Element is selected.
+2025-04-23 16:16:51,976 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:16140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:16:51,976 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 13: Keyword='click'
+2025-04-23 16:16:51,976 - WafLogger - INFO - runner.py:341] [PID:16140] Executing 'click' at row 13.
+2025-04-23 16:16:51,993 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] and locator_type: css
+2025-04-23 16:16:52,004 - WafLogger - DEBUG - driver_functions.py:104] [PID:16140] scrolling to element with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] locator_type: css
+2025-04-23 16:16:52,016 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] and locator_type: css
+2025-04-23 16:16:52,141 - WafLogger - DEBUG - driver_functions.py:526] [PID:16140] clicked on element with locator: body > div > fieldset:nth-child(3) > label[for="radio-2"] locator_type: css
+2025-04-23 16:16:54,143 - WafLogger - DEBUG - keywords_manager.py:1094] [PID:16140] Populating the step result details in the PDF report.
+2025-04-23 16:16:54,444 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:16140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:16:54,444 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 14: Keyword='check_radio_chk_selected'
+2025-04-23 16:16:54,444 - WafLogger - INFO - runner.py:397] [PID:16140] Executing 'check_radio_chk_selected' at row 14.
+2025-04-23 16:16:54,445 - WafLogger - DEBUG - keywords_manager.py:624] [PID:16140] Checking if element is selected.
+2025-04-23 16:16:54,460 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: body > div > fieldset:nth-child(3) > input#radio-2 and locator_type: css
+2025-04-23 16:16:54,470 - WafLogger - DEBUG - driver_functions.py:865] [PID:16140] Element is with locator: body > div > fieldset:nth-child(3) > input#radio-2 and locator_type: css is selected
+2025-04-23 16:16:54,470 - WafLogger - DEBUG - keywords_manager.py:630] [PID:16140] Element is selected.
+2025-04-23 16:16:54,717 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:16140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:16:54,718 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 15: Keyword='click'
+2025-04-23 16:16:54,718 - WafLogger - INFO - runner.py:341] [PID:16140] Executing 'click' at row 15.
+2025-04-23 16:16:54,735 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] and locator_type: css
+2025-04-23 16:16:54,743 - WafLogger - DEBUG - driver_functions.py:104] [PID:16140] scrolling to element with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] locator_type: css
+2025-04-23 16:16:54,751 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] and locator_type: css
+2025-04-23 16:16:54,843 - WafLogger - DEBUG - driver_functions.py:526] [PID:16140] clicked on element with locator: body > div > fieldset:nth-child(3) > label[for="radio-3"] locator_type: css
+2025-04-23 16:16:56,844 - WafLogger - DEBUG - keywords_manager.py:1094] [PID:16140] Populating the step result details in the PDF report.
+2025-04-23 16:16:57,119 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:16140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:16:57,119 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 16: Keyword='check_radio_chk_selected'
+2025-04-23 16:16:57,119 - WafLogger - INFO - runner.py:397] [PID:16140] Executing 'check_radio_chk_selected' at row 16.
+2025-04-23 16:16:57,119 - WafLogger - DEBUG - keywords_manager.py:624] [PID:16140] Checking if element is selected.
+2025-04-23 16:16:57,135 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: body > div > fieldset:nth-child(3) > input#radio-3 and locator_type: css
+2025-04-23 16:16:57,142 - WafLogger - DEBUG - driver_functions.py:865] [PID:16140] Element is with locator: body > div > fieldset:nth-child(3) > input#radio-3 and locator_type: css is selected
+2025-04-23 16:16:57,142 - WafLogger - DEBUG - keywords_manager.py:630] [PID:16140] Element is selected.
+2025-04-23 16:16:57,378 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:16140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:16:57,379 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 17: Keyword='step'
+2025-04-23 16:16:57,379 - WafLogger - INFO - runner.py:224] [PID:16140] Executing 'step' at row 17.
+2025-04-23 16:16:57,379 - WafLogger - DEBUG - keywords_manager.py:223] [PID:16140] Populating the test details table in the PDF report
+2025-04-23 16:16:57,379 - WafLogger - DEBUG - pdf_report_manager.py:87] [PID:16140] Step is captured to be added to PDF report.
+2025-04-23 16:16:57,379 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 18: Keyword='click'
+2025-04-23 16:16:57,379 - WafLogger - INFO - runner.py:341] [PID:16140] Executing 'click' at row 18.
+2025-04-23 16:16:57,393 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-1"] and locator_type: css
+2025-04-23 16:16:57,400 - WafLogger - DEBUG - driver_functions.py:104] [PID:16140] scrolling to element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-1"] locator_type: css
+2025-04-23 16:16:57,406 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-1"] and locator_type: css
+2025-04-23 16:16:57,513 - WafLogger - DEBUG - driver_functions.py:526] [PID:16140] clicked on element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-1"] locator_type: css
+2025-04-23 16:16:59,514 - WafLogger - DEBUG - keywords_manager.py:1094] [PID:16140] Populating the step result details in the PDF report.
+2025-04-23 16:16:59,748 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:16140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:16:59,749 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 19: Keyword='check_radio_chk_selected'
+2025-04-23 16:16:59,749 - WafLogger - INFO - runner.py:397] [PID:16140] Executing 'check_radio_chk_selected' at row 19.
+2025-04-23 16:16:59,749 - WafLogger - DEBUG - keywords_manager.py:624] [PID:16140] Checking if element is selected.
+2025-04-23 16:16:59,765 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: #checkbox-1 and locator_type: css
+2025-04-23 16:16:59,773 - WafLogger - DEBUG - driver_functions.py:865] [PID:16140] Element is with locator: #checkbox-1 and locator_type: css is selected
+2025-04-23 16:16:59,773 - WafLogger - DEBUG - keywords_manager.py:630] [PID:16140] Element is selected.
+2025-04-23 16:17:00,007 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:16140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:17:00,008 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 20: Keyword='check_radio_chk_not_selected'
+2025-04-23 16:17:00,008 - WafLogger - INFO - runner.py:410] [PID:16140] Executing 'check_radio_chk_not_selected' at row 20.
+2025-04-23 16:17:00,008 - WafLogger - DEBUG - keywords_manager.py:691] [PID:16140] Checking if element is NOT selected.
+2025-04-23 16:17:00,024 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: #checkbox-2 and locator_type: css
+2025-04-23 16:17:00,035 - WafLogger - DEBUG - driver_functions.py:867] [PID:16140] Element is with locator: #checkbox-2 and locator_type: css is NOT selected
+2025-04-23 16:17:00,035 - WafLogger - DEBUG - keywords_manager.py:697] [PID:16140] Element is NOT selected.
+2025-04-23 16:17:00,273 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:16140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:17:00,274 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 21: Keyword='click'
+2025-04-23 16:17:00,274 - WafLogger - INFO - runner.py:341] [PID:16140] Executing 'click' at row 21.
+2025-04-23 16:17:00,288 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-2"] and locator_type: css
+2025-04-23 16:17:00,296 - WafLogger - DEBUG - driver_functions.py:104] [PID:16140] scrolling to element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-2"] locator_type: css
+2025-04-23 16:17:00,304 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-2"] and locator_type: css
+2025-04-23 16:17:00,418 - WafLogger - DEBUG - driver_functions.py:526] [PID:16140] clicked on element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-2"] locator_type: css
+2025-04-23 16:17:02,418 - WafLogger - DEBUG - keywords_manager.py:1094] [PID:16140] Populating the step result details in the PDF report.
+2025-04-23 16:17:02,653 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:16140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:17:02,654 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 22: Keyword='check_radio_chk_selected'
+2025-04-23 16:17:02,654 - WafLogger - INFO - runner.py:397] [PID:16140] Executing 'check_radio_chk_selected' at row 22.
+2025-04-23 16:17:02,654 - WafLogger - DEBUG - keywords_manager.py:624] [PID:16140] Checking if element is selected.
+2025-04-23 16:17:02,666 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: #checkbox-2 and locator_type: css
+2025-04-23 16:17:02,677 - WafLogger - DEBUG - driver_functions.py:865] [PID:16140] Element is with locator: #checkbox-2 and locator_type: css is selected
+2025-04-23 16:17:02,677 - WafLogger - DEBUG - keywords_manager.py:630] [PID:16140] Element is selected.
+2025-04-23 16:17:02,911 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:16140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:17:02,911 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 23: Keyword='check_radio_chk_not_selected'
+2025-04-23 16:17:02,911 - WafLogger - INFO - runner.py:410] [PID:16140] Executing 'check_radio_chk_not_selected' at row 23.
+2025-04-23 16:17:02,911 - WafLogger - DEBUG - keywords_manager.py:691] [PID:16140] Checking if element is NOT selected.
+2025-04-23 16:17:02,927 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: #checkbox-3 and locator_type: css
+2025-04-23 16:17:02,938 - WafLogger - DEBUG - driver_functions.py:867] [PID:16140] Element is with locator: #checkbox-3 and locator_type: css is NOT selected
+2025-04-23 16:17:02,938 - WafLogger - DEBUG - keywords_manager.py:697] [PID:16140] Element is NOT selected.
+2025-04-23 16:17:03,574 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:16140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:17:03,574 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 24: Keyword='click'
+2025-04-23 16:17:03,574 - WafLogger - INFO - runner.py:341] [PID:16140] Executing 'click' at row 24.
+2025-04-23 16:17:03,591 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-3"] and locator_type: css
+2025-04-23 16:17:03,601 - WafLogger - DEBUG - driver_functions.py:104] [PID:16140] scrolling to element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-3"] locator_type: css
+2025-04-23 16:17:03,611 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-3"] and locator_type: css
+2025-04-23 16:17:03,729 - WafLogger - DEBUG - driver_functions.py:526] [PID:16140] clicked on element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-3"] locator_type: css
+2025-04-23 16:17:05,730 - WafLogger - DEBUG - keywords_manager.py:1094] [PID:16140] Populating the step result details in the PDF report.
+2025-04-23 16:17:05,945 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:16140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:17:05,945 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 25: Keyword='check_radio_chk_selected'
+2025-04-23 16:17:05,945 - WafLogger - INFO - runner.py:397] [PID:16140] Executing 'check_radio_chk_selected' at row 25.
+2025-04-23 16:17:05,945 - WafLogger - DEBUG - keywords_manager.py:624] [PID:16140] Checking if element is selected.
+2025-04-23 16:17:05,957 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: #checkbox-3 and locator_type: css
+2025-04-23 16:17:05,967 - WafLogger - DEBUG - driver_functions.py:865] [PID:16140] Element is with locator: #checkbox-3 and locator_type: css is selected
+2025-04-23 16:17:05,969 - WafLogger - DEBUG - keywords_manager.py:630] [PID:16140] Element is selected.
+2025-04-23 16:17:06,196 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:16140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:17:06,196 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 26: Keyword='check_radio_chk_not_selected'
+2025-04-23 16:17:06,196 - WafLogger - INFO - runner.py:410] [PID:16140] Executing 'check_radio_chk_not_selected' at row 26.
+2025-04-23 16:17:06,196 - WafLogger - DEBUG - keywords_manager.py:691] [PID:16140] Checking if element is NOT selected.
+2025-04-23 16:17:06,212 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: #checkbox-4 and locator_type: css
+2025-04-23 16:17:06,225 - WafLogger - DEBUG - driver_functions.py:867] [PID:16140] Element is with locator: #checkbox-4 and locator_type: css is NOT selected
+2025-04-23 16:17:06,225 - WafLogger - DEBUG - keywords_manager.py:697] [PID:16140] Element is NOT selected.
+2025-04-23 16:17:06,476 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:16140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:17:06,476 - WafLogger - DEBUG - runner.py:508] [PID:16140] Processing row 27: Keyword='click'
+2025-04-23 16:17:06,476 - WafLogger - INFO - runner.py:341] [PID:16140] Executing 'click' at row 27.
+2025-04-23 16:17:06,492 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-4"] and locator_type: css
+2025-04-23 16:17:06,502 - WafLogger - DEBUG - driver_functions.py:104] [PID:16140] scrolling to element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-4"] locator_type: css
+2025-04-23 16:17:06,510 - WafLogger - DEBUG - driver_functions.py:451] [PID:16140] Element found with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-4"] and locator_type: css
+2025-04-23 16:17:06,596 - WafLogger - DEBUG - driver_functions.py:526] [PID:16140] clicked on element with locator: body > div > fieldset:nth-child(5) > label[for="checkbox-4"] locator_type: css
+2025-04-23 16:17:08,597 - WafLogger - DEBUG - keywords_manager.py:1094] [PID:16140] Populating the step result details in the PDF report.
+2025-04-23 16:17:08,860 - WafLogger - DEBUG - pdf_report_manager.py:99] [PID:16140] Sub Step is captured to be added to PDF report.
+2025-04-23 16:17:08,860 - WafLogger - INFO - runner.py:519] [PID:16140] Test script execution completed successfully.
+2025-04-23 16:17:08,860 - WafLogger - INFO - runner.py:574] [PID:16140] Test script 'D:\allprojects\web_automation_htmltopdf\test_scripts\edge\QS001_testscript.xlsx' executed successfully.
+2025-04-23 16:17:08,861 - WafLogger - DEBUG - runner.py:587] [PID:16140] Adding row to test summary results excel file.
+2025-04-23 16:17:09,539 - WafLogger - DEBUG - runner.py:590] [PID:16140] Closing the test and creating the test result pdf file.
+2025-04-23 16:17:09,539 - WafLogger - DEBUG - keywords_manager.py:180] [PID:16140] Started creating pdf report
+2025-04-23 16:17:09,541 - WafLogger - DEBUG - pdf_report_manager.py:135] [PID:16140] Finalizing the data to be added to PDF report.
+2025-04-23 16:17:09,542 - WafLogger - DEBUG - pdf_reporting.py:65] [PID:16140] Encoding the logo png file
+2025-04-23 16:17:09,543 - WafLogger - DEBUG - pdf_reporting.py:113] [PID:16140] Decrypting the PDF report template
+2025-04-23 16:17:09,575 - WafLogger - DEBUG - pdf_reporting.py:122] [PID:16140] Generated the PDF report template with appropriate data
+2025-04-23 16:17:09,575 - WafLogger - DEBUG - pdf_reporting.py:76] [PID:16140] Creating the PDF report header template
+2025-04-23 16:17:09,575 - WafLogger - DEBUG - pdf_reporting.py:95] [PID:16140] Creating the PDF report footer template
+2025-04-23 16:17:09,575 - WafLogger - DEBUG - pdf_reporting.py:138] [PID:16140] Starting creation of PDF report from template with populated data
+2025-04-23 16:17:13,408 - WafLogger - DEBUG - pdf_reporting.py:163] [PID:16140] Completed creation of PDF report from template with populated data
+2025-04-23 16:17:13,510 - WafLogger - DEBUG - keywords_manager.py:182] [PID:16140] Closing the browser
+2025-04-23 16:17:13,510 - WafLogger - DEBUG - driver_functions.py:41] [PID:16140] Closing Browser
+2025-04-23 16:17:15,679 - WafLogger - INFO - driver_functions.py:43] [PID:16140] Closing Browser SUCCESSFUL
+2025-04-23 16:17:20,135 - WafLogger - INFO - runner.py:987] [PID:15800] 0hrs:1min:58sec:0ms
+2025-04-23 16:17:20,148 - WafLogger - DEBUG - pdf_report_manager.py:168] [PID:15800] Checking if output.xlsx file exists before creating the test summary PDF report.
+2025-04-23 16:17:20,149 - WafLogger - DEBUG - pdf_report_manager.py:170] [PID:15800] Output.xlsx exists and starting to create test summary PDF report.
+2025-04-23 16:17:20,229 - WafLogger - DEBUG - pdf_ts_reporting.py:51] [PID:15800] Encoding the logo png file
+2025-04-23 16:17:20,231 - WafLogger - DEBUG - pdf_ts_reporting.py:99] [PID:15800] Decrypting the test summary report PDF template
+2025-04-23 16:17:20,261 - WafLogger - DEBUG - pdf_ts_reporting.py:108] [PID:15800] Generated the test summary report PDF template with appropriate data
+2025-04-23 16:17:20,261 - WafLogger - DEBUG - pdf_ts_reporting.py:62] [PID:15800] Creating the test summary report PDF header template
+2025-04-23 16:17:20,261 - WafLogger - DEBUG - pdf_ts_reporting.py:81] [PID:15800] Creating the test summary report PDF footer template
+2025-04-23 16:17:20,262 - WafLogger - DEBUG - pdf_ts_reporting.py:126] [PID:15800] Starting creation of test dummary PDF report from template with populated data
+2025-04-23 16:17:21,213 - WafLogger - DEBUG - pdf_ts_reporting.py:150] [PID:15800] Completed creation of test summary PDF report from template with populated data
+2025-04-23 16:17:21,276 - WafLogger - INFO - utilities.py:128] [PID:15800] ['QS001_EDGE_PASSED_23Apr2025.pdf', 'QS002_CHROME_FAILED_23Apr2025.pdf', 'QS003_EDGE_PASSED_23Apr2025.pdf', 'QS004_CHROME_PASSED_23Apr2025.pdf', 'Test_Summary_Results_23Apr2025.pdf']
+2025-04-23 16:17:21,276 - WafLogger - INFO - utilities.py:132] [PID:15800] Processing PDF: QS001_EDGE_PASSED_23Apr2025.pdf
+2025-04-23 16:17:21,276 - WafLogger - INFO - utilities.py:132] [PID:15800] Processing PDF: QS002_CHROME_FAILED_23Apr2025.pdf
+2025-04-23 16:17:21,276 - WafLogger - INFO - utilities.py:132] [PID:15800] Processing PDF: QS003_EDGE_PASSED_23Apr2025.pdf
+2025-04-23 16:17:21,276 - WafLogger - INFO - utilities.py:132] [PID:15800] Processing PDF: QS004_CHROME_PASSED_23Apr2025.pdf
+2025-04-23 16:17:21,276 - WafLogger - INFO - utilities.py:132] [PID:15800] Processing PDF: Test_Summary_Results_23Apr2025.pdf
+2025-04-23 16:17:21,276 - WafLogger - INFO - utilities.py:140] [PID:15800] Merge order: ['Test_Summary_Results_23Apr2025.pdf', 'QS001_EDGE_PASSED_23Apr2025.pdf', 'QS002_CHROME_FAILED_23Apr2025.pdf', 'QS003_EDGE_PASSED_23Apr2025.pdf', 'QS004_CHROME_PASSED_23Apr2025.pdf']
+2025-04-23 16:17:21,276 - WafLogger - INFO - utilities.py:147] [PID:15800] All PDFs are within the size limit. Merging into a single file.
+2025-04-23 16:17:21,579 - WafLogger - INFO - utilities.py:153] [PID:15800] Merged PDF saved at: D:\allprojects\web_automation_htmltopdf\test_results\vinaybabu_pc\23Apr2025\10h45m20s\consolidated\Test_Results_23Apr2025_10h47m21s275075.pdf

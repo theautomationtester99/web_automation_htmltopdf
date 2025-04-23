@@ -763,6 +763,10 @@ if __name__ == '__main__':
         pids = read_pids_from_file()
         stop_running_processes(pids, logger)
         clear_pid_file()  # Clear the file after stopping processes
+        
+        main_process_id = os.getpid()
+        write_pid_to_file(main_process_id)  # Write the main process ID to a file
+        
         prm = PdfReportManager(logger)
 
         logger.debug("Execution Started ----------------.")
