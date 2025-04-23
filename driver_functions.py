@@ -277,7 +277,6 @@ class BrowserDriver(DriverManager):
             self.logger.error("### Exception Occurred when taking screenshot")
             raise
 
-
     def get_title(self):
         """
         Retrieve the title of the current browser page.
