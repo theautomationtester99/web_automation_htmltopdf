@@ -15,6 +15,7 @@ import pyautogui
 from excel_report_manager import ExcelReportManager
 from keywords_manager import KeywordsManager
 from pdf_report_manager import PdfReportManager
+from sm_browser_downloader import SMBrowserDownloader
 from utilities import Utils
 from config import start_properties
 import os
@@ -448,6 +449,24 @@ def stop_running_processes(pids, wafl):
         except psutil.NoSuchProcess:
             wafl.info(f"No process found with PID: {pid}")
 
+def setup_drivers(wafl):
+    # Setup ChromeDriver
+    smbd = SMBrowserDownloader(wafl)
+    try:
+        smbd.setup_sm_browsers("chrome")
+        wafl.warn("ChromeDriver is ready!")
+        smbd.close_sm_browsers()
+    except Exception as e:
+        wafl.error(f"Error setting up ChromeDriver: {e}")
+
+    # Setup EdgeDriver
+    try:
+        smbd.setup_sm_browsers("edge")
+        wafl.warn("EdgeDriver is ready!")
+        smbd.close_sm_browsers()
+    except Exception as e:
+        wafl.error(f"Error setting up EdgeDriver: {e}")
+
 def clear_pid_file(file_name="processes.txt"):
     """Clear the content of the PID file."""
     if getattr(sys, 'frozen', False):  # Check if running as a frozen executable
@@ -756,6 +775,8 @@ if __name__ == '__main__':
         logger_config = LoggerConfig(log_queue=log_queue)
         listener = logger_config.start_listener()
         logger = logger_config.logger
+        
+        setup_drivers(logger)  # Setup drivers for Chrome and Edge
 
         utils = Utils(logger)
         utils.stop_driver_processes()

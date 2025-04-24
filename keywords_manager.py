@@ -330,7 +330,7 @@ class KeywordsManager(BrowserDriver):
                     sub_step_status='Fail'
                 )
             raise
-
+    
     def ge_browser_version(self):
         """
         Retrieves the version of the currently active browser.
