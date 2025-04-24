@@ -454,7 +454,7 @@ def setup_drivers(wafl):
     smbd = SMBrowserDownloader(wafl)
     try:
         smbd.setup_sm_browsers("chrome")
-        wafl.warn("ChromeDriver is ready!")
+        wafl.warning("ChromeDriver is ready!")
         smbd.close_sm_browsers()
     except Exception as e:
         wafl.error(f"Error setting up ChromeDriver: {e}")
@@ -462,7 +462,7 @@ def setup_drivers(wafl):
     # Setup EdgeDriver
     try:
         smbd.setup_sm_browsers("edge")
-        wafl.warn("EdgeDriver is ready!")
+        wafl.warning("EdgeDriver is ready!")
         smbd.close_sm_browsers()
     except Exception as e:
         wafl.error(f"Error setting up EdgeDriver: {e}")

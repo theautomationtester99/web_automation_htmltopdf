@@ -104,12 +104,12 @@ class Utils:
         for process in psutil.process_iter(attrs=["pid", "name"]):
             try:
                 process_name = process.info["name"].lower()
-                self.logger.warn(f"Process name: {process_name}")
+                self.logger.warning(f"Process name: {process_name}")
                 if any(driver in process_name for driver in driver_names):
                     self.logger.info(f"Terminating {process_name} (PID: {process.info['pid']})")
                     psutil.Process(process.info["pid"]).terminate()
             except (psutil.NoSuchProcess, psutil.ZombieProcess):
-                self.logger.warn(f"Process already terminated: {process.info.get('name', 'Unknown')} (PID: {process.info.get('pid', 'Unknown')})")
+                self.logger.warning(f"Process already terminated: {process.info.get('name', 'Unknown')} (PID: {process.info.get('pid', 'Unknown')})")
             except psutil.AccessDenied:
                 self.logger.error(f"Access denied for process: {process.info.get('name', 'Unknown')} (PID: {process.info.get('pid', 'Unknown')})")
             except Exception as e:
@@ -501,7 +501,7 @@ class Utils:
     #         drive_folder_id = folder.get("id")
     #         self.logger.info(f"Created folder '{folder_name}' in Drive (ID: {drive_folder_id})")
     #     else:
-    #         self.logger.warn(f"Folder '{folder_name}' already exists in Drive (ID: {drive_folder_id})")
+    #         self.logger.warning(f"Folder '{folder_name}' already exists in Drive (ID: {drive_folder_id})")
 
     #     # Iterate over items in the local folder
     #     for item_name in os.listdir(folder_path):
@@ -521,7 +521,7 @@ class Utils:
     #                 drive_service.files().create(body=file_metadata, media_body=media, fields="id").execute()
     #                 self.logger.info(f"Uploaded file '{item_name}' to Drive in folder '{folder_name}'")
     #             else:
-    #                 self.logger.warn(f"File '{item_name}' already exists in folder '{folder_name}', skipping upload.")
+    #                 self.logger.warning(f"File '{item_name}' already exists in folder '{folder_name}', skipping upload.")
         
     #     self.logger.info(f"Files from '{folder_path}' uploaded successfully!")
     
@@ -541,7 +541,7 @@ class Utils:
             drive_folder_id = folder.get("id")
             self.logger.info(f"Created folder '{folder_name}' in Drive (ID: {drive_folder_id})")
         else:
-            self.logger.warn(f"Folder '{folder_name}' already exists in Drive (ID: {drive_folder_id})")
+            self.logger.warning(f"Folder '{folder_name}' already exists in Drive (ID: {drive_folder_id})")
 
         # Get a list of existing files in the folder
         existing_files = {file["name"]: file["id"] for file in self.list_files_in_folder(drive_folder_id, drive_service)}
@@ -564,7 +564,7 @@ class Utils:
                     drive_service.files().create(body=file_metadata, media_body=media, fields="id").execute()
                     self.logger.info(f"Uploaded file '{item_name}' to Drive in folder '{folder_name}'")
                 else:
-                    self.logger.warn(f"File '{item_name}' already exists in folder '{folder_name}', skipping upload.")
+                    self.logger.warning(f"File '{item_name}' already exists in folder '{folder_name}', skipping upload.")
 
         self.logger.info(f"Files from '{folder_path}' uploaded successfully!")
     
@@ -624,7 +624,7 @@ class Utils:
         # Grant new access to all users
         for user_email in user_emails:
             if not self.is_valid_gmail(user_email):
-                self.logger.warn(f"The email address {user_email} is not a gmail address. Skipping granding access to google drive.")
+                self.logger.warning(f"The email address {user_email} is not a gmail address. Skipping granding access to google drive.")
                 continue
             new_permission = {
                 "type": "user",
@@ -833,22 +833,22 @@ class Utils:
 
             # Check if recipient list is empty
             if not unique_recipients:
-                self.logger.warn(f"Recipient email list is empty {recipient_emails}, contains only blank entries, or has invalid email addresses. No emails sent.")
+                self.logger.warning(f"Recipient email list is empty {recipient_emails}, contains only blank entries, or has invalid email addresses. No emails sent.")
                 return
             
             if not self.is_valid_email(sender_email):
-                self.logger.warn(f"Invalid sender email address {sender_email}. No emails sent.")
+                self.logger.warning(f"Invalid sender email address {sender_email}. No emails sent.")
                 return
             
             if not self.is_valid_gmail(sender_email):
-                self.logger.warn(f"Sender email address {sender_email} should only a gmail account. No emails sent.")
+                self.logger.warning(f"Sender email address {sender_email} should only a gmail account. No emails sent.")
                 return
             
             # Get list of files in the folder
             files = [f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f))]
 
             if not files:
-                self.logger.warn("No files found in the folder.")
+                self.logger.warning("No files found in the folder.")
                 return
             
             total_files = len(files)
@@ -898,7 +898,7 @@ class Utils:
             
             # **Check if recordings folder contains at least one file**
             if not any(os.path.isfile(os.path.join(zip_folder_path, f)) for f in os.listdir(zip_folder_path)):
-                self.logger.warn(f"No files found in 'recordings' folder. Zipping and sending email skipped.")
+                self.logger.warning(f"No files found in 'recordings' folder. Zipping and sending email skipped.")
                 return
             
             zip_name = os.path.join(self.get_test_result_folder(), "recordings.zip")
