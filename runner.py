@@ -937,6 +937,7 @@ if __name__ == '__main__':
             asyncio.run(prm.generate_test_summary_pdf())
             utils.merge_pdfs_in_parts()
             utils.send_email_with_attachment()
+            utils.upload_folder_to_ftp()
             
         if args.start_parallel:
             st = time.time()
@@ -1014,6 +1015,7 @@ if __name__ == '__main__':
             asyncio.run(prm.generate_test_summary_pdf())
             utils.merge_pdfs_in_parts()
             utils.send_email_with_attachment()
+            utils.upload_folder_to_ftp()
 
     except Exception as e:
         logger.error(f"An error occurred: {e}")

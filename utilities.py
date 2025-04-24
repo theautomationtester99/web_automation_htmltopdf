@@ -36,6 +36,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 import psutil
+from ftplib import FTP
 
 class Utils:
     """
@@ -115,6 +116,91 @@ class Utils:
             except Exception as e:
                 self.logger.error(f"Unexpected error: {str(e)}")
 
+    # FTP upload related methods
+    ##################################################################################
+    
+    def connect_to_ftp(self, host, port, username, password):
+        """Connect to FTP server and return the FTP object."""
+        ftp = FTP()
+        ftp.connect(host, port)
+        ftp.login(username, password)
+        self.logger.info(f"Connected to FTP server: {host}:{port}")
+        return ftp
+
+    def ensure_remote_dir_exists(self, ftp, remote_dir):
+        """Ensure the remote directory exists, create it if necessary."""
+        self.logger.info(f"Ensuring remote directory exists: {remote_dir}")
+        try:
+            ftp.cwd(remote_dir)
+            self.logger.info(f"Changed to remote directory: {remote_dir}")
+        except Exception:
+            # ftp.mkd(remote_dir)
+            parts = remote_dir.split('/')
+            current_path = ""
+            for part in parts:
+                if part:  # Skip empty parts (e.g., leading '/')
+                    current_path += f"/{part}"
+                    try:
+                        ftp.cwd(current_path)  # Check if the directory exists
+                    except Exception:
+                        ftp.mkd(current_path) 
+            self.logger.info(f"Created remote directory: {remote_dir}")
+            ftp.cwd(remote_dir)
+            self.logger.info(f"Changed to remote directory: {remote_dir}")
+
+    def upload_file(self, ftp, local_file, remote_file):
+        """Upload a single file to the FTP server if it doesn't already exist."""
+        try:
+            ftp.size(remote_file)  # Check if the file exists
+            self.logger.warn(f"File exists, skipping: {remote_file}")
+        except Exception:
+            with open(local_file, 'rb') as file:
+                ftp.storbinary(f"STOR {remote_file}", file)
+                self.logger.info(f"Uploaded file: {remote_file}")
+
+    def upload_directory(self, ftp, local_dir, remote_dir):
+        """Upload all files and subdirectories from a local directory."""
+        self.logger.info(f"Uploading directory: {local_dir} to {remote_dir}")
+        self.ensure_remote_dir_exists(ftp, remote_dir)  # Ensure the root remote directory exists
+        for item in os.listdir(local_dir):
+            self.logger.info(f"Processing item: {item}")
+            local_path = os.path.join(local_dir, item)
+            remote_path = f"{remote_dir}/{item}"
+            # remote_path = os.path.join(remote_dir, item)
+            if os.path.isdir(local_path):
+                # Handle subdirectories
+                # try:
+                #     self.logger.info(f"Checking remote folder: {item}")
+                #     ftp.cwd(item)  # Check if the remote folder exists
+                # except Exception as e:
+                #     self.logger.info(f"Creating remote folder: {item}")
+                #     ftp.mkd(item)  # Create the folder if it doesn't exist
+                # ftp.cwd(item)  # Navigate into the folder
+                self.upload_directory(ftp, local_path, remote_path)
+                ftp.cwd("..")  # Navigate back to parent folder
+            else:
+                # Handle files
+                self.upload_file(ftp, local_path, item)
+
+    def upload_folder_to_ftp(self):
+        """Main function to upload a folder to the FTP server."""
+        try:
+            # local_folder=self.get_test_result_folder()
+            local_folder = os.path.abspath(os.path.join(self.test_results_folder, "..", "..", "..")
+)
+            remote_folder=start_properties.FTP_USER_HOME
+            host = start_properties.FTP_HOST
+            port = 21
+            username = start_properties.FTP_USER
+            password = start_properties.FTP_PASSWORD
+            ftp = self.connect_to_ftp(host, port, username, password)  # Connect to the FTP server
+            self.upload_directory(ftp, local_folder, remote_folder)  # Upload the folder
+            ftp.quit()
+            self.logger.info("Connection closed.")
+        except Exception as e:
+            self.logger.error(f"Error: {e}")
+    
+    ###########################################
     
     def merge_pdfs_in_parts(self):
         folder_path = self.get_test_result_folder()
