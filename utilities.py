@@ -186,8 +186,11 @@ class Utils:
         """Main function to upload a folder to the FTP server."""
         try:
             # local_folder=self.get_test_result_folder()
-            local_folder = os.path.abspath(os.path.join(self.test_results_folder, "..", "..", "..")
-)
+            do_ftp_upload = True if start_properties.FTP_UPLOAD.lower() == "yes" else False
+            if not do_ftp_upload:
+                self.logger.info("FTP upload is disabled.")
+                return
+            local_folder = os.path.abspath(os.path.join(self.test_results_folder, "..", "..", ".."))
             remote_folder=start_properties.FTP_USER_HOME
             host = start_properties.FTP_HOST
             port = 21
