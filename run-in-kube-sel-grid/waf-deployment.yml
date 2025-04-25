@@ -18,6 +18,10 @@ spec:
         image: waf2st
         imagePullPolicy: Never
         env:
+        - name: PARALLEL_EXECUTION
+          value: "yes"
+        - name: NO_THREADS
+          value: "3"
         - name: FTP_UPLOAD
           value: "yes"
         - name: FTP_HOST

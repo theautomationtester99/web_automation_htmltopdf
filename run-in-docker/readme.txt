@@ -38,5 +38,5 @@ Step 6
 ------
 launch the waf running containers many if require like this
 
-docker run -d --rm -e FTP_UPLOAD=yes -e FTP_HOST=172.17.0.2 -e LOG_LEVEL=warn waf2st
-docker run -d --rm -e FTP_UPLOAD=yes -e FTP_HOST=172.17.0.2 -e LOG_LEVEL=warn -e HEADLESS=no waf2st
+docker run -d --rm -e NO_THREADS=3 -e PARALLEL_EXECUTION=yes -e FTP_UPLOAD=yes -e FTP_HOST=172.17.0.2 -e LOG_LEVEL=warn waf2st
+docker run -d --rm -e NO_THREADS=3 -e PARALLEL_EXECUTION=yes -e FTP_UPLOAD=yes -e FTP_HOST=172.17.0.2 -e LOG_LEVEL=warn -e HEADLESS=no waf2st

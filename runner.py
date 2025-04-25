@@ -810,6 +810,19 @@ if __name__ == '__main__':
         if active_args > 1:
             logger.error("Only one of '--start', --start-parallel, '--version', '--encrypt-file', '--encrypt-str', --delete-tr-google-drive or '--help-html' can be used at a time.")
             raise ValueError("Only one of '--start', --start-parallel, '--version', '--encrypt-file', '--encrypt-str', --delete-tr-google-drive or '--help-html' can be used at a time.")
+        
+        if args.start and True if str(start_properties.PARALLEL_EXECUTION).lower() == 'yes' else False:
+            args = argparse.Namespace(
+                start=False,               # Force this to True
+                start_parallel=True,     # Suppress this
+                version=False,            # Suppress this
+                delete_tr_google_drive=False, # Suppress this
+                encrypt_file=None,        # Suppress this
+                encrypt_str=None,         # Suppress this
+                output_file=None,         # Suppress this
+                help_html=False           # Suppress this
+            )
+            logger.warning("Parallel execution is enabled via environment variable. So starting parallel execution.")
 
         if args.output_file and not args.encrypt_file:
             logger.error("'--output-file' can only be used with '--encrypt-file'.")
