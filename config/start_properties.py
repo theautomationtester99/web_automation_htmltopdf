@@ -22,7 +22,7 @@ INPRIVATE = os.getenv("INPRIVATE", "yes")
 HEADLESS = os.getenv("HEADLESS", "yes")
 
 NO_THREADS = int(os.getenv("NO_THREADS", "4"))
-FTP_UPLOAD = os.getenv("FTP_UPLOAD", "no")
+FTP_UPLOAD = os.getenv("FTP_UPLOAD", "yes")
 FTP_HOST = os.getenv("FTP_HOST", "localhost")
 FTP_USER = os.getenv("FTP_USER", "user1")
 FTP_PASSWORD = os.getenv("FTP_PASSWORD", "password1")

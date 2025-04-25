@@ -1,27 +1,28 @@
-import asyncio
-from pathlib import Path
-import re
-from multiprocessing import Process, Queue, freeze_support, Lock
 import argparse
+import asyncio
+import os
+import re
 import sys
 import tempfile
 import time
 import webbrowser
-from config_reader import ConfigReader
+from multiprocessing import Lock, Process, Queue, freeze_support
+from pathlib import Path
 import cv2
 import numpy as np
 import pandas as pd
+import psutil
 import pyautogui
+from config import start_properties
+from config_reader import ConfigReader
+from constants import VALID_KEYWORDS
 from excel_report_manager import ExcelReportManager
 from keywords_manager import KeywordsManager
+from logger_config import LoggerConfig
 from pdf_report_manager import PdfReportManager
 from sm_browser_downloader import SMBrowserDownloader
 from utilities import Utils
-from config import start_properties
-import os
-from logger_config import LoggerConfig
-from constants import VALID_KEYWORDS
-import psutil
+
 
 def validate_test_script(testscript_file, wafl, utils, launch_browser):
     """
@@ -775,18 +776,18 @@ if __name__ == '__main__':
         logger_config = LoggerConfig(log_queue=log_queue)
         listener = logger_config.start_listener()
         logger = logger_config.logger
-        
-        setup_drivers(logger)  # Setup drivers for Chrome and Edge
 
         utils = Utils(logger)
-        utils.stop_driver_processes()
-        # Stop running processes from previous execution
-        pids = read_pids_from_file()
-        stop_running_processes(pids, logger)
-        clear_pid_file()  # Clear the file after stopping processes
         
-        main_process_id = os.getpid()
-        write_pid_to_file(main_process_id)  # Write the main process ID to a file
+        if True if str(start_properties.RUN_IN_SELENIUM_GRID).lower() != 'yes' else False:
+            setup_drivers(logger)  # Setup drivers for Chrome and Edge
+            utils.stop_driver_processes()
+            # Stop running processes from previous execution
+            pids = read_pids_from_file()
+            stop_running_processes(pids, logger)
+            clear_pid_file()  # Clear the file after stopping processes            
+            main_process_id = os.getpid()
+            write_pid_to_file(main_process_id)  # Write the main process ID to a file
         
         prm = PdfReportManager(logger)
 
@@ -940,6 +941,9 @@ if __name__ == '__main__':
             utils.upload_folder_to_ftp()
             
         if args.start_parallel:
+            logger.info("----------------------------------------------------")
+            logger.info("Starting parallel execution.")
+            logger.info("----------------------------------------------------")
             st = time.time()
             check_before_start(utils)
             run_headless = True if str(start_properties.HEADLESS).lower() == 'yes' else False

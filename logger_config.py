@@ -1,8 +1,8 @@
 import logging
-from logging.handlers import RotatingFileHandler, QueueHandler, QueueListener
 import os
-from multiprocessing import Queue
 import sys
+from logging.handlers import QueueHandler, QueueListener, RotatingFileHandler
+from multiprocessing import Queue
 from color_formatter import ColorFormatter
 from config import start_properties
 

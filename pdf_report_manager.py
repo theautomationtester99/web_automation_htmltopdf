@@ -1,11 +1,10 @@
-from pathlib import Path
+import os
 import sys
+from pathlib import Path
 import pandas as pd
-
 from pdf_reporting import PdfReporting
 from pdf_ts_reporting import PdfTsReporting
 from utilities import Utils
-import os
 
 
 class PdfReportManager:
@@ -52,6 +51,7 @@ class PdfReportManager:
         self.browser_img_alt = ""
         self.os_img_src = ""
         self.os_img_alt = ""
+        self.running_on_host_name = ""
         self.browser_version = ""
         self.grid_img_src = ""
         self.executed_date = self.utils.get_date_string()
@@ -146,7 +146,7 @@ class PdfReportManager:
         self.report_data["executed_date"] = self.executed_date
         self.report_data["overall_status_text"] = self.overall_status_text
         self.report_data["table_data"] = self.table_data
-        pdf = PdfReporting(self.logger, base_dir/"resources"/"logo.png", base_dir/"resources"/"encrypted_file.jinja2", self.report_data, self.tc_id, self.tc_id + "_" + self.browser_img_alt + "_" + self.overall_status_text + "_" + self.utils.get_date_string())
+        pdf = PdfReporting(self.logger, base_dir/"resources"/"logo.png", base_dir/"resources"/"encrypted_file.jinja2", self.report_data, self.tc_id + "-" + self.running_on_host_name + "-" + self.browser_img_alt + "-" + self.os_img_alt, self.tc_id + "_" + self.browser_img_alt + "_" + self.overall_status_text + "_" + self.utils.get_date_string())
 
         await pdf.generate_pdf()
 

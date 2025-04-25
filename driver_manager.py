@@ -1,15 +1,12 @@
 import os
-
 import pyautogui as pag
+import requests
 from appium import webdriver as appium_wd
 from appium.options.android import UiAutomator2Options
-import requests
-from config import start_properties
-from config_reader import ConfigReader
-from jproperties import Properties
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.edge.options import Options as EdgeOptions
+from config import start_properties
 
 
 class DriverManager:

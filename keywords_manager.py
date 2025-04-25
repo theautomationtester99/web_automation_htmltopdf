@@ -1,11 +1,13 @@
+import asyncio
+from datetime import datetime
+from axe_selenium_python import Axe
 from config import start_properties
-from constants import CHROME_LOGO_SRC_B64, EDGE_LOGO_SRC_B64, LINUX_LOGO_SRC_B64, SE_GRID_B64, WIN_LOGO_SRC_B64
+from constants import (CHROME_LOGO_SRC_B64, EDGE_LOGO_SRC_B64,
+                       LINUX_LOGO_SRC_B64, SE_GRID_B64, WIN_LOGO_SRC_B64)
 from driver_functions import BrowserDriver
 from pdf_report_manager import PdfReportManager
 from utilities import Utils
-from datetime import datetime
-import asyncio
-from axe_selenium_python import Axe
+
 
 class KeywordsManager(BrowserDriver):
     """
@@ -252,10 +254,14 @@ class KeywordsManager(BrowserDriver):
             if self.run_in_selenium_grid.lower() == "yes":
                 self.logger.debug("Capturing the OS where the browser is running in Selenium Grid.")
                 os_name = self.grid_os_info
+                host_name = "selenium grid"
                 self.repo_m.grid_img_src = self.se_grid_b64
             else:
                 self.logger.debug("Capturing the OS where the browser is running in local machine.")
                 os_name = self.utils.detect_os()
+                host_name = self.utils.get_hostname()
+            
+            self.repo_m.running_on_host_name = host_name
 
             # Populate OS details in the PDF report
             if str(os_name).lower() == "linux":

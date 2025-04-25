@@ -106,7 +106,6 @@ class BrowserDriver(DriverManager):
             self.logger.error("cannot send data on the element with locator: " + locator + " locator_type: " + locator_type)
             raise
 
-
     def take_screenshot(self, file_str):
         """
         Capture a screenshot of the current browser view.
@@ -128,71 +127,6 @@ class BrowserDriver(DriverManager):
         else:
             # return utils.take_screenshot_full(file_start)
             return self.utils.take_screenshot_full_src_tag(file_str)
-
-
-    # def take_screenshot_with_base64_watermark(self):
-    #     """
-    #     Capture a screenshot, overlay a date-time watermark inside
-    #     a transparent rectangle, and encode the image into Base64 format.
-
-    #     Returns:
-    #         str: Base64-encoded string representation of the watermarked screenshot.
-
-    #     Raises:
-    #         Exception: If any error occurs during screenshot capture or processing.
-    #     """
-    #     try:
-    #         # Capture screenshot as binary data
-    #         screenshot = self.driver.get_screenshot_as_png()
-    #         image = Image.open(BytesIO(screenshot))
-
-    #         # Add the date-time watermark
-    #         date_time_str = Utils().get_datetime_string()
-    #         draw = ImageDraw.Draw(image)
-
-    #         # Use the default font provided by Pillow
-    #         font = ImageFont.load_default()
-
-    #         # Calculate text size using the bounding box
-    #         text_bbox = draw.textbbox((0, 0), date_time_str, font=font)  # Gets the bounding box of the text
-    #         text_width, text_height = text_bbox[2] - text_bbox[0], text_bbox[3] - text_bbox[1]
-
-    #         # Position for watermark (top-right corner)
-    #         width, height = image.size
-    #         padding = 10  # Padding for the rectangle and text
-    #         rect_position = (
-    #             width - text_width - 2 * padding,  # Left
-    #             padding,  # Top
-    #             width - padding,  # Right
-    #             padding + text_height + 2 * padding  # Bottom
-    #         )
-
-    #         # Create transparent rectangle overlay
-    #         rect_color = (0, 0, 0, 128)  # Black color with 50% opacity (RGBA)
-    #         overlay = Image.new("RGBA", image.size, (255, 255, 255, 0))
-    #         overlay_draw = ImageDraw.Draw(overlay)
-    #         overlay_draw.rectangle(rect_position, fill=rect_color)
-
-    #         # Add watermark text over the rectangle
-    #         text_position = (rect_position[0] + padding, rect_position[1] + padding)
-    #         overlay_draw.text(text_position, date_time_str, font=font, fill=(255, 255, 255, 255))  # White text
-
-    #         # Combine the original image with the overlay
-    #         image = Image.alpha_composite(image.convert("RGBA"), overlay)
-
-    #         # Save the image into a BytesIO object
-    #         buffered = BytesIO()
-    #         image.save(buffered, format="PNG")
-
-    #         # Encode the image into Base64 format
-    #         base64_image = base64.b64encode(buffered.getvalue()).decode("utf-8")
-
-    #         # Return the Base64 string
-    #         return f"data:image/png;base64,{base64_image}"
-
-    #     except Exception as e:
-    #         self.logger.error("### Exception Occurred when taking screenshot")
-    #         raise
 
     def take_screenshot_with_base64_watermark(self, input_string):
         """
@@ -739,7 +673,6 @@ class BrowserDriver(DriverManager):
             self.apply_style(original_style, element)
         except:
             self.logger.error("Cannot highlight element with locator: " + locator + " and locator_type: " + locator_type)
-            
             
     def drag_and_drop(self, source_locator="", source_locator_type="id", target_locator="", target_locator_type="id"):
         """

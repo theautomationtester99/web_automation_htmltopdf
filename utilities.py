@@ -1,42 +1,36 @@
+import base64
 import filecmp
 import getpass
 import glob
 import json
 import os
-from pathlib import Path
 import platform
 import re
+import shutil
+import smtplib
 import socket
 import sys
 import zipfile
-import PyPDF2
-import numpy as np
-import cv2
-import pyautogui
 from datetime import datetime, timezone
-from PIL import Image
-from PIL import ImageFont
-from PIL import ImageDraw
-import shutil
+from email.mime.application import MIMEApplication
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from ftplib import FTP
 from io import BytesIO
-import base64
+from pathlib import Path
+import cv2
+import numpy as np
+import psutil
+import pyautogui
+import PyPDF2
 from cryptography.fernet import Fernet
+from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
-from google.oauth2 import service_account
-import os
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+from PIL import Image, ImageDraw, ImageFont
 from config import start_properties
 from constants import SCOPES, SERVICE_ACCOUNT_FILE
-import smtplib
-import os
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.application import MIMEApplication
-import psutil
-from ftplib import FTP
+
 
 class Utils:
     """
@@ -87,8 +81,6 @@ class Utils:
             self.test_results_folder = os.path.abspath(os.path.join(generic_path, self.hostname, self.date_str, self.time_str))
             self.recordings_folder = os.path.abspath(os.path.join(self.test_results_folder, "recordings"))
             self.images_folder = os.path.abspath(os.path.join(self.test_results_folder, "images"))
-            
-            
 
     def get_test_result_folder(self):
         """
@@ -106,6 +98,10 @@ class Utils:
             try:
                 process_name = process.info["name"].lower()
                 self.logger.warning(f"Process name: {process_name}")
+                # Skip if the process is 'msedgewebview'
+                if "msedgewebview" in process_name:
+                    self.logger.info(f"Skipping {process_name} (PID: {process.info['pid']})")
+                    continue
                 if any(driver in process_name for driver in driver_names):
                     self.logger.info(f"Terminating {process_name} (PID: {process.info['pid']})")
                     psutil.Process(process.info["pid"]).terminate()
@@ -832,7 +828,10 @@ class Utils:
     
     def get_hostname(self) -> str:
         """Returns the hostname of the system."""
-        return socket.gethostname()
+        if start_properties.RUN_IN_SELENIUM_GRID.lower() == "yes":
+            return "selenium_grid"
+        else:
+            return socket.gethostname()
 
     def upload_test_results_to_drive(self, recipient_email):
         folder_name = "TestResults"

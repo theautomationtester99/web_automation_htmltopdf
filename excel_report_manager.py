@@ -1,11 +1,11 @@
-import pandas as pd
-from tabulate import tabulate
-
-from utilities import Utils
-from openpyxl import load_workbook
-from openpyxl.utils import get_column_letter
-from openpyxl.styles import Alignment
 import os
+import pandas as pd
+from openpyxl import load_workbook
+from openpyxl.styles import Alignment
+from openpyxl.utils import get_column_letter
+from tabulate import tabulate
+from utilities import Utils
+
 
 class ExcelReportManager:
     """

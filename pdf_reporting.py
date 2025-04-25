@@ -1,8 +1,8 @@
-from utilities import Utils
-from jinja2 import Environment, FileSystemLoader
-import os
 import base64
+import os
+from jinja2 import Environment, FileSystemLoader
 from pyppeteer import launch
+from utilities import Utils
 
 
 class PdfReporting:
