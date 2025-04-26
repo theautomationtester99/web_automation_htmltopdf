@@ -34,7 +34,7 @@ class SMBrowserDownloader(BrowserDriver):
             except Exception as e:
                 self.logger.error("An error occurred: %s", e, exc_info=True)
                 raise
-    
+
     def close_sm_browsers(self):
             """
             Launches the specified browser, captures OS and browser details, and logs information in the PDF report.

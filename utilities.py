@@ -10,6 +10,8 @@ import shutil
 import smtplib
 import socket
 import sys
+import tempfile
+import time
 import zipfile
 from datetime import datetime, timezone
 from email.mime.application import MIMEApplication
@@ -90,10 +92,10 @@ class Utils:
             str: The absolute path to the test results folder.
         """
         return self.test_results_folder
-    
+
     def stop_driver_processes(self):
         driver_names = ["msedgedriver", "chromedriver","msedgedriver.exe", "chromedriver.exe", "chromerunnerprocess", "edgerunnerprocess", "recordingprocess", "chrome", "msedge", "firefox", "geckodriver", "chromerunnerprocess.exe", "edgerunnerprocess.exe", "recordingprocess.exe"]
-        
+
         for process in psutil.process_iter(attrs=["pid", "name"]):
             try:
                 process_name = process.info["name"].lower()
@@ -114,7 +116,7 @@ class Utils:
 
     # FTP upload related methods
     ##################################################################################
-    
+
     def connect_to_ftp(self, host, port, username, password):
         """Connect to FTP server and return the FTP object."""
         ftp = FTP()
@@ -139,7 +141,7 @@ class Utils:
                     try:
                         ftp.cwd(current_path)  # Check if the directory exists
                     except Exception:
-                        ftp.mkd(current_path) 
+                        ftp.mkd(current_path)
             self.logger.info(f"Created remote directory: {remote_dir}")
             ftp.cwd(remote_dir)
             self.logger.info(f"Changed to remote directory: {remote_dir}")
@@ -198,9 +200,9 @@ class Utils:
             self.logger.info("Connection closed.")
         except Exception as e:
             self.logger.error(f"Error: {e}")
-    
+
     ###########################################
-    
+
     def merge_pdfs_in_parts(self):
         folder_path = self.get_test_result_folder()
         output_base = os.path.join(folder_path, "consolidated")
@@ -209,9 +211,9 @@ class Utils:
 
         pdf_files = [f for f in os.listdir(folder_path) if f.endswith('.pdf')]
         test_summary = [f for f in pdf_files if f.startswith('Test_Summary_Results')]
-        
+
         self.logger.info(pdf_files)
-        
+
         grouped_pdfs = {}
         for pdf in pdf_files:
             self.logger.info(f"Processing PDF: {pdf}")
@@ -221,13 +223,13 @@ class Utils:
                 grouped_pdfs.setdefault(prefix, []).append(pdf)
 
         merge_order = test_summary + sum([grouped_pdfs[key] for key in sorted(grouped_pdfs.keys())], [])
-        
+
         self.logger.info(f"Merge order: {merge_order}")
-        
+
         total_size = sum(os.path.getsize(os.path.join(folder_path, pdf_file)) for pdf_file in merge_order)
-        
+
         max_size = 100 * 1024 * 1024  # 100MB threshold
-        
+
         if total_size <= max_size:
             self.logger.info("All PDFs are within the size limit. Merging into a single file.")
             pdf_writer = PyPDF2.PdfMerger()
@@ -245,7 +247,7 @@ class Utils:
 
             for pdf_file in merge_order:
                 pdf_writer.append(os.path.join(folder_path, pdf_file))
-                
+
                 current_size += os.path.getsize(os.path.join(folder_path, pdf_file))
 
                 if current_size >= max_size:
@@ -263,7 +265,7 @@ class Utils:
                     pdf_writer.write(output_pdf)
 
             self.logger.info(f"Merged PDFs saved in parts under: {output_base}")
-    
+
     def get_test_recordings_folder(self):
         """
         Gets the path to the recordings folder.
@@ -437,7 +439,7 @@ class Utils:
         date_time = now.strftime("%d%b%Y_%Ih%Mm%Ss%f")
         # self.logger.debug("date and time:", date_time)
         return date_time
-    
+
     def get_time_string(self):
         """
         Generates a formatted string representing the current date and time.
@@ -526,7 +528,7 @@ class Utils:
         creds = service_account.Credentials.from_service_account_info(service_account_info, scopes=SCOPES)
         drive_service = build("drive", "v3", credentials=creds)
         return drive_service
-    
+
     # Authenticate using the service account
     def authenticate_service_account_file(self):
         creds = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
@@ -538,7 +540,7 @@ class Utils:
         query = f"name='{folder_name}' and mimeType='application/vnd.google-apps.folder'"
         results = drive_service.files().list(q=query, fields="files(id, webViewLink)").execute()
         folders = results.get("files", [])
-        
+
         if folders:
             folder_id = folders[0]["id"]
             folder_link = folders[0]["webViewLink"]
@@ -607,9 +609,9 @@ class Utils:
     #                 self.logger.info(f"Uploaded file '{item_name}' to Drive in folder '{folder_name}'")
     #             else:
     #                 self.logger.warning(f"File '{item_name}' already exists in folder '{folder_name}', skipping upload.")
-        
+
     #     self.logger.info(f"Files from '{folder_path}' uploaded successfully!")
-    
+
     def upload_folder_to_drive(self, parent_folder_id, folder_path, drive_service):
         """Recursively upload a folder and its contents to Google Drive, avoiding duplicates."""
         folder_name = os.path.basename(folder_path)
@@ -652,15 +654,15 @@ class Utils:
                     self.logger.warning(f"File '{item_name}' already exists in folder '{folder_name}', skipping upload.")
 
         self.logger.info(f"Files from '{folder_path}' uploaded successfully!")
-    
+
     def list_files_in_folder(self, folder_id, drive_service):
         """Retrieve a list of files in a Google Drive folder."""
         query = f"'{folder_id}' in parents and trashed = false"
         response = drive_service.files().list(q=query, fields="files(id, name)").execute()
         return response.get("files", [])
-    
-    
-    
+
+
+
     def delete_folder_from_drive(self, folder_id, drive_service):
         """Delete all files and subfolders inside a Google Drive folder."""
         query = f"'{folder_id}' in parents and trashed = false"
@@ -679,7 +681,7 @@ class Utils:
                 self.logger.error(f"Failed to delete '{file['name']}': {e}")
 
         self.logger.info(f"All contents from folder (ID: {folder_id}) deleted successfully!")
-    
+
     def grant_access_to_folder_and_contents(self, folder_id, user_emails, drive_service):
         """Remove existing permissions (except for specified users) and grant new access to a list of users for a folder and its contents."""
 
@@ -821,11 +823,11 @@ class Utils:
         # (0,0,0)-black color text
         draw.text((x, y), text, fill=(0, 0, 0), font=font, anchor='ms')
         image.save(file_name_path)
-        
+
     def sanitize_string(self, input_str: str) -> str:
         # Replace all non-alphanumeric and non-underscore characters with '_'
         return re.sub(r'[^a-zA-Z0-9_]', '_', input_str)
-    
+
     def get_hostname(self) -> str:
         """Returns the hostname of the system."""
         if start_properties.RUN_IN_SELENIUM_GRID.lower() == "yes":
@@ -835,7 +837,7 @@ class Utils:
 
     def upload_test_results_to_drive(self, recipient_email):
         folder_name = "TestResults"
-        
+
         if getattr(sys, 'frozen', False):  # Check if running as a frozen executable
             script_dir = os.path.dirname(sys.executable)  # Use the directory of the executable
         else:
@@ -850,21 +852,21 @@ class Utils:
         folder_id, folder_link = self.get_existing_root_folder_id(folder_name, drive_service)
         if not folder_id:
             folder_id, folder_link = self.create_folder(folder_name, drive_service)
-        
+
         self.upload_folder_to_drive(folder_id, folder_path, drive_service)
         # self.logger.info(folder_id, folder_link)
         self.grant_access_to_folder_and_contents(folder_id, recipient_email, drive_service)
         return folder_link
-    
+
     def delete_test_results_from_drive(self):
         folder_name = "TestResults"
         drive_service = self.authenticate_service_account()
         folder_id, folder_link = self.get_existing_root_folder_id(folder_name, drive_service)
         if not folder_id:
             return
-        
+
         self.delete_folder_from_drive(folder_id, drive_service)
-    
+
     def zip_folder(self, folder_path, zip_name):
         """Compress a folder into a ZIP file."""
         with zipfile.ZipFile(zip_name, 'w', zipfile.ZIP_DEFLATED) as zipf:
@@ -903,7 +905,7 @@ class Utils:
         """
         send_test_results_email = True if str(start_properties.SEND_TEST_RESULTS_EMAIL).lower() == 'yes' else False
         upload_test_results_to_drive = True if str(start_properties.UPLOAD_TEST_RESULTS).lower() == 'yes' else False
-        
+
         if send_test_results_email:
             sender_email =  str(start_properties.SENDER_EMAIL).lower()
             sender_password = self.decrypt_string(str(start_properties.SENDER_EMAIL_PASSWORD))
@@ -912,7 +914,7 @@ class Utils:
             folder_path = os.path.join(self.get_test_result_folder(), "consolidated")
             subject_prefix = "Test Results"
             zip_subject_prefix = "Recordings"
-            
+
             smtp_server = "smtp.gmail.com"
             smtp_port = 587  # Gmail SMTP port
 
@@ -923,24 +925,24 @@ class Utils:
             if not unique_recipients:
                 self.logger.warning(f"Recipient email list is empty {recipient_emails}, contains only blank entries, or has invalid email addresses. No emails sent.")
                 return
-            
+
             if not self.is_valid_email(sender_email):
                 self.logger.warning(f"Invalid sender email address {sender_email}. No emails sent.")
                 return
-            
+
             if not self.is_valid_gmail(sender_email):
                 self.logger.warning(f"Sender email address {sender_email} should only a gmail account. No emails sent.")
                 return
-            
+
             # Get list of files in the folder
             files = [f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f))]
 
             if not files:
                 self.logger.warning("No files found in the folder.")
                 return
-            
+
             total_files = len(files)
-            
+
             for recipient_email in unique_recipients:
                 for idx, file_name in enumerate(files, start=1):
                     # Determine email subject
@@ -983,12 +985,12 @@ class Utils:
                         self.logger.info(f"Email sent successfully to {recipient_email} with attachment: {file_name}")
                     except Exception as e:
                         self.logger.error(f"Error sending email to {recipient_email} for {file_name}: {e}")
-            
+
             # **Check if recordings folder contains at least one file**
             if not any(os.path.isfile(os.path.join(zip_folder_path, f)) for f in os.listdir(zip_folder_path)):
                 self.logger.warning(f"No files found in 'recordings' folder. Zipping and sending email skipped.")
                 return
-            
+
             zip_name = os.path.join(self.get_test_result_folder(), "recordings.zip")
             self.zip_folder(zip_folder_path, zip_name)  # Using defined function
 
@@ -998,7 +1000,7 @@ class Utils:
 
             # **Preserving your email logic, now sending split files**
             total_zip_files = len(split_files)  # Update file count to reflect split ZIP files
-            
+
             for recipient_email in unique_recipients:
                 for idx, file_path in enumerate(split_files, start=1):
                     zip_subject = zip_subject_prefix if total_zip_files == 1 else f"{subject_prefix} - Part {idx}/{total_zip_files}"
@@ -1007,10 +1009,10 @@ class Utils:
                     msg["From"] = sender_email
                     msg["To"] = recipient_email
                     msg["Subject"] = zip_subject
-                    
+
                     body_single = f"Hello,\n\nAttached is recordings zip.\n\nBest regards."
                     body = body_single if total_zip_files == 1 else f"Hello,\n\nPlease find attached recordings zip - Part {idx}/{total_zip_files}\n\nBest regards."
-                
+
                     msg.attach(MIMEText(body, "plain"))
 
                     try:
@@ -1031,7 +1033,7 @@ class Utils:
                         self.logger.info(f"Email sent successfully to {recipient_email} with attachment: {os.path.basename(file_path)}")
                     except Exception as e:
                         self.logger.error(f"Error sending email to {recipient_email} for {os.path.basename(file_path)}: {e}")
-            
+
             # **Delete ZIP files after emails are sent**
             zip_files = [zip_name] + split_files  # Includes main ZIP and all split parts
             for file in zip_files:
@@ -1046,7 +1048,7 @@ class Utils:
 
     def is_valid_email(self,email):
         return re.match(r"[^@]+@[^@]+\.[^@]+", email)
-    
+
     def is_valid_gmail(self, email):
         return re.match(r"^[a-zA-Z0-9._%+-]+@gmail\.com$", email) is not None
 
@@ -1084,7 +1086,7 @@ class Utils:
             if os.path.isdir(d):
                 str_lst.append(d)
         return str_lst
-    
+
     def extract_first_x_chars(self, input_string, x):
         """
         Extracts the first x characters from the given string.
@@ -1100,7 +1102,7 @@ class Utils:
             raise ValueError("Input must be a string.")
         if not isinstance(x, int) or x < 0:
             raise ValueError("The number of characters to extract must be a non-negative integer.")
-        
+
         return input_string[:x]
 
     def get_abs_path_folder_matching_string_within_folder(self, root_folder_path, search_folder_name: str) -> str:
@@ -1346,7 +1348,7 @@ class Utils:
 
         # self.logger.debug("File encrypted successfully!")
         # return encrypted_content
-    
+
     def encrypt_string(self, input_string, encryption_key="DC3HN3PdUb5z_MyYbitSyVnPU_E_WOfZkUsYR8bWKzY="):
         """
         Encrypts a given string using Fernet encryption.
@@ -1365,7 +1367,7 @@ class Utils:
         encrypted_string = f.encrypt(input_string.encode())
 
         return encrypted_string
-    
+
     def decrypt_string(self, encrypted_string, encryption_key="DC3HN3PdUb5z_MyYbitSyVnPU_E_WOfZkUsYR8bWKzY="):
         """
         Decrypts an encrypted string using Fernet encryption.

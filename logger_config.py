@@ -27,7 +27,7 @@ class LoggerConfig:
 
         generic_path = os.path.join(script_dir, "logs")
         log_file = os.path.join(generic_path, 'waf.log')
-        
+
         self.log_file = log_file
         self.log_level = self.get_log_level_from_config()
         self.log_queue = log_queue or Queue()  # Use provided Queue or create a new one

@@ -1,5 +1,7 @@
 import asyncio
 from datetime import datetime
+import os
+import time
 from axe_selenium_python import Axe
 from config import start_properties
 from constants import (CHROME_LOGO_SRC_B64, EDGE_LOGO_SRC_B64,
@@ -23,8 +25,8 @@ class KeywordsManager(BrowserDriver):
         linux_logo_src_b64 (str): Base64 encoded string for Linux logo image.
         win_logo_src_b64 (str): Base64 encoded string for Windows logo image.
     """
-    def __init__(self, logger, retry_count=1):
-        super().__init__(logger)
+    def __init__(self, logger, temp_dir, retry_count=1):
+        super().__init__(logger, temp_dir)
         self.screenshot_strategy = self._get_screenshot_strategy()
         self.highlight_enabled = self._get_highlight_element_strategy()
         self.screenshot_no = 0
@@ -39,6 +41,7 @@ class KeywordsManager(BrowserDriver):
         self.linux_logo_src_b64 = LINUX_LOGO_SRC_B64
         self.win_logo_src_b64 = WIN_LOGO_SRC_B64
         self.se_grid_b64 = SE_GRID_B64
+        self.temp_dir=temp_dir
 
     def update_retry_count(self, retry_count):
         """
@@ -55,7 +58,7 @@ class KeywordsManager(BrowserDriver):
     '''
     The below are the keywords that can be used generically for any application under testing.
     '''
-    
+
     def _get_screenshot_strategy(self):
         """
         Fetches the screenshot_return value from the start.properties file.
@@ -72,13 +75,13 @@ class KeywordsManager(BrowserDriver):
         if strategy not in ["always", "on-error", "never"]:
             self.logger.warning(f"Invalid screenshot_strategy '{strategy}' found in configuration. Defaulting to 'always'.")
             strategy = "always"
-        
+
         if strategy == "never":
             self.logger.info("Mapping 'never' screenshot strategy to 'on-error'.")
             strategy = "on-error"
 
         return strategy
-    
+
     def _get_highlight_element_strategy(self):
         """
         Fetches the screenshot_return value from the start.properties file.
@@ -110,7 +113,7 @@ class KeywordsManager(BrowserDriver):
         except Exception as e:
             self.logger.error("An error occurred: %s", e, exc_info=True)
             raise
-    
+
     def ge_switch_to_iframe(self, locator, locator_type, element_name):
         """
         Switches to the specified iframe using traditional locators.
@@ -172,7 +175,7 @@ class KeywordsManager(BrowserDriver):
                     sub_step_status='Fail'
                 )
             raise
-    
+
     def ge_close(self):
         """
         Creates a PDF report and closes the browser instance.
@@ -183,7 +186,7 @@ class KeywordsManager(BrowserDriver):
         asyncio.run(self.repo_m.create_report())
         self.logger.debug("Closing the browser")
         self.close_browser()
-    
+
     def ge_close_browser(self):
         """
         Creates a PDF report and closes the browser instance.
@@ -260,7 +263,7 @@ class KeywordsManager(BrowserDriver):
                 self.logger.debug("Capturing the OS where the browser is running in local machine.")
                 os_name = self.utils.detect_os()
                 host_name = self.utils.get_hostname()
-            
+
             self.repo_m.running_on_host_name = host_name
 
             # Populate OS details in the PDF report
@@ -336,7 +339,7 @@ class KeywordsManager(BrowserDriver):
                     sub_step_status='Fail'
                 )
             raise
-    
+
     def ge_browser_version(self):
         """
         Retrieves the version of the currently active browser.
@@ -365,7 +368,7 @@ class KeywordsManager(BrowserDriver):
             self.logger.debug("An error occurred: %s", e, exc_info=True)
             return False
             raise
-    
+
     def ge_is_page_accessibility_compliant(self):
         """
         Checks the web page for accessibility compliance using axe-core.
@@ -421,8 +424,7 @@ class KeywordsManager(BrowserDriver):
                     sub_step_status='Fail'
                 )
             raise
-            
-    
+
     def ge_drag_and_drop(self, source_locator, source_locator_type, target_locator, target_locator_type, source_element_name, target_element_name):
         """
         Performs a drag-and-drop action from a source element to a target element and logs the result in the PDF report.
@@ -485,7 +487,7 @@ class KeywordsManager(BrowserDriver):
                     sub_step_status='Fail'
                 )
             raise
-        
+
     def ge_mouse_hover(self, locator, locator_type, element_name):
         """
         Performs a mouse hover action on the specified element and logs the result in the PDF report.
@@ -569,7 +571,7 @@ class KeywordsManager(BrowserDriver):
                 self.logger.debug("Element is enabled.")
 
                 # Handle screenshot strategy
-                
+
                 self.screenshot_no += 1
                 self.repo_m.add_report_data(
                     sub_step=f"Check if the element '{element_name}' is enabled",
@@ -580,12 +582,12 @@ class KeywordsManager(BrowserDriver):
                     ),
                     image_alt=self.repo_m.browser_img_alt
                 )
-                
+
             else:
                 self.logger.debug("Element is NOT enabled.")
 
                 # Handle screenshot strategy
-               
+
                 self.screenshot_no += 1
                 self.repo_m.add_report_data(
                     sub_step=f"Check if the element '{element_name}' is enabled",
@@ -596,12 +598,12 @@ class KeywordsManager(BrowserDriver):
                     ),
                     image_alt=self.repo_m.browser_img_alt
                 )
-                
+
         except Exception as e:
             self.logger.error("An error occurred: %s", e, exc_info=True)
 
             # Handle screenshot strategy for errors
-            
+
             self.screenshot_no += 1
             self.repo_m.add_report_data(
                 sub_step=f"Check if the element '{element_name}' is enabled",
@@ -612,9 +614,9 @@ class KeywordsManager(BrowserDriver):
                 ),
                 image_alt=self.repo_m.browser_img_alt
             )
-            
+
             raise
-    
+
     def ge_is_chk_radio_element_selected(self, locator, locator_type, element_name):
         """
         Checks if the specified element is enabled and logs the result in the PDF report.
@@ -636,7 +638,7 @@ class KeywordsManager(BrowserDriver):
                 self.logger.debug("Element is selected.")
 
                 # Handle screenshot strategy
-                
+
                 self.screenshot_no += 1
                 self.repo_m.add_report_data(
                     sub_step=f"Check if the element '{element_name}' is selected",
@@ -647,12 +649,12 @@ class KeywordsManager(BrowserDriver):
                     ),
                     image_alt=self.repo_m.browser_img_alt
                 )
-                
+
             else:
                 self.logger.debug("Element is NOT selected.")
 
                 # Handle screenshot strategy
-               
+
                 self.screenshot_no += 1
                 self.repo_m.add_report_data(
                     sub_step=f"Check if the element '{element_name}' is selected",
@@ -663,12 +665,12 @@ class KeywordsManager(BrowserDriver):
                     ),
                     image_alt=self.repo_m.browser_img_alt
                 )
-                
+
         except Exception as e:
             self.logger.error("An error occurred: %s", e, exc_info=True)
 
             # Handle screenshot strategy for errors
-            
+
             self.screenshot_no += 1
             self.repo_m.add_report_data(
                 sub_step=f"Check if the element '{element_name}' is selected",
@@ -679,9 +681,9 @@ class KeywordsManager(BrowserDriver):
                 ),
                 image_alt=self.repo_m.browser_img_alt
             )
-            
+
             raise
-    
+
     def ge_is_chk_radio_element_not_selected(self, locator, locator_type, element_name):
         """
         Checks if the specified element is enabled and logs the result in the PDF report.
@@ -703,7 +705,7 @@ class KeywordsManager(BrowserDriver):
                 self.logger.debug("Element is NOT selected.")
 
                 # Handle screenshot strategy
-                
+
                 self.screenshot_no += 1
                 self.repo_m.add_report_data(
                     sub_step=f"Check if the element '{element_name}' is NOT selected",
@@ -714,12 +716,12 @@ class KeywordsManager(BrowserDriver):
                     ),
                     image_alt=self.repo_m.browser_img_alt
                 )
-                
+
             else:
                 self.logger.debug("Element is selected.")
 
                 # Handle screenshot strategy
-               
+
                 self.screenshot_no += 1
                 self.repo_m.add_report_data(
                     sub_step=f"Check if the element '{element_name}' is NOT selected",
@@ -730,12 +732,12 @@ class KeywordsManager(BrowserDriver):
                     ),
                     image_alt=self.repo_m.browser_img_alt
                 )
-                
+
         except Exception as e:
             self.logger.error("An error occurred: %s", e, exc_info=True)
 
             # Handle screenshot strategy for errors
-            
+
             self.screenshot_no += 1
             self.repo_m.add_report_data(
                 sub_step=f"Check if the element '{element_name}' is NOT selected",
@@ -746,7 +748,7 @@ class KeywordsManager(BrowserDriver):
                 ),
                 image_alt=self.repo_m.browser_img_alt
             )
-            
+
             raise
 
     def ge_is_element_disabled(self, locator, locator_type, element_name):
@@ -770,7 +772,7 @@ class KeywordsManager(BrowserDriver):
                 self.logger.debug("Element is disabled.")
 
                 # Handle screenshot strategy
-                
+
                 self.screenshot_no += 1
                 self.repo_m.add_report_data(
                     sub_step=f"Check if the element '{element_name}' is disabled",
@@ -781,12 +783,12 @@ class KeywordsManager(BrowserDriver):
                     ),
                     image_alt=self.repo_m.browser_img_alt
                 )
-               
+
             else:
                 self.logger.debug("Element is NOT disabled.")
 
                 # Handle screenshot strategy
-                
+
                 self.screenshot_no += 1
                 self.repo_m.add_report_data(
                     sub_step=f"Check if the element '{element_name}' is disabled",
@@ -797,12 +799,12 @@ class KeywordsManager(BrowserDriver):
                     ),
                     image_alt=self.repo_m.browser_img_alt
                 )
-                
+
         except Exception as e:
             self.logger.error("An error occurred: %s", e, exc_info=True)
 
             # Handle screenshot strategy for errors
-            
+
             self.screenshot_no += 1
             self.repo_m.add_report_data(
                 sub_step=f"Check if the element '{element_name}' is disabled",
@@ -813,7 +815,7 @@ class KeywordsManager(BrowserDriver):
                 ),
                 image_alt=self.repo_m.browser_img_alt
             )
-        
+
             raise
 
     def ge_is_element_displayed(self, locator, locator_type, element_name):
@@ -835,7 +837,7 @@ class KeywordsManager(BrowserDriver):
                 self.logger.debug("Element is displayed.")
 
                 # Handle screenshot strategy
-                
+
                 self.screenshot_no += 1
                 self.repo_m.add_report_data(
                     sub_step=f"Check if the element '{element_name}' is displayed",
@@ -846,12 +848,12 @@ class KeywordsManager(BrowserDriver):
                     ),
                     image_alt=self.repo_m.browser_img_alt
                 )
-                
+
             else:
                 self.logger.debug("Element is NOT displayed.")
 
                 # Handle screenshot strategy
-               
+
                 self.screenshot_no += 1
                 self.repo_m.add_report_data(
                     sub_step=f"Check if the element '{element_name}' is displayed",
@@ -862,12 +864,12 @@ class KeywordsManager(BrowserDriver):
                     ),
                     image_alt=self.repo_m.browser_img_alt
                 )
-                
+
         except Exception as e:
             self.logger.error("An error occurred: %s", e, exc_info=True)
 
             # Handle screenshot strategy for errors
-            
+
             self.screenshot_no += 1
             self.repo_m.add_report_data(
                 sub_step=f"Check if the element '{element_name}' is displayed",
@@ -878,7 +880,7 @@ class KeywordsManager(BrowserDriver):
                 ),
                 image_alt=self.repo_m.browser_img_alt
             )
-            
+
             raise
 
     def ge_enter_url(self, url):
@@ -1035,7 +1037,7 @@ class KeywordsManager(BrowserDriver):
             # Handle screenshot strategy
             if is_matched:
                 self.logger.debug("Populating the step result details in the PDF report.")
-                
+
                 self.screenshot_no += 1
                 self.repo_m.add_report_data(
                     sub_step=f"Verifying the text '{expected_text}' in '{element_name}'",
@@ -1046,10 +1048,10 @@ class KeywordsManager(BrowserDriver):
                     ),
                     image_alt=self.repo_m.browser_img_alt
                 )
-                
+
             else:
                 self.logger.debug("Populating the step result details in the PDF report.")
-                
+
                 self.screenshot_no += 1
                 self.repo_m.add_report_data(
                     sub_step=f"Verifying the text '{expected_text}' in '{element_name}'",
@@ -1060,12 +1062,12 @@ class KeywordsManager(BrowserDriver):
                     ),
                     image_alt=self.repo_m.browser_img_alt
                 )
-                
+
         except Exception as e:
             self.logger.error("An error occurred: %s", e, exc_info=True)
 
             # Handle screenshot strategy for errors
-            
+
             self.screenshot_no += 1
             self.repo_m.add_report_data(
                 sub_step=f"Verifying the text '{expected_text}' in '{element_name}'",
@@ -1076,7 +1078,146 @@ class KeywordsManager(BrowserDriver):
                 ),
                 image_alt=self.repo_m.browser_img_alt
                 )
+
+            raise
+    
+    
+    def ge_verify_file_downloaded(self,partial_filename):
+        """
+        Verifies if the displayed text of the specified element matches the expected text and logs the result in the PDF report.
+
+        Args:
+            locator (str): The locator for the element.
+            locator_type (str): The type of locator.
+            expected_text (str): The text expected to be displayed by the element.
+            element_name (str): The user-friendly name of the element.
+
+        Raises:
+            Exception: If any error occurs while verifying the displayed text.
+        """
+        try:
+            self.ge_wait_for_seconds(2)
             
+            download_complete = False
+            timeout = 300  # Set a timeout to avoid infinite loop
+            start_time = time.time()
+
+            while not download_complete:
+                # Check if any file with partial name exists
+                print(self.temp_dir)
+                files = os.listdir(self.temp_dir)
+                matching_files = [file for file in files if partial_filename in file]
+                
+                # If matching files are found and no `.crdownload` or `.tmp` file exists, download is complete
+                if matching_files and not any(file.endswith(('.crdownload', '.tmp')) for file in files):
+                    self.logger.info(f"Download completed: {matching_files}")
+                    download_complete = True
+
+                # Break the loop if the timeout is reached
+                if time.time() - start_time > timeout:
+                    self.logger.warning("Download tracking timed out.")
+                    break
+
+                time.sleep(5)  # Short sleep to avoid excessive CPU usage
+
+            if download_complete:
+                files = os.listdir(self.temp_dir)
+                matching_files = [file for file in files if partial_filename in file]
+                if matching_files:
+                    self.logger.info(f"File(s) matching '{partial_filename}' found: {matching_files}")
+                    self.repo_m.add_report_data(
+                        sub_step=f"Check if the file containing '{partial_filename}' in its file name is downloaded into the directory {self.temp_dir}.",
+                        sub_step_message="The file is downloaded successfully",
+                        sub_step_status='Pass'
+                    )
+                else:
+                    self.logger.warning(f"No file found with the partial name '{partial_filename}'.")
+                    self.repo_m.add_report_data(
+                        sub_step=f"Check if the file containing '{partial_filename}' in its file name is downloaded into the directory {self.temp_dir}.",
+                        sub_step_message="The file is NOT downloaded successfully",
+                        sub_step_status='Fail'
+                    )
+            else:
+                self.logger.error("Download failed or incomplete within the timeout.")
+                self.repo_m.add_report_data(
+                        sub_step=f"Check if the file containing '{partial_filename}' in its file name is downloaded into the directory {self.temp_dir}.",
+                        sub_step_message="The file download failed or incomplete within the timeout.",
+                        sub_step_status='Fail'
+                    )            
+        except Exception as e:
+            self.logger.error("An error occurred: %s", e, exc_info=True)
+
+            # Handle screenshot strategy for errors
+
+            self.screenshot_no += 1
+            self.repo_m.add_report_data(
+                sub_step=f"Check if the file containing '{partial_filename}' in its file name is downloaded into the directory {self.temp_dir}.",
+                sub_step_message=f"Error Occurred: {str(e)}",
+                sub_step_status='Fail'
+                )
+
+            raise
+
+    def ge_js_click(self, locator, locator_type, element_name):
+        """
+        Clicks on the specified element and logs the result in the PDF report.
+
+        Args:
+            locator (str): The locator for the element.
+            locator_type (str): The type of locator.
+            element_name (str): The user-friendly name of the element.
+
+        Raises:
+            Exception: If any error occurs while performing the click action.
+        """
+        try:
+            self.scroll_into_view(locator, locator_type)
+            if self.highlight_enabled:
+                self.highlight(1, "blue", 2, locator, locator_type)
+            self.element_js_click(locator, locator_type)
+            self.wait_for_some_time(2)
+            self.logger.debug("Populating the step result details in the PDF report.")
+
+            # Handle screenshot strategy
+            if self.screenshot_strategy == "always":
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Click on the element '{element_name}'",
+                    sub_step_message="The click is successful",
+                    sub_step_status='Pass',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Click on the element '{element_name}'",
+                    sub_step_message="The click is successful",
+                    sub_step_status='Pass'
+                )
+        except Exception as e:
+            self.logger.error("An error occurred: %s", e, exc_info=True)
+            self.logger.debug("Populating the step result details in the PDF report.")
+
+            # Handle screenshot strategy for errors
+            if self.screenshot_strategy in ["always", "on-error"]:
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Click on the element '{element_name}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Click on the element '{element_name}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail'
+                )
             raise
 
     def ge_click(self, locator, locator_type, element_name):
@@ -1141,7 +1282,7 @@ class KeywordsManager(BrowserDriver):
                 )
             raise
 
-    def ge_select_file(self, locator, locator_type, file_paths):
+    def ge_select_file(self, locator, locator_type, file_paths, element_name):
         """
         Selects a file to upload using the provided locator and file paths, then logs the result in the PDF report.
 
@@ -1154,9 +1295,72 @@ class KeywordsManager(BrowserDriver):
             Exception: If any error occurs during the file selection process.
         """
         try:
+            self.ge_click(locator, locator_type, element_name)
+            self.wait_for_some_time(2)
             self.file_name_to_select(file_paths)
             self.wait_for_element(locator, locator_type)
             self.scroll_into_view(locator, locator_type)
+            self.logger.debug("Populating the step result details in the PDF report.")
+
+            # Handle screenshot strategy
+            if self.screenshot_strategy == "always":
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Upload the file '{file_paths}'",
+                    sub_step_message="The file is added successfully",
+                    sub_step_status='Pass',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Upload the file '{file_paths}'",
+                    sub_step_message="The file is added successfully",
+                    sub_step_status='Pass'
+                )
+        except Exception as e:
+            self.logger.error("An error occurred: %s", e, exc_info=True)
+            self.logger.debug("Populating the step result details in the PDF report.")
+
+            # Handle screenshot strategy for errors
+            if self.screenshot_strategy in ["always", "on-error"]:
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Upload the file '{file_paths}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Upload the file '{file_paths}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail'
+                )
+            raise
+    
+    
+    def ge_upload_file(self, locator, locator_type, file_paths):
+        """
+        Selects a file to upload using the provided locator and file paths, then logs the result in the PDF report.
+
+        Args:
+            locator (str): The locator for the file input element.
+            locator_type (str): The type of locator (e.g., "id", "xpath", "css").
+            file_paths (str): The path(s) to the file(s) to be uploaded.
+
+        Raises:
+            Exception: If any error occurs during the file selection process.
+        """
+        try:
+            self.scroll_into_view(locator, locator_type)
+            self.file_name_to_upload(file_paths, locator, locator_type)
+            self.wait_for_some_time(1)
             self.logger.debug("Populating the step result details in the PDF report.")
 
             # Handle screenshot strategy

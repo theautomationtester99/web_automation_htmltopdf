@@ -7,6 +7,9 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.edge.options import Options as EdgeOptions
 from config import start_properties
+import tempfile
+
+from utilities import Utils
 
 
 class DriverManager:
@@ -27,7 +30,7 @@ class DriverManager:
         driver (WebDriver): The WebDriver instance for the launched browser.
     """
 
-    def __init__(self, logger):
+    def __init__(self, logger, temp_dir):
         """
         Initializes a new instance of the DriverManager class. Sets up the required browser configurations by
         reading properties from the 'start.properties' file.
@@ -58,6 +61,8 @@ class DriverManager:
         self.run_in_appium_grid = str(start_properties.RUN_IN_APPIUM_GRID).lower()
         self.appium_url = start_properties.APPIUM_URL
         self.grid_os_info = ""
+        self.utils = Utils(logger)
+        self.temp_dir = temp_dir
 
     def _is_browser_in_private(self):
         """
@@ -78,7 +83,7 @@ class DriverManager:
         """
         is_headless = start_properties.HEADLESS.upper()
         return str(is_headless.lower()) == "yes"
-    
+
     def _is_running_grid(self):
         """
         Retrieves the browser's headless mode setting from the configuration file.
@@ -127,9 +132,11 @@ class DriverManager:
             >>> driver_manager = DriverManager(logger)
             >>> driver_manager.launch_browser("chrome")
         """
+        temp_download_dir = self.temp_dir
+        self.logger.info(f"Temporary download directory: {temp_download_dir}")
         if self.run_in_selenium_grid.lower() == 'yes':
             if browser_name.lower() == "chrome":
-                prefs = {"credentials_enable_service": False, "profile.password_manager_enabled": False}
+                prefs = {"download.default_directory": temp_download_dir,"download.prompt_for_download": False, "download.directory_upgrade": True, "safebrowsing.enabled": True, "credentials_enable_service": False, "profile.password_manager_enabled": False}
                 options = Options()
                 options.add_experimental_option("useAutomationExtension", False)
                 options.add_experimental_option("excludeSwitches", ["enable-automation"])
@@ -158,7 +165,7 @@ class DriverManager:
                 except requests.RequestException as e:
                     self.logger.error(f"Failed to fetch Selenium Grid status: {e}")
             if browser_name.lower() == "edge":
-                prefs = {"credentials_enable_service": False, "profile.password_manager_enabled": False, "browser.show_hub_apps_tower": False, "browser.show_hub_apps_tower_pinned": False}
+                prefs = {"download.default_directory": temp_download_dir,"download.prompt_for_download": False, "download.directory_upgrade": True, "safebrowsing.enabled": True,"credentials_enable_service": False, "profile.password_manager_enabled": False, "browser.show_hub_apps_tower": False, "browser.show_hub_apps_tower_pinned": False}
                 edge_options = EdgeOptions()
                 edge_options.add_experimental_option("useAutomationExtension", False)
                 edge_options.add_experimental_option("excludeSwitches", ["enable-automation"])
@@ -223,7 +230,7 @@ class DriverManager:
                 # self.driver = webdriver.Edge(EdgeChromiumDriverManager().install())
         else:
             if browser_name.lower() == "chrome":
-                prefs = {"credentials_enable_service": False, "profile.password_manager_enabled": False}
+                prefs = {"download.default_directory": temp_download_dir,"download.prompt_for_download": False, "download.directory_upgrade": True, "safebrowsing.enabled": True,"credentials_enable_service": False, "profile.password_manager_enabled": False}
                 options = Options()
                 options.add_experimental_option("useAutomationExtension", False)
                 options.add_experimental_option("excludeSwitches", ["enable-automation"])
@@ -239,7 +246,8 @@ class DriverManager:
                 # self.driver.maximize_window()
                 # self.driver = webdriver.Chrome(ChromeDriverManager().install())
             if browser_name.lower() == "edge":
-                prefs = {"credentials_enable_service": False, "profile.password_manager_enabled": False, "browse.show_hub_apps_tower": False, "browser.show_hub_apps_tower_pinned": False}
+                prefs = {"download.default_directory": temp_download_dir,"download.prompt_for_download": False, "download.directory_upgrade": True, "safebrowsing.enabled": True,"credentials_enable_service": False, "profile.password_manager_enabled": False, "browse.show_hub_apps_tower": False, "browser.show_hub_apps_tower_pinned": False}
+                temp_download_dir = tempfile.mkdtemp()  # This creates a temporary directory
                 edge_options = EdgeOptions()
                 edge_options.add_experimental_option("useAutomationExtension", False)
                 edge_options.add_experimental_option("excludeSwitches", ["enable-automation"])
@@ -249,6 +257,8 @@ class DriverManager:
                 if self.is_headless:
                     edge_options.add_argument("--headless")
                 edge_options.add_argument("--disable-extensions")
+                edge_options.add_argument("--disable-features=msSmartScreen")
+                edge_options.add_argument("--enable-unsafe-swiftshader")
                 edge_options.add_argument("--disable-gpu")
                 edge_options.add_argument("--disable-field-trial-config")
                 edge_options.add_argument("--disable-background-networking")

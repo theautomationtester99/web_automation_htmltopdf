@@ -40,40 +40,40 @@ def validate_test_script(testscript_file, wafl, utils, launch_browser):
         ValueError: If the test script is invalid.
     """
     wafl.info(f"Validating the test script: {testscript_file}")
-    
+
     if not utils.is_excel_doc(testscript_file):
         wafl.error("The test script Excel file is not in the correct format.")
         raise ValueError("The test script Excel file is not in the correct format.")
 
     wafl.debug("Reading the test script Excel file into a pandas DataFrame.")
     df = pd.read_excel(testscript_file, dtype={"Keyword": "string", "Input1": "string", "Input2": "string", "Input3": "string"})
-    
+
     if df['Keyword'].isnull().values.any():
         wafl.error("The 'Keyword' column in the Excel file contains empty values.")
         raise ValueError("The 'Keyword' column in the Excel file contains empty values.")
 
     wafl.debug("Replacing empty values in the DataFrame with empty strings.")
     df = df.replace(np.nan, '', regex=True)
-    
+
     wafl.info("Validating the content of the test script.")
     for index, row in df.iterrows():
         keyword = str(row["Keyword"])
         wafl.debug(f"Validating row {index}: Keyword='{keyword}'")
-        
+
         if keyword not in VALID_KEYWORDS:
             wafl.error(f"Invalid keyword '{keyword}' at row {index}.")
             raise ValueError(f"Invalid keyword '{keyword}' in the test script.")
-        
+
         if keyword == 'tc_id':
             tc_id_value = str(row["Input3"]).strip()
             if not os.path.basename(testscript_file).split("_")[0].lower() == tc_id_value.lower():
                 wafl.error(f"TC ID '{tc_id_value}' does not match the test script file name at row {index}.")
                 raise ValueError(f"TC ID '{tc_id_value}' does not match the test script file name.")
-        
+
         if keyword == 'wait_for_seconds' and not str(row["Input3"]).strip().isdigit():
             wafl.error(f"Invalid value '{row['Input3']}' for 'wait_for_seconds' at row {index}.")
             raise ValueError(f"Invalid value '{row['Input3']}' for 'wait_for_seconds'.")
-        
+
         if keyword == 'mcnp_choose_date_from_datepicker':
             which_calendar = str(row["Input2"]).strip()
             wafl.debug(f"Validating date format for calendar '{which_calendar}' at row {index}.")
@@ -81,13 +81,13 @@ def validate_test_script(testscript_file, wafl, utils, launch_browser):
                 utils.check_date_format_validity(str(row["Input3"]).strip())
             elif which_calendar == 'cn_det_dd':
                 utils.check_date_range_format_validity(str(row["Input3"]).strip())
-        
+
         if keyword == 'open_browser' and launch_browser == '':
             browser_given = str(row["Input3"]).strip()
             if browser_given.lower() not in ['chrome', 'edge']:
                 wafl.error(f"Invalid browser name '{browser_given}' at row {index}.")
                 raise ValueError(f"Invalid browser name '{browser_given}'. It should be either 'chrome' or 'edge'.")
-        
+
         if keyword == 'login_jnj':
             wafl.debug(f"Validating 'login_jnj' inputs at row {index}.")
             element_name_data = str(row["Input1"]).strip()
@@ -101,15 +101,15 @@ def validate_test_script(testscript_file, wafl, utils, launch_browser):
             if len(list(filter(None, [item.strip() for item in login_uname_pwd_data_lst]))) != 2:
                 wafl.error(f"Invalid 'Input3' data '{login_uname_pwd_data}' for 'login_jnj' at row {index}.")
                 raise ValueError(f"'Input3' for 'login_jnj' must contain exactly 2 values separated by a semicolon (';').")
-            
+
             if len(list(filter(None, [item.strip() for item in element_name_data_lst]))) != 4:
                 wafl.error(f"Invalid 'Input1' data '{element_name_data}' for 'login_jnj' at row {index}.")
                 raise ValueError(f"'Input1' for 'login_jnj' must contain exactly 4 values separated by a semicolon (';').")
-            
+
             if len(list(filter(None, [item.strip() for item in element_locator_data_lst]))) != 4:
                 wafl.error(f"Invalid 'Input2' data '{element_locator_data}' for 'login_jnj' at row {index}.")
                 raise ValueError(f"'Input2' for 'login_jnj' must contain exactly 4 values separated by a semicolon (';').")
-        
+
         if keyword == 'drag_drop':
             wafl.debug(f"Validating 'drag_drop' inputs at row {index}.")
             dd_element_name_data = str(row["Input1"]).strip()
@@ -121,11 +121,11 @@ def validate_test_script(testscript_file, wafl, utils, launch_browser):
             if len(list(filter(None, [item.strip() for item in dd_element_name_data_lst]))) != 2:
                 wafl.error(f"Invalid 'Input1' data '{dd_element_name_data}' for 'drag_drop' at row {index}.")
                 raise ValueError(f"'Input1' for 'drag_drop' must contain exactly 2 values separated by a semicolon (';').")
-            
+
             if len(list(filter(None, [item.strip() for item in dd_element_locator_data_lst]))) != 2:
                 wafl.error(f"Invalid 'Input2' data '{dd_element_locator_data}' for 'drag_drop' at row {index}.")
                 raise ValueError(f"'Input2' for 'drag_drop' must contain exactly 2 values separated by a semicolon (';').")
-    
+
     wafl.info("Test script validation completed successfully.")
     return df
 
@@ -334,6 +334,12 @@ def verify_displayed_text(row, wafl, km, object_repo_reader):
         str(row["Input1"]).strip()
     )
 
+def verify_file_downloaded(row, wafl, km):
+    wafl.info(f"Executing 'verify_file_downloaded' at row {row.name}.")
+    km.ge_verify_file_downloaded(
+        str(row["Input3"]).strip()
+    )
+
 def click(row, wafl, km, object_repo_reader):
     locator_type = "xpath"
     if "_css" in str(row["Input2"]).strip().lower():
@@ -347,6 +353,32 @@ def click(row, wafl, km, object_repo_reader):
         str(row["Input1"]).strip()
     )
 
+def js_click(row, wafl, km, object_repo_reader):
+    locator_type = "xpath"
+    if "_css" in str(row["Input2"]).strip().lower():
+        locator_type = "css"
+    if "_id" in str(row["Input2"]).strip().lower():
+        locator_type = "id"
+    wafl.info(f"Executing 'js_click' at row {row.name}.")
+    km.ge_js_click(
+        str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')),
+        locator_type,
+        str(row["Input1"]).strip()
+    )
+
+def upload_file(row, wafl, km, object_repo_reader):
+    locator_type = "xpath"
+    if "_css" in str(row["Input2"]).strip().lower():
+        locator_type = "css"
+    if "_id" in str(row["Input2"]).strip().lower():
+        locator_type = "id"
+    wafl.info(f"Executing 'upload_file' at row {row.name}.")
+    km.ge_upload_file(
+        str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')),
+        locator_type,
+        str(row["Input3"]).strip()
+    )
+
 def select_file(row, wafl, km, object_repo_reader):
     locator_type = "xpath"
     if "_css" in str(row["Input2"]).strip().lower():
@@ -357,7 +389,8 @@ def select_file(row, wafl, km, object_repo_reader):
     km.ge_select_file(
         str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')),
         locator_type,
-        str(row["Input3"]).strip()
+        str(row["Input3"]).strip(),
+        str(row["Input1"]).strip()
     )
 
 def mcnp_choose_date_from_datepicker(row, wafl, km, object_repo_reader):
@@ -514,8 +547,11 @@ def execute_test_script(df, wafl, km, object_repo_reader, utils, launch_browser)
         'check_element_disabled': lambda row: check_element_disabled(row, wafl, km, object_repo_reader),
         'check_element_displayed': lambda row: check_element_displayed(row, wafl, km, object_repo_reader),
         'verify_displayed_text': lambda row: verify_displayed_text(row, wafl, km, object_repo_reader),
+        'verify_file_downloaded': lambda row: verify_file_downloaded(row, wafl, km),
         'click': lambda row: click(row, wafl, km, object_repo_reader),
+        'js_click': lambda row: js_click(row, wafl, km, object_repo_reader),
         'select_file': lambda row: select_file(row, wafl, km, object_repo_reader),
+        'upload_file': lambda row: upload_file(row, wafl, km, object_repo_reader),
         'mcnp_choose_date_from_datepicker': lambda row: mcnp_choose_date_from_datepicker(row, wafl, km, object_repo_reader),
         'check_radio_chk_selected': lambda row: check_radio_chk_selected(row, wafl, km, object_repo_reader),
         'check_radio_chk_not_selected': lambda row: check_radio_chk_not_selected(row, wafl, km, object_repo_reader),
@@ -571,7 +607,7 @@ def start_runner(testscript_file, rlog_queue, rlock, object_repo_reader, utils, 
 
     wafl.debug("Instantiating excel report manager")
     e_report = ExcelReportManager(wafl, rlock)
-    
+
     wafl.debug("Checking if the test script excel file name ends with 'testscript.xlsx'")
 
     if "testscript.xlsx" in testscript_file:
@@ -580,7 +616,15 @@ def start_runner(testscript_file, rlog_queue, rlock, object_repo_reader, utils, 
 
         retry_count = 1
         wafl.debug("Instantiating the keyword manager.")
-        km = KeywordsManager(wafl, retry_count)
+        
+        process_id = os.getpid()
+        # Get a timestamp for uniqueness
+        timestamp = int(time.time() * 1000)  # Milliseconds
+        # Combine process ID and timestamp
+        unique_id = f"proc_{process_id}_time_{timestamp}"
+        temp_directory = os.path.abspath(tempfile.mkdtemp(suffix=f"_{unique_id}"))
+        
+        km = KeywordsManager(wafl, temp_directory , retry_count)
         retries = 0
         max_retries = get_max_retries(rlog_queue)
 
@@ -627,11 +671,11 @@ def get_max_retries(rq):
     except:
         lgr.error("Invalid value for max_retries in properties file. Defaulting to 0.")
         max_retries = 0
-    
+
     # Enforce the maximum limit of 2
     if max_retries > 2:
         max_retries = 2
-    
+
     return max_retries
 
 def take_recording(process_name: Process, record_name, logger):
@@ -690,7 +734,7 @@ def check_before_start(utils):
         ValueError: If duplicate test scripts are found in the `test_scripts` folder and its subfolders.
     """
     logger.debug("Loading 'start.properties' file.")
-    
+
     if getattr(sys, 'frozen', False):  # Check if running as a frozen executable
         script_dir = os.path.dirname(sys.executable)  # Use the directory of the executable
     else:
@@ -714,7 +758,7 @@ def check_before_start(utils):
     utils.create_image_and_test_results_folders()
 
     logger.debug("Starting analysis of the contents of the test_scripts folders.")
-    
+
     if getattr(sys, 'frozen', False):  # Check if running as a frozen executable
         script_dir = os.path.dirname(sys.executable)  # Use the directory of the executable
     else:
@@ -770,25 +814,25 @@ if __name__ == '__main__':
         base_dir = Path(sys.argv[0]).parent.resolve()
         lock = Lock()
         log_queue = Queue()
-        
+
         object_repo_reader = ConfigReader(base_dir/"config"/"object_repository.properties")
-        
+
         logger_config = LoggerConfig(log_queue=log_queue)
         listener = logger_config.start_listener()
         logger = logger_config.logger
 
         utils = Utils(logger)
-        
+
         if True if str(start_properties.RUN_IN_SELENIUM_GRID).lower() != 'yes' else False:
             setup_drivers(logger)  # Setup drivers for Chrome and Edge
             utils.stop_driver_processes()
             # Stop running processes from previous execution
             pids = read_pids_from_file()
             stop_running_processes(pids, logger)
-            clear_pid_file()  # Clear the file after stopping processes            
+            clear_pid_file()  # Clear the file after stopping processes
             main_process_id = os.getpid()
             write_pid_to_file(main_process_id)  # Write the main process ID to a file
-        
+
         prm = PdfReportManager(logger)
 
         logger.debug("Execution Started ----------------.")
@@ -810,7 +854,7 @@ if __name__ == '__main__':
         if active_args > 1:
             logger.error("Only one of '--start', --start-parallel, '--version', '--encrypt-file', '--encrypt-str', --delete-tr-google-drive or '--help-html' can be used at a time.")
             raise ValueError("Only one of '--start', --start-parallel, '--version', '--encrypt-file', '--encrypt-str', --delete-tr-google-drive or '--help-html' can be used at a time.")
-        
+
         if args.start and True if str(start_properties.PARALLEL_EXECUTION).lower() == 'yes' else False:
             args = argparse.Namespace(
                 start=False,               # Force this to True
@@ -849,7 +893,7 @@ if __name__ == '__main__':
                 utils.encrypt_file(str(args.encrypt_file), str(output_file))
                 logger.debug(f"Finished encrypting file {args.encrypt_file} to {output_file}")
                 sys.exit(0)  # Exit the program successfully after encrypting the file
-        
+
         if args.encrypt_str:
             logger.debug("Started encrypting file " + args.encrypt_str + ".")
             encrypted_str = utils.encrypt_string(str(args.encrypt_str))
@@ -860,7 +904,7 @@ if __name__ == '__main__':
             logger.info("Version: 3.0")
             print("Version: 3.0")
             sys.exit(0)  # Exit the program successfully after encrypting the file
-            
+
         if args.delete_tr_google_drive:
             logger.debug("Deleting test results from Google Drive.")
             utils.delete_test_results_from_drive()
@@ -873,11 +917,11 @@ if __name__ == '__main__':
             run_headless = True if str(start_properties.HEADLESS).lower() == 'yes' else False
             run_in_grid =  str(start_properties.RUN_IN_SELENIUM_GRID).lower()
             run_in_appium =  str(start_properties.RUN_IN_APPIUM_GRID).lower()
-            
+
             upload_tr =  True if str(start_properties.UPLOAD_TEST_RESULTS).lower() == 'yes' else False
 
             logger.debug("Gathering all files present in the test_scripts folder.")
-            
+
             if getattr(sys, 'frozen', False):  # Check if running as a frozen executable
                 script_dir = os.path.dirname(sys.executable)  # Use the directory of the executable
             else:
@@ -895,7 +939,7 @@ if __name__ == '__main__':
                     logger.debug("The file path " + x + " contains 'testscript.xlsx' in the end.")
                     logger.debug("Checking if the file name starts with 'ts' (case insensitive).")
 
-                    p = re.compile(r'^qs[a-zA-Z0-9]*_testscript\.xlsx$', re.I)
+                    p = re.compile(r'^qs[a-zA-Z0-9_]*_testscript\.xlsx$', re.I)
                     if p.match(os.path.basename(x)):
                         logger.debug("The file name " + os.path.basename(x) + " starts with 'ts' (case insensitive).")
                         logger.debug("Checking if the file " + os.path.basename(x) + " is present in chrome or edge folder.")
@@ -952,7 +996,7 @@ if __name__ == '__main__':
             utils.merge_pdfs_in_parts()
             utils.send_email_with_attachment()
             utils.upload_folder_to_ftp()
-            
+
         if args.start_parallel:
             logger.info("----------------------------------------------------")
             logger.info("Starting parallel execution.")
@@ -964,13 +1008,13 @@ if __name__ == '__main__':
             run_in_appium =  True if str(start_properties.RUN_IN_APPIUM_GRID).lower() == 'yes' else False
             # number_threads =  int(start_properties.NO_THREADS)
             upload_tr =  True if str(start_properties.UPLOAD_TEST_RESULTS).lower() == 'yes' else False
-            
+
             try:
                 number_threads = int(start_properties.NO_THREADS)
             except:
                 logger.error("Invalid value for number of threads. Defaulting to 2.")
                 number_threads = 2
-            
+
             # Enforce the maximum limit of 2
             if number_threads > 10:
                 number_threads = 2
@@ -980,7 +1024,7 @@ if __name__ == '__main__':
                 raise ValueError("Parallel execution can only be run in headless mode.")
 
             logger.debug("Gathering all files present in the test_scripts folder.")
-            
+
             if getattr(sys, 'frozen', False):  # Check if running as a frozen executable
                 script_dir = os.path.dirname(sys.executable)  # Use the directory of the executable
             else:
@@ -998,11 +1042,12 @@ if __name__ == '__main__':
 
                 if "testscript.xlsx" in x:
                     logger.debug("The file path " + x + " contains 'testscript.xlsx' in the end.")
-                    logger.debug("Checking if the file name starts with 'ts' (case insensitive).")
+                    logger.debug("Checking if the file name starts with 'qs' (case insensitive).")
 
-                    p = re.compile(r'^qs[a-zA-Z0-9]*_testscript\.xlsx$', re.I)
+                    p = re.compile(r'^qs[a-zA-Z0-9_]*_testscript\.xlsx$', re.I)
+                    logger.debug(p.match(os.path.basename(x)))
                     if p.match(os.path.basename(x)):
-                        logger.debug("The file name " + os.path.basename(x) + " starts with 'ts' (case insensitive).")
+                        logger.debug("The file name " + os.path.basename(x) + " starts with 'qs' (case insensitive).")
                         logger.debug("Checking if the file " + os.path.basename(x) + " is present in chrome or edge folder.")
                         if os.path.dirname(x).split(os.sep)[-1].lower() == 'chrome':
                             logger.debug("The file " + os.path.basename(x) + " is present in chrome folder. Launching the execution of test script on chrome browser.")

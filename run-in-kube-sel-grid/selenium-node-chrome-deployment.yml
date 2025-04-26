@@ -33,7 +33,7 @@ spec:
           - name: SE_EVENT_BUS_SUBSCRIBE_PORT
             value: "4443"
           - name: SE_EVENT_BUS_PUBLISH_PORT
-            value: "4442"          
+            value: "4442"
         resources:
           limits:
             memory: "500Mi"

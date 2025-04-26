@@ -58,7 +58,7 @@
                 "overall_step_status": "Pass",
                 "sub_steps": {}
             },
-            "2": { 
+            "2": {
                 "sno": "2",
                 "rowspan": "2",
                 "step": "Login to Application",

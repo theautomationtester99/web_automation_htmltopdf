@@ -43,7 +43,7 @@
 # print(f"Log Level: {start_properties.LOG_LEVEL}")
 # print(f"Selenium Grid URL: {start_properties.GRID_URL}")
 # print(f"Appium Grid URL: {start_properties.APPIUM_URL}")
-# print(f"Delete test results: {start_properties.DELETE_TEST_RESULTS}") 
+# print(f"Delete test results: {start_properties.DELETE_TEST_RESULTS}")
 
 # key="DC3HN3PdUb5z_MyYbitSyVnPU_E_WOfZkUsYR8bWKzY="
 # input = "my deep dark secret"
@@ -173,9 +173,9 @@
 #     if not files:
 #         print("No files found in the folder.")
 #         return
-    
+
 #     total_files = len(files)
-    
+
 #     for recipient_email in unique_recipients:
 #         for idx, file_name in enumerate(files, start=1):
 #             # Determine email subject
@@ -253,7 +253,7 @@
 #     recipient_emails = str(start_props_reader.get_property('Misc', 'recipient_emails', fallback='No')).lower().split(";")
 #     folder_path = os.path.join(self.get_test_result_folder(), "consolidated")
 #     subject_prefix = "Test Results"
-    
+
 #     smtp_server = "smtp.gmail.com"
 #     smtp_port = 587  # Gmail SMTP port
 
@@ -276,9 +276,9 @@
 #     if not files:
 #         print("No files found in the folder.")
 #         return
-    
+
 #     total_files = len(files)
-    
+
 #     for recipient_email in unique_recipients:
 #         for idx, file_name in enumerate(files, start=1):
 #             # Determine email subject

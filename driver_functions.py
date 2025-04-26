@@ -22,11 +22,11 @@ class BrowserDriver(DriverManager):
     Attributes:
         logger: Logger instance for logging browser-related activities.
     """
-    def __init__(self, logger):
+    def __init__(self, logger, temp_dir=None):
         """
         Initialize the BrowserDriver instance, setting up the logger instance.
         """
-        super().__init__(logger)
+        super().__init__(logger,temp_dir)
         self.utils = Utils(self.logger)
         self.logger = logger
 
@@ -84,7 +84,7 @@ class BrowserDriver(DriverManager):
         except:
             self.logger.error("cannot send data on the element with locator: " + locator + " locator_type: " + locator_type)
             raise
-    
+
     def scroll_into_view(self, locator, locator_type, element=None):
         """
         Scroll to the web element identified by the given locator.
@@ -462,6 +462,28 @@ class BrowserDriver(DriverManager):
             self.logger.error("cannot click on the element with locator: " + locator + " locator_type: " + locator_type)
             raise
 
+    def element_js_click(self, locator="", locator_type="id", element=None):
+        """
+        Click on a web element.
+        Either provide a pre-located element or specify a combination of locator and locator_type.
+
+        Args:
+            locator (str, optional): The locator for the web element (default: "").
+            locator_type (str, optional): The type of locator (e.g., "id", "xpath", default: "id").
+            element (WebElement, optional): A pre-located web element (default: None).
+
+        Raises:
+            Exception: Logs an error and raises an exception if the click action fails.
+        """
+        try:
+            if locator:
+                element = self.get_element(locator, locator_type)
+            self.driver.execute_script("arguments[0].click();", element)
+            self.logger.debug("clicked on element with locator: " + locator + " locator_type: " + locator_type)
+        except:
+            self.logger.error("cannot click on the element with locator: " + locator + " locator_type: " + locator_type)
+            raise
+
     def element_hover(self, locator="", locator_type="id", element=None):
         """
         Hover over a web element.
@@ -566,7 +588,7 @@ class BrowserDriver(DriverManager):
             text = None
             raise
         return text
-    
+
     def switch_to_iframe(self, locator="", locator_type="id", element=None):
         """
         Check if a web element is present.
@@ -586,13 +608,13 @@ class BrowserDriver(DriverManager):
         try:
             if locator:
                 element = self.get_element(locator, locator_type)
-            
+
             self.driver.switch_to.default_content()  # Switch back to the main content
             self.driver.switch_to.frame(element)
-            
+
         except:
             self.logger.error("Unable to switch to iframe with locator: " + locator + " and locator_type: " + locator_type)
-    
+
     def switch_to_default_content(self):
         """
         Switch back to the default content of the page.
@@ -603,7 +625,7 @@ class BrowserDriver(DriverManager):
         try:
             self.logger.debug("Switching to default content")
             self.driver.switch_to.default_content()  # Switch back to the main content
-            
+
         except:
             self.logger.error("Unable to switch to default content")
 
@@ -673,7 +695,7 @@ class BrowserDriver(DriverManager):
             self.apply_style(original_style, element)
         except:
             self.logger.error("Cannot highlight element with locator: " + locator + " and locator_type: " + locator_type)
-            
+
     def drag_and_drop(self, source_locator="", source_locator_type="id", target_locator="", target_locator_type="id"):
         """
         Performs a drag-and-drop action from a source element to a target element.
@@ -771,7 +793,7 @@ class BrowserDriver(DriverManager):
         except:
             self.logger.error("Element is not displayed with locator: " + locator + " and locator_type: " + locator_type)
             return False
-    
+
     def is_chk_radio_element_selected(self, locator="", locator_type="id", element=None):
         """
         Check if a web element is enabled.
@@ -955,6 +977,21 @@ class BrowserDriver(DriverManager):
         pyautogui.write(file_name)
         pyautogui.press('tab')
         pyautogui.press('enter')
+    
+    def file_name_to_upload(self, file_name, locator="", locator_type="id", element=None):
+        """
+        Simulates selecting a file using its name through keyboard automation.
+
+        :param file_name: The name of the file to select.
+        """
+        try:
+            if locator:
+                element = self.get_element(locator, locator_type)
+            element.send_keys(file_name)
+            self.logger.debug("send data on element with locator: " + locator + " locator_type: " + locator_type)
+        except:
+            self.logger.error("cannot send data on the element with locator: " + locator + " locator_type: " + locator_type)
+            raise
 
     def is_not_used(self):
         pass

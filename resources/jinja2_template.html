@@ -204,7 +204,7 @@
             {% endfor %}
         </div>
     {% endif %}
-    
+
     {% if table_data|length > 1 %}
         {% for retry_key, retry_data in table_data.items() %}
             <h3>{{ retry_key.replace('retry_', 'attempt ').capitalize() }}</h3>

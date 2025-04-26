@@ -82,7 +82,7 @@ class PdfReportManager:
             self.step_no = 0
             self.overall_status_text = "PASSED"
             self.table_data[retry_key]["rstatus"] = "Pass"
-        
+
         if "step" in data:
             self.logger.debug('Step is captured to be added to PDF report.')
             self.step_no += 1
@@ -164,7 +164,7 @@ class PdfReportManager:
         """
         base_dir = Path(sys.argv[0]).parent.resolve()
         tr_folder = self.utils.get_test_result_folder()
-        
+
         self.logger.debug('Checking if output.xlsx file exists before creating the test summary PDF report.')
         if self.utils.check_if_file_exists(os.path.join(tr_folder, "output.xlsx")):
             self.logger.debug('Output.xlsx exists and starting to create test summary PDF report.')
