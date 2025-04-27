@@ -895,10 +895,10 @@ class BrowserDriver(DriverManager):
         """
         if direction == "up":
             # Scroll Up
-            self.driver.execute_script("window.scrollBy(0, -1000);")
+            self.driver.execute_script("window.scrollBy(0, -1500);")
         if direction == "down":
             # Scroll Down
-            self.driver.execute_script("window.scrollBy(0, 1000);")
+            self.driver.execute_script("window.scrollBy(0, 1500);")
 
     def get_url(self):
         """

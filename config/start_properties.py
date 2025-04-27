@@ -18,7 +18,7 @@ APPIUM_URL = os.getenv("APPIUM_URL", "http://192.168.1.8:4723/wd/hub")
 
 LOG_LEVEL = os.getenv("LOG_LEVEL", "debug")
 
-INPRIVATE = os.getenv("INPRIVATE", "yes")
+INPRIVATE = os.getenv("INPRIVATE", "no")
 HEADLESS = os.getenv("HEADLESS", "yes")
 
 NO_THREADS = int(os.getenv("NO_THREADS", "4"))

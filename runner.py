@@ -74,13 +74,40 @@ def validate_test_script(testscript_file, wafl, utils, launch_browser):
             wafl.error(f"Invalid value '{row['Input3']}' for 'wait_for_seconds' at row {index}.")
             raise ValueError(f"Invalid value '{row['Input3']}' for 'wait_for_seconds'.")
 
-        if keyword == 'mcnp_choose_date_from_datepicker':
-            which_calendar = str(row["Input2"]).strip()
-            wafl.debug(f"Validating date format for calendar '{which_calendar}' at row {index}.")
-            if which_calendar == 'cn_det_ed':
-                utils.check_date_format_validity(str(row["Input3"]).strip())
-            elif which_calendar == 'cn_det_dd':
-                utils.check_date_range_format_validity(str(row["Input3"]).strip())
+        if keyword == 'choose_date_from_datepicker':
+            calendar_type = str(row["Input1"]).strip()
+            wafl.debug(f"Validating date format for calendar '{calendar_type}' at row {index}.")
+            if calendar_type == 'a':
+                if not utils.is_date_format_valid(str(row["Input3"]).strip()):
+                    wafl.error(f"Invalid date format '{row['Input3']}' for calendar type '{calendar_type}' at row {index}. It should be in '01 December 2022' format. Also ensure it matches a valid calendar date. For example, April only has 30 days.")
+                    raise ValueError(f"Invalid date format '{row['Input3']}' for calendar type '{calendar_type}'. It should be in '01 December 2022' format. Also ensure it matches a valid calendar date. For example, April only has 30 days.")
+                try:
+                    l1, l2, l3, l4 = str(row["Input2"]).strip().split(";")
+                except:
+                    wafl.error(f"Invalid locator data '{row['Input2']}' for calendar type '{calendar_type}' at row {index}. It should contain 4 values separated by semicolons (';'). For example: 'date_mon_txt_xpath;date_pre_button_xpath;date_nxt_button_xpath;date_date_list_xpath'.")
+                    raise ValueError(f"Invalid locator data '{row['Input2']}' for calendar type '{calendar_type}'. It should contain 4 values separated by semicolons (';'). For example: 'date_mon_txt_xpath;date_pre_button_xpath;date_nxt_button_xpath;date_date_list_xpath'.")
+                # Check if all variables end with '_css', '_id', or '_xpath'
+                valid_suffixes = ("_css", "_id", "_xpath")
+                if all(locator.endswith(valid_suffixes) for locator in (l1, l2, l3, l4)):
+                    wafl.debug(f"All locators end with one of the valid suffixes: {valid_suffixes}.")
+                else:
+                    wafl.error(f"Not all locators end with one of the valid suffixes for calendar type '{calendar_type}' at row {index}. For example: 'date_mon_txt_xpath;date_pre_button_xpath;date_nxt_button_xpath;date_date_list_xpath'.")
+                    raise ValueError(f"Not all locators end with one of the valid suffixes: {valid_suffixes}. For example: 'date_mon_txt_xpath;date_pre_button_xpath;date_nxt_button_xpath;date_date_list_xpath'.")
+            elif calendar_type == 'b':
+                if not utils.is_date_format_valid(str(row["Input3"]).strip()):
+                    wafl.error(f"Invalid date format '{row['Input3']}' for calendar type '{calendar_type}' at row {index}. It should be in '01 December 2022' format. Also ensure it matches a valid calendar date. For example, April only has 30 days.")
+                    raise ValueError(f"Invalid date format '{row['Input3']}' for calendar type '{calendar_type}'. It should be in '01 December 2022' format. Also ensure it matches a valid calendar date. For example, April only has 30 days.")
+                try:
+                    l1, l2, l3 = str(row["Input2"]).strip().split(";")
+                except:
+                    wafl.error(f"Invalid locator data '{row['Input2']}' for calendar type '{calendar_type}' at row {index}. It should contain 3 values separated by semicolons (';'). For example: 'date_mon_select_xpath;date_yr_select_xpath;date_date_list_xpath'.")
+                    raise ValueError(f"Invalid locator data '{row['Input2']}' for calendar type '{calendar_type}'. It should contain 3 values separated by semicolons (';'). For example: 'date_mon_select_xpath;date_yr_select_xpath;date_date_list_xpath'.")
+                valid_suffixes = ("_css", "_id", "_xpath")
+                if all(locator.endswith(valid_suffixes) for locator in (l1, l2, l3)):
+                    wafl.debug(f"All locators end with one of the valid suffixes: {valid_suffixes}.")
+                else:
+                    wafl.error(f"Not all locators end with one of the valid suffixes for calendar type '{calendar_type}' at row {index}. For example: 'date_mon_select_xpath;date_yr_select_xpath;date_date_list_xpath'.")
+                    raise ValueError(f"Not all locators end with one of the valid suffixes: {valid_suffixes}. For example: 'date_mon_select_xpath;date_yr_select_xpath;date_date_list_xpath'.")
 
         if keyword == 'open_browser' and launch_browser == '':
             browser_given = str(row["Input3"]).strip()
@@ -353,6 +380,55 @@ def click(row, wafl, km, object_repo_reader):
         str(row["Input1"]).strip()
     )
 
+def scroll_page(row, wafl, km):
+    wafl.info(f"Executing 'scroll_page' at row {row.name}.")
+    km.ge_scroll_page(
+        str(row["Input3"]).strip()
+    )
+
+
+def select_dropdown_by_value(row, wafl, km, object_repo_reader):
+    locator_type = "xpath"
+    if "_css" in str(row["Input2"]).strip().lower():
+        locator_type = "css"
+    if "_id" in str(row["Input2"]).strip().lower():
+        locator_type = "id"
+    wafl.info(f"Executing 'select_dropdown_by_value' at row {row.name}.")
+    km.ge_select_dropdown_by_value(
+        str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')),
+        locator_type,
+        str(row["Input1"]).strip(),
+        str(row["Input3"]).strip()
+    )
+
+def select_dropdown_by_index(row, wafl, km, object_repo_reader):
+    locator_type = "xpath"
+    if "_css" in str(row["Input2"]).strip().lower():
+        locator_type = "css"
+    if "_id" in str(row["Input2"]).strip().lower():
+        locator_type = "id"
+    wafl.info(f"Executing 'select_dropdown_by_index' at row {row.name}.")
+    km.ge_select_dropdown_by_index(
+        str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')),
+        locator_type,
+        str(row["Input1"]).strip(),
+        str(row["Input3"]).strip()
+    )
+
+def select_dropdown_by_visible_text(row, wafl, km, object_repo_reader):
+    locator_type = "xpath"
+    if "_css" in str(row["Input2"]).strip().lower():
+        locator_type = "css"
+    if "_id" in str(row["Input2"]).strip().lower():
+        locator_type = "id"
+    wafl.info(f"Executing 'select_dropdown_by_index' at row {row.name}.")
+    km.ge_select_dropdown_by_visible_text(
+        str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')),
+        locator_type,
+        str(row["Input1"]).strip(),
+        str(row["Input3"]).strip()
+    )
+
 def js_click(row, wafl, km, object_repo_reader):
     locator_type = "xpath"
     if "_css" in str(row["Input2"]).strip().lower():
@@ -393,35 +469,93 @@ def select_file(row, wafl, km, object_repo_reader):
         str(row["Input1"]).strip()
     )
 
-def mcnp_choose_date_from_datepicker(row, wafl, km, object_repo_reader):
-    wafl.info(f"Executing 'mcnp_choose_date_from_datepicker' at row {row.name}.")
-    which_calendar = str(row["Input2"]).strip()
+def choose_date_from_datepicker(row, wafl, km, object_repo_reader):
+    wafl.info(f"Executing 'choose_date_from_datepicker' at row {row.name}.")
+    which_calendar = str(row["Input1"]).strip()
     date_to_choose = str(row["Input3"]).strip()
-    locator_type = "xpath"
-    locator_name = str(row["Input1"]).strip()
-    cn_det_ddate_mon_txt_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_ddate_mon_txt_xpath', fallback='No'))
-    cn_det_ddate_pre_button_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_ddate_pre_button_xpath', fallback='No'))
-    cn_det_ddate_nxt_button_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_ddate_nxt_button_xpath', fallback='No'))
-    cn_det_ddate_date_list_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_ddate_date_list_xpath', fallback='No'))
-    cn_det_edate_mon_txt_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_edate_mon_txt_xpath', fallback='No'))
-    cn_det_edate_pre_button_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_edate_pre_button_xpath', fallback='No'))
-    cn_det_edate_nxt_button_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_edate_nxt_button_xpath', fallback='No'))
-    cn_det_edate_date_list_xpath = str(object_repo_reader.get_property('XPATH', 'cn_det_edate_date_list_xpath', fallback='No'))
+    
+    if which_calendar.lower() == 'a':
+        locator1_type = "xpath"
+        locator2_type = "xpath"
+        locator3_type = "xpath"
+        locator4_type = "xpath"
+        try:
+            l1, l2, l3, l4 = str(row["Input2"]).strip().split(";")
+            if "_css" in l1.strip().lower():
+                locator1_type = "css"
+            if "_id" in l1.strip().lower():
+                locator1_type = "id"
+            if "_css" in l2.strip().lower():
+                locator2_type = "css"
+            if "_id" in l2.strip().lower():
+                locator2_type = "id"
+            if "_css" in l3.strip().lower():
+                locator3_type = "css"
+            if "_id" in l3.strip().lower():
+                locator3_type = "id"
+            if "_css" in l4.strip().lower():
+                locator4_type = "css"
+            if "_id" in l4.strip().lower():
+                locator4_type = "id"
+        except:
+            raise ValueError(f"Invalid locator data '{row['Input2']}' for calendar type 'a'. It should contain 4 values separated by semicolons (';'). For example: 'date_mon_txt_xpath;date_pre_button_xpath;date_nxt_button_xpath;date_date_list_xpath'.")
+        date_mon_txt_loc = str(object_repo_reader.get_property(locator1_type.upper(), l1, fallback='No'))
+        date_pre_button_loc = str(object_repo_reader.get_property(locator2_type.upper(), l2, fallback='No'))
+        date_nxt_button_loc = str(object_repo_reader.get_property(locator3_type.upper(), l3, fallback='No'))
+        date_date_list_loc = str(object_repo_reader.get_property(locator4_type.upper(), l4, fallback='No'))
+        # edate_mon_txt_xpath = str(object_repo_reader.get_property(locator_type.upper(), 'edate_mon_txt_xpath', fallback='No'))
+        # edate_pre_button_xpath = str(object_repo_reader.get_property(locator_type.upper(), 'edate_pre_button_xpath', fallback='No'))
+        # edate_nxt_button_xpath = str(object_repo_reader.get_property(locator_type.upper(), 'edate_nxt_button_xpath', fallback='No'))
+        # edate_date_list_xpath = str(object_repo_reader.get_property(locator_type.upper(), 'edate_date_list_xpath', fallback='No'))
 
-    km.choose_date_from_date_picker(
-        which_calender=which_calendar,
-        date_to_choose=date_to_choose,
-        locator_type=locator_type,
-        locator_name=locator_name,
-        cn_det_ddate_mon_txt_xpath=cn_det_ddate_mon_txt_xpath,
-        cn_det_ddate_pre_button_xpath=cn_det_ddate_pre_button_xpath,
-        cn_det_ddate_nxt_button_xpath=cn_det_ddate_nxt_button_xpath,
-        cn_det_ddate_date_list_xpath=cn_det_ddate_date_list_xpath,
-        cn_det_edate_mon_txt_xpath=cn_det_edate_mon_txt_xpath,
-        cn_det_edate_pre_button_xpath=cn_det_edate_pre_button_xpath,
-        cn_det_edate_nxt_button_xpath=cn_det_edate_nxt_button_xpath,
-        cn_det_edate_date_list_xpath=cn_det_edate_date_list_xpath
-    )
+        km.ge_choose_date_from_date_picker(
+            which_calender=which_calendar,
+            date_to_choose=date_to_choose,
+            locator_mon_type=locator1_type,
+            locator_pre_type=locator2_type,
+            locator_nxt_type=locator3_type,
+            locator_dt_lst_type=locator4_type,
+            locator_name=which_calendar,
+            date_mon_txt_loc=date_mon_txt_loc,
+            date_pre_button_loc=date_pre_button_loc,
+            date_nxt_button_loc=date_nxt_button_loc,
+            date_date_list_loc=date_date_list_loc
+        )
+    elif which_calendar.lower() == 'b':
+        locator1_type = "xpath"
+        locator2_type = "xpath"
+        locator3_type = "xpath"
+        try:
+            l1, l2, l3 = str(row["Input2"]).strip().split(";")
+            if "_css" in l1.strip().lower():
+                locator1_type = "css"
+            if "_id" in l1.strip().lower():
+                locator1_type = "id"
+            if "_css" in l2.strip().lower():
+                locator2_type = "css"
+            if "_id" in l2.strip().lower():
+                locator2_type = "id"
+            if "_css" in l3.strip().lower():
+                locator3_type = "css"
+            if "_id" in l3.strip().lower():
+                locator3_type = "id"
+        except:
+            raise ValueError(f"Invalid locator data '{row['Input2']}' for calendar type 'b'. It should contain 3 values separated by semicolons (';'). For example: 'date_mon_txt_xpath;date_pre_button_xpath;date_nxt_button_xpath;date_date_list_xpath'.")
+        date_mon_select_loc = str(object_repo_reader.get_property(locator1_type.upper(), l1, fallback='No'))
+        date_yr_select_loc = str(object_repo_reader.get_property(locator2_type.upper(), l2, fallback='No'))
+        date_date_list_loc = str(object_repo_reader.get_property(locator3_type.upper(), l3, fallback='No'))
+        
+        km.ge_choose_date_from_date_picker(
+            which_calender=which_calendar,
+            date_to_choose=date_to_choose,
+            locator_mon_select_type=locator1_type,
+            locator_yr_select_type=locator2_type,
+            locator_dt_lst_type=locator3_type,
+            locator_name=which_calendar,
+            date_mon_select_loc=date_mon_select_loc,
+            date_yr_select_loc=date_yr_select_loc,
+            date_date_list_loc=date_date_list_loc
+        )
 
 def check_radio_chk_selected(row, wafl, km, object_repo_reader):
     locator_type = "xpath"
@@ -552,10 +686,14 @@ def execute_test_script(df, wafl, km, object_repo_reader, utils, launch_browser)
         'js_click': lambda row: js_click(row, wafl, km, object_repo_reader),
         'select_file': lambda row: select_file(row, wafl, km, object_repo_reader),
         'upload_file': lambda row: upload_file(row, wafl, km, object_repo_reader),
-        'mcnp_choose_date_from_datepicker': lambda row: mcnp_choose_date_from_datepicker(row, wafl, km, object_repo_reader),
+        'choose_date_from_datepicker': lambda row: choose_date_from_datepicker(row, wafl, km, object_repo_reader),
         'check_radio_chk_selected': lambda row: check_radio_chk_selected(row, wafl, km, object_repo_reader),
         'check_radio_chk_not_selected': lambda row: check_radio_chk_not_selected(row, wafl, km, object_repo_reader),
         'check_page_accessibility': lambda row: check_page_accessibility(row, wafl, km),
+        'select_dropdown_by_value': lambda row: select_dropdown_by_value(row, wafl, km, object_repo_reader),
+        'select_dropdown_by_index': lambda row: select_dropdown_by_index(row, wafl, km, object_repo_reader),
+        'select_dropdown_by_visible_text': lambda row: select_dropdown_by_visible_text(row, wafl, km, object_repo_reader),
+        'scroll_page': lambda row: scroll_page(row, wafl, km),
         # Add other keywords and their corresponding functions here...
     }
 

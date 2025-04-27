@@ -1,4 +1,5 @@
 import base64
+import calendar
 import filecmp
 import getpass
 import glob
@@ -661,8 +662,6 @@ class Utils:
         response = drive_service.files().list(q=query, fields="files(id, name)").execute()
         return response.get("files", [])
 
-
-
     def delete_folder_from_drive(self, folder_id, drive_service):
         """Delete all files and subfolders inside a Google Drive folder."""
         query = f"'{folder_id}' in parents and trashed = false"
@@ -1223,7 +1222,7 @@ class Utils:
     # date_str = get_date_string()
     # create_image_folder(os.path.abspath("images\\" + date_str))
     # take_screenshot_full("images\\" + date_str, "tc001")
-    def check_date_format_validity(self, entered_date):
+    def is_date_format_valid(self, entered_date):
         """
         Validates the format of the entered date as 'DD MMMM YYYY'.
 
@@ -1238,33 +1237,25 @@ class Utils:
             The valid years range from 2019 to 2025.
         """
         self.is_not_used()
-        dts = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15",
-               "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30",
-               "31"]
-        mts = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
-               "October", "November", "December"]
-        yrs = ["2019", "2020", "2021", "2022", "2023", "2024", "2025"]
-        input_date = entered_date
-        # checking validity of input date as DD MMMM YYYY
-        input_date_split_list = input_date.split()
-        if len(input_date_split_list) != 3:
-            exit("Check the date entered for the keyword 'choose_date_from_datepicker'. It should be like "
-                 "the example 01 December 2022")
-        if len(input_date_split_list[0]) != 2:
-            exit("Check the date entered for the keyword 'choose_date_from_datepicker'. It should be like "
-                 "the example 01 December 2022")
-        if len(input_date_split_list[2]) != 4:
-            exit("Check the date entered for the keyword 'choose_date_from_datepicker'. It should be like "
-                 "the example 01 December 2022")
-        if input_date_split_list[0] not in dts:
-            exit("Check the date entered for the keyword 'choose_date_from_datepicker'. It should be like "
-                 "the example 01 December 2022")
-        if input_date_split_list[1] not in mts:
-            exit("Check the date entered for the keyword 'choose_date_from_datepicker'. It should be like "
-                 "the example 01 December 2022")
-        if input_date_split_list[2] not in yrs:
-            exit("Check the date entered for the keyword 'choose_date_from_datepicker'. The year should "
-                 "be between 2019 and 2025")
+        dts = [f"{day:02}" for day in range(1, 32)]
+        mts = list(calendar.month_name)[1:]  # Exclude the first element (empty string)
+        current_year = datetime.now().year
+        yrs = [str(year) for year in range(1900, current_year + 1)]
+        
+        # Used a try-except block to handle cases where entered_date.split() doesn’t return three components.
+        try:
+            self.logger.warning("validating date")
+            day, month, year = entered_date.split()
+            self.logger.warning(day)
+            datetime.strptime(entered_date, '%d %B %Y')
+            if not (day in dts and month in mts and year in yrs):
+                self.logger.warning(entered_date)
+                return False
+            else:
+                return True
+        except ValueError as e:
+            self.logger.error(e)
+            return False
 
     def check_date_range_format_validity(self, entered_date):
         """
@@ -1296,14 +1287,14 @@ class Utils:
                  "the example '01 December 2022 - 02 December 2022'")
 
         first_date = " ".join(input_date.split()[0:3])
-        self.check_date_format_validity(first_date)
+        self.is_date_format_valid(first_date)
 
         first_date_yr = int(first_date.split()[2])
         first_date_mon = self.get_mtn_number(first_date.split()[1])
         first_date_day = int(first_date.split()[0])
 
         second_date = " ".join(input_date.split()[4:7])
-        self.check_date_format_validity(second_date)
+        self.is_date_format_valid(second_date)
 
         second_date_yr = int(second_date.split()[2])
         second_date_mon = self.get_mtn_number(second_date.split()[1])

@@ -238,6 +238,19 @@ class KeywordsManager(BrowserDriver):
         self.logger.debug("Pausing the execution for " + str(how_seconds) + " seconds")
         self.wait_for_some_time(how_seconds)
 
+    def ge_scroll_page(self, up_or_down):
+            """
+            Pauses execution for the specified number of seconds.
+
+            Args:
+                how_seconds (str): The duration in seconds to pause execution.
+            """
+            if up_or_down.lower() in ["up", "down"]:
+                self.logger.debug("Scrolling page " + str(up_or_down) + " for 1000 pixels")
+                self.web_scroll(up_or_down)
+
+
+    
     def ge_open_browser(self, browser_name):
         """
         Launches the specified browser, captures OS and browser details, and logs information in the PDF report.
@@ -1081,7 +1094,6 @@ class KeywordsManager(BrowserDriver):
 
             raise
     
-    
     def ge_verify_file_downloaded(self,partial_filename):
         """
         Verifies if the displayed text of the specified element matches the expected text and logs the result in the PDF report.
@@ -1282,6 +1294,192 @@ class KeywordsManager(BrowserDriver):
                 )
             raise
 
+    def ge_select_dropdown_by_value(self, locator, locator_type, element_name, value):
+        """
+        Clicks on the specified element and logs the result in the PDF report.
+
+        Args:
+            locator (str): The locator for the element.
+            locator_type (str): The type of locator.
+            element_name (str): The user-friendly name of the element.
+
+        Raises:
+            Exception: If any error occurs while performing the click action.
+        """
+        try:
+            self.scroll_into_view(locator, locator_type)
+            if self.highlight_enabled:
+                self.highlight(1, "blue", 2, locator, locator_type)
+            self.dropdown_select_element(locator, locator_type, value)
+            self.wait_for_some_time(2)
+            self.logger.debug("Populating the step result details in the PDF report.")
+
+            # Handle screenshot strategy
+            if self.screenshot_strategy == "always":
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Select from dropdown '{element_name}'",
+                    sub_step_message="The selection is successful",
+                    sub_step_status='Pass',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Select from dropdown '{element_name}'",
+                    sub_step_message="The selection is successful",
+                    sub_step_status='Pass'
+                )
+        except Exception as e:
+            self.logger.error("An error occurred: %s", e, exc_info=True)
+            self.logger.debug("Populating the step result details in the PDF report.")
+
+            # Handle screenshot strategy for errors
+            if self.screenshot_strategy in ["always", "on-error"]:
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Select from dropdown '{element_name}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Select from dropdown '{element_name}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail'
+                )
+            raise
+
+    def ge_select_dropdown_by_index(self, locator, locator_type, element_name, index):
+        """
+        Clicks on the specified element and logs the result in the PDF report.
+
+        Args:
+            locator (str): The locator for the element.
+            locator_type (str): The type of locator.
+            element_name (str): The user-friendly name of the element.
+
+        Raises:
+            Exception: If any error occurs while performing the click action.
+        """
+        try:
+            self.scroll_into_view(locator, locator_type)
+            if self.highlight_enabled:
+                self.highlight(1, "blue", 2, locator, locator_type)
+            self.dropdown_select_element(locator, locator_type, index, "index")
+            self.wait_for_some_time(2)
+            self.logger.debug("Populating the step result details in the PDF report.")
+
+            # Handle screenshot strategy
+            if self.screenshot_strategy == "always":
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Select from dropdown '{element_name}'",
+                    sub_step_message="The selection is successful",
+                    sub_step_status='Pass',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Select from dropdown '{element_name}'",
+                    sub_step_message="The selection is successful",
+                    sub_step_status='Pass'
+                )
+        except Exception as e:
+            self.logger.error("An error occurred: %s", e, exc_info=True)
+            self.logger.debug("Populating the step result details in the PDF report.")
+
+            # Handle screenshot strategy for errors
+            if self.screenshot_strategy in ["always", "on-error"]:
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Select from dropdown '{element_name}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Select from dropdown '{element_name}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail'
+                )
+            raise
+    
+    def ge_select_dropdown_by_visible_text(self, locator, locator_type, element_name, text):
+        """
+        Clicks on the specified element and logs the result in the PDF report.
+
+        Args:
+            locator (str): The locator for the element.
+            locator_type (str): The type of locator.
+            element_name (str): The user-friendly name of the element.
+
+        Raises:
+            Exception: If any error occurs while performing the click action.
+        """
+        try:
+            self.scroll_into_view(locator, locator_type)
+            if self.highlight_enabled:
+                self.highlight(1, "blue", 2, locator, locator_type)
+            self.dropdown_select_element(locator, locator_type, text, "text")
+            self.wait_for_some_time(2)
+            self.logger.debug("Populating the step result details in the PDF report.")
+
+            # Handle screenshot strategy
+            if self.screenshot_strategy == "always":
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Select from dropdown '{element_name}'",
+                    sub_step_message="The selection is successful",
+                    sub_step_status='Pass',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Select from dropdown '{element_name}'",
+                    sub_step_message="The selection is successful",
+                    sub_step_status='Pass'
+                )
+        except Exception as e:
+            self.logger.error("An error occurred: %s", e, exc_info=True)
+            self.logger.debug("Populating the step result details in the PDF report.")
+
+            # Handle screenshot strategy for errors
+            if self.screenshot_strategy in ["always", "on-error"]:
+                self.screenshot_no += 1
+                self.repo_m.add_report_data(
+                    sub_step=f"Select from dropdown '{element_name}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail',
+                    image_src=self.take_screenshot(
+                        f"{self.screenshot_first_str}_{self.utils.format_number_zeropad_4char(self.screenshot_no)}"
+                    ),
+                    image_alt=self.repo_m.browser_img_alt
+                )
+            else:
+                self.repo_m.add_report_data(
+                    sub_step=f"Select from dropdown '{element_name}'",
+                    sub_step_message=f"Error Occurred: {str(e)}",
+                    sub_step_status='Fail'
+                )
+            raise
+
     def ge_select_file(self, locator, locator_type, file_paths, element_name):
         """
         Selects a file to upload using the provided locator and file paths, then logs the result in the PDF report.
@@ -1344,7 +1542,6 @@ class KeywordsManager(BrowserDriver):
                 )
             raise
     
-    
     def ge_upload_file(self, locator, locator_type, file_paths):
         """
         Selects a file to upload using the provided locator and file paths, then logs the result in the PDF report.
@@ -1405,11 +1602,7 @@ class KeywordsManager(BrowserDriver):
                 )
             raise
 
-    '''
-    The below are the keywords that are specific to MCNP application.
-    '''
-
-    def choose_date_from_date_picker(self, **kwargs):
+    def ge_choose_date_from_date_picker(self, **kwargs):
         """
         Selects a date or date range from a date picker, using the provided calendar details.
 
@@ -1424,84 +1617,84 @@ class KeywordsManager(BrowserDriver):
             Exception: If any error occurs during the date selection process.
         """
         try:
-            util_t = Utils()
+            util_t = self.utils
             which_calender = kwargs.get("which_calender")
             expected_date = kwargs.get("date_to_choose")
 
-            if which_calender == 'cn_det_dd':
-                first_date = " ".join(expected_date.split()[0:3])
-                first_mon_yr = " ".join(first_date.split()[1:3])
-                first_yr = int(first_date.split()[2])
-                first_mon = str(first_date.split()[1])
-                first_mon_nbr = util_t.get_mtn_number(first_mon)
-                first_day = str(first_date.split()[0])
+            # if which_calender == 'db':
+            #     first_date = " ".join(expected_date.split()[0:3])
+            #     first_mon_yr = " ".join(first_date.split()[1:3])
+            #     first_yr = int(first_date.split()[2])
+            #     first_mon = str(first_date.split()[1])
+            #     first_mon_nbr = util_t.get_mtn_number(first_mon)
+            #     first_day = str(first_date.split()[0])
 
-                second_date = " ".join(expected_date.split()[4:7])
-                second_mon_yr = " ".join(second_date.split()[1:3])
-                second_yr = int(second_date.split()[2])
-                second_mon = str(second_date.split()[1])
-                second_mon_nbr = util_t.get_mtn_number(second_mon)
-                second_day = str(second_date.split()[0])
+            #     second_date = " ".join(expected_date.split()[4:7])
+            #     second_mon_yr = " ".join(second_date.split()[1:3])
+            #     second_yr = int(second_date.split()[2])
+            #     second_mon = str(second_date.split()[1])
+            #     second_mon_nbr = util_t.get_mtn_number(second_mon)
+            #     second_day = str(second_date.split()[0])
 
-                # Navigate to the first date
-                while True:
-                    displayed_month = self.get_text(kwargs.get('cn_det_ddate_mon_txt_xpath'),
-                                                    kwargs.get("locator_type"),
-                                                    kwargs.get("locator_name"))
-                    disp_yr = int(displayed_month.split()[1])
-                    disp_mon = str(displayed_month.split()[0])
-                    disp_mon_nbr = util_t.get_mtn_number(disp_mon)
-                    if displayed_month == first_mon_yr:
-                        break
-                    if disp_yr > first_yr:
-                        self.element_click(kwargs.get('cn_det_ddate_pre_button_xpath'), kwargs.get("locator_type"))
-                    elif disp_yr < first_yr:
-                        self.element_click(kwargs.get('cn_det_ddate_nxt_button_xpath'), kwargs.get("locator_type"))
-                    else:
-                        if disp_mon_nbr > first_mon_nbr:
-                            self.element_click(kwargs.get('cn_det_ddate_pre_button_xpath'), kwargs.get("locator_type"))
-                        else:
-                            self.element_click(kwargs.get('cn_det_ddate_nxt_button_xpath'), kwargs.get("locator_type"))
+            #     # Navigate to the first date
+            #     while True:
+            #         displayed_month = self.get_text(kwargs.get('date_mon_txt_xpath'),
+            #                                         kwargs.get("locator_type"),
+            #                                         kwargs.get("locator_name"))
+            #         disp_yr = int(displayed_month.split()[1])
+            #         disp_mon = str(displayed_month.split()[0])
+            #         disp_mon_nbr = util_t.get_mtn_number(disp_mon)
+            #         if displayed_month == first_mon_yr:
+            #             break
+            #         if disp_yr > first_yr:
+            #             self.element_click(kwargs.get('date_pre_button_xpath'), kwargs.get("locator_type"))
+            #         elif disp_yr < first_yr:
+            #             self.element_click(kwargs.get('date_nxt_button_xpath'), kwargs.get("locator_type"))
+            #         else:
+            #             if disp_mon_nbr > first_mon_nbr:
+            #                 self.element_click(kwargs.get('date_pre_button_xpath'), kwargs.get("locator_type"))
+            #             else:
+            #                 self.element_click(kwargs.get('date_nxt_button_xpath'), kwargs.get("locator_type"))
 
-                date_element_list = self.get_element_list(kwargs.get('cn_det_ddate_date_list_xpath'),
-                                                        kwargs.get("locator_type"))
-                for testscript_file in date_element_list:
-                    disp_day = self.get_text("", "", testscript_file)
-                    disp_day_two_dig = "%02d" % (int(disp_day),)
-                    if disp_day_two_dig == first_day:
-                        self.element_click("", "", testscript_file)
-                        break
+            #     date_element_list = self.get_element_list(kwargs.get('date_date_list_xpath'),
+            #                                             kwargs.get("locator_type"))
+            #     for testscript_file in date_element_list:
+            #         disp_day = self.get_text("", "", testscript_file)
+            #         disp_day_two_dig = "%02d" % (int(disp_day),)
+            #         if disp_day_two_dig == first_day:
+            #             self.element_click("", "", testscript_file)
+            #             break
 
-                # Navigate to the second date in the range
-                while True:
-                    displayed_month = self.get_text(kwargs.get('cn_det_ddate_mon_txt_xpath'),
-                                                    kwargs.get("locator_type"),
-                                                    kwargs.get("locator_name"))
-                    disp_yr = int(displayed_month.split()[1])
-                    disp_mon = str(displayed_month.split()[0])
-                    disp_mon_nbr = util_t.get_mtn_number(disp_mon)
-                    if displayed_month == second_mon_yr:
-                        break
-                    if disp_yr > second_yr:
-                        self.element_click(kwargs.get('cn_det_ddate_pre_button_xpath'), kwargs.get("locator_type"))
-                    elif disp_yr < second_yr:
-                        self.element_click(kwargs.get('cn_det_ddate_nxt_button_xpath'), kwargs.get("locator_type"))
-                    else:
-                        if disp_mon_nbr > second_mon_nbr:
-                            self.element_click(kwargs.get('cn_det_ddate_pre_button_xpath'), kwargs.get("locator_type"))
-                        else:
-                            self.element_click(kwargs.get('cn_det_ddate_nxt_button_xpath'), kwargs.get("locator_type"))
+            #     # Navigate to the second date in the range
+            #     while True:
+            #         displayed_month = self.get_text(kwargs.get('date_mon_txt_xpath'),
+            #                                         kwargs.get("locator_type"),
+            #                                         kwargs.get("locator_name"))
+            #         disp_yr = int(displayed_month.split()[1])
+            #         disp_mon = str(displayed_month.split()[0])
+            #         disp_mon_nbr = util_t.get_mtn_number(disp_mon)
+            #         if displayed_month == second_mon_yr:
+            #             break
+            #         if disp_yr > second_yr:
+            #             self.element_click(kwargs.get('date_pre_button_xpath'), kwargs.get("locator_type"))
+            #         elif disp_yr < second_yr:
+            #             self.element_click(kwargs.get('date_nxt_button_xpath'), kwargs.get("locator_type"))
+            #         else:
+            #             if disp_mon_nbr > second_mon_nbr:
+            #                 self.element_click(kwargs.get('date_pre_button_xpath'), kwargs.get("locator_type"))
+            #             else:
+            #                 self.element_click(kwargs.get('date_nxt_button_xpath'), kwargs.get("locator_type"))
 
-                date_element_list = self.get_element_list(kwargs.get('cn_det_ddate_date_list_xpath'),
-                                                        kwargs.get("locator_type"))
-                for testscript_file in date_element_list:
-                    disp_day = self.get_text("", "", testscript_file)
-                    disp_day_two_dig = "%02d" % (int(disp_day),)
-                    if disp_day_two_dig == second_day:
-                        self.element_click("", "", testscript_file)
-                        break
+            #     date_element_list = self.get_element_list(kwargs.get('date_date_list_xpath'),
+            #                                             kwargs.get("locator_type"))
+            #     for testscript_file in date_element_list:
+            #         disp_day = self.get_text("", "", testscript_file)
+            #         disp_day_two_dig = "%02d" % (int(disp_day),)
+            #         if disp_day_two_dig == second_day:
+            #             self.element_click("", "", testscript_file)
+            #             break
 
-            if which_calender == 'cn_det_ed':
+            if which_calender == 'a':
                 mon_yr = " ".join(expected_date.split()[1:3])
                 yr = int(expected_date.split()[2])
                 mon = str(expected_date.split()[1])
@@ -1510,8 +1703,8 @@ class KeywordsManager(BrowserDriver):
 
                 # Navigate to the date
                 while True:
-                    displayed_month = self.get_text(kwargs.get('cn_det_edate_mon_txt_xpath'),
-                                                    kwargs.get("locator_type"),
+                    displayed_month = self.get_text(kwargs.get('date_mon_txt_loc'),
+                                                    kwargs.get("locator_mon_type"),
                                                     kwargs.get("locator_name"))
                     disp_yr = int(displayed_month.split()[1])
                     disp_mon = str(displayed_month.split()[0])
@@ -1519,22 +1712,41 @@ class KeywordsManager(BrowserDriver):
                     if displayed_month == mon_yr:
                         break
                     if disp_yr > yr:
-                        self.element_click(kwargs.get('cn_det_edate_pre_button_xpath'), kwargs.get("locator_type"))
+                        self.element_click(kwargs.get('date_pre_button_loc'), kwargs.get("locator_pre_type"))
                     elif disp_yr < yr:
-                        self.element_click(kwargs.get('cn_det_edate_nxt_button_xpath'), kwargs.get("locator_type"))
+                        self.element_click(kwargs.get('date_nxt_button_loc'), kwargs.get("locator_nxt_type"))
                     else:
                         if disp_mon_nbr > mon_nbr:
-                            self.element_click(kwargs.get('cn_det_edate_pre_button_xpath'), kwargs.get("locator_type"))
+                            self.element_click(kwargs.get('date_pre_button_loc'), kwargs.get("locator_pre_type"))
                         else:
-                            self.element_click(kwargs.get('cn_det_edate_nxt_button_xpath'), kwargs.get("locator_type"))
+                            self.element_click(kwargs.get('date_nxt_button_loc'), kwargs.get("locator_nxt_type"))
 
-                date_element_list = self.get_element_list(kwargs.get('cn_det_edate_date_list_xpath'),
-                                                        kwargs.get("locator_type"))
-                for testscript_file in date_element_list:
-                    disp_day = self.get_text("", "", testscript_file)
+                date_element_list = self.get_element_list(kwargs.get('date_date_list_loc'), kwargs.get("locator_dt_lst_type"))
+                for dt in date_element_list:
+                    disp_day = self.get_text("", "", dt)
                     disp_day_two_dig = "%02d" % (int(disp_day),)
                     if disp_day_two_dig == day:
-                        self.element_click("", "", testscript_file)
+                        self.element_click("", "", dt)
+                        break
+            elif which_calender == 'b':
+                mon_yr = " ".join(expected_date.split()[1:3])
+                yr = int(expected_date.split()[2])
+                mon = str(expected_date.split()[1])
+                mon_nbr = util_t.get_mtn_number(mon)
+                day = str(expected_date.split()[0])
+                
+                self.dropdown_select_element(kwargs.get('date_mon_select_loc'), kwargs.get("locator_mon_select_type"), mon, "text")
+                self.dropdown_select_element(kwargs.get('date_yr_select_loc'), kwargs.get("locator_yr_select_type"), str(yr))
+
+                # Navigate to the date
+                date_element_list = self.get_element_list(kwargs.get('date_date_list_loc'), kwargs.get("locator_dt_lst_type"))
+                for dt in date_element_list:
+                    disp_day = self.get_text("", "", dt)
+                    day_attribute_value = self.get_attribute_value(element=dt, attribute="aria-label")
+                    self.logger.warning(day_attribute_value)
+                    disp_day_two_dig = "%02d" % (int(disp_day),)
+                    if disp_day_two_dig == day and (str(mon).lower() in str(day_attribute_value).lower()):
+                        self.element_click("", "", dt)
                         break
 
             # Handle screenshot strategy
