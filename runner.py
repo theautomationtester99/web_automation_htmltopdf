@@ -2,6 +2,7 @@ import argparse
 import asyncio
 import os
 import re
+import shutil
 import sys
 import tempfile
 import time
@@ -64,6 +65,18 @@ def validate_test_script(testscript_file, wafl, utils, launch_browser):
             wafl.error(f"Invalid keyword '{keyword}' at row {index}.")
             raise ValueError(f"Invalid keyword '{keyword}' in the test script.")
 
+        if keyword in ['upload_file', 'select_file']:
+            u_file_name = str(row["Input3"]).strip()
+            u_ld = str(row["Input2"]).strip()
+            if not u_ld:
+                wafl.error(f"Locator id is not given at row {index}.")
+                raise ValueError(f"Locator id is not given at row {index}.")
+            u_root_path = get_root_directory_path()
+            u_test_data_path = os.path.join(u_root_path, "test_data")
+            if not utils.do_file_exist_in_dir(u_test_data_path, u_file_name):
+                wafl.error(f"The file {u_file_name} does not exist in the test data folder.")
+                raise ValueError(f"The file {u_file_name} does not exist in the test data folder.")
+        
         if keyword == 'tc_id':
             tc_id_value = str(row["Input3"]).strip()
             if not os.path.basename(testscript_file).split("_")[0].lower() == tc_id_value.lower():
@@ -155,6 +168,14 @@ def validate_test_script(testscript_file, wafl, utils, launch_browser):
 
     wafl.info("Test script validation completed successfully.")
     return df
+
+def get_root_directory_path():
+    if getattr(sys, 'frozen', False):  # Check if running as a frozen executable
+        script_dir = os.path.dirname(sys.executable)  # Use the directory of the executable
+    else:
+        script_dir = os.path.dirname(os.path.abspath(__file__))  # Normal script behavior
+
+    return os.path.join(script_dir)
 
 def hover_mouse(row, wafl, km, object_repo_reader):
     locator_type = "xpath"
@@ -449,10 +470,11 @@ def upload_file(row, wafl, km, object_repo_reader):
     if "_id" in str(row["Input2"]).strip().lower():
         locator_type = "id"
     wafl.info(f"Executing 'upload_file' at row {row.name}.")
+    up_file_path = os.path.join(get_root_directory_path(), "test_data", str(row["Input3"]).strip())
     km.ge_upload_file(
         str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')),
         locator_type,
-        str(row["Input3"]).strip()
+        up_file_path
     )
 
 def select_file(row, wafl, km, object_repo_reader):
@@ -760,7 +782,9 @@ def start_runner(testscript_file, rlog_queue, rlock, object_repo_reader, utils, 
         timestamp = int(time.time() * 1000)  # Milliseconds
         # Combine process ID and timestamp
         unique_id = f"proc_{process_id}_time_{timestamp}"
-        temp_directory = os.path.abspath(tempfile.mkdtemp(suffix=f"_{unique_id}"))
+        # temp_directory = os.path.abspath(tempfile.mkdtemp(suffix=f"_{unique_id}"))
+        temp_directory = os.path.join(get_root_directory_path(), "test_data", str(unique_id))
+        os.makedirs(temp_directory, exist_ok=True)
         
         km = KeywordsManager(wafl, temp_directory , retry_count)
         retries = 0
@@ -791,6 +815,7 @@ def start_runner(testscript_file, rlog_queue, rlock, object_repo_reader, utils, 
 
         wafl.debug("Closing the test and creating the test result pdf file.")
         km.ge_close()
+        # shutil.rmtree(temp_directory)
 
 def get_max_retries(rq):
     """
@@ -879,6 +904,7 @@ def check_before_start(utils):
         script_dir = os.path.dirname(os.path.abspath(__file__))  # Normal script behavior
 
     generic_tr_path = os.path.join(script_dir, "test_results")
+    generic_td_path = os.path.join(script_dir, "test_data")
 
     delete_test_results_images_recordings_folders_before_start = str(start_properties.DELETE_TEST_RESULTS).lower()
 
@@ -889,6 +915,7 @@ def check_before_start(utils):
         # utils.delete_folder_and_contents("images")
         # utils.delete_folder_and_contents("recordings")
         utils.delete_folder_and_contents(generic_tr_path)
+        utils.delete_subfolders(generic_td_path)
 
     # logger.debug("Deleting the output.xlsx file.")
     # utils.delete_file("output.xlsx")
@@ -1053,8 +1080,8 @@ if __name__ == '__main__':
             st = time.time()
             check_before_start(utils)
             run_headless = True if str(start_properties.HEADLESS).lower() == 'yes' else False
-            run_in_grid =  str(start_properties.RUN_IN_SELENIUM_GRID).lower()
-            run_in_appium =  str(start_properties.RUN_IN_APPIUM_GRID).lower()
+            run_in_grid =  True if str(start_properties.RUN_IN_SELENIUM_GRID).lower() == 'yes' else False
+            run_in_appium =  True if str(start_properties.RUN_IN_APPIUM_GRID).lower() == 'yes' else False
 
             upload_tr =  True if str(start_properties.UPLOAD_TEST_RESULTS).lower() == 'yes' else False
 
@@ -1081,50 +1108,80 @@ if __name__ == '__main__':
                     if p.match(os.path.basename(x)):
                         logger.debug("The file name " + os.path.basename(x) + " starts with 'ts' (case insensitive).")
                         logger.debug("Checking if the file " + os.path.basename(x) + " is present in chrome or edge folder.")
-                        if os.path.dirname(x).split(os.sep)[-1].lower() == 'chrome':
+                        if os.path.dirname(x).split(os.sep)[-1].lower() == 'chrome' and not run_in_grid:
                             logger.debug("The file " + os.path.basename(x) + " is present in chrome folder. Launching the execution of test script on chrome browser.")
                             proc1 = Process(target=start_runner,args=(x, log_queue, lock,object_repo_reader, utils,'chrome', ),name="ChromeRunnerProcess")
                             proc1.start()
                             write_pid_to_file(proc1.pid)
                             proc2 = None
-                            if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
+                            if not run_headless and not run_in_grid and not run_in_appium:
                                 logger.debug("Starting the execution recording.")
                                 proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", ""),logger), name="RecordingProcess")
                                 proc2.start()
                                 write_pid_to_file(proc2.pid)
 
                             proc1.join()
-                            if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
+                            if not run_headless and not run_in_grid and not run_in_appium:
                                 proc2.join()
-                        elif os.path.dirname(x).split(os.sep)[-1].lower() == 'edge':
+                        elif os.path.dirname(x).split(os.sep)[-1].lower() == 'edge' and not run_in_grid:
                             logger.debug("The file " + os.path.basename(x) + " is present in edge folder. Launching the execution of test script on edge browser.")
                             proc1 = Process(target=start_runner, args=(x, log_queue, lock,object_repo_reader, utils, 'edge',), name="EdgeRunnerProcess")
                             proc1.start()
                             write_pid_to_file(proc1.pid)
                             proc2 = None
-                            if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
+                            if not run_headless and not run_in_grid and not run_in_appium:
                                 logger.debug("Starting the execution recording.")
                                 proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", ""), logger), name="RecordingProcess")
                                 proc2.start()
                                 write_pid_to_file(proc2.pid)
 
                             proc1.join()
-                            if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
+                            if not run_headless and not run_in_grid and not run_in_appium:
                                 proc2.join()
-                        elif os.path.dirname(x).split(os.sep)[-1].lower() == 'test_scripts':
+                        elif os.path.dirname(x).split(os.sep)[-1].lower() == 'test_scripts' and not run_in_grid:
                             logger.debug("The file " + os.path.basename(x) + " is present in test_scripts folder. Launching the execution and browser will be choosen from test script.")
                             proc1 = Process(target=start_runner, args=(x,log_queue, lock,object_repo_reader, utils,), name="TestScriptsRunnerProcess")
                             proc1.start()
                             write_pid_to_file(proc1.pid)
                             proc2 = None
-                            if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
+                            if not run_headless and not run_in_grid and not run_in_appium:
                                 logger.debug("Starting the execution recording.")
                                 proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", ""), logger),name="RecordingProcess")
                                 proc2.start()
                                 write_pid_to_file(proc2.pid)
 
                             proc1.join()
-                            if not run_headless and run_in_grid.lower() != 'yes' and run_in_appium.lower() != 'yes':
+                            if not run_headless and not run_in_grid and not run_in_appium:
+                                proc2.join()
+                        elif os.path.dirname(x).split(os.sep)[-1].lower() == 'grid_edge' and run_in_grid:
+                            logger.debug("The file " + os.path.basename(x) + " is present in edge folder. Launching the execution of test script on edge browser.")
+                            proc1 = Process(target=start_runner, args=(x, log_queue, lock,object_repo_reader, utils, 'edge',), name="EdgeRunnerProcess")
+                            proc1.start()
+                            write_pid_to_file(proc1.pid)
+                            proc2 = None
+                            if not run_headless and not run_in_grid and not run_in_appium:
+                                logger.debug("Starting the execution recording.")
+                                proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", ""), logger), name="RecordingProcess")
+                                proc2.start()
+                                write_pid_to_file(proc2.pid)
+
+                            proc1.join()
+                            if not run_headless and not run_in_grid and not run_in_appium:
+                                proc2.join()
+                        elif os.path.dirname(x).split(os.sep)[-1].lower() == 'grid_chrome' and run_in_grid:
+                            logger.debug("The file " + os.path.basename(x) + " is present in chrome folder. Launching the execution of test script on chrome browser.")
+                            proc1 = Process(target=start_runner,args=(x, log_queue, lock,object_repo_reader, utils,'chrome', ),name="ChromeRunnerProcess")
+                            proc1.start()
+                            write_pid_to_file(proc1.pid)
+                            proc2 = None
+                            if not run_headless and not run_in_grid and not run_in_appium:
+                                logger.debug("Starting the execution recording.")
+                                proc2 = Process(target=take_recording(proc1, os.path.basename(x).replace("testscript.xlsx", ""),logger), name="RecordingProcess")
+                                proc2.start()
+                                write_pid_to_file(proc2.pid)
+
+                            proc1.join()
+                            if not run_headless and not run_in_grid and not run_in_appium:
                                 proc2.join()
             et = time.time()
 
@@ -1187,15 +1244,21 @@ if __name__ == '__main__':
                     if p.match(os.path.basename(x)):
                         logger.debug("The file name " + os.path.basename(x) + " starts with 'qs' (case insensitive).")
                         logger.debug("Checking if the file " + os.path.basename(x) + " is present in chrome or edge folder.")
-                        if os.path.dirname(x).split(os.sep)[-1].lower() == 'chrome':
+                        if os.path.dirname(x).split(os.sep)[-1].lower() == 'chrome' and not run_in_grid:
                             logger.debug("The file " + os.path.basename(x) + " is present in chrome folder. Launching the execution of test script on chrome browser.")
                             processes.append(Process(target=start_runner,args=(x,log_queue, lock,object_repo_reader, utils, 'chrome',), name="ChromeRunnerProcess"))
-                        elif os.path.dirname(x).split(os.sep)[-1].lower() == 'edge':
+                        elif os.path.dirname(x).split(os.sep)[-1].lower() == 'edge' and not run_in_grid:
                             logger.debug("The file " + os.path.basename(x) + " is present in edge folder. Launching the execution of test script on edge browser.")
                             processes.append(Process(target=start_runner,args=(x,log_queue, lock,object_repo_reader, utils, 'edge',), name="EdgeRunnerProcess"))
-                        elif os.path.dirname(x).split(os.sep)[-1].lower() == 'test_scripts':
+                        elif os.path.dirname(x).split(os.sep)[-1].lower() == 'test_scripts' and not run_in_grid:
                             logger.debug("The file " + os.path.basename(x) + " is present in test_scripts folder. Launching the execution and browser will be choosen from test script.")
                             processes.append(Process(target=start_runner, args=(x,log_queue, lock,object_repo_reader, utils,), name="TestScriptsRunnerProcess"))
+                        elif os.path.dirname(x).split(os.sep)[-1].lower() == 'grid_chrome' and run_in_grid:
+                            logger.debug("The file " + os.path.basename(x) + " is present in chrome folder. Launching the execution of test script on chrome browser.")
+                            processes.append(Process(target=start_runner,args=(x,log_queue, lock,object_repo_reader, utils, 'chrome',), name="ChromeRunnerProcess"))
+                        elif os.path.dirname(x).split(os.sep)[-1].lower() == 'grid_edge' and run_in_grid:
+                            logger.debug("The file " + os.path.basename(x) + " is present in edge folder. Launching the execution of test script on edge browser.")
+                            processes.append(Process(target=start_runner,args=(x,log_queue, lock,object_repo_reader, utils, 'edge',), name="EdgeRunnerProcess"))
 
             for batch_start in range(0, len(processes), number_threads):
                 batch = processes[batch_start:batch_start + number_threads]

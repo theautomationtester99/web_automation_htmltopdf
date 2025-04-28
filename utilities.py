@@ -190,19 +190,58 @@ class Utils:
                 self.logger.warning("FTP upload is disabled.")
                 return
             local_folder = os.path.abspath(os.path.join(self.test_results_folder, "..", "..", ".."))
-            remote_folder=start_properties.FTP_USER_HOME
+            local_folder_td = os.path.abspath(os.path.join(self.test_results_folder, "..", "..", "..","..","test_data"))
+            remote_folder=os.path.join(start_properties.FTP_USER_HOME, "test_results")
+            remote_folder_td=os.path.join(start_properties.FTP_USER_HOME, "test_data")
             host = start_properties.FTP_HOST
             port = 21
             username = start_properties.FTP_USER
             password = start_properties.FTP_PASSWORD
             ftp = self.connect_to_ftp(host, port, username, password)  # Connect to the FTP server
             self.upload_directory(ftp, local_folder, remote_folder)  # Upload the folder
+            self.upload_directory(ftp, local_folder_td, remote_folder_td)  # Upload the folder
             ftp.quit()
             self.logger.warning("Connection closed.")
         except Exception as e:
             self.logger.error(f"Error: {e}")
 
     ###########################################
+    
+    
+    def do_files_with_ext_in_dir(self, directory, temp_extensions = ('.crdownload', '.tmp')):
+        """
+        Checks if there are any temporary files in the specified directory.
+
+        Args:
+            directory (str): The directory to check.
+
+        Returns:
+            bool: True if temporary files are found, False otherwise.
+        """
+        try:
+            return any(file.endswith(temp_extensions) for file in os.listdir(directory))
+        except Exception as e:
+            self.logger.error(f"Error while checking for temporary files: {str(e)}")
+            return False
+    
+    def do_file_exist_in_dir(self, temp_dir, partial_filename):
+        """
+        Checks for the existence of files with a partial filename in the specified directory.
+
+        Args:
+            temp_dir (str): The directory to check for files.
+            partial_filename (str): The partial filename to match.
+
+        Returns:
+            list: A list of matching files.
+        """
+        try:
+            files = os.listdir(temp_dir)
+            matching_files = [file for file in files if partial_filename in file]
+            return matching_files
+        except Exception as e:
+            self.logger.error(f"Error while checking file existence: {str(e)}")
+            return False
 
     def merge_pdfs_in_parts(self):
         folder_path = self.get_test_result_folder()
@@ -309,6 +348,27 @@ class Utils:
             self.logger.debug('Folder and its content removed')  # Folder and its content removed
         except:
             self.logger.debug('Folder not deleted')
+    
+    def delete_subfolders(self, folder_path):
+        """
+        Deletes subfolders within the specified folder_path while leaving files intact.
+
+        Args:
+            folder_path (str): The path to the parent folder.
+
+        Logs:
+            Debug: If the subfolders are successfully removed or if no subfolders were found.
+        """
+        self.is_not_used()
+        try:
+            for item in os.listdir(folder_path):
+                item_path = os.path.join(folder_path, item)
+                if os.path.isdir(item_path):  # Check if the item is a directory (subfolder)
+                    shutil.rmtree(item_path)
+                    self.logger.debug(f'Subfolder "{item}" removed')
+            self.logger.debug('All subfolders removed successfully')
+        except Exception as e:
+            self.logger.debug(f'Error removing subfolders: {str(e)}')
 
     def generate_random_notif_id(self):
         """

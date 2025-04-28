@@ -94,7 +94,7 @@ COPY entrypoint_root.sh /root/entrypoint.sh
 RUN dos2unix /root/entrypoint.sh && \
     chmod +x /root/entrypoint.sh
 
-RUN echo '*/10 * * * * DISPLAY=:0 . /root/env_vars.sh; /waf/runner --start >> /proc/1/fd/1 2>> /proc/1/fd/2' | crontab -
+RUN echo '*/15 * * * * DISPLAY=:0 . /root/env_vars.sh; /waf/runner --start >> /proc/1/fd/1 2>> /proc/1/fd/2' | crontab -
 
 RUN service cron restart
 
