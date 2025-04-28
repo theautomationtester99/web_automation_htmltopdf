@@ -58,6 +58,7 @@ build_dir = os.path.join(project_dir, "build")
 include_files = [
     (os.path.join(project_dir, 'resources/logo.png'), 'resources/logo.png'),
     (os.path.join(project_dir, 'test_scripts'), 'test_scripts'),
+    (os.path.join(project_dir, 'test_data'), 'test_data'),
     (os.path.join(project_dir, 'resources/encrypted_file.jinja2'), 'resources/encrypted_file.jinja2'),
     (os.path.join(project_dir, 'config/object_repository.properties'), 'config/object_repository.properties'),
     (os.path.join(project_dir, 'resources/encrypted_ts_file.jinja2'), 'resources/encrypted_ts_file.jinja2'),
