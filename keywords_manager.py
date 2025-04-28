@@ -1117,11 +1117,11 @@ class KeywordsManager(BrowserDriver):
             while not download_complete:
                 # Check if any file with partial name exists
                 print(self.temp_dir)
-                files = os.listdir(self.temp_dir)
-                matching_files = [file for file in files if partial_filename in file]
+                # files = os.listdir(self.temp_dir)
+                matching_files = self.utils.do_file_exist_in_dir(self.temp_dir, partial_filename)
                 
                 # If matching files are found and no `.crdownload` or `.tmp` file exists, download is complete
-                if matching_files and not any(file.endswith(('.crdownload', '.tmp')) for file in files):
+                if matching_files and not self.utils.do_files_with_ext_in_dir(self.temp_dir):
                     self.logger.info(f"Download completed: {matching_files}")
                     download_complete = True
 
@@ -1133,8 +1133,8 @@ class KeywordsManager(BrowserDriver):
                 time.sleep(5)  # Short sleep to avoid excessive CPU usage
 
             if download_complete:
-                files = os.listdir(self.temp_dir)
-                matching_files = [file for file in files if partial_filename in file]
+                # files = os.listdir(self.temp_dir)
+                matching_files = self.utils.do_file_exist_in_dir(self.temp_dir, partial_filename)
                 if matching_files:
                     self.logger.info(f"File(s) matching '{partial_filename}' found: {matching_files}")
                     self.repo_m.add_report_data(
@@ -1726,7 +1726,7 @@ class KeywordsManager(BrowserDriver):
                     disp_day = self.get_text("", "", dt)
                     disp_day_two_dig = "%02d" % (int(disp_day),)
                     if disp_day_two_dig == day:
-                        self.element_click("", "", dt)
+                        self.element_js_click("", "", dt)
                         break
             elif which_calender == 'b':
                 mon_yr = " ".join(expected_date.split()[1:3])
@@ -1746,7 +1746,7 @@ class KeywordsManager(BrowserDriver):
                     self.logger.warning(day_attribute_value)
                     disp_day_two_dig = "%02d" % (int(disp_day),)
                     if disp_day_two_dig == day and (str(mon).lower() in str(day_attribute_value).lower()):
-                        self.element_click("", "", dt)
+                        self.element_js_click("", "", dt)
                         break
 
             # Handle screenshot strategy
