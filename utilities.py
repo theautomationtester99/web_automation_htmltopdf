@@ -166,7 +166,7 @@ class Utils:
             local_path = os.path.join(local_dir, item)
             remote_path = f"{remote_dir}/{item}"
             # remote_path = os.path.join(remote_dir, item)
-            if os.path.isdir(local_path):
+            if os.path.isdir(local_path) and os.listdir(local_path):
                 # Handle subdirectories
                 # try:
                 #     self.logger.info(f"Checking remote folder: {item}")
