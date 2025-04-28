@@ -159,10 +159,10 @@ class Utils:
 
     def upload_directory(self, ftp, local_dir, remote_dir):
         """Upload all files and subdirectories from a local directory."""
-        self.logger.info(f"Uploading directory: {local_dir} to {remote_dir}")
+        self.logger.warning(f"Uploading directory: {local_dir} to {remote_dir}")
         self.ensure_remote_dir_exists(ftp, remote_dir)  # Ensure the root remote directory exists
         for item in os.listdir(local_dir):
-            self.logger.info(f"Processing item: {item}")
+            self.logger.warning(f"Processing item: {item}")
             local_path = os.path.join(local_dir, item)
             remote_path = f"{remote_dir}/{item}"
             # remote_path = os.path.join(remote_dir, item)
@@ -187,7 +187,7 @@ class Utils:
             # local_folder=self.get_test_result_folder()
             do_ftp_upload = True if start_properties.FTP_UPLOAD.lower() == "yes" else False
             if not do_ftp_upload:
-                self.logger.info("FTP upload is disabled.")
+                self.logger.warning("FTP upload is disabled.")
                 return
             local_folder = os.path.abspath(os.path.join(self.test_results_folder, "..", "..", ".."))
             remote_folder=start_properties.FTP_USER_HOME
@@ -198,7 +198,7 @@ class Utils:
             ftp = self.connect_to_ftp(host, port, username, password)  # Connect to the FTP server
             self.upload_directory(ftp, local_folder, remote_folder)  # Upload the folder
             ftp.quit()
-            self.logger.info("Connection closed.")
+            self.logger.warning("Connection closed.")
         except Exception as e:
             self.logger.error(f"Error: {e}")
 
