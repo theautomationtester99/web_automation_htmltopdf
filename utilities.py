@@ -166,17 +166,18 @@ class Utils:
             local_path = os.path.join(local_dir, item)
             remote_path = f"{remote_dir}/{item}"
             # remote_path = os.path.join(remote_dir, item)
-            if os.path.isdir(local_path) and os.listdir(local_path):
-                # Handle subdirectories
-                # try:
-                #     self.logger.info(f"Checking remote folder: {item}")
-                #     ftp.cwd(item)  # Check if the remote folder exists
-                # except Exception as e:
-                #     self.logger.info(f"Creating remote folder: {item}")
-                #     ftp.mkd(item)  # Create the folder if it doesn't exist
-                # ftp.cwd(item)  # Navigate into the folder
-                self.upload_directory(ftp, local_path, remote_path)
-                ftp.cwd("..")  # Navigate back to parent folder
+            if os.path.isdir(local_path):
+                if os.listdir(local_path):
+                    # Handle subdirectories
+                    # try:
+                    #     self.logger.info(f"Checking remote folder: {item}")
+                    #     ftp.cwd(item)  # Check if the remote folder exists
+                    # except Exception as e:
+                    #     self.logger.info(f"Creating remote folder: {item}")
+                    #     ftp.mkd(item)  # Create the folder if it doesn't exist
+                    # ftp.cwd(item)  # Navigate into the folder
+                    self.upload_directory(ftp, local_path, remote_path)
+                    ftp.cwd("..")  # Navigate back to parent folder
             else:
                 # Handle files
                 self.upload_file(ftp, local_path, item)

@@ -31,6 +31,6 @@ spec:
         - name: HEADLESS
           value: "yes"
         - name: RUN_IN_SELENIUM_GRID
-          value: "yes"
+          value: "no"
         - name: GRID_URL
           value: "http://selenium-hub:4444/wd/hub"
