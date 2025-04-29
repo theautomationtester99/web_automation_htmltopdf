@@ -61,58 +61,70 @@ def validate_test_script(testscript_file, rlock, object_repo, wafl, utils, launc
 
     wafl.info("Validating the content of the test script.")
     for index, row in df.iterrows():
-        keyword = str(row["Keyword"])
-        wafl.debug(f"Validating row {index}: Keyword='{keyword}'")
+        keyword = str(row["Keyword"]).strip()
+        wafl.debug(f"Validating row {index +2}: Keyword='{keyword}'")
         
         if index == 0:
-            if not (str(row["Test Steps"]) == 'tc_id'):
+            if not (keyword == 'tc_id'):
                 skip_e_report.add_row_skipped_tc([testscript_file,f"The first keyword must be 'tc_id'", "Skipped"])
                 raise ValueError("The first keyword must be 'tc_id'")
         if index == 1:
-            if not (str(row["Test Steps"]) == 'tc_desc'):
+            if not (keyword == 'tc_desc'):
                 skip_e_report.add_row_skipped_tc([testscript_file,f"The second keyword must be 'tc_desc'", "Skipped"])
                 raise ValueError("The second keyword must be 'tc_desc'")
         if index == 2:
-            if not (str(row["Test Steps"]) == 'step'):
+            if not (keyword == 'step'):
                 skip_e_report.add_row_skipped_tc([testscript_file,f"The third keyword must be 'step'", "Skipped"])
                 raise ValueError("The third keyword must be 'step'")
         if index == 3:
-            if not (str(row["Test Steps"]) == 'open_browser'):
+            if not (keyword == 'open_browser'):
                 skip_e_report.add_row_skipped_tc([testscript_file,f"The fourth keyword must be 'open_browser'", "Skipped"])
                 raise ValueError("The fourth keyword must be 'open_browser'")
         if index == 4:
-            if not (str(row["Test Steps"]) == 'enter_url'):
+            if not (keyword == 'enter_url'):
                 skip_e_report.add_row_skipped_tc([testscript_file,f"The fifth keyword must be 'enter_url'", "Skipped"])
                 raise ValueError("The fifth keyword must be 'enter_url'")
 
         if keyword not in VALID_KEYWORDS:
-            wafl.error(f"Invalid keyword '{keyword}' at row {index}.")
-            skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid keyword '{keyword}' at row {index}.", "Skipped"])
+            wafl.error(f"Invalid keyword '{keyword}' at row {index +2}.")
+            skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid keyword '{keyword}' at row {index +2}.", "Skipped"])
             raise ValueError(f"Invalid keyword '{keyword}' in the test script.")
         
         if keyword in ['upload_file', 'select_file', "type", "click", "verify_displayed_text","choose_date_from_datepicker", "check_element_enabled", "check_element_disabled","check_element_displayed", "switch_to_iframe", "check_radio_chk_selected", "check_radio_chk_not_selected", "drag_drop", "hover_mouse", "js_click", "select_dropdown_by_value", "select_dropdown_by_index", "select_dropdown_by_visible_text"]:
             u_lid = str(row["Input2"]).strip()
             if not u_lid:
-                wafl.error(f"Locator id is not given at row {index}.")
-                skip_e_report.add_row_skipped_tc([testscript_file,f"Locator id is not given at row {index}.", "Skipped"])
-                raise ValueError(f"Locator id is not given at row {index}.")
-            loc_value = object_repo.get_property("", str(row["Input2"]).strip(), fallback='No')
-            if loc_value.lower() == 'no':
-                wafl.error(f"Locator given at row {index} does not exist in object_repository.properties file.")
-                skip_e_report.add_row_skipped_tc([testscript_file,f"Locator given at row {index} does not exist in object_repository.properties file.", "Skipped"])
-                raise ValueError(f"Locator given at row {index} does not exist in object_repository.properties file.")
+                wafl.error(f"Locator id is not given at row {index +2}.")
+                skip_e_report.add_row_skipped_tc([testscript_file,f"Locator id is not given at row {index +2}.", "Skipped"])
+                raise ValueError(f"Locator id is not given at row {index +2}.")
+            # u_lids = u_lid.split(";")
+            u_lids = [lid.strip() for lid in u_lid.split(";") if lid.strip()]
+            if not u_lids:  # Empty list scenario
+                wafl.error(f"No valid locator ids provided at row {index +2}.")
+                skip_e_report.add_row_skipped_tc([testscript_file, f"No valid locator ids provided at row {index +2}.", "Skipped"])
+                raise ValueError(f"No valid locator ids provided at row {index +2}.")
+            for single_u_lid in u_lids:
+                single_u_lid = single_u_lid.strip()  # Trim whitespace
+                if not single_u_lid:
+                    wafl.error(f"Empty locator id found in the list at row {index +2}.")
+                    skip_e_report.add_row_skipped_tc([testscript_file, f"Empty locator id found in the list at row {index +2}.", "Skipped"])
+                    raise ValueError(f"Empty locator id found in the list at row {index +2}.")
+                loc_value = object_repo.get_property("", single_u_lid, fallback='No')
+                if loc_value.lower() == 'no':
+                    wafl.error(f"Locator given at row {index +2} does not exist in object_repository.properties file.")
+                    skip_e_report.add_row_skipped_tc([testscript_file,f"Locator given at row {index +2} does not exist in object_repository.properties file.", "Skipped"])
+                    raise ValueError(f"Locator given at row {index +2} does not exist in object_repository.properties file.")
 
         if keyword in ['upload_file', 'select_file']:
             u_file_name = str(row["Input3"]).strip()
             u_ld = str(row["Input2"]).strip()
             if not u_ld:
-                wafl.error(f"Locator id is not given at row {index}.")
-                skip_e_report.add_row_skipped_tc([testscript_file,f"Locator id is not given at row {index}.", "Skipped"])
-                raise ValueError(f"Locator id is not given at row {index}.")
+                wafl.error(f"Locator id is not given at row {index +2}.")
+                skip_e_report.add_row_skipped_tc([testscript_file,f"Locator id is not given at row {index +2}.", "Skipped"])
+                raise ValueError(f"Locator id is not given at row {index +2}.")
             if not u_file_name:
-                wafl.error(f"Upload file name is not given at row {index}.")
-                skip_e_report.add_row_skipped_tc([testscript_file,f"Upload file name is not given at row {index}.", "Skipped"])
-                raise ValueError(f"Upload file name is not given at row {index}.")
+                wafl.error(f"Upload file name is not given at row {index +2}.")
+                skip_e_report.add_row_skipped_tc([testscript_file,f"Upload file name is not given at row {index +2}.", "Skipped"])
+                raise ValueError(f"Upload file name is not given at row {index +2}.")
             u_root_path = get_root_directory_path()
             u_test_data_path = os.path.join(u_root_path, "test_files")
             if not utils.do_file_exist_in_dir(u_test_data_path, u_file_name):
@@ -124,7 +136,7 @@ def validate_test_script(testscript_file, rlock, object_repo, wafl, utils, launc
             tc_id_value = str(row["Input3"]).strip()
             if not os.path.basename(testscript_file).split("_")[0].lower() == tc_id_value.lower():
                 skip_e_report.add_row_skipped_tc([testscript_file,f"TC ID '{tc_id_value}' does not match the test script file name.", "Skipped"])
-                wafl.error(f"TC ID '{tc_id_value}' does not match the test script file name at row {index}.")
+                wafl.error(f"TC ID '{tc_id_value}' does not match the test script file name at row {index +2}.")
                 raise ValueError(f"TC ID '{tc_id_value}' does not match the test script file name.")
         
         if keyword == 'tc_desc':
@@ -138,9 +150,9 @@ def validate_test_script(testscript_file, rlock, object_repo, wafl, utils, launc
             step_value = str(row["Input1"]).strip()
             step_exp_value = str(row["Input2"]).strip()
             if not step_value.lower() or not step_exp_value.lower():
-                skip_e_report.add_row_skipped_tc([testscript_file,f"Empty step or empty step expected result given at at row {index}.", "Skipped"])
-                wafl.error(f"Empty step or empty step expected result given at at row {index}.")
-                raise ValueError(f"Empty step or empty step expected result given at at row {index}.")
+                skip_e_report.add_row_skipped_tc([testscript_file,f"Empty step or empty step expected result given at at row {index +2}.", "Skipped"])
+                wafl.error(f"Empty step or empty step expected result given at at row {index +2}.")
+                raise ValueError(f"Empty step or empty step expected result given at at row {index +2}.")
         
         if keyword == 'enter_url':
             enter_url_value = str(row["Input3"]).strip()
@@ -152,27 +164,37 @@ def validate_test_script(testscript_file, rlock, object_repo, wafl, utils, launc
         if keyword == 'open_browser' and launch_browser == '':
             browser_given = str(row["Input3"]).strip()
             if browser_given.lower() not in ['chrome', 'edge']:
-                wafl.error(f"Invalid browser name '{browser_given}' at row {index}.")
+                wafl.error(f"Invalid browser name '{browser_given}' at row {index +2}.")
                 skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid browser name '{browser_given}'. It should be either 'chrome' or 'edge'.", "Skipped"])
                 raise ValueError(f"Invalid browser name '{browser_given}'. It should be either 'chrome' or 'edge'.")
 
         if keyword == 'wait_for_seconds' and not str(row["Input3"]).strip().isdigit():
-            wafl.error(f"Invalid value '{row['Input3']}' for 'wait_for_seconds' at row {index}.")
+            wafl.error(f"Invalid value '{row['Input3']}' for 'wait_for_seconds' at row {index +2}.")
             skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid value '{row['Input3']}' for 'wait_for_seconds'.", "Skipped"])
             raise ValueError(f"Invalid value '{row['Input3']}' for 'wait_for_seconds'.")
 
         if keyword == 'choose_date_from_datepicker':
             calendar_type = str(row["Input1"]).strip()
-            wafl.debug(f"Validating date format for calendar '{calendar_type}' at row {index}.")
+            cd_loc = str(row["Input2"]).strip()
+            cd_lids = [clid.strip() for clid in cd_loc.split(";") if clid.strip()]
+            if not cd_lids:  # Empty list scenario
+                wafl.error(f"No valid locator ids provided at row {index +2}.")
+                skip_e_report.add_row_skipped_tc([testscript_file, f"No valid locator ids provided at row {index +2}.", "Skipped"])
+                raise ValueError(f"No valid locator ids provided at row {index +2}.")
+            wafl.debug(f"Validating date format for calendar '{calendar_type}' at row {index +2}.")
             if calendar_type == 'a':
+                if not len(cd_lids) == 4:
+                    wafl.error(f"Number of locator ids provided at row {index +2} is not 4. They should be 4 like for example, demoqa_home_form_db_mnt_xpath;demoqa_home_form_db_yr_xpath;demoqa_home_form_db_dt_lst_xpath;demoqa_home_css")
+                    skip_e_report.add_row_skipped_tc([testscript_file, f"Number of locator ids provided at row {index +2} is not 4. They should be 4 like for example, demoqa_home_form_db_mnt_xpath;demoqa_home_form_db_yr_xpath;demoqa_home_form_db_dt_lst_xpath;demoqa_home_css", "Skipped"])
+                    raise ValueError(f"Number of locator ids provided at row {index +2} is not 4. They should be 4 like for example, demoqa_home_form_db_mnt_xpath;demoqa_home_form_db_yr_xpath;demoqa_home_form_db_dt_lst_xpath;demoqa_home_css")
                 if not utils.is_date_format_valid(str(row["Input3"]).strip()):
-                    wafl.error(f"Invalid date format '{row['Input3']}' for calendar type '{calendar_type}' at row {index}. It should be in '01 December 2022' format. Also ensure it matches a valid calendar date. For example, April only has 30 days.")
+                    wafl.error(f"Invalid date format '{row['Input3']}' for calendar type '{calendar_type}' at row {index +2}. It should be in '01 December 2022' format. Also ensure it matches a valid calendar date. For example, April only has 30 days.")
                     skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid date format '{row['Input3']}' for calendar type '{calendar_type}'. It should be in '01 December 2022' format. Also ensure it matches a valid calendar date. For example, April only has 30 days.", "Skipped"])
                     raise ValueError(f"Invalid date format '{row['Input3']}' for calendar type '{calendar_type}'. It should be in '01 December 2022' format. Also ensure it matches a valid calendar date. For example, April only has 30 days.")
                 try:
                     l1, l2, l3, l4 = str(row["Input2"]).strip().split(";")
                 except:
-                    wafl.error(f"Invalid locator data '{row['Input2']}' for calendar type '{calendar_type}' at row {index}. It should contain 4 values separated by semicolons (';'). For example: 'date_mon_txt_xpath;date_pre_button_xpath;date_nxt_button_xpath;date_date_list_xpath'.")
+                    wafl.error(f"Invalid locator data '{row['Input2']}' for calendar type '{calendar_type}' at row {index +2}. It should contain 4 values separated by semicolons (';'). For example: 'date_mon_txt_xpath;date_pre_button_xpath;date_nxt_button_xpath;date_date_list_xpath'.")
                     skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid locator data '{row['Input2']}' for calendar type '{calendar_type}'. It should contain 4 values separated by semicolons (';'). For example: 'date_mon_txt_xpath;date_pre_button_xpath;date_nxt_button_xpath;date_date_list_xpath'.", "Skipped"])
                     raise ValueError(f"Invalid locator data '{row['Input2']}' for calendar type '{calendar_type}'. It should contain 4 values separated by semicolons (';'). For example: 'date_mon_txt_xpath;date_pre_button_xpath;date_nxt_button_xpath;date_date_list_xpath'.")
                 # Check if all variables end with '_css', '_id', or '_xpath'
@@ -180,30 +202,34 @@ def validate_test_script(testscript_file, rlock, object_repo, wafl, utils, launc
                 if all(locator.endswith(valid_suffixes) for locator in (l1, l2, l3, l4)):
                     wafl.debug(f"All locators end with one of the valid suffixes: {valid_suffixes}.")
                 else:
-                    wafl.error(f"Not all locators end with one of the valid suffixes for calendar type '{calendar_type}' at row {index}. For example: 'date_mon_txt_xpath;date_pre_button_xpath;date_nxt_button_xpath;date_date_list_xpath'.")
+                    wafl.error(f"Not all locators end with one of the valid suffixes for calendar type '{calendar_type}' at row {index +2}. For example: 'date_mon_txt_xpath;date_pre_button_xpath;date_nxt_button_xpath;date_date_list_xpath'.")
                     skip_e_report.add_row_skipped_tc([testscript_file,f"Not all locators end with one of the valid suffixes: {valid_suffixes}. For example: 'date_mon_txt_xpath;date_pre_button_xpath;date_nxt_button_xpath;date_date_list_xpath'.", "Skipped"])
                     raise ValueError(f"Not all locators end with one of the valid suffixes: {valid_suffixes}. For example: 'date_mon_txt_xpath;date_pre_button_xpath;date_nxt_button_xpath;date_date_list_xpath'.")
             elif calendar_type == 'b':
+                if not len(cd_lids) == 3:
+                    wafl.error(f"Number of locator ids provided at row {index +2} is not 4. They should be 4 like for example, demoqa_home_form_db_mnt_xpath;demoqa_home_form_db_yr_xpath;demoqa_home_form_db_dt_lst_xpath")
+                    skip_e_report.add_row_skipped_tc([testscript_file, f"Number of locator ids provided at row {index +2} is not 4. They should be 4 like for example, demoqa_home_form_db_mnt_xpath;demoqa_home_form_db_yr_xpath;demoqa_home_form_db_dt_lst_xpath", "Skipped"])
+                    raise ValueError(f"Number of locator ids provided at row {index +2} is not 4. They should be 4 like for example, demoqa_home_form_db_mnt_xpath;demoqa_home_form_db_yr_xpath;demoqa_home_form_db_dt_lst_xpath")
                 if not utils.is_date_format_valid(str(row["Input3"]).strip()):
-                    wafl.error(f"Invalid date format '{row['Input3']}' for calendar type '{calendar_type}' at row {index}. It should be in '01 December 2022' format. Also ensure it matches a valid calendar date. For example, April only has 30 days.")
+                    wafl.error(f"Invalid date format '{row['Input3']}' for calendar type '{calendar_type}' at row {index +2}. It should be in '01 December 2022' format. Also ensure it matches a valid calendar date. For example, April only has 30 days.")
                     skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid date format '{row['Input3']}' for calendar type '{calendar_type}'. It should be in '01 December 2022' format. Also ensure it matches a valid calendar date. For example, April only has 30 days.", "Skipped"])
                     raise ValueError(f"Invalid date format '{row['Input3']}' for calendar type '{calendar_type}'. It should be in '01 December 2022' format. Also ensure it matches a valid calendar date. For example, April only has 30 days.")
                 try:
                     l1, l2, l3 = str(row["Input2"]).strip().split(";")
                 except:
-                    wafl.error(f"Invalid locator data '{row['Input2']}' for calendar type '{calendar_type}' at row {index}. It should contain 3 values separated by semicolons (';'). For example: 'date_mon_select_xpath;date_yr_select_xpath;date_date_list_xpath'.")
+                    wafl.error(f"Invalid locator data '{row['Input2']}' for calendar type '{calendar_type}' at row {index +2}. It should contain 3 values separated by semicolons (';'). For example: 'date_mon_select_xpath;date_yr_select_xpath;date_date_list_xpath'.")
                     skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid locator data '{row['Input2']}' for calendar type '{calendar_type}'. It should contain 3 values separated by semicolons (';'). For example: 'date_mon_select_xpath;date_yr_select_xpath;date_date_list_xpath'.", "Skipped"])
                     raise ValueError(f"Invalid locator data '{row['Input2']}' for calendar type '{calendar_type}'. It should contain 3 values separated by semicolons (';'). For example: 'date_mon_select_xpath;date_yr_select_xpath;date_date_list_xpath'.")
                 valid_suffixes = ("_css", "_id", "_xpath")
                 if all(locator.endswith(valid_suffixes) for locator in (l1, l2, l3)):
                     wafl.debug(f"All locators end with one of the valid suffixes: {valid_suffixes}.")
                 else:
-                    wafl.error(f"Not all locators end with one of the valid suffixes for calendar type '{calendar_type}' at row {index}. For example: 'date_mon_select_xpath;date_yr_select_xpath;date_date_list_xpath'.")
+                    wafl.error(f"Not all locators end with one of the valid suffixes for calendar type '{calendar_type}' at row {index +2}. For example: 'date_mon_select_xpath;date_yr_select_xpath;date_date_list_xpath'.")
                     skip_e_report.add_row_skipped_tc([testscript_file,f"Not all locators end with one of the valid suffixes: {valid_suffixes}. For example: 'date_mon_select_xpath;date_yr_select_xpath;date_date_list_xpath'.", "Skipped"])
                     raise ValueError(f"Not all locators end with one of the valid suffixes: {valid_suffixes}. For example: 'date_mon_select_xpath;date_yr_select_xpath;date_date_list_xpath'.")
 
-        if keyword == 'login_jnj':
-            wafl.debug(f"Validating 'login_jnj' inputs at row {index}.")
+        if keyword == 'login_custom':
+            wafl.debug(f"Validating 'login_custom' inputs at row {index +2}.")
             element_name_data = str(row["Input1"]).strip()
             element_locator_data = str(row["Input2"]).strip()
             login_uname_pwd_data = str(row["Input3"]).strip()
@@ -213,22 +239,22 @@ def validate_test_script(testscript_file, rlock, object_repo, wafl, utils, launc
             login_uname_pwd_data_lst = login_uname_pwd_data.split(";")
 
             if len(list(filter(None, [item.strip() for item in login_uname_pwd_data_lst]))) != 2:
-                wafl.error(f"Invalid 'Input3' data '{login_uname_pwd_data}' for 'login_jnj' at row {index}.")
-                skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid keyword '{keyword}' at row {index}.", "Skipped"])
-                raise ValueError(f"'Input3' for 'login_jnj' must contain exactly 2 values separated by a semicolon (';').")
+                wafl.error(f"Invalid 'Input3' data '{login_uname_pwd_data}' for 'login_custom' at row {index +2}.")
+                skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid keyword '{keyword}' at row {index +2}.", "Skipped"])
+                raise ValueError(f"'Input3' for 'login_custom' must contain exactly 2 values separated by a semicolon (';').")
 
             if len(list(filter(None, [item.strip() for item in element_name_data_lst]))) != 4:
-                wafl.error(f"Invalid 'Input1' data '{element_name_data}' for 'login_jnj' at row {index}.")
-                skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid keyword '{keyword}' at row {index}.", "Skipped"])
-                raise ValueError(f"'Input1' for 'login_jnj' must contain exactly 4 values separated by a semicolon (';').")
+                wafl.error(f"Invalid 'Input1' data '{element_name_data}' for 'login_custom' at row {index +2}.")
+                skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid keyword '{keyword}' at row {index +2}.", "Skipped"])
+                raise ValueError(f"'Input1' for 'login_custom' must contain exactly 4 values separated by a semicolon (';').")
 
             if len(list(filter(None, [item.strip() for item in element_locator_data_lst]))) != 4:
-                wafl.error(f"Invalid 'Input2' data '{element_locator_data}' for 'login_jnj' at row {index}.")
-                skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid keyword '{keyword}' at row {index}.", "Skipped"])
-                raise ValueError(f"'Input2' for 'login_jnj' must contain exactly 4 values separated by a semicolon (';').")
+                wafl.error(f"Invalid 'Input2' data '{element_locator_data}' for 'login_custom' at row {index +2}.")
+                skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid keyword '{keyword}' at row {index +2}.", "Skipped"])
+                raise ValueError(f"'Input2' for 'login_custom' must contain exactly 4 values separated by a semicolon (';').")
 
         if keyword == 'drag_drop':
-            wafl.debug(f"Validating 'drag_drop' inputs at row {index}.")
+            wafl.debug(f"Validating 'drag_drop' inputs at row {index +2}.")
             dd_element_name_data = str(row["Input1"]).strip()
             dd_element_locator_data = str(row["Input2"]).strip()
 
@@ -236,12 +262,12 @@ def validate_test_script(testscript_file, rlock, object_repo, wafl, utils, launc
             dd_element_locator_data_lst = dd_element_locator_data.split(";")
 
             if len(list(filter(None, [item.strip() for item in dd_element_name_data_lst]))) != 2:
-                wafl.error(f"Invalid 'Input1' data '{dd_element_name_data}' for 'drag_drop' at row {index}.")
+                wafl.error(f"Invalid 'Input1' data '{dd_element_name_data}' for 'drag_drop' at row {index +2}.")
                 skip_e_report.add_row_skipped_tc([testscript_file,f"'Input2' for 'drag_drop' must contain exactly 2 values separated by a semicolon (';').", "Skipped"])
                 raise ValueError(f"'Input1' for 'drag_drop' must contain exactly 2 values separated by a semicolon (';').")
 
             if len(list(filter(None, [item.strip() for item in dd_element_locator_data_lst]))) != 2:
-                wafl.error(f"Invalid 'Input2' data '{dd_element_locator_data}' for 'drag_drop' at row {index}.")
+                wafl.error(f"Invalid 'Input2' data '{dd_element_locator_data}' for 'drag_drop' at row {index +2}.")
                 skip_e_report.add_row_skipped_tc([testscript_file,f"'Input2' for 'drag_drop' must contain exactly 2 values separated by a semicolon (';').", "Skipped"])
                 raise ValueError(f"'Input2' for 'drag_drop' must contain exactly 2 values separated by a semicolon (';').")
 
@@ -353,8 +379,8 @@ def step(row, wafl, km):
     wafl.info(f"Executing 'step' at row {row.name}.")
     km.ge_step(step=str(row["Input1"]).strip(), result=str(row["Input2"]).strip())
 
-def login_jnj(row, wafl, km, object_repo_reader):
-    wafl.info(f"Executing 'login_jnj' at row {row.name}.")
+def login_custom(row, wafl, km, object_repo_reader):
+    wafl.info(f"Executing 'login_custom' at row {row.name}.")
     login_jnj_name_data = str(row["Input1"]).strip()
     login_jnj_locator_data = str(row["Input2"]).strip()
     login_jnj_uname_pwd_data = str(row["Input3"]).strip()
@@ -380,7 +406,7 @@ def login_jnj(row, wafl, km, object_repo_reader):
         if i == 3:
             login_jnj_dict['signon_element_name'] = login_jnj_name_data_lst[i]
             login_jnj_dict['signon_locator'] = str(object_repo_reader.get_property('XPATH', login_jnj_locator_data_lst[i], fallback='No'))
-    km.login_jnj(**login_jnj_dict)
+    km.login_custom(**login_jnj_dict)
 
 def enter_url(row, wafl, km):
     wafl.info(f"Executing 'enter_url' at row {row.name}. URL: {row['Input3']}.")
@@ -775,7 +801,7 @@ def execute_test_script(df, wafl, km, object_repo_reader, utils, launch_browser)
         'tc_id': lambda row: tc_id(row, wafl, km),
         'tc_desc': lambda row: tc_desc(row, wafl, km),
         'step': lambda row: step(row, wafl, km),
-        'login_jnj': lambda row: login_jnj(row, wafl, km, object_repo_reader),
+        'login_custom': lambda row: login_custom(row, wafl, km, object_repo_reader),
         'enter_url': lambda row: enter_url(row, wafl, km),
         'type': lambda row: type_keyword(row, wafl, km, object_repo_reader, utils),
         'check_element_enabled': lambda row: check_element_enabled(row, wafl, km, object_repo_reader),
@@ -800,15 +826,15 @@ def execute_test_script(df, wafl, km, object_repo_reader, utils, launch_browser)
 
     for index, row in df.iterrows():
         keyword = str(row["Keyword"])
-        wafl.debug(f"Processing row {index}: Keyword='{keyword}'")
+        wafl.debug(f"Processing row {index +2}: Keyword='{keyword}'")
 
         try:
             if keyword in keyword_dispatch:
                 keyword_dispatch[keyword](row)
             else:
-                wafl.warning(f"Keyword '{keyword}' at row {index} is not implemented.")
+                wafl.warning(f"Keyword '{keyword}' at row {index +2} is not implemented.")
         except Exception as e:
-            wafl.error(f"Error executing keyword '{keyword}' at row {index}: {e}")
+            wafl.error(f"Error executing keyword '{keyword}' at row {index +2}: {e}")
             raise
 
     wafl.info("Test script execution completed successfully.")

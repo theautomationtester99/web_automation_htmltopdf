@@ -1786,7 +1786,7 @@ class KeywordsManager(BrowserDriver):
                 )
             raise
 
-    def login_jnj(self, **kwargs):
+    def login_custom(self, **kwargs):
         """
         Performs the login operation for the application specific.
 
