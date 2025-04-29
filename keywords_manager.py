@@ -1116,9 +1116,9 @@ class KeywordsManager(BrowserDriver):
 
             while not download_complete:
                 # Check if any file with partial name exists
-                print(self.temp_dir)
+                self.logger.info(self.temp_dir)
                 # files = os.listdir(self.temp_dir)
-                matching_files = self.utils.do_file_exist_in_dir(self.temp_dir, partial_filename)
+                matching_files = self.utils.get_matching_files_in_dir(self.temp_dir, partial_filename)
                 
                 # If matching files are found and no `.crdownload` or `.tmp` file exists, download is complete
                 if matching_files and not self.utils.do_files_with_ext_in_dir(self.temp_dir):
@@ -1134,7 +1134,7 @@ class KeywordsManager(BrowserDriver):
 
             if download_complete:
                 # files = os.listdir(self.temp_dir)
-                matching_files = self.utils.do_file_exist_in_dir(self.temp_dir, partial_filename)
+                matching_files = self.utils.get_matching_files_in_dir(self.temp_dir, partial_filename)
                 if matching_files:
                     self.logger.info(f"File(s) matching '{partial_filename}' found: {matching_files}")
                     self.repo_m.add_report_data(

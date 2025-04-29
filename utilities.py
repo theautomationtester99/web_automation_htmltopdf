@@ -235,7 +235,7 @@ class Utils:
             self.logger.error(f"Error while checking for temporary files: {str(e)}")
             return False
     
-    def do_file_exist_in_dir(self, temp_dir, partial_filename):
+    def get_matching_files_in_dir(self, temp_dir, partial_filename):
         """
         Checks for the existence of files with a partial filename in the specified directory.
 
@@ -246,10 +246,34 @@ class Utils:
         Returns:
             list: A list of matching files.
         """
+        if not partial_filename:  # Check if partial_filename is empty
+            self.logger.error("Partial filename is blank.")
+            return []
         try:
             files = os.listdir(temp_dir)
             matching_files = [file for file in files if partial_filename in file]
             return matching_files
+        except Exception as e:
+            self.logger.error(f"Error while checking file existence: {str(e)}")
+            return []
+    
+    def do_file_exist_in_dir(self, temp_dir, exact_filename):
+        """
+        Checks for the existence of files with a partial filename in the specified directory.
+
+        Args:
+            temp_dir (str): The directory to check for files.
+            partial_filename (str): The partial filename to match.
+
+        Returns:
+            list: A list of matching files.
+        """
+        if not exact_filename:  # Check if partial_filename is empty
+            self.logger.error("Filename is blank.")
+            return False
+        try:
+            files = os.listdir(temp_dir)
+            return exact_filename in files
         except Exception as e:
             self.logger.error(f"Error while checking file existence: {str(e)}")
             return False

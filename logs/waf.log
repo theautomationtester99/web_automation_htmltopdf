@@ -22543,3 +22543,809 @@ Hyawlaldw
 2025-04-29 10:53:57,187 - WafLogger - WARNING - keywords_manager.py:1746] [PID:22688] Choose Tuesday, December 28th, 2021
 2025-04-29 10:54:59,721 - WafLogger - WARNING - utilities.py:216] [PID:22688] D:\allprojects\web_automation_htmltopdf\test_files\proc_22688_time_1745904152522 has been removed.
 2025-04-29 10:55:07,627 - WafLogger - ERROR - utilities.py:207] [PID:2044] Error: [WinError 10061] No connection could be made because the target machine actively refused it
+2025-04-29 11:42:42,520 - WafLogger - WARNING - runner.py:667] [PID:11164] ChromeDriver is ready!
+2025-04-29 11:42:46,762 - WafLogger - WARNING - runner.py:675] [PID:11164] EdgeDriver is ready!
+2025-04-29 11:42:48,896 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: system idle process
+2025-04-29 11:42:48,896 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: system
+2025-04-29 11:42:48,901 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: 
+2025-04-29 11:42:48,906 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: registry
+2025-04-29 11:42:48,910 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:48,914 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: smss.exe
+2025-04-29 11:42:48,919 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: csrss.exe
+2025-04-29 11:42:48,925 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wininit.exe
+2025-04-29 11:42:48,932 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: csrss.exe
+2025-04-29 11:42:48,940 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: winlogon.exe
+2025-04-29 11:42:48,947 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: services.exe
+2025-04-29 11:42:48,954 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: lsaiso.exe
+2025-04-29 11:42:48,961 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:48,969 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: lsass.exe
+2025-04-29 11:42:48,970 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: runtimebroker.exe
+2025-04-29 11:42:48,977 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:48,985 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: fontdrvhost.exe
+2025-04-29 11:42:48,995 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: fontdrvhost.exe
+2025-04-29 11:42:49,004 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wudfhost.exe
+2025-04-29 11:42:49,015 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,026 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wudfhost.exe
+2025-04-29 11:42:49,036 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,045 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: dwm.exe
+2025-04-29 11:42:49,053 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,064 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,072 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,081 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: vmmemwsl
+2025-04-29 11:42:49,081 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: runtimebroker.exe
+2025-04-29 11:42:49,081 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: webviewhost.exe
+2025-04-29 11:42:49,087 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,096 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,104 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,111 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,120 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,126 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,131 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,137 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,137 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: systemsettings.exe
+2025-04-29 11:42:49,143 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,149 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,155 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: intelcphdcpsvc.exe
+2025-04-29 11:42:49,156 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,165 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,165 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: utorrentie.exe
+2025-04-29 11:42:49,171 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,176 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,181 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,187 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,192 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,197 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,203 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: spoolsv.exe
+2025-04-29 11:42:49,208 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: igfxcuiservicen.exe
+2025-04-29 11:42:49,214 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,219 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,225 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,231 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,237 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,243 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,249 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: memcompression
+2025-04-29 11:42:49,249 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,256 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,261 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,267 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: dell.d3.winsvc.exe
+2025-04-29 11:42:49,272 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,272 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,278 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: servicehost.exe
+2025-04-29 11:42:49,283 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,283 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,289 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,289 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,294 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,299 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,304 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,309 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,316 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,324 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,324 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: anydesk.exe
+2025-04-29 11:42:49,330 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: armsvc.exe
+2025-04-29 11:42:49,335 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: officeclicktorun.exe
+2025-04-29 11:42:49,341 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,347 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,353 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: dell.techhub.exe
+2025-04-29 11:42:49,353 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedge.exe
+2025-04-29 11:42:49,360 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,368 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,381 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,397 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: esif_uf.exe
+2025-04-29 11:42:49,397 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: rancher desktop.exe
+2025-04-29 11:42:49,405 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: oneapp.igcc.winservice.exe
+2025-04-29 11:42:49,412 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: intelaudioservice.exe
+2025-04-29 11:42:49,420 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: ipoverusbsvc.exe
+2025-04-29 11:42:49,426 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,426 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,432 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,432 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,460 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: jhi_service.exe
+2025-04-29 11:42:49,468 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: mpdefendercoreservice.exe
+2025-04-29 11:42:49,476 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,477 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: applicationframehost.exe
+2025-04-29 11:42:49,483 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: smpd.exe
+2025-04-29 11:42:49,488 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,494 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: raps.exe
+2025-04-29 11:42:49,500 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: rstmwservice.exe
+2025-04-29 11:42:49,506 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,511 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: rtkauduservice64.exe
+2025-04-29 11:42:49,517 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: smartbyteanalyticsservice.exe
+2025-04-29 11:42:49,524 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: smartbytenetworkservice.exe
+2025-04-29 11:42:49,530 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,536 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: teamviewer_service.exe
+2025-04-29 11:42:49,536 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: skype.exe
+2025-04-29 11:42:49,542 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msmpeng.exe
+2025-04-29 11:42:49,548 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wmiregistrationservice.exe
+2025-04-29 11:42:49,555 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,555 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,568 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,580 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wslservice.exe
+2025-04-29 11:42:49,580 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: runtimebroker.exe
+2025-04-29 11:42:49,586 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,591 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,598 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: dashost.exe
+2025-04-29 11:42:49,598 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: powershell.exe
+2025-04-29 11:42:49,605 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,611 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: vmwp.exe
+2025-04-29 11:42:49,617 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,623 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wmiapsrv.exe
+2025-04-29 11:42:49,629 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,629 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: igfxemn.exe
+2025-04-29 11:42:49,629 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,636 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: aggregatorhost.exe
+2025-04-29 11:42:49,636 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,636 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wslhost.exe
+2025-04-29 11:42:49,642 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wlanext.exe
+2025-04-29 11:42:49,643 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wavessvc64.exe
+2025-04-29 11:42:49,648 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,654 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,660 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: supportassistagent.exe
+2025-04-29 11:42:49,660 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: uihost.exe
+2025-04-29 11:42:49,666 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: rapsservice.exe
+2025-04-29 11:42:49,672 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,678 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: ddvdatacollector.exe
+2025-04-29 11:42:49,686 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,692 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,697 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wmiprvse.exe
+2025-04-29 11:42:49,698 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: smartbytetelemetry.exe
+2025-04-29 11:42:49,705 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: dell.techhub.datamanager.subagent.exe
+2025-04-29 11:42:49,711 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: dell.techhub.diagnostics.subagent.exe
+2025-04-29 11:42:49,716 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: dell.techhub.analytics.subagent.exe
+2025-04-29 11:42:49,722 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: dell.update.subagent.exe
+2025-04-29 11:42:49,730 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: dell.coreservices.client.exe
+2025-04-29 11:42:49,730 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,737 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,743 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: dell.techhub.instrumentation.subagent.exe
+2025-04-29 11:42:49,750 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,750 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: dllhost.exe
+2025-04-29 11:42:49,750 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,762 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wmiprvse.exe
+2025-04-29 11:42:49,762 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: python.exe
+2025-04-29 11:42:49,762 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: crossdeviceservice.exe
+2025-04-29 11:42:49,763 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,763 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wsl.exe
+2025-04-29 11:42:49,763 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: dllhost.exe
+2025-04-29 11:42:49,763 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: sihost.exe
+2025-04-29 11:42:49,763 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wsl.exe
+2025-04-29 11:42:49,763 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,769 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,776 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: ngciso.exe
+2025-04-29 11:42:49,776 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: taskhostw.exe
+2025-04-29 11:42:49,787 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: dell.techhub.instrumentation.userprocess.exe
+2025-04-29 11:42:49,794 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,794 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: mcafee-security-ft.exe
+2025-04-29 11:42:49,794 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: rancher desktop.exe
+2025-04-29 11:42:49,795 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,795 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: shellhost.exe
+2025-04-29 11:42:49,795 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msrdc.exe
+2025-04-29 11:42:49,795 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: explorer.exe
+2025-04-29 11:42:49,795 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedge.exe
+2025-04-29 11:42:49,795 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: host-switch.exe
+2025-04-29 11:42:49,802 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,815 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,822 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,822 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: whatsapp.exe
+2025-04-29 11:42:49,822 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: code.exe
+2025-04-29 11:42:49,823 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: dllhost.exe
+2025-04-29 11:42:49,823 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: startmenuexperiencehost.exe
+2025-04-29 11:42:49,828 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: rtkauduservice64.exe
+2025-04-29 11:42:49,835 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: vmcompute.exe
+2025-04-29 11:42:49,840 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,841 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: python.exe
+2025-04-29 11:42:49,841 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: searchhost.exe
+2025-04-29 11:42:49,846 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,846 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: backgroundtaskhost.exe
+2025-04-29 11:42:49,852 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: ddvcollectorsvcapi.exe
+2025-04-29 11:42:49,863 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,869 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,870 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,870 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: skype.exe
+2025-04-29 11:42:49,870 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: code.exe
+2025-04-29 11:42:49,870 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: widgets.exe
+2025-04-29 11:42:49,870 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: useroobebroker.exe
+2025-04-29 11:42:49,870 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: runtimebroker.exe
+2025-04-29 11:42:49,870 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,870 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: cmd.exe
+2025-04-29 11:42:49,870 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: runtimebroker.exe
+2025-04-29 11:42:49,870 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: openconsole.exe
+2025-04-29 11:42:49,870 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,870 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: windowsterminal.exe
+2025-04-29 11:42:49,870 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: widgetservice.exe
+2025-04-29 11:42:49,871 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: code.exe
+2025-04-29 11:42:49,871 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: adobecollabsync.exe
+2025-04-29 11:42:49,871 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,871 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: rancher desktop.exe
+2025-04-29 11:42:49,871 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: mcafee-security.exe
+2025-04-29 11:42:49,871 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,871 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,871 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: taskhostw.exe
+2025-04-29 11:42:49,871 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: runtimebroker.exe
+2025-04-29 11:42:49,871 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,871 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: ctfmon.exe
+2025-04-29 11:42:49,871 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,871 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,871 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: helper.exe
+2025-04-29 11:42:49,877 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,878 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,878 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: lockapp.exe
+2025-04-29 11:42:49,885 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: searchindexer.exe
+2025-04-29 11:42:49,885 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,890 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,896 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: nissrv.exe
+2025-04-29 11:42:49,896 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: python.exe
+2025-04-29 11:42:49,903 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,903 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: phoneexperiencehost.exe
+2025-04-29 11:42:49,903 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wsl-helper.exe
+2025-04-29 11:42:49,909 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: dellsupportassistremedationservice.exe
+2025-04-29 11:42:49,909 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: utorrent.exe
+2025-04-29 11:42:49,910 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: textinputhost.exe
+2025-04-29 11:42:49,910 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: rtkauduservice64.exe
+2025-04-29 11:42:49,910 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,910 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,910 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,910 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wsl.exe
+2025-04-29 11:42:49,916 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,916 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: utorrentie.exe
+2025-04-29 11:42:49,922 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,922 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,922 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,923 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedge.exe
+2025-04-29 11:42:49,923 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: securityhealthsystray.exe
+2025-04-29 11:42:49,935 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: securityhealthservice.exe
+2025-04-29 11:42:49,935 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wsl.exe
+2025-04-29 11:42:49,935 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedge.exe
+2025-04-29 11:42:49,942 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: ddvrulesprocessor.exe
+2025-04-29 11:42:49,942 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,943 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: skype.exe
+2025-04-29 11:42:49,943 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,943 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: skype.exe
+2025-04-29 11:42:49,943 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,943 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: code.exe
+2025-04-29 11:42:49,943 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,943 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,943 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: skype.exe
+2025-04-29 11:42:49,951 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,951 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,958 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: fusionservice.exe
+2025-04-29 11:42:49,958 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: runtimebroker.exe
+2025-04-29 11:42:49,958 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: ms-teams.exe
+2025-04-29 11:42:49,965 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: serviceshell.exe
+2025-04-29 11:42:49,965 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,965 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: runtimebroker.exe
+2025-04-29 11:42:49,965 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,965 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,966 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedgewebview2.exe
+2025-04-29 11:42:49,966 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: sdxhelper.exe
+2025-04-29 11:42:49,966 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wsl.exe
+2025-04-29 11:42:49,966 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: anydesk.exe
+2025-04-29 11:42:49,966 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: sharex.exe
+2025-04-29 11:42:49,966 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedge.exe
+2025-04-29 11:42:49,966 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wslrelay.exe
+2025-04-29 11:42:49,966 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wslhost.exe
+2025-04-29 11:42:49,966 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,967 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wsl.exe
+2025-04-29 11:42:49,967 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wslhost.exe
+2025-04-29 11:42:49,967 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,967 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wsl.exe
+2025-04-29 11:42:49,967 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wslhost.exe
+2025-04-29 11:42:49,967 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,967 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wslhost.exe
+2025-04-29 11:42:49,967 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,967 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msrdc.exe
+2025-04-29 11:42:49,967 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: smartscreen.exe
+2025-04-29 11:42:49,967 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,967 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: adobecollabsync.exe
+2025-04-29 11:42:49,967 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,968 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: windowspackagemanagerserver.exe
+2025-04-29 11:42:49,968 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedge.exe
+2025-04-29 11:42:49,968 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,968 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: pet.exe
+2025-04-29 11:42:49,968 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: steve.exe
+2025-04-29 11:42:49,969 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,969 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: code.exe
+2025-04-29 11:42:49,969 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,969 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: code.exe
+2025-04-29 11:42:49,969 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: python.exe
+2025-04-29 11:42:49,969 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wslhost.exe
+2025-04-29 11:42:49,969 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: code.exe
+2025-04-29 11:42:49,969 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedge.exe
+2025-04-29 11:42:49,969 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: code.exe
+2025-04-29 11:42:49,971 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,971 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,971 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,971 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: runtimebroker.exe
+2025-04-29 11:42:49,971 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wsl.exe
+2025-04-29 11:42:49,971 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: code.exe
+2025-04-29 11:42:49,971 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: python.exe
+2025-04-29 11:42:49,971 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wslhost.exe
+2025-04-29 11:42:49,971 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedge.exe
+2025-04-29 11:42:49,972 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedge.exe
+2025-04-29 11:42:49,972 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: powershell.exe
+2025-04-29 11:42:49,973 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,973 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: wslhost.exe
+2025-04-29 11:42:49,985 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: svchost.exe
+2025-04-29 11:42:49,985 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: code.exe
+2025-04-29 11:42:49,985 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,986 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: code.exe
+2025-04-29 11:42:49,986 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: conhost.exe
+2025-04-29 11:42:49,986 - WafLogger - WARNING - utilities.py:103] [PID:11164] Process name: msedge.exe
+2025-04-29 11:42:50,047 - WafLogger - WARNING - runner.py:1067] [PID:11164] Parallel execution is enabled via environment variable. So starting parallel execution.
+2025-04-29 11:43:06,051 - WafLogger - ERROR - utilities.py:250] [PID:20432] Filename is blank.
+2025-04-29 11:43:06,052 - WafLogger - ERROR - runner.py:82] [PID:20432] The file  does not exist in the test data folder.
+2025-04-29 11:43:08,705 - WafLogger - ERROR - keywords_manager.py:408] [PID:21316] Accessibility check failed with 8 violations.
+2025-04-29 11:43:08,706 - WafLogger - ERROR - keywords_manager.py:411] [PID:21316] Violation: aria-required-children
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:416] [PID:21316] Description: Ensures elements with an ARIA role that require child roles contain them
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:417] [PID:21316] Impact: critical
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:418] [PID:21316] Help URL: https://dequeuniversity.com/rules/axe/3.1/aria-required-children?application=axeAPI
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:411] [PID:21316] Violation: autocomplete-valid
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:416] [PID:21316] Description: Ensure the autocomplete attribute is correct and suitable for the form field
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:417] [PID:21316] Impact: serious
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:418] [PID:21316] Help URL: https://dequeuniversity.com/rules/axe/3.1/autocomplete-valid?application=axeAPI
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:411] [PID:21316] Violation: button-name
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:416] [PID:21316] Description: Ensures buttons have discernible text
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:417] [PID:21316] Impact: critical
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:418] [PID:21316] Help URL: https://dequeuniversity.com/rules/axe/3.1/button-name?application=axeAPI
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:411] [PID:21316] Violation: color-contrast
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:416] [PID:21316] Description: Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:417] [PID:21316] Impact: serious
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:418] [PID:21316] Help URL: https://dequeuniversity.com/rules/axe/3.1/color-contrast?application=axeAPI
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:411] [PID:21316] Violation: landmark-one-main
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:416] [PID:21316] Description: Ensures the page has only one main landmark and each iframe in the page has at most one main landmark
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:417] [PID:21316] Impact: moderate
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:418] [PID:21316] Help URL: https://dequeuniversity.com/rules/axe/3.1/landmark-one-main?application=axeAPI
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:411] [PID:21316] Violation: listitem
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:416] [PID:21316] Description: Ensures <li> elements are used semantically
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:417] [PID:21316] Impact: serious
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:418] [PID:21316] Help URL: https://dequeuniversity.com/rules/axe/3.1/listitem?application=axeAPI
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:411] [PID:21316] Violation: page-has-heading-one
+2025-04-29 11:43:08,707 - WafLogger - ERROR - keywords_manager.py:416] [PID:21316] Description: Ensure that the page, or at least one of its frames contains a level-one heading
+2025-04-29 11:43:08,708 - WafLogger - ERROR - keywords_manager.py:417] [PID:21316] Impact: moderate
+2025-04-29 11:43:08,708 - WafLogger - ERROR - keywords_manager.py:418] [PID:21316] Help URL: https://dequeuniversity.com/rules/axe/3.1/page-has-heading-one?application=axeAPI
+2025-04-29 11:43:08,708 - WafLogger - ERROR - keywords_manager.py:411] [PID:21316] Violation: region
+2025-04-29 11:43:08,708 - WafLogger - ERROR - keywords_manager.py:416] [PID:21316] Description: Ensures all page content is contained by landmarks
+2025-04-29 11:43:08,708 - WafLogger - ERROR - keywords_manager.py:417] [PID:21316] Impact: moderate
+2025-04-29 11:43:08,708 - WafLogger - ERROR - keywords_manager.py:418] [PID:21316] Help URL: https://dequeuniversity.com/rules/axe/3.1/region?application=axeAPI
+2025-04-29 11:43:33,292 - WafLogger - WARNING - utilities.py:216] [PID:21316] D:\allprojects\web_automation_htmltopdf\test_files\proc_21316_time_1745907179385 has been removed.
+2025-04-29 11:43:39,240 - WafLogger - WARNING - utilities.py:216] [PID:11808] D:\allprojects\web_automation_htmltopdf\test_files\proc_11808_time_1745907175885 has been removed.
+2025-04-29 11:43:49,055 - WafLogger - WARNING - utilities.py:216] [PID:21620] D:\allprojects\web_automation_htmltopdf\test_files\proc_21620_time_1745907173494 has been removed.
+2025-04-29 11:43:54,546 - WafLogger - WARNING - utilities.py:1320] [PID:20556] validating date
+2025-04-29 11:43:54,547 - WafLogger - WARNING - utilities.py:1322] [PID:20556] 31
+2025-04-29 11:43:54,548 - WafLogger - ERROR - utilities.py:1330] [PID:20556] day is out of range for month
+2025-04-29 11:43:54,548 - WafLogger - ERROR - runner.py:122] [PID:20556] Invalid date format '31 April 2021' for calendar type 'b' at row 24. It should be in '01 December 2022' format. Also ensure it matches a valid calendar date. For example, April only has 30 days.
+2025-04-29 11:44:04,089 - WafLogger - ERROR - runner.py:55] [PID:19448] The 'Keyword' column in the Excel file contains empty values.
+2025-04-29 11:44:49,485 - WafLogger - WARNING - utilities.py:216] [PID:24560] D:\allprojects\web_automation_htmltopdf\test_files\proc_24560_time_1745907239330 has been removed.
+2025-04-29 11:51:33,850 - WafLogger - WARNING - runner.py:667] [PID:19636] ChromeDriver is ready!
+2025-04-29 11:51:38,389 - WafLogger - WARNING - runner.py:675] [PID:19636] EdgeDriver is ready!
+2025-04-29 11:51:40,527 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: system idle process
+2025-04-29 11:51:40,527 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: system
+2025-04-29 11:51:40,531 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: 
+2025-04-29 11:51:40,535 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: registry
+2025-04-29 11:51:40,540 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,544 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: smss.exe
+2025-04-29 11:51:40,548 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: csrss.exe
+2025-04-29 11:51:40,552 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wininit.exe
+2025-04-29 11:51:40,563 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: csrss.exe
+2025-04-29 11:51:40,568 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: winlogon.exe
+2025-04-29 11:51:40,573 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: services.exe
+2025-04-29 11:51:40,578 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: lsaiso.exe
+2025-04-29 11:51:40,583 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,589 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: lsass.exe
+2025-04-29 11:51:40,589 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: runtimebroker.exe
+2025-04-29 11:51:40,593 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,598 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: fontdrvhost.exe
+2025-04-29 11:51:40,603 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: fontdrvhost.exe
+2025-04-29 11:51:40,609 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wudfhost.exe
+2025-04-29 11:51:40,614 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,619 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wudfhost.exe
+2025-04-29 11:51:40,624 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,629 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: dwm.exe
+2025-04-29 11:51:40,634 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,639 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,644 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,649 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: vmmemwsl
+2025-04-29 11:51:40,649 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: runtimebroker.exe
+2025-04-29 11:51:40,650 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: webviewhost.exe
+2025-04-29 11:51:40,658 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,664 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,669 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,674 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,679 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,684 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,689 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,694 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,694 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: systemsettings.exe
+2025-04-29 11:51:40,700 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,704 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,710 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: intelcphdcpsvc.exe
+2025-04-29 11:51:40,710 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,715 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,716 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: utorrentie.exe
+2025-04-29 11:51:40,722 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,730 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,744 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,751 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,758 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,763 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,768 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: spoolsv.exe
+2025-04-29 11:51:40,775 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: igfxcuiservicen.exe
+2025-04-29 11:51:40,780 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,786 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,792 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,798 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,802 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,808 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,813 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: memcompression
+2025-04-29 11:51:40,814 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:40,818 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,824 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,829 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: dell.d3.winsvc.exe
+2025-04-29 11:51:40,834 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,834 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:40,840 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: servicehost.exe
+2025-04-29 11:51:40,847 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:40,847 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:40,853 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,853 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:40,860 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,866 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,871 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,877 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:40,883 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,888 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,889 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: anydesk.exe
+2025-04-29 11:51:40,894 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: armsvc.exe
+2025-04-29 11:51:40,899 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: officeclicktorun.exe
+2025-04-29 11:51:40,904 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,909 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,914 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: dell.techhub.exe
+2025-04-29 11:51:40,920 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,926 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,931 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,936 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: esif_uf.exe
+2025-04-29 11:51:40,936 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: rancher desktop.exe
+2025-04-29 11:51:40,943 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: oneapp.igcc.winservice.exe
+2025-04-29 11:51:40,949 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: intelaudioservice.exe
+2025-04-29 11:51:40,954 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: ipoverusbsvc.exe
+2025-04-29 11:51:40,961 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,961 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:40,969 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,969 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,975 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: jhi_service.exe
+2025-04-29 11:51:40,982 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: mpdefendercoreservice.exe
+2025-04-29 11:51:40,991 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:40,991 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: applicationframehost.exe
+2025-04-29 11:51:40,998 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: smpd.exe
+2025-04-29 11:51:41,005 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,013 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: raps.exe
+2025-04-29 11:51:41,019 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: rstmwservice.exe
+2025-04-29 11:51:41,026 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,032 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: rtkauduservice64.exe
+2025-04-29 11:51:41,036 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: smartbyteanalyticsservice.exe
+2025-04-29 11:51:41,041 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: smartbytenetworkservice.exe
+2025-04-29 11:51:41,046 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,053 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: teamviewer_service.exe
+2025-04-29 11:51:41,053 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: skype.exe
+2025-04-29 11:51:41,059 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msmpeng.exe
+2025-04-29 11:51:41,067 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wmiregistrationservice.exe
+2025-04-29 11:51:41,075 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,082 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,089 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wslservice.exe
+2025-04-29 11:51:41,090 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: runtimebroker.exe
+2025-04-29 11:51:41,096 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,102 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,108 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: dashost.exe
+2025-04-29 11:51:41,108 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: powershell.exe
+2025-04-29 11:51:41,116 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,123 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: vmwp.exe
+2025-04-29 11:51:41,130 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,137 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wmiapsrv.exe
+2025-04-29 11:51:41,147 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,147 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: igfxemn.exe
+2025-04-29 11:51:41,154 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: aggregatorhost.exe
+2025-04-29 11:51:41,154 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,156 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wslhost.exe
+2025-04-29 11:51:41,163 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wlanext.exe
+2025-04-29 11:51:41,163 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wavessvc64.exe
+2025-04-29 11:51:41,170 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,177 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,184 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: supportassistagent.exe
+2025-04-29 11:51:41,184 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: uihost.exe
+2025-04-29 11:51:41,190 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: rapsservice.exe
+2025-04-29 11:51:41,197 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,202 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: ddvdatacollector.exe
+2025-04-29 11:51:41,209 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,213 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,218 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wmiprvse.exe
+2025-04-29 11:51:41,218 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: smartbytetelemetry.exe
+2025-04-29 11:51:41,219 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,226 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: dell.techhub.datamanager.subagent.exe
+2025-04-29 11:51:41,234 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: dell.techhub.diagnostics.subagent.exe
+2025-04-29 11:51:41,241 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: dell.techhub.analytics.subagent.exe
+2025-04-29 11:51:41,248 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: dell.update.subagent.exe
+2025-04-29 11:51:41,255 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: dell.coreservices.client.exe
+2025-04-29 11:51:41,255 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,261 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,267 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: dell.techhub.instrumentation.subagent.exe
+2025-04-29 11:51:41,272 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,272 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: dllhost.exe
+2025-04-29 11:51:41,272 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,277 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wmiprvse.exe
+2025-04-29 11:51:41,277 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: python.exe
+2025-04-29 11:51:41,277 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: crossdeviceservice.exe
+2025-04-29 11:51:41,277 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,278 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wsl.exe
+2025-04-29 11:51:41,284 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: searchprotocolhost.exe
+2025-04-29 11:51:41,284 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: dllhost.exe
+2025-04-29 11:51:41,284 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: sihost.exe
+2025-04-29 11:51:41,285 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wsl.exe
+2025-04-29 11:51:41,285 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,292 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,301 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: ngciso.exe
+2025-04-29 11:51:41,301 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: taskhostw.exe
+2025-04-29 11:51:41,308 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: dell.techhub.instrumentation.userprocess.exe
+2025-04-29 11:51:41,316 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,316 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: mcafee-security-ft.exe
+2025-04-29 11:51:41,317 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: rancher desktop.exe
+2025-04-29 11:51:41,317 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,317 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: shellhost.exe
+2025-04-29 11:51:41,317 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msrdc.exe
+2025-04-29 11:51:41,317 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: explorer.exe
+2025-04-29 11:51:41,318 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: host-switch.exe
+2025-04-29 11:51:41,324 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,333 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,343 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,344 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: whatsapp.exe
+2025-04-29 11:51:41,344 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: code.exe
+2025-04-29 11:51:41,344 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: dllhost.exe
+2025-04-29 11:51:41,344 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: startmenuexperiencehost.exe
+2025-04-29 11:51:41,351 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: rtkauduservice64.exe
+2025-04-29 11:51:41,359 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: vmcompute.exe
+2025-04-29 11:51:41,365 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,365 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: searchhost.exe
+2025-04-29 11:51:41,370 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,370 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: backgroundtaskhost.exe
+2025-04-29 11:51:41,376 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: ddvcollectorsvcapi.exe
+2025-04-29 11:51:41,382 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,388 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,389 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,389 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: skype.exe
+2025-04-29 11:51:41,389 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: code.exe
+2025-04-29 11:51:41,389 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: widgets.exe
+2025-04-29 11:51:41,389 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: useroobebroker.exe
+2025-04-29 11:51:41,390 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: runtimebroker.exe
+2025-04-29 11:51:41,390 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,390 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: cmd.exe
+2025-04-29 11:51:41,390 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: runtimebroker.exe
+2025-04-29 11:51:41,390 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: openconsole.exe
+2025-04-29 11:51:41,390 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,390 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: windowsterminal.exe
+2025-04-29 11:51:41,391 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: widgetservice.exe
+2025-04-29 11:51:41,391 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: code.exe
+2025-04-29 11:51:41,391 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: adobecollabsync.exe
+2025-04-29 11:51:41,392 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,393 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: rancher desktop.exe
+2025-04-29 11:51:41,393 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: mcafee-security.exe
+2025-04-29 11:51:41,393 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,393 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,393 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: taskhostw.exe
+2025-04-29 11:51:41,393 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: runtimebroker.exe
+2025-04-29 11:51:41,393 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,393 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: ctfmon.exe
+2025-04-29 11:51:41,393 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,393 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,393 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: helper.exe
+2025-04-29 11:51:41,393 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,395 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: lockapp.exe
+2025-04-29 11:51:41,400 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: searchindexer.exe
+2025-04-29 11:51:41,401 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,406 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,413 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: nissrv.exe
+2025-04-29 11:51:41,414 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: python.exe
+2025-04-29 11:51:41,421 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,421 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: phoneexperiencehost.exe
+2025-04-29 11:51:41,422 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wsl-helper.exe
+2025-04-29 11:51:41,429 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: dellsupportassistremedationservice.exe
+2025-04-29 11:51:41,430 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: utorrent.exe
+2025-04-29 11:51:41,430 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: textinputhost.exe
+2025-04-29 11:51:41,430 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: rtkauduservice64.exe
+2025-04-29 11:51:41,430 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,430 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,430 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,430 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wsl.exe
+2025-04-29 11:51:41,443 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,444 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: utorrentie.exe
+2025-04-29 11:51:41,451 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,451 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,451 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,451 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: securityhealthsystray.exe
+2025-04-29 11:51:41,457 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: securityhealthservice.exe
+2025-04-29 11:51:41,457 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wsl.exe
+2025-04-29 11:51:41,463 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: ddvrulesprocessor.exe
+2025-04-29 11:51:41,463 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,463 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: skype.exe
+2025-04-29 11:51:41,463 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,463 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: skype.exe
+2025-04-29 11:51:41,463 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,463 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: code.exe
+2025-04-29 11:51:41,463 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,464 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,464 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: skype.exe
+2025-04-29 11:51:41,469 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,469 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,482 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: fusionservice.exe
+2025-04-29 11:51:41,482 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: runtimebroker.exe
+2025-04-29 11:51:41,482 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: ms-teams.exe
+2025-04-29 11:51:41,488 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: serviceshell.exe
+2025-04-29 11:51:41,489 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,489 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: runtimebroker.exe
+2025-04-29 11:51:41,489 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,489 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,489 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,489 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: sdxhelper.exe
+2025-04-29 11:51:41,489 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wsl.exe
+2025-04-29 11:51:41,489 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: anydesk.exe
+2025-04-29 11:51:41,489 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: sharex.exe
+2025-04-29 11:51:41,489 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wslrelay.exe
+2025-04-29 11:51:41,490 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wslhost.exe
+2025-04-29 11:51:41,490 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,490 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: python.exe
+2025-04-29 11:51:41,490 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wsl.exe
+2025-04-29 11:51:41,490 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wslhost.exe
+2025-04-29 11:51:41,490 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,491 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wsl.exe
+2025-04-29 11:51:41,491 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wslhost.exe
+2025-04-29 11:51:41,491 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,491 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wslhost.exe
+2025-04-29 11:51:41,491 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,491 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msrdc.exe
+2025-04-29 11:51:41,491 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,491 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: adobecollabsync.exe
+2025-04-29 11:51:41,492 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,492 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: windowspackagemanagerserver.exe
+2025-04-29 11:51:41,492 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,492 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: audiodg.exe
+2025-04-29 11:51:41,492 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: pet.exe
+2025-04-29 11:51:41,492 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: steve.exe
+2025-04-29 11:51:41,493 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,493 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: code.exe
+2025-04-29 11:51:41,493 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,493 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: code.exe
+2025-04-29 11:51:41,493 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: python.exe
+2025-04-29 11:51:41,493 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wslhost.exe
+2025-04-29 11:51:41,493 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: code.exe
+2025-04-29 11:51:41,493 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: code.exe
+2025-04-29 11:51:41,494 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,494 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,494 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,494 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wsl.exe
+2025-04-29 11:51:41,494 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: msedgewebview2.exe
+2025-04-29 11:51:41,494 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: code.exe
+2025-04-29 11:51:41,494 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: smartscreen.exe
+2025-04-29 11:51:41,494 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: python.exe
+2025-04-29 11:51:41,495 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wslhost.exe
+2025-04-29 11:51:41,495 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: powershell.exe
+2025-04-29 11:51:41,495 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,495 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: wslhost.exe
+2025-04-29 11:51:41,502 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: svchost.exe
+2025-04-29 11:51:41,503 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: code.exe
+2025-04-29 11:51:41,503 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,503 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: code.exe
+2025-04-29 11:51:41,503 - WafLogger - WARNING - utilities.py:103] [PID:19636] Process name: conhost.exe
+2025-04-29 11:51:41,520 - WafLogger - WARNING - runner.py:1067] [PID:19636] Parallel execution is enabled via environment variable. So starting parallel execution.
+2025-04-29 11:51:57,040 - WafLogger - ERROR - utilities.py:272] [PID:21436] Filename is blank.
+2025-04-29 11:51:57,041 - WafLogger - ERROR - runner.py:82] [PID:21436] The file  does not exist in the test data folder.
+2025-04-29 11:52:00,061 - WafLogger - ERROR - keywords_manager.py:408] [PID:22584] Accessibility check failed with 8 violations.
+2025-04-29 11:52:00,062 - WafLogger - ERROR - keywords_manager.py:411] [PID:22584] Violation: aria-required-children
+2025-04-29 11:52:00,063 - WafLogger - ERROR - keywords_manager.py:416] [PID:22584] Description: Ensures elements with an ARIA role that require child roles contain them
+2025-04-29 11:52:00,063 - WafLogger - ERROR - keywords_manager.py:417] [PID:22584] Impact: critical
+2025-04-29 11:52:00,063 - WafLogger - ERROR - keywords_manager.py:418] [PID:22584] Help URL: https://dequeuniversity.com/rules/axe/3.1/aria-required-children?application=axeAPI
+2025-04-29 11:52:00,063 - WafLogger - ERROR - keywords_manager.py:411] [PID:22584] Violation: autocomplete-valid
+2025-04-29 11:52:00,063 - WafLogger - ERROR - keywords_manager.py:416] [PID:22584] Description: Ensure the autocomplete attribute is correct and suitable for the form field
+2025-04-29 11:52:00,063 - WafLogger - ERROR - keywords_manager.py:417] [PID:22584] Impact: serious
+2025-04-29 11:52:00,063 - WafLogger - ERROR - keywords_manager.py:418] [PID:22584] Help URL: https://dequeuniversity.com/rules/axe/3.1/autocomplete-valid?application=axeAPI
+2025-04-29 11:52:00,063 - WafLogger - ERROR - keywords_manager.py:411] [PID:22584] Violation: button-name
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:416] [PID:22584] Description: Ensures buttons have discernible text
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:417] [PID:22584] Impact: critical
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:418] [PID:22584] Help URL: https://dequeuniversity.com/rules/axe/3.1/button-name?application=axeAPI
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:411] [PID:22584] Violation: color-contrast
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:416] [PID:22584] Description: Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:417] [PID:22584] Impact: serious
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:418] [PID:22584] Help URL: https://dequeuniversity.com/rules/axe/3.1/color-contrast?application=axeAPI
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:411] [PID:22584] Violation: landmark-one-main
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:416] [PID:22584] Description: Ensures the page has only one main landmark and each iframe in the page has at most one main landmark
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:417] [PID:22584] Impact: moderate
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:418] [PID:22584] Help URL: https://dequeuniversity.com/rules/axe/3.1/landmark-one-main?application=axeAPI
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:411] [PID:22584] Violation: listitem
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:416] [PID:22584] Description: Ensures <li> elements are used semantically
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:417] [PID:22584] Impact: serious
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:418] [PID:22584] Help URL: https://dequeuniversity.com/rules/axe/3.1/listitem?application=axeAPI
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:411] [PID:22584] Violation: page-has-heading-one
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:416] [PID:22584] Description: Ensure that the page, or at least one of its frames contains a level-one heading
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:417] [PID:22584] Impact: moderate
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:418] [PID:22584] Help URL: https://dequeuniversity.com/rules/axe/3.1/page-has-heading-one?application=axeAPI
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:411] [PID:22584] Violation: region
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:416] [PID:22584] Description: Ensures all page content is contained by landmarks
+2025-04-29 11:52:00,064 - WafLogger - ERROR - keywords_manager.py:417] [PID:22584] Impact: moderate
+2025-04-29 11:52:00,065 - WafLogger - ERROR - keywords_manager.py:418] [PID:22584] Help URL: https://dequeuniversity.com/rules/axe/3.1/region?application=axeAPI
+2025-04-29 11:52:23,177 - WafLogger - WARNING - utilities.py:216] [PID:22584] D:\allprojects\web_automation_htmltopdf\test_files\proc_22584_time_1745907712875 has been removed.
+2025-04-29 11:52:27,791 - WafLogger - WARNING - utilities.py:216] [PID:23476] D:\allprojects\web_automation_htmltopdf\test_files\proc_23476_time_1745907707077 has been removed.
+2025-04-29 11:52:36,949 - WafLogger - WARNING - utilities.py:216] [PID:2792] D:\allprojects\web_automation_htmltopdf\test_files\proc_2792_time_1745907704454 has been removed.
+2025-04-29 11:52:42,498 - WafLogger - WARNING - utilities.py:1342] [PID:2080] validating date
+2025-04-29 11:52:42,499 - WafLogger - WARNING - utilities.py:1344] [PID:2080] 31
+2025-04-29 11:52:42,499 - WafLogger - ERROR - utilities.py:1352] [PID:2080] day is out of range for month
+2025-04-29 11:52:42,500 - WafLogger - ERROR - runner.py:122] [PID:2080] Invalid date format '31 April 2021' for calendar type 'b' at row 24. It should be in '01 December 2022' format. Also ensure it matches a valid calendar date. For example, April only has 30 days.
+2025-04-29 11:52:49,954 - WafLogger - ERROR - runner.py:55] [PID:24204] The 'Keyword' column in the Excel file contains empty values.
+2025-04-29 11:53:36,718 - WafLogger - WARNING - utilities.py:216] [PID:9024] D:\allprojects\web_automation_htmltopdf\test_files\proc_9024_time_1745907766515 has been removed.
+2025-04-29 11:53:51,078 - WafLogger - WARNING - utilities.py:218] [PID:6652] D:\allprojects\web_automation_htmltopdf\test_files\proc_6652_time_1745907759576 is not empty and was not removed.
+2025-04-29 11:53:58,184 - WafLogger - ERROR - runner.py:90] [PID:4704] TC ID 'QS0041' does not match the test script file name at row 0.
+2025-04-29 11:54:02,499 - WafLogger - ERROR - keywords_manager.py:408] [PID:24156] Accessibility check failed with 8 violations.
+2025-04-29 11:54:02,513 - WafLogger - ERROR - keywords_manager.py:411] [PID:24156] Violation: aria-required-children
+2025-04-29 11:54:02,513 - WafLogger - ERROR - keywords_manager.py:416] [PID:24156] Description: Ensures elements with an ARIA role that require child roles contain them
+2025-04-29 11:54:02,513 - WafLogger - ERROR - keywords_manager.py:417] [PID:24156] Impact: critical
+2025-04-29 11:54:02,513 - WafLogger - ERROR - keywords_manager.py:418] [PID:24156] Help URL: https://dequeuniversity.com/rules/axe/3.1/aria-required-children?application=axeAPI
+2025-04-29 11:54:02,513 - WafLogger - ERROR - keywords_manager.py:411] [PID:24156] Violation: autocomplete-valid
+2025-04-29 11:54:02,513 - WafLogger - ERROR - keywords_manager.py:416] [PID:24156] Description: Ensure the autocomplete attribute is correct and suitable for the form field
+2025-04-29 11:54:02,513 - WafLogger - ERROR - keywords_manager.py:417] [PID:24156] Impact: serious
+2025-04-29 11:54:02,513 - WafLogger - ERROR - keywords_manager.py:418] [PID:24156] Help URL: https://dequeuniversity.com/rules/axe/3.1/autocomplete-valid?application=axeAPI
+2025-04-29 11:54:02,513 - WafLogger - ERROR - keywords_manager.py:411] [PID:24156] Violation: button-name
+2025-04-29 11:54:02,513 - WafLogger - ERROR - keywords_manager.py:416] [PID:24156] Description: Ensures buttons have discernible text
+2025-04-29 11:54:02,513 - WafLogger - ERROR - keywords_manager.py:417] [PID:24156] Impact: critical
+2025-04-29 11:54:02,513 - WafLogger - ERROR - keywords_manager.py:418] [PID:24156] Help URL: https://dequeuniversity.com/rules/axe/3.1/button-name?application=axeAPI
+2025-04-29 11:54:02,514 - WafLogger - ERROR - keywords_manager.py:411] [PID:24156] Violation: color-contrast
+2025-04-29 11:54:02,514 - WafLogger - ERROR - keywords_manager.py:416] [PID:24156] Description: Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds
+2025-04-29 11:54:02,514 - WafLogger - ERROR - keywords_manager.py:417] [PID:24156] Impact: serious
+2025-04-29 11:54:02,514 - WafLogger - ERROR - keywords_manager.py:418] [PID:24156] Help URL: https://dequeuniversity.com/rules/axe/3.1/color-contrast?application=axeAPI
+2025-04-29 11:54:02,514 - WafLogger - ERROR - keywords_manager.py:411] [PID:24156] Violation: landmark-one-main
+2025-04-29 11:54:02,514 - WafLogger - ERROR - keywords_manager.py:416] [PID:24156] Description: Ensures the page has only one main landmark and each iframe in the page has at most one main landmark
+2025-04-29 11:54:02,514 - WafLogger - ERROR - keywords_manager.py:417] [PID:24156] Impact: moderate
+2025-04-29 11:54:02,514 - WafLogger - ERROR - keywords_manager.py:418] [PID:24156] Help URL: https://dequeuniversity.com/rules/axe/3.1/landmark-one-main?application=axeAPI
+2025-04-29 11:54:02,514 - WafLogger - ERROR - keywords_manager.py:411] [PID:24156] Violation: listitem
+2025-04-29 11:54:02,514 - WafLogger - ERROR - keywords_manager.py:416] [PID:24156] Description: Ensures <li> elements are used semantically
+2025-04-29 11:54:02,514 - WafLogger - ERROR - keywords_manager.py:417] [PID:24156] Impact: serious
+2025-04-29 11:54:02,514 - WafLogger - ERROR - keywords_manager.py:418] [PID:24156] Help URL: https://dequeuniversity.com/rules/axe/3.1/listitem?application=axeAPI
+2025-04-29 11:54:02,514 - WafLogger - ERROR - keywords_manager.py:411] [PID:24156] Violation: page-has-heading-one
+2025-04-29 11:54:02,514 - WafLogger - ERROR - keywords_manager.py:416] [PID:24156] Description: Ensure that the page, or at least one of its frames contains a level-one heading
+2025-04-29 11:54:02,514 - WafLogger - ERROR - keywords_manager.py:417] [PID:24156] Impact: moderate
+2025-04-29 11:54:02,514 - WafLogger - ERROR - keywords_manager.py:418] [PID:24156] Help URL: https://dequeuniversity.com/rules/axe/3.1/page-has-heading-one?application=axeAPI
+2025-04-29 11:54:02,514 - WafLogger - ERROR - keywords_manager.py:411] [PID:24156] Violation: region
+2025-04-29 11:54:02,514 - WafLogger - ERROR - keywords_manager.py:416] [PID:24156] Description: Ensures all page content is contained by landmarks
+2025-04-29 11:54:02,515 - WafLogger - ERROR - keywords_manager.py:417] [PID:24156] Impact: moderate
+2025-04-29 11:54:02,515 - WafLogger - ERROR - keywords_manager.py:418] [PID:24156] Help URL: https://dequeuniversity.com/rules/axe/3.1/region?application=axeAPI
+2025-04-29 11:54:03,666 - WafLogger - WARNING - utilities.py:1342] [PID:20636] validating date
+2025-04-29 11:54:03,668 - WafLogger - WARNING - utilities.py:1344] [PID:20636] 28
+2025-04-29 11:54:25,015 - WafLogger - WARNING - utilities.py:216] [PID:24156] D:\allprojects\web_automation_htmltopdf\test_files\proc_24156_time_1745907834507 has been removed.
+2025-04-29 11:55:05,802 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Sunday, November 28th, 2021
+2025-04-29 11:55:05,820 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Monday, November 29th, 2021
+2025-04-29 11:55:05,837 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Tuesday, November 30th, 2021
+2025-04-29 11:55:05,853 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Wednesday, December 1st, 2021
+2025-04-29 11:55:05,868 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Thursday, December 2nd, 2021
+2025-04-29 11:55:05,885 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Friday, December 3rd, 2021
+2025-04-29 11:55:05,901 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Saturday, December 4th, 2021
+2025-04-29 11:55:05,920 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Sunday, December 5th, 2021
+2025-04-29 11:55:05,934 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Monday, December 6th, 2021
+2025-04-29 11:55:05,945 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Tuesday, December 7th, 2021
+2025-04-29 11:55:05,960 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Wednesday, December 8th, 2021
+2025-04-29 11:55:05,973 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Thursday, December 9th, 2021
+2025-04-29 11:55:05,984 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Friday, December 10th, 2021
+2025-04-29 11:55:05,995 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Saturday, December 11th, 2021
+2025-04-29 11:55:06,005 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Sunday, December 12th, 2021
+2025-04-29 11:55:06,020 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Monday, December 13th, 2021
+2025-04-29 11:55:06,034 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Tuesday, December 14th, 2021
+2025-04-29 11:55:06,046 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Wednesday, December 15th, 2021
+2025-04-29 11:55:06,056 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Thursday, December 16th, 2021
+2025-04-29 11:55:06,068 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Friday, December 17th, 2021
+2025-04-29 11:55:06,079 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Saturday, December 18th, 2021
+2025-04-29 11:55:06,088 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Sunday, December 19th, 2021
+2025-04-29 11:55:06,101 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Monday, December 20th, 2021
+2025-04-29 11:55:06,111 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Tuesday, December 21st, 2021
+2025-04-29 11:55:06,122 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Wednesday, December 22nd, 2021
+2025-04-29 11:55:06,136 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Thursday, December 23rd, 2021
+2025-04-29 11:55:06,148 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Friday, December 24th, 2021
+2025-04-29 11:55:06,160 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Saturday, December 25th, 2021
+2025-04-29 11:55:06,171 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Sunday, December 26th, 2021
+2025-04-29 11:55:06,184 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Monday, December 27th, 2021
+2025-04-29 11:55:06,197 - WafLogger - WARNING - keywords_manager.py:1746] [PID:20636] Choose Tuesday, December 28th, 2021
+2025-04-29 11:55:07,913 - WafLogger - WARNING - utilities.py:218] [PID:14504] D:\allprojects\web_automation_htmltopdf\test_files\proc_14504_time_1745907839753 is not empty and was not removed.
+2025-04-29 11:56:11,522 - WafLogger - WARNING - utilities.py:216] [PID:20636] D:\allprojects\web_automation_htmltopdf\test_files\proc_20636_time_1745907843674 has been removed.
+2025-04-29 11:56:19,743 - WafLogger - ERROR - utilities.py:207] [PID:19636] Error: [WinError 10061] No connection could be made because the target machine actively refused it

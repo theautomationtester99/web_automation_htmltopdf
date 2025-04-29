@@ -25,7 +25,7 @@ from sm_browser_downloader import SMBrowserDownloader
 from utilities import Utils
 
 
-def validate_test_script(testscript_file, rlock, wafl, utils, launch_browser):
+def validate_test_script(testscript_file, rlock, object_repo, wafl, utils, launch_browser):
     """
     Validates the test script Excel file for format, content, and keyword correctness.
 
@@ -63,11 +63,44 @@ def validate_test_script(testscript_file, rlock, wafl, utils, launch_browser):
     for index, row in df.iterrows():
         keyword = str(row["Keyword"])
         wafl.debug(f"Validating row {index}: Keyword='{keyword}'")
+        
+        if index == 0:
+            if not (str(row["Test Steps"]) == 'tc_id'):
+                skip_e_report.add_row_skipped_tc([testscript_file,f"The first keyword must be 'tc_id'", "Skipped"])
+                raise ValueError("The first keyword must be 'tc_id'")
+        if index == 1:
+            if not (str(row["Test Steps"]) == 'tc_desc'):
+                skip_e_report.add_row_skipped_tc([testscript_file,f"The second keyword must be 'tc_desc'", "Skipped"])
+                raise ValueError("The second keyword must be 'tc_desc'")
+        if index == 2:
+            if not (str(row["Test Steps"]) == 'step'):
+                skip_e_report.add_row_skipped_tc([testscript_file,f"The third keyword must be 'step'", "Skipped"])
+                raise ValueError("The third keyword must be 'step'")
+        if index == 3:
+            if not (str(row["Test Steps"]) == 'open_browser'):
+                skip_e_report.add_row_skipped_tc([testscript_file,f"The fourth keyword must be 'open_browser'", "Skipped"])
+                raise ValueError("The fourth keyword must be 'open_browser'")
+        if index == 4:
+            if not (str(row["Test Steps"]) == 'enter_url'):
+                skip_e_report.add_row_skipped_tc([testscript_file,f"The fifth keyword must be 'enter_url'", "Skipped"])
+                raise ValueError("The fifth keyword must be 'enter_url'")
 
         if keyword not in VALID_KEYWORDS:
             wafl.error(f"Invalid keyword '{keyword}' at row {index}.")
             skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid keyword '{keyword}' at row {index}.", "Skipped"])
             raise ValueError(f"Invalid keyword '{keyword}' in the test script.")
+        
+        if keyword in ['upload_file', 'select_file', "type", "click", "verify_displayed_text","choose_date_from_datepicker", "check_element_enabled", "check_element_disabled","check_element_displayed", "switch_to_iframe", "check_radio_chk_selected", "check_radio_chk_not_selected", "drag_drop", "hover_mouse", "js_click", "select_dropdown_by_value", "select_dropdown_by_index", "select_dropdown_by_visible_text"]:
+            u_lid = str(row["Input2"]).strip()
+            if not u_lid:
+                wafl.error(f"Locator id is not given at row {index}.")
+                skip_e_report.add_row_skipped_tc([testscript_file,f"Locator id is not given at row {index}.", "Skipped"])
+                raise ValueError(f"Locator id is not given at row {index}.")
+            loc_value = object_repo.get_property("", str(row["Input2"]).strip(), fallback='No')
+            if loc_value.lower() == 'no':
+                wafl.error(f"Locator given at row {index} does not exist in object_repository.properties file.")
+                skip_e_report.add_row_skipped_tc([testscript_file,f"Locator given at row {index} does not exist in object_repository.properties file.", "Skipped"])
+                raise ValueError(f"Locator given at row {index} does not exist in object_repository.properties file.")
 
         if keyword in ['upload_file', 'select_file']:
             u_file_name = str(row["Input3"]).strip()
@@ -76,10 +109,14 @@ def validate_test_script(testscript_file, rlock, wafl, utils, launch_browser):
                 wafl.error(f"Locator id is not given at row {index}.")
                 skip_e_report.add_row_skipped_tc([testscript_file,f"Locator id is not given at row {index}.", "Skipped"])
                 raise ValueError(f"Locator id is not given at row {index}.")
+            if not u_file_name:
+                wafl.error(f"Upload file name is not given at row {index}.")
+                skip_e_report.add_row_skipped_tc([testscript_file,f"Upload file name is not given at row {index}.", "Skipped"])
+                raise ValueError(f"Upload file name is not given at row {index}.")
             u_root_path = get_root_directory_path()
             u_test_data_path = os.path.join(u_root_path, "test_files")
             if not utils.do_file_exist_in_dir(u_test_data_path, u_file_name):
-                wafl.error(f"The file {u_file_name} does not exist in the test data folder.")
+                wafl.error(f"The file '{u_file_name}' does not exist in the test files folder.")
                 skip_e_report.add_row_skipped_tc([testscript_file,f"The file {u_file_name} does not exist in the test data folder.", "Skipped"])
                 raise ValueError(f"The file {u_file_name} does not exist in the test data folder.")
         
@@ -89,6 +126,35 @@ def validate_test_script(testscript_file, rlock, wafl, utils, launch_browser):
                 skip_e_report.add_row_skipped_tc([testscript_file,f"TC ID '{tc_id_value}' does not match the test script file name.", "Skipped"])
                 wafl.error(f"TC ID '{tc_id_value}' does not match the test script file name at row {index}.")
                 raise ValueError(f"TC ID '{tc_id_value}' does not match the test script file name.")
+        
+        if keyword == 'tc_desc':
+            tc_desc_value = str(row["Input3"]).strip()
+            if not tc_id_value.lower():
+                skip_e_report.add_row_skipped_tc([testscript_file,f"TC Desc '{tc_desc_value}' is empty.", "Skipped"])
+                wafl.error(f"TC Desc '{tc_desc_value}' is empty.")
+                raise ValueError(f"TC Desc '{tc_desc_value}' is empty.")
+        
+        if keyword == 'step':
+            step_value = str(row["Input1"]).strip()
+            step_exp_value = str(row["Input2"]).strip()
+            if not step_value.lower() or not step_exp_value.lower():
+                skip_e_report.add_row_skipped_tc([testscript_file,f"Empty step or empty step expected result given at at row {index}.", "Skipped"])
+                wafl.error(f"Empty step or empty step expected result given at at row {index}.")
+                raise ValueError(f"Empty step or empty step expected result given at at row {index}.")
+        
+        if keyword == 'enter_url':
+            enter_url_value = str(row["Input3"]).strip()
+            if not enter_url_value.lower():
+                skip_e_report.add_row_skipped_tc([testscript_file,f"Enter URL '{enter_url_value}' is empty.", "Skipped"])
+                wafl.error(f"Enter URL '{enter_url_value}' is empty.")
+                raise ValueError(f"Enter URL '{enter_url_value}' is empty.")
+        
+        if keyword == 'open_browser' and launch_browser == '':
+            browser_given = str(row["Input3"]).strip()
+            if browser_given.lower() not in ['chrome', 'edge']:
+                wafl.error(f"Invalid browser name '{browser_given}' at row {index}.")
+                skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid browser name '{browser_given}'. It should be either 'chrome' or 'edge'.", "Skipped"])
+                raise ValueError(f"Invalid browser name '{browser_given}'. It should be either 'chrome' or 'edge'.")
 
         if keyword == 'wait_for_seconds' and not str(row["Input3"]).strip().isdigit():
             wafl.error(f"Invalid value '{row['Input3']}' for 'wait_for_seconds' at row {index}.")
@@ -135,13 +201,6 @@ def validate_test_script(testscript_file, rlock, wafl, utils, launch_browser):
                     wafl.error(f"Not all locators end with one of the valid suffixes for calendar type '{calendar_type}' at row {index}. For example: 'date_mon_select_xpath;date_yr_select_xpath;date_date_list_xpath'.")
                     skip_e_report.add_row_skipped_tc([testscript_file,f"Not all locators end with one of the valid suffixes: {valid_suffixes}. For example: 'date_mon_select_xpath;date_yr_select_xpath;date_date_list_xpath'.", "Skipped"])
                     raise ValueError(f"Not all locators end with one of the valid suffixes: {valid_suffixes}. For example: 'date_mon_select_xpath;date_yr_select_xpath;date_date_list_xpath'.")
-
-        if keyword == 'open_browser' and launch_browser == '':
-            browser_given = str(row["Input3"]).strip()
-            if browser_given.lower() not in ['chrome', 'edge']:
-                wafl.error(f"Invalid browser name '{browser_given}' at row {index}.")
-                skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid browser name '{browser_given}'. It should be either 'chrome' or 'edge'.", "Skipped"])
-                raise ValueError(f"Invalid browser name '{browser_given}'. It should be either 'chrome' or 'edge'.")
 
         if keyword == 'login_jnj':
             wafl.debug(f"Validating 'login_jnj' inputs at row {index}.")
@@ -792,7 +851,7 @@ def start_runner(testscript_file, rlog_queue, rlock, object_repo_reader, utils, 
 
     if "testscript.xlsx" in testscript_file:
         wafl.debug("The test script Excel file name ends with 'testscript.xlsx'. Proceeding with execution.")
-        df = validate_test_script(testscript_file, rlock, wafl, utils, launch_browser)
+        df = validate_test_script(testscript_file, rlock, object_repo_reader, wafl, utils, launch_browser)
 
         retry_count = 1
         wafl.debug("Instantiating the keyword manager.")

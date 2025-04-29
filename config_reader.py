@@ -54,4 +54,10 @@ class ConfigReader:
         Returns:
             str: The value of the property, or the fallback value if the property does not exist.
         """
-        return self.config.get(section, property_name, fallback=fallback)
+        if not section:  # Check if section is empty or None
+            for sec in self.config.sections():  # Iterate through all sections
+                if self.config.has_option(sec, property_name):  # Check if property exists in the section
+                    return self.config.get(sec, property_name)  # Return the value if found
+            return fallback  # Return fallback if property is not found in any section
+        else:
+            return self.config.get(section, property_name, fallback=fallback)
