@@ -191,9 +191,9 @@ class Utils:
                 self.logger.warning("FTP upload is disabled.")
                 return
             local_folder = os.path.abspath(os.path.join(self.test_results_folder, "..", "..", ".."))
-            local_folder_td = os.path.abspath(os.path.join(self.test_results_folder, "..", "..", "..","..","test_data"))
+            local_folder_td = os.path.abspath(os.path.join(self.test_results_folder, "..", "..", "..","..","test_files"))
             remote_folder=os.path.join(start_properties.FTP_USER_HOME, "test_results")
-            remote_folder_td=os.path.join(start_properties.FTP_USER_HOME, "test_data")
+            remote_folder_td=os.path.join(start_properties.FTP_USER_HOME, "test_files")
             host = start_properties.FTP_HOST
             port = 21
             username = start_properties.FTP_USER
@@ -208,6 +208,16 @@ class Utils:
 
     ###########################################
     
+    def remove_empty_dir(self, directory):
+        if os.path.exists(directory) and os.path.isdir(directory):
+            # Check if the directory is empty
+            if not os.listdir(directory):  # os.listdir() returns an empty list if the directory is empty
+                shutil.rmtree(directory)
+                self.logger.warning(f"{directory} has been removed.")
+            else:
+                self.logger.warning(f"{directory} is not empty and was not removed.")
+        else:
+            self.logger.error(f"{directory} does not exist or is not a directory.")
     
     def do_files_with_ext_in_dir(self, directory, temp_extensions = ('.crdownload', '.tmp')):
         """

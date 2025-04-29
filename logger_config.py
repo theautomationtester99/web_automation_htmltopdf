@@ -10,6 +10,16 @@ from config import start_properties
 class LoggerConfig:
     """
     A multiprocessing-safe logger configuration class with ColorFormatter support for colored console output.
+    
+    DEBUG (10) Used for detailed information, typically useful for diagnosing problems. For example, you might use DEBUG messages to understand the flow of your program during development.
+
+    INFO (20) General information about program execution, such as confirming that a particular process has started or finished successfully.
+
+    WARNING (30) Indicates something unexpected happened or could happen in the future, but the program continues to operate. For example, using deprecated features or approaching resource limits.
+
+    ERROR (40) A serious issue that has occurred, preventing a part of the program from functioning properly. Examples include failed database connections or missing files.
+
+    CRITICAL (50) A very severe issue indicating the program might not be able to continue running, such as system crashes or unhandled exceptions.
     """
 
     def __init__(self, log_file='', log_queue=None):
@@ -63,7 +73,8 @@ class LoggerConfig:
 
         # Rotating File Handler
         file_handler = RotatingFileHandler(self.log_file, maxBytes=5 * 1024 * 1024, backupCount=5)
-        file_handler.setLevel(self.log_level)
+        file_handler.setLevel(logging.DEBUG)
+        # file_handler.setLevel(self.log_level)
         file_handler.setFormatter(logging.Formatter(
             '%(asctime)s - %(name)s - %(levelname)s - %(filename)s:%(lineno)d] [PID:%(process)d] %(message)s'
         ))

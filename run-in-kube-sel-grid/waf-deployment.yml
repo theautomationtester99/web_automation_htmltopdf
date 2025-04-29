@@ -19,17 +19,17 @@ spec:
         imagePullPolicy: Never
         env:
         - name: PARALLEL_EXECUTION
-          value: "yes"
+          value: "no"
         - name: NO_THREADS
-          value: "3"
+          value: "2"
         - name: FTP_UPLOAD
           value: "yes"
         - name: FTP_HOST
           value: "ftp-service"
         - name: LOG_LEVEL
-          value: "warn"
+          value: "warning"
         - name: HEADLESS
-          value: "yes"
+          value: "no"
         - name: RUN_IN_SELENIUM_GRID
           value: "no"
         - name: GRID_URL

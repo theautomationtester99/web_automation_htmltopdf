@@ -16,7 +16,7 @@ GRID_URL = os.getenv("GRID_URL", "http://localhost:30805/wd/hub")
 RUN_IN_APPIUM_GRID = os.getenv("RUN_IN_APPIUM_GRID", "no")
 APPIUM_URL = os.getenv("APPIUM_URL", "http://192.168.1.8:4723/wd/hub")
 
-LOG_LEVEL = os.getenv("LOG_LEVEL", "debug")
+LOG_LEVEL = os.getenv("LOG_LEVEL", "warning")
 
 INPRIVATE = os.getenv("INPRIVATE", "no")
 HEADLESS = os.getenv("HEADLESS", "yes")

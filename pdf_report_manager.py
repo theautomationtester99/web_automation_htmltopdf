@@ -173,6 +173,30 @@ class PdfReportManager:
 
             ts_pdf = PdfTsReporting(self.logger, base_dir/"resources"/"logo.png", base_dir/"resources"/"encrypted_ts_file.jinja2", table_data, "Test_Summary_Results_" + self.utils.get_date_string())
             await ts_pdf.generate_pdf()
+    async def generate_skipped_test_summary_pdf(self):
+        """
+        Generates a summary PDF report based on the contents of 'output.xlsx' file.
+
+        This method checks if the 'output.xlsx' file exists in the current directory.
+        If the file is found:
+            - The data is read into a Pandas DataFrame and converted to a table-friendly format.
+            - PdfTsReporting class is used to create a test summary report with this data.
+
+        The generated summary report includes the test case results and is saved with a
+        timestamped filename.
+        """
+        base_dir = Path(sys.argv[0]).parent.resolve()
+        tr_folder = self.utils.get_test_result_folder()
+
+        self.logger.debug('Checking if skipped test cases excel file exists before creating the skipped test summary PDF report.')
+        if self.utils.check_if_file_exists(os.path.join(tr_folder, "skipped_tc_report.xlsx")):
+            self.logger.debug('skipped_tc_report.xlsx exists and starting to create skipped test summary PDF report.')
+            df = pd.read_excel(os.path.join(tr_folder, "skipped_tc_report.xlsx"))
+            table_data = df.to_dict(orient='records')
+
+            sk_ts_pdf = PdfTsReporting(self.logger, base_dir/"resources"/"logo.png", base_dir/"resources"/"encrypted_sts_file.jinja2", table_data, "Skipped_Tests_" + self.utils.get_date_string())
+            await sk_ts_pdf.generate_pdf()
+    
 
     def is_not_used(self):
         pass

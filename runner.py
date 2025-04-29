@@ -25,7 +25,7 @@ from sm_browser_downloader import SMBrowserDownloader
 from utilities import Utils
 
 
-def validate_test_script(testscript_file, wafl, utils, launch_browser):
+def validate_test_script(testscript_file, rlock, wafl, utils, launch_browser):
     """
     Validates the test script Excel file for format, content, and keyword correctness.
 
@@ -40,10 +40,12 @@ def validate_test_script(testscript_file, wafl, utils, launch_browser):
     Raises:
         ValueError: If the test script is invalid.
     """
+    skip_e_report = ExcelReportManager(wafl, rlock)
     wafl.info(f"Validating the test script: {testscript_file}")
 
     if not utils.is_excel_doc(testscript_file):
         wafl.error("The test script Excel file is not in the correct format.")
+        skip_e_report.add_row_skipped_tc([testscript_file,f"The test script Excel file is not in the correct format.", "Skipped"])
         raise ValueError("The test script Excel file is not in the correct format.")
 
     wafl.debug("Reading the test script Excel file into a pandas DataFrame.")
@@ -51,6 +53,7 @@ def validate_test_script(testscript_file, wafl, utils, launch_browser):
 
     if df['Keyword'].isnull().values.any():
         wafl.error("The 'Keyword' column in the Excel file contains empty values.")
+        skip_e_report.add_row_skipped_tc([testscript_file,f"The 'Keyword' column in the Excel file contains empty values.", "Skipped"])
         raise ValueError("The 'Keyword' column in the Excel file contains empty values.")
 
     wafl.debug("Replacing empty values in the DataFrame with empty strings.")
@@ -63,6 +66,7 @@ def validate_test_script(testscript_file, wafl, utils, launch_browser):
 
         if keyword not in VALID_KEYWORDS:
             wafl.error(f"Invalid keyword '{keyword}' at row {index}.")
+            skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid keyword '{keyword}' at row {index}.", "Skipped"])
             raise ValueError(f"Invalid keyword '{keyword}' in the test script.")
 
         if keyword in ['upload_file', 'select_file']:
@@ -70,21 +74,25 @@ def validate_test_script(testscript_file, wafl, utils, launch_browser):
             u_ld = str(row["Input2"]).strip()
             if not u_ld:
                 wafl.error(f"Locator id is not given at row {index}.")
+                skip_e_report.add_row_skipped_tc([testscript_file,f"Locator id is not given at row {index}.", "Skipped"])
                 raise ValueError(f"Locator id is not given at row {index}.")
             u_root_path = get_root_directory_path()
-            u_test_data_path = os.path.join(u_root_path, "test_data")
+            u_test_data_path = os.path.join(u_root_path, "test_files")
             if not utils.do_file_exist_in_dir(u_test_data_path, u_file_name):
                 wafl.error(f"The file {u_file_name} does not exist in the test data folder.")
+                skip_e_report.add_row_skipped_tc([testscript_file,f"The file {u_file_name} does not exist in the test data folder.", "Skipped"])
                 raise ValueError(f"The file {u_file_name} does not exist in the test data folder.")
         
         if keyword == 'tc_id':
             tc_id_value = str(row["Input3"]).strip()
             if not os.path.basename(testscript_file).split("_")[0].lower() == tc_id_value.lower():
+                skip_e_report.add_row_skipped_tc([testscript_file,f"TC ID '{tc_id_value}' does not match the test script file name.", "Skipped"])
                 wafl.error(f"TC ID '{tc_id_value}' does not match the test script file name at row {index}.")
                 raise ValueError(f"TC ID '{tc_id_value}' does not match the test script file name.")
 
         if keyword == 'wait_for_seconds' and not str(row["Input3"]).strip().isdigit():
             wafl.error(f"Invalid value '{row['Input3']}' for 'wait_for_seconds' at row {index}.")
+            skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid value '{row['Input3']}' for 'wait_for_seconds'.", "Skipped"])
             raise ValueError(f"Invalid value '{row['Input3']}' for 'wait_for_seconds'.")
 
         if keyword == 'choose_date_from_datepicker':
@@ -93,11 +101,13 @@ def validate_test_script(testscript_file, wafl, utils, launch_browser):
             if calendar_type == 'a':
                 if not utils.is_date_format_valid(str(row["Input3"]).strip()):
                     wafl.error(f"Invalid date format '{row['Input3']}' for calendar type '{calendar_type}' at row {index}. It should be in '01 December 2022' format. Also ensure it matches a valid calendar date. For example, April only has 30 days.")
+                    skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid date format '{row['Input3']}' for calendar type '{calendar_type}'. It should be in '01 December 2022' format. Also ensure it matches a valid calendar date. For example, April only has 30 days.", "Skipped"])
                     raise ValueError(f"Invalid date format '{row['Input3']}' for calendar type '{calendar_type}'. It should be in '01 December 2022' format. Also ensure it matches a valid calendar date. For example, April only has 30 days.")
                 try:
                     l1, l2, l3, l4 = str(row["Input2"]).strip().split(";")
                 except:
                     wafl.error(f"Invalid locator data '{row['Input2']}' for calendar type '{calendar_type}' at row {index}. It should contain 4 values separated by semicolons (';'). For example: 'date_mon_txt_xpath;date_pre_button_xpath;date_nxt_button_xpath;date_date_list_xpath'.")
+                    skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid locator data '{row['Input2']}' for calendar type '{calendar_type}'. It should contain 4 values separated by semicolons (';'). For example: 'date_mon_txt_xpath;date_pre_button_xpath;date_nxt_button_xpath;date_date_list_xpath'.", "Skipped"])
                     raise ValueError(f"Invalid locator data '{row['Input2']}' for calendar type '{calendar_type}'. It should contain 4 values separated by semicolons (';'). For example: 'date_mon_txt_xpath;date_pre_button_xpath;date_nxt_button_xpath;date_date_list_xpath'.")
                 # Check if all variables end with '_css', '_id', or '_xpath'
                 valid_suffixes = ("_css", "_id", "_xpath")
@@ -105,27 +115,32 @@ def validate_test_script(testscript_file, wafl, utils, launch_browser):
                     wafl.debug(f"All locators end with one of the valid suffixes: {valid_suffixes}.")
                 else:
                     wafl.error(f"Not all locators end with one of the valid suffixes for calendar type '{calendar_type}' at row {index}. For example: 'date_mon_txt_xpath;date_pre_button_xpath;date_nxt_button_xpath;date_date_list_xpath'.")
+                    skip_e_report.add_row_skipped_tc([testscript_file,f"Not all locators end with one of the valid suffixes: {valid_suffixes}. For example: 'date_mon_txt_xpath;date_pre_button_xpath;date_nxt_button_xpath;date_date_list_xpath'.", "Skipped"])
                     raise ValueError(f"Not all locators end with one of the valid suffixes: {valid_suffixes}. For example: 'date_mon_txt_xpath;date_pre_button_xpath;date_nxt_button_xpath;date_date_list_xpath'.")
             elif calendar_type == 'b':
                 if not utils.is_date_format_valid(str(row["Input3"]).strip()):
                     wafl.error(f"Invalid date format '{row['Input3']}' for calendar type '{calendar_type}' at row {index}. It should be in '01 December 2022' format. Also ensure it matches a valid calendar date. For example, April only has 30 days.")
+                    skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid date format '{row['Input3']}' for calendar type '{calendar_type}'. It should be in '01 December 2022' format. Also ensure it matches a valid calendar date. For example, April only has 30 days.", "Skipped"])
                     raise ValueError(f"Invalid date format '{row['Input3']}' for calendar type '{calendar_type}'. It should be in '01 December 2022' format. Also ensure it matches a valid calendar date. For example, April only has 30 days.")
                 try:
                     l1, l2, l3 = str(row["Input2"]).strip().split(";")
                 except:
                     wafl.error(f"Invalid locator data '{row['Input2']}' for calendar type '{calendar_type}' at row {index}. It should contain 3 values separated by semicolons (';'). For example: 'date_mon_select_xpath;date_yr_select_xpath;date_date_list_xpath'.")
+                    skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid locator data '{row['Input2']}' for calendar type '{calendar_type}'. It should contain 3 values separated by semicolons (';'). For example: 'date_mon_select_xpath;date_yr_select_xpath;date_date_list_xpath'.", "Skipped"])
                     raise ValueError(f"Invalid locator data '{row['Input2']}' for calendar type '{calendar_type}'. It should contain 3 values separated by semicolons (';'). For example: 'date_mon_select_xpath;date_yr_select_xpath;date_date_list_xpath'.")
                 valid_suffixes = ("_css", "_id", "_xpath")
                 if all(locator.endswith(valid_suffixes) for locator in (l1, l2, l3)):
                     wafl.debug(f"All locators end with one of the valid suffixes: {valid_suffixes}.")
                 else:
                     wafl.error(f"Not all locators end with one of the valid suffixes for calendar type '{calendar_type}' at row {index}. For example: 'date_mon_select_xpath;date_yr_select_xpath;date_date_list_xpath'.")
+                    skip_e_report.add_row_skipped_tc([testscript_file,f"Not all locators end with one of the valid suffixes: {valid_suffixes}. For example: 'date_mon_select_xpath;date_yr_select_xpath;date_date_list_xpath'.", "Skipped"])
                     raise ValueError(f"Not all locators end with one of the valid suffixes: {valid_suffixes}. For example: 'date_mon_select_xpath;date_yr_select_xpath;date_date_list_xpath'.")
 
         if keyword == 'open_browser' and launch_browser == '':
             browser_given = str(row["Input3"]).strip()
             if browser_given.lower() not in ['chrome', 'edge']:
                 wafl.error(f"Invalid browser name '{browser_given}' at row {index}.")
+                skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid browser name '{browser_given}'. It should be either 'chrome' or 'edge'.", "Skipped"])
                 raise ValueError(f"Invalid browser name '{browser_given}'. It should be either 'chrome' or 'edge'.")
 
         if keyword == 'login_jnj':
@@ -140,14 +155,17 @@ def validate_test_script(testscript_file, wafl, utils, launch_browser):
 
             if len(list(filter(None, [item.strip() for item in login_uname_pwd_data_lst]))) != 2:
                 wafl.error(f"Invalid 'Input3' data '{login_uname_pwd_data}' for 'login_jnj' at row {index}.")
+                skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid keyword '{keyword}' at row {index}.", "Skipped"])
                 raise ValueError(f"'Input3' for 'login_jnj' must contain exactly 2 values separated by a semicolon (';').")
 
             if len(list(filter(None, [item.strip() for item in element_name_data_lst]))) != 4:
                 wafl.error(f"Invalid 'Input1' data '{element_name_data}' for 'login_jnj' at row {index}.")
+                skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid keyword '{keyword}' at row {index}.", "Skipped"])
                 raise ValueError(f"'Input1' for 'login_jnj' must contain exactly 4 values separated by a semicolon (';').")
 
             if len(list(filter(None, [item.strip() for item in element_locator_data_lst]))) != 4:
                 wafl.error(f"Invalid 'Input2' data '{element_locator_data}' for 'login_jnj' at row {index}.")
+                skip_e_report.add_row_skipped_tc([testscript_file,f"Invalid keyword '{keyword}' at row {index}.", "Skipped"])
                 raise ValueError(f"'Input2' for 'login_jnj' must contain exactly 4 values separated by a semicolon (';').")
 
         if keyword == 'drag_drop':
@@ -160,10 +178,12 @@ def validate_test_script(testscript_file, wafl, utils, launch_browser):
 
             if len(list(filter(None, [item.strip() for item in dd_element_name_data_lst]))) != 2:
                 wafl.error(f"Invalid 'Input1' data '{dd_element_name_data}' for 'drag_drop' at row {index}.")
+                skip_e_report.add_row_skipped_tc([testscript_file,f"'Input2' for 'drag_drop' must contain exactly 2 values separated by a semicolon (';').", "Skipped"])
                 raise ValueError(f"'Input1' for 'drag_drop' must contain exactly 2 values separated by a semicolon (';').")
 
             if len(list(filter(None, [item.strip() for item in dd_element_locator_data_lst]))) != 2:
                 wafl.error(f"Invalid 'Input2' data '{dd_element_locator_data}' for 'drag_drop' at row {index}.")
+                skip_e_report.add_row_skipped_tc([testscript_file,f"'Input2' for 'drag_drop' must contain exactly 2 values separated by a semicolon (';').", "Skipped"])
                 raise ValueError(f"'Input2' for 'drag_drop' must contain exactly 2 values separated by a semicolon (';').")
 
     wafl.info("Test script validation completed successfully.")
@@ -470,7 +490,7 @@ def upload_file(row, wafl, km, object_repo_reader):
     if "_id" in str(row["Input2"]).strip().lower():
         locator_type = "id"
     wafl.info(f"Executing 'upload_file' at row {row.name}.")
-    up_file_path = os.path.join(get_root_directory_path(), "test_data", str(row["Input3"]).strip())
+    up_file_path = os.path.join(get_root_directory_path(), "test_files", str(row["Input3"]).strip())
     km.ge_upload_file(
         str(object_repo_reader.get_property(locator_type.upper(), str(row["Input2"]).strip(), fallback='No')),
         locator_type,
@@ -772,7 +792,7 @@ def start_runner(testscript_file, rlog_queue, rlock, object_repo_reader, utils, 
 
     if "testscript.xlsx" in testscript_file:
         wafl.debug("The test script Excel file name ends with 'testscript.xlsx'. Proceeding with execution.")
-        df = validate_test_script(testscript_file, wafl, utils, launch_browser)
+        df = validate_test_script(testscript_file, rlock, wafl, utils, launch_browser)
 
         retry_count = 1
         wafl.debug("Instantiating the keyword manager.")
@@ -783,7 +803,7 @@ def start_runner(testscript_file, rlog_queue, rlock, object_repo_reader, utils, 
         # Combine process ID and timestamp
         unique_id = f"proc_{process_id}_time_{timestamp}"
         # temp_directory = os.path.abspath(tempfile.mkdtemp(suffix=f"_{unique_id}"))
-        temp_directory = os.path.join(get_root_directory_path(), "test_data", str(unique_id))
+        temp_directory = os.path.join(get_root_directory_path(), "test_files", str(unique_id))
         os.makedirs(temp_directory, exist_ok=True)
         
         km = KeywordsManager(wafl, temp_directory , retry_count)
@@ -815,7 +835,7 @@ def start_runner(testscript_file, rlog_queue, rlock, object_repo_reader, utils, 
 
         wafl.debug("Closing the test and creating the test result pdf file.")
         km.ge_close()
-        # shutil.rmtree(temp_directory)
+        utils.remove_empty_dir(temp_directory)
 
 def get_max_retries(rq):
     """
@@ -904,7 +924,7 @@ def check_before_start(utils):
         script_dir = os.path.dirname(os.path.abspath(__file__))  # Normal script behavior
 
     generic_tr_path = os.path.join(script_dir, "test_results")
-    generic_td_path = os.path.join(script_dir, "test_data")
+    generic_td_path = os.path.join(script_dir, "test_files")
 
     delete_test_results_images_recordings_folders_before_start = str(start_properties.DELETE_TEST_RESULTS).lower()
 
@@ -936,6 +956,8 @@ def check_before_start(utils):
     root_folder = utils.get_abs_path_folder_matching_string_within_folder(generic_path, 'test_scripts')
     chrome_folder = utils.get_abs_path_folder_matching_string_within_folder(generic_path,'chrome')
     edge_folder = utils.get_abs_path_folder_matching_string_within_folder(generic_path,'edge')
+    grid_chrome_folder = utils.get_abs_path_folder_matching_string_within_folder(generic_path,'grid_chrome')
+    grid_edge_folder = utils.get_abs_path_folder_matching_string_within_folder(generic_path,'grid_edge')
 
     logger.debug("Checking if test_scripts folder and chrome folder contains the same files.")
 
@@ -949,6 +971,17 @@ def check_before_start(utils):
         if utils.check_if_two_folder_contain_same_files(root_folder, edge_folder):
             logger.error("The 'test_scripts' folder and 'edge' folder contains same test script excel files. Make the files unique per folder.")
             raise ValueError("The 'test_scripts' folder and 'edge' folder contains same test script excel files. Make the files unique per folder.")
+    
+    if os.path.exists(grid_chrome_folder) and os.path.isdir(grid_chrome_folder):
+        if utils.check_if_two_folder_contain_same_files(root_folder, grid_chrome_folder):
+            logger.error("The 'test_scripts' folder and 'grid_chrome' folder contains same test script excel files. Make the files unique per folder.")
+            raise ValueError("The 'test_scripts' folder and 'grid_chrome' folder contains same test script excel files. Make the files unique per folder.")
+
+    logger.debug("Checking if test_scripts folder and edge folder contains the same files.")
+    if os.path.exists(grid_edge_folder) and os.path.isdir(grid_edge_folder):
+        if utils.check_if_two_folder_contain_same_files(root_folder, grid_edge_folder):
+            logger.error("The 'test_scripts' folder and 'grid_edge' folder contains same test script excel files. Make the files unique per folder.")
+            raise ValueError("The 'test_scripts' folder and 'grid_edge' folder contains same test script excel files. Make the files unique per folder.")
 
 if __name__ == '__main__':
     freeze_support()
@@ -988,16 +1021,6 @@ if __name__ == '__main__':
 
         utils = Utils(logger)
 
-        if True if str(start_properties.RUN_IN_SELENIUM_GRID).lower() != 'yes' else False:
-            setup_drivers(logger)  # Setup drivers for Chrome and Edge
-            utils.stop_driver_processes()
-            # Stop running processes from previous execution
-            pids = read_pids_from_file()
-            stop_running_processes(pids, logger)
-            clear_pid_file()  # Clear the file after stopping processes
-            main_process_id = os.getpid()
-            write_pid_to_file(main_process_id)  # Write the main process ID to a file
-
         prm = PdfReportManager(logger)
 
         logger.debug("Execution Started ----------------.")
@@ -1019,6 +1042,16 @@ if __name__ == '__main__':
         if active_args > 1:
             logger.error("Only one of '--start', --start-parallel, '--version', '--encrypt-file', '--encrypt-str', --delete-tr-google-drive or '--help-html' can be used at a time.")
             raise ValueError("Only one of '--start', --start-parallel, '--version', '--encrypt-file', '--encrypt-str', --delete-tr-google-drive or '--help-html' can be used at a time.")
+        
+        if (args.start or args.start_parallel) and (True if str(start_properties.RUN_IN_SELENIUM_GRID).lower() != 'yes' else False):
+            setup_drivers(logger)  # Setup drivers for Chrome and Edge
+            utils.stop_driver_processes()
+            # Stop running processes from previous execution
+            pids = read_pids_from_file()
+            stop_running_processes(pids, logger)
+            clear_pid_file()  # Clear the file after stopping processes
+            main_process_id = os.getpid()
+            write_pid_to_file(main_process_id)  # Write the main process ID to a file
 
         if args.start and True if str(start_properties.PARALLEL_EXECUTION).lower() == 'yes' else False:
             args = argparse.Namespace(
@@ -1188,6 +1221,7 @@ if __name__ == '__main__':
             elapsed_time = round(et - st)
             logger.info(utils.format_elapsed_time(elapsed_time))
             asyncio.run(prm.generate_test_summary_pdf())
+            asyncio.run(prm.generate_skipped_test_summary_pdf())
             utils.merge_pdfs_in_parts()
             utils.send_email_with_attachment()
             utils.upload_folder_to_ftp()
@@ -1274,7 +1308,7 @@ if __name__ == '__main__':
 
             elapsed_time = round(et - st)
             logger.info(utils.format_elapsed_time(elapsed_time))
-
+            asyncio.run(prm.generate_skipped_test_summary_pdf())
             asyncio.run(prm.generate_test_summary_pdf())
             utils.merge_pdfs_in_parts()
             utils.send_email_with_attachment()
