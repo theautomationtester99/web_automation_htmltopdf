@@ -11,8 +11,6 @@ import shutil
 import smtplib
 import socket
 import sys
-import tempfile
-import time
 import zipfile
 from datetime import datetime, timezone
 from email.mime.application import MIMEApplication
@@ -25,7 +23,6 @@ import cv2
 import numpy as np
 import psutil
 import pyautogui
-import PyPDF2
 from cryptography.fernet import Fernet
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -33,6 +30,7 @@ from googleapiclient.http import MediaFileUpload
 from PIL import Image, ImageDraw, ImageFont
 from config import start_properties
 from constants import SCOPES, SERVICE_ACCOUNT_FILE
+from pypdf import PdfWriter, PdfReader
 
 
 class Utils:
@@ -307,21 +305,27 @@ class Utils:
 
         if total_size <= max_size:
             self.logger.info("All PDFs are within the size limit. Merging into a single file.")
-            pdf_writer = PyPDF2.PdfMerger()
+            pdf_writer = PdfWriter()
             for pdf_file in merge_order:
-                pdf_writer.append(os.path.join(folder_path, pdf_file))
+                # pdf_writer.append(os.path.join(folder_path, pdf_file))
+                reader = PdfReader(os.path.join(folder_path, pdf_file))
+                for page in reader.pages:
+                    pdf_writer.add_page(page)
             with open(output_file_base + ".pdf", "wb") as output_pdf:
                 pdf_writer.write(output_pdf)
             self.logger.info(f"Merged PDF saved at: {output_file_base}.pdf")
         else:
             part_number = 1
             current_output_path = f"{output_file_base}_part{part_number}.pdf"
-            pdf_writer = PyPDF2.PdfMerger()
+            pdf_writer = PdfWriter()
 
             current_size = 0
 
             for pdf_file in merge_order:
-                pdf_writer.append(os.path.join(folder_path, pdf_file))
+                # pdf_writer.append(os.path.join(folder_path, pdf_file))
+                reader = PdfReader(os.path.join(folder_path, pdf_file))
+                for page in reader.pages:
+                    pdf_writer.add_page(page)
 
                 current_size += os.path.getsize(os.path.join(folder_path, pdf_file))
 
@@ -332,7 +336,7 @@ class Utils:
                     part_number += 1
                     current_size = 0
                     current_output_path = f"{output_file_base}_part{part_number}.pdf"
-                    pdf_writer = PyPDF2.PdfMerger()  # Properly reset PdfMerger
+                    pdf_writer = PdfWriter()  # Properly reset PdfMerger
 
             # Save the last part
             if pdf_writer.pages:
@@ -1339,9 +1343,7 @@ class Utils:
         
         # Used a try-except block to handle cases where entered_date.split() doesn’t return three components.
         try:
-            self.logger.warning("validating date")
             day, month, year = entered_date.split()
-            self.logger.warning(day)
             datetime.strptime(entered_date, '%d %B %Y')
             if not (day in dts and month in mts and year in yrs):
                 self.logger.warning(entered_date)

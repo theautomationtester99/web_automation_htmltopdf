@@ -1304,7 +1304,7 @@ if __name__ == '__main__':
             et = time.time()
 
             elapsed_time = round(et - st)
-            logger.info(utils.format_elapsed_time(elapsed_time))
+            logger.warning(utils.format_elapsed_time(elapsed_time))
             asyncio.run(prm.generate_test_summary_pdf())
             asyncio.run(prm.generate_skipped_test_summary_pdf())
             utils.merge_pdfs_in_parts()
@@ -1392,7 +1392,7 @@ if __name__ == '__main__':
             et = time.time()
 
             elapsed_time = round(et - st)
-            logger.info(utils.format_elapsed_time(elapsed_time))
+            logger.warning(utils.format_elapsed_time(elapsed_time))
             asyncio.run(prm.generate_skipped_test_summary_pdf())
             asyncio.run(prm.generate_test_summary_pdf())
             utils.merge_pdfs_in_parts()

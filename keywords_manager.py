@@ -1743,7 +1743,6 @@ class KeywordsManager(BrowserDriver):
                 for dt in date_element_list:
                     disp_day = self.get_text("", "", dt)
                     day_attribute_value = self.get_attribute_value(element=dt, attribute="aria-label")
-                    self.logger.warning(day_attribute_value)
                     disp_day_two_dig = "%02d" % (int(disp_day),)
                     if disp_day_two_dig == day and (str(mon).lower() in str(day_attribute_value).lower()):
                         self.element_js_click("", "", dt)
